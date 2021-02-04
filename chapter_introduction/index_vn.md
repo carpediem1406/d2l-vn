@@ -1,5 +1,3 @@
-<!-- =================== Bắt đầu dịch Phần 1 ==================== -->
-
 <!--
 # Introduction
 -->
@@ -7,77 +5,83 @@
 # Giới thiệu
 :label:`chap_introduction`
 
+
 <!--
-Until recently, nearly every computer program that interact with daily
-were coded by software developers from first principles.
-Say that we wanted to write an application to manage an e-commerce platform.  After huddling around a whiteboard for a few hours to ponder the problem,
+Until recently, nearly every computer program that we interact with daily
+was coded by software developers from first principles.
+Say that we wanted to write an application to manage an e-commerce platform.
+After huddling around a whiteboard for a few hours to ponder the problem,
 we would come up with the broad strokes of a working solution that might probably look something like this:
 (i) users interact with the application through an interface
 running in a web browser or mobile application;
 (ii) our application interacts with a commercial-grade database engine
-to keep track of each user's state and maintain records
-of historical transactions; and (iii) at the heart of our application,
+to keep track of each user's state and maintain records of historical transactions; 
+and (iii) at the heart of our application,
 the *business logic* (you might say, the *brains*) of our application
 spells out in methodical detail the appropriate action
 that our program should take in every conceivable circumstance.
 -->
 
-Cho tới tận gần đây, gần như tất cả mọi chương trình máy tính mà chúng ta tương tác hàng ngày đều được tạo ra bởi lập trình viên phần mềm từ những định đề cơ bản.
+Cho tới tận gần đây, hầu như mọi chương trình máy tính mà chúng ta tương tác hàng ngày đều được tạo ra bởi lập trình viên phần mềm từ những định đề cơ bản.
 Giả sử chúng ta muốn viết một ứng dụng quản lý hệ thống thương mại điện tử.
-Sau khi tụm lại quanh chiếc bảng trắng để suy nghĩ về vấn đề một cách cặn kẽ, chúng ta có thể phác thảo một giải pháp vận hành được, phần nào sẽ nhìn giống như sau:
+Sau khi đứng quanh chiếc bảng trắng để suy nghĩ về vấn đề một cách cặn kẽ, chúng ta có thể phác thảo được một giải pháp vận hành, phần nào sẽ nhìn giống như sau:
 (i) người dùng tương tác với ứng dụng thông qua một giao diện chạy trên trình duyệt web hoặc ứng dụng trên điện thoại;
 (ii) ứng dụng tương tác với một hệ thống cơ sở dữ liệu thương mại để theo dõi trạng thái của từng người dùng và duy trì hồ sơ lịch sử các giao dịch;
-và (iii) (cũng là cốt lõi của ứng dụng) các logic nghiệp vụ (hay cũng có thể nói *bộ não*) mô tả cách thức xử lí cụ thể của ứng dụng trong từng tình huống có thể xảy ra.
+và (iii) cũng là cốt lõi của ứng dụng là những logic nghiệp vụ (hay cũng có thể nói *bộ não*) mô tả cách thức xử lý cụ thể của ứng dụng trong từng tình huống có thể xảy ra.
+
 
 <!--
-To build the *brains* of our application,
-we'd have to step through every possible corner case
+To build the brains of our application,
+we would have to step through every possible corner case
 that we anticipate encountering, devising appropriate rules.
 Each time a customer clicks to add an item to their shopping cart,
 we add an entry to the shopping cart database table,
-associating that user's ID with the requested product’s ID.
+associating that user's ID with the requested product's ID.
 While few developers ever get it completely right the first time
 (it might take some test runs to work out the kinks),
 for the most part, we could write such a program from first principles
-and confidently launch it *before ever seeing a real customer*.
+and confidently launch it 
+*before* ever seeing a real customer.
 Our ability to design automated systems from first principles
-that drive functioning products and systems, often in novel situations,
+that drive functioning products and systems, 
+often in novel situations,
 is a remarkable cognitive feat.
 And when you are able to devise solutions that work $100\%$ of the time,
-*you should not be using machine learning*.
+you should not be using machine learning.
 -->
 
-Để xây dựng *bộ não* của ứng dụng này, ta phải xem xét tất cả mọi trường hợp mà chúng ta cho rằng sẽ gặp phải, qua đó đặt ra những quy tắc thích hợp.
+Để xây dựng bộ não của ứng dụng này, ta phải xem xét tất cả mọi trường hợp mà chúng ta cho rằng sẽ gặp phải, qua đó đặt ra những quy tắc thích hợp.
 Ví dụ, mỗi lần người dùng nhấn để thêm một món đồ vào giỏ hàng, ta thêm một trường vào bảng giỏ hàng trong cơ sở dữ liệu, liên kết ID của người dùng với ID của món hàng được yêu cầu.
-Mặc dù hầu như rất ít lập trình viên có thể làm đúng hết trong lần đầu tiên, (sẽ cần vài lần chạy kiểm tra để xử lý hết được những trường hợp hiểm hóc), hầu như phần lớn ta có thể lập trình được từ những định đề cơ bản và tự tin chạy ứng dụng *trước khi được dùng bởi một khách hàng thực sự nào*.
+Mặc dù gần như rất ít lập trình viên có thể làm đúng hết trong lần đầu tiên, (sẽ cần vài lần chạy kiểm tra để xử lý hết được những trường hợp hiểm hóc), 
+phần lớn ta có thể lập trình được từ những định đề cơ bản và tự tin chạy ứng dụng *trước khi* được dùng bởi một khách hàng thực sự nào.
 Khả năng phát triển những sản phầm và hệ thống tự động từ những định đề cơ bản, thường là trong những điều kiện mới lạ, là một kỳ công trong suy luận và nhận thức của con người.
-Và khi bạn có thể tạo ra một giải pháp hoạt động được trong mọi tình huống, *bạn không nên sử dụng học máy*.
+Và khi bạn có thể tạo ra một giải pháp hoạt động được trong mọi tình huống, bạn không nên sử dụng học máy.
+
 
 <!--
-Fortunately for the growing community of ML scientists,
+Fortunately for the growing community of machine learning scientists,
 many tasks that we would like to automate
 do not bend so easily to human ingenuity.
 Imagine huddling around the whiteboard with the smartest minds you know,
 but this time you are tackling one of the following problems:
 -->
 
-May mắn thay cho cộng đồng đang tăng trưởng của các nhà khoa học về học máy, nhiều tác vụ mà chúng ta muốn tự động hoá không dễ dàng bị khuất phục bởi sự tài tình của con người.
-Thử tưởng tượng bạn đang quây quần bên tấm bảng trắng với những bộ não thông minh nhất mà bạn biết, nhưng lần này bạn đang đương đầu với một trong những vấn đề dưới đây:
+May mắn thay cho cộng đồng đang tăng trưởng của các nhà khoa học về học máy, nhiều tác vụ mà chúng ta muốn tự động hóa không dễ dàng bị khuất phục bởi sự tài tình của con người.
+Thử tưởng tượng bạn đang đứng quanh tấm bảng trắng với những bộ não thông minh nhất mà bạn biết, nhưng lần này bạn đang đương đầu với một trong những vấn đề dưới đây:
+
 
 <!--
-* Write a program that predicts tomorrow's weather given geographic
-information, satellite images, and a trailing window of past weather.
-* Write a program that takes in a question, expressed in free-form text, and
- answers it correctly.
-* Write a program that given an image can identify all the people it contains,
- drawing outlines around each.
-* Write a program that presents users with products that they are likely to
-  enjoy but unlikely, in the natural course of browsing, to encounter.
+* Write a program that predicts tomorrow's weather given geographic information, satellite images, and a trailing window of past weather.
+* Write a program that takes in a question, expressed in free-form text, and answers it correctly.
+* Write a program that given an image can identify all the people it contains, drawing outlines around each.
+* Write a program that presents users with products that they are likely to enjoy but unlikely, in the natural course of browsing, to encounter.
 -->
 
 * Viết một chương trình dự báo thời tiết ngày mai, cho biết trước thông tin địa lý, hình ảnh vệ tinh, và một chuỗi dữ liệu thời tiết trong quá khứ.
 * Viết một chương trình lấy đầu vào là một câu hỏi, được diễn đạt không theo khuôn mẫu nào, và trả lời nó một cách chính xác.
-* Viết một chương trình hiển thị ra cho người dùng những sản phẩm mà họ có khả năng cao sẽ thích, nhưng lại ít có khả năng gặp được khi duyệt qua môt cách tự nhiên.
+* Viết một chương trình cho một hình ảnh có thể xác định tất cả những người có trong đó và vẽ các đường viền xung quanh mỗi hình ảnh.
+* Viết một chương trình hiển thị ra cho người dùng những sản phẩm mà họ có khả năng cao sẽ thích, nhưng lại ít có khả năng gặp được khi duyệt qua một cách tự nhiên.
+
 
 <!--
 In each of these cases, even elite programmers
@@ -89,44 +93,45 @@ In other cases, the relationship (say between pixels,
 and abstract categories) may be too complicated,
 requiring thousands or millions of computations
 that are beyond our conscious understanding
-(even if our eyes manage the task effortlessly).
-Machine learning (ML) is the study of powerful
-techniques that can *learn* from *experience*.
-As ML algorithm accumulates more experience,
+even if our eyes manage the task effortlessly.
+*Machine learning* is the study of powerful
+techniques that can learn from experience.
+As an machine learning algorithm accumulates more experience,
 typically in the form of observational data or
-interactions with an environment, their performance improves.
+interactions with an environment, its performance improves.
 Contrast this with our deterministic e-commerce platform,
 which performs according to the same business logic,
 no matter how much experience accrues,
-until the developers themselves *learn* and decide
+until the developers themselves learn and decide
 that it is time to update the software.
 In this book, we will teach you the fundamentals of machine learning,
-and focus in particular on deep learning, a powerful set of techniques
+and focus in particular on *deep learning*, 
+a powerful set of techniques
 driving innovations in areas as diverse as computer vision,
 natural language processing, healthcare, and genomics.
 -->
 
-Trong mỗi trường hợp trên, cho dù có là lập trình viên thượng thừa cũng không thể lập trình lên được từ con số không.
-Có nhiều lý do khác nhau.
+Trong mỗi trường hợp trên, cho dù có là lập trình viên thượng thừa cũng không thể lập trình lên được từ con số không. Có nhiều lý do khác nhau.
 Đôi khi chương trình mà chúng ta cần lại đi theo một khuôn mẫu thay đổi theo thời gian và chương trình của chúng ta cần phải thích ứng với điều đó.
-Trong trường hợp khác, mối quan hệ (giả dụ như giữa các điểm ảnh và các hạng mục trừu tượng) có thể là quá phức tạp, yêu cầu hàng ngàn hàng triệu phép tính vượt ngoài khả năng thấu hiểu của nhận thức chúng ta (mặc dù mắt của chúng ta có thể xử lý tác vụ này một cách dễ dàng).
-Học máy (Machine Learning - ML) là lĩnh vực nghiên cứu những kỹ thuật tiên tiến mà có thể *học* từ *kinh nghiệm*.
+Trong trường hợp khác, mối quan hệ (ví dụ như giữa các điểm ảnh và các hạng mục trừu tượng) có thể là quá phức tạp, 
+yêu cầu hàng ngàn hàng triệu phép tính vượt ngoài khả năng thấu hiểu của nhận thức chúng ta (mặc dù mắt của chúng ta có thể xử lý tác vụ này một cách dễ dàng).
+Học máy (Machine Learning - ML) là lĩnh vực nghiên cứu những kỹ thuật tiên tiến mà có thể học từ kinh nghiệm.
 Khi thuật toán ML tích luỹ thêm nhiều kinh nghiệm, thường là dưới dạng dữ liệu quan sát hoặc tương tác với môi trường, chất lượng của nó sẽ tăng lên.
-Tương phản với hệ thống thương mại điện tử tất định của chúng ta, khi mà nó luôn tuân theo cùng logic nghiệp vụ đã có, mặc cho đã tích luỹ thêm bao nhiêu kinh nghiệm, tận cho tới khi lập trình viên tự *học* và quyết định rằng đã tới lúc cập nhật phần mềm này.
-Trong cuốn sách này, chúng tôi sẽ dạy cho bạn về những điều căn bản nhất trong học máy, và tập trung đặc biệt vào học sâu, một tập hợp hùng mạnh những kỹ thuật đang thúc đẩy sự đổi mới ở nhiều lĩnh vực khác nhau như thị giác máy tính, xử lý ngôn ngữ tự nhiên, chăm sóc y tế và nghiên cứu cấu trúc gen.
+Tương phản với hệ thống thương mại điện tử tất định của chúng ta, khi mà nó luôn tuân theo cùng logic nghiệp vụ đã có, 
+mặc cho đã tích luỹ thêm bao nhiêu kinh nghiệm, tận cho tới khi lập trình viên tự học và quyết định rằng đã tới lúc cập nhật phần mềm này.
+Trong cuốn sách này, chúng tôi sẽ dạy cho bạn về những điều căn bản nhất trong học máy, và tập trung đặc biệt vào *học sâu*, 
+một tập hợp hùng mạnh những kỹ thuật đang thúc đẩy sự đổi mới ở nhiều lĩnh vực khác nhau như thị giác máy tính, xử lý ngôn ngữ tự nhiên, chăm sóc y tế và nghiên cứu cấu trúc gen.
 
-<!-- =================== Kết thúc dịch Phần 1 ==================== -->
-
-<!-- =================== Bắt đầu dịch Phần 2 ==================== -->
 
 <!--
 ## A Motivating Example
 -->
 
-## Một ví dụ truyền cảm hứng
+## Một ví dụ Truyền cảm hứng
+
 
 <!--
-Before we could begin writing, the authors of this book,
+Before beginning writing, the authors of this book,
 like much of the work force, had to become caffeinated.
 We hopped in the car and started driving.
 Using an iPhone, Alex called out "Hey Siri",
@@ -134,7 +139,8 @@ awakening the phone's voice recognition system.
 Then Mu commanded "directions to Blue Bottle coffee shop".
 The phone quickly displayed the transcription of his command.
 It also recognized that we were asking for directions
-and launched the Maps application to fulfill our request.
+and launched the Maps application (app)
+to fulfill our request.
 Once launched, the Maps app identified a number of routes.
 Next to each route, the phone displayed a predicted transit time.
 While we fabricated this story for pedagogical convenience,
@@ -147,72 +153,85 @@ Các tác giả của cuốn sách cũng giống như nhiều người lao độ
 Chúng tôi leo lên xe và bắt đầu lái.
 Sở hữu chiếc iPhone, Alex gọi "Hey Siri" để đánh thức hệ thống nhận dạng giọng nói của điện thoại.
 Sau đó Mu ra lệnh "chỉ đường đến quán cà phê Blue Bottle".
-Chiếc điện thoại nhanh chóng hiển thị bản ghi thoại (_transcription_) của câu lệnh.
+Chiếc điện thoại nhanh chóng hiển thị bản ghi thoại (*transcription*) của câu lệnh.
 Nó cũng nhận ra rằng chúng tôi đang yêu cầu chỉ dẫn đường đi và tự khởi động ứng dụng Bản đồ để hoàn thành yêu cầu đó.
 Khởi động xong, ứng dụng Bản đồ tự xác định một vài lộ trình tới đích.
 Đến mỗi tuyến đường, ứng dụng lại cập nhật và hiển thị thời gian di chuyển dự tính mới.
-Mặc dù đây chỉ là câu chuyện dựng lên cho mục đích giảng dạy, nó cũng cho thấy chỉ trong khoảng vài giây, những tương tác hàng ngày của chúng ta với chiếc điện thoại thông minh có thể liên quan đến nhiều mô hình học máy.
+Mặc dù đây chỉ là câu chuyện dựng lên cho mục đích giảng dạy, nó cũng cho thấy chỉ trong khoảng vài giây thôi, 
+những tương tác hàng ngày của chúng ta với chiếc điện thoại thông minh có thể liên quan đến nhiều mô hình học máy.
+
 
 <!--
 Imagine just writing a program to respond to a *wake word*
-like "Alexa", "Okay, Google" or "Siri".
+such as "Alexa", "OK Google", and "Hey Siri".
 Try coding it up in a room by yourself
 with nothing but a computer and a code editor,
 as illustrated in :numref:`fig_wake_word`.
 How would you write such a program from first principles?
 Think about it... the problem is hard.
-Every second, the microphone will collect roughly 44,000 samples.
+Every second, the microphone will collect roughly 
+44000 samples.
 Each sample is a measurement of the amplitude of the sound wave.
-What rule could map reliably from a snippet of raw audio to confident predictions ``{yes, no}`` on whether the snippet contains the wake word?
+What rule could map reliably from a snippet of raw audio to confident predictions 
+$\{\text{yes}, \text{no}\}$
+on whether the snippet contains the wake word?
 If you are stuck, do not worry.
 We do not know how to write such a program from scratch either.
-That is why we use ML.
+That is why we use machine learning.
 -->
 
-Tưởng tượng rằng ta mới viết một chương trình để phản hồi một *hiệu lệnh đánh thức* như là "Alexa", "Okay, Google" hoặc "Siri".
-Hãy thử tự viết nó chỉ với một chiếc máy tính và một trình soạn thảo mã nguồn như minh hoạ trong :numref:`fig_wake_word`.
+Tưởng tượng rằng ta mới viết một chương trình để phản hồi một *hiệu lệnh đánh thức* như là "Alexa", "OK Google" hoặc "Hey Siri".
+Hãy thử tự viết nó chỉ với một chiếc máy tính và một trình soạn thảo mã nguồn như minh họa trong :numref:`fig_wake_word`.
 Bạn sẽ bắt đầu viết một chương trình như vậy như thế nào?
 Thử nghĩ xem... vấn đề này khó đấy.
-Cứ mỗi giây, chiếc mic sẽ thu thập cỡ tầm 44,000 mẫu tín hiệu.
+Cứ mỗi giây, chiếc mic sẽ thu thập tầm 44000 mẫu tín hiệu.
 Mỗi mẫu là một giá trị biên độ của sóng âm.
-Quy tắc đáng tin cậy nào có thể từ một đoạn âm thanh thô đưa ra các dự đoán ``{có, không}`` để xác định đoạn âm thanh đó có chứa hiệu lệnh đánh thức hay không?
+Quy tắc đáng tin cậy nào có thể từ một đoạn âm thanh thô đưa ra các dự đoán $\{\text{có}, \text{không}\}$ nhằm xác định đoạn âm thanh đó có chứa hiệu lệnh đánh thức hay không?
 Nếu bạn không biết xử lý điều này như thế nào, thì cũng đừng lo lắng.
 Chúng tôi cũng không biết làm cách nào để viết một chương trình như vậy từ đầu.
 Đó là lý do vì sao chúng tôi sử dụng học máy.
+
 
 <!--
 ![Identify an awake word.](../img/wake-word.svg)
 -->
 
-![Xác định một hiệu lệnh đánh thức](../img/wake-word.svg)
+![Xác định một hiệu lệnh đánh thức.](../img/wake-word.svg)
 :label:`fig_wake_word`
 
+
 <!--
-Here's the trick.
+Here is the trick.
 Often, even when we do not know how to tell a computer
 explicitly how to map from inputs to outputs,
 we are nonetheless capable of performing the cognitive feat ourselves.
 In other words, even if you do not know
-*how to program a computer* to recognize the word "Alexa",
-you yourself *are able* to recognize the word "Alexa".
+how to program a computer to recognize the word "Alexa",
+you yourself are able to recognize it.
 Armed with this ability, we can collect a huge *dataset*
-containing examples of audio and label those that *do*
-and that *do not* contain the wake word.
-In the ML approach, we do not attempt to design a system
+containing examples of audio 
+and label those that do
+and that do not contain the wake word.
+In the machine learning approach, 
+we do not attempt to design a system
 *explicitly* to recognize wake words.
 Instead, we define a flexible program
 whose behavior is determined by a number of *parameters*.
-Then we use the dataset to determine the best possible set of parameters, those that improve the performance of our program
+Then we use the dataset to determine the best possible set of parameters, 
+those that improve the performance of our program
 with respect to some measure of performance on the task of interest.
 -->
 
 Thủ thuật là thế này.
-Ngay cả khi không thể giải thích cụ thể cho một cái máy tính về cách ánh xạ từ đầu vào đến đầu ra như thế nào, thì chúng ta vẫn có khả năng làm việc đó bằng bộ não của mình.
-Hay nói cách khác, thậm chí nếu chúng ta không biết *cách lập trình một cái máy tính* để nhận dạng từ "Alexa", chính chúng ta lại *có khả năng* nhận thức được từ "Alexa".
-Với khả năng này, chúng ta có thể thu thập một *tập dữ liệu* lớn các mẫu âm thanh kèm nhãn mà *có chứa* hoặc *không chứa* hiệu lệnh đánh thức.
+Ngay cả khi không thể giải thích cụ thể cho một cái máy tính về cách ánh xạ từ đầu vào đến đầu ra như thế nào, 
+thì chúng ta vẫn có khả năng làm việc đó bằng bộ não của mình.
+Hay nói cách khác, thậm chí nếu ta không biết cách lập trình một cái máy tính để nhận dạng từ "Alexa", thì chính ta lại có khả năng nhận thức được từ "Alexa".
+Với khả năng này, ta có thể thu thập một *tập dữ liệu* lớn các mẫu âm thanh kèm nhãn mà có chứa hoặc không chứa hiệu lệnh đánh thức.
 Trong cách tiếp cận học máy, chúng ta không thiết kế một hệ thống *rõ ràng* để nhận dạng hiệu lệnh đánh thức.
-Thay vào đó, chúng ta định nghĩa một chương trình linh hoạt mà hành vi của nó được xác định bởi những *tham số*.
-Sau đó chúng ta sử dụng tập dữ liệu để xác định bộ các tham số tốt nhất có khả năng cải thiện chất lượng của chương trình, cũng như thoả mãn một số yêu cầu về chất lượng trong nhiệm vụ được giao.
+Thay vào đó, ta định nghĩa một chương trình linh hoạt mà hành vi của nó được xác định bởi những *tham số*.
+Sau đó chúng ta sử dụng tập dữ liệu để xác định bộ các tham số tốt nhất có khả năng cải thiện chất lượng của chương trình, 
+cũng như thỏa mãn một số yêu cầu về chất lượng trong nhiệm vụ được giao.
+
 
 <!--
 You can think of the parameters as knobs that we can turn,
@@ -221,44 +240,48 @@ Fixing the parameters, we call the program a *model*.
 The set of all distinct programs (input-output mappings)
 that we can produce just by manipulating the parameters
 is called a *family* of models.
-And the *meta-program* that uses our dataset
+And the meta-program that uses our dataset
 to choose the parameters is called a *learning algorithm*.
 -->
 
-Bạn có thể coi những tham số như các núm vặn có thể điều chỉnh để thay đổi hành vi của chương trình.
+Bạn có thể xem những tham số như các núm vặn có thể điều chỉnh để thay đổi hành vi của chương trình.
 Sau khi đã cố định các tham số, chúng ta gọi chương trình này là một *mô hình*.
-Tập hợp của tất cả các chương trình khác nhau (ánh xạ đầu vào-đầu ra) mà chúng ta có thể tạo ra chỉ bằng cách thay đổi các tham số được gọi là một *nhóm* các mô hình.
-Và *chương trình học tham số* sử dụng tập dữ liệu để chọn ra các tham số được gọi là *thuật toán học*.
+Tập hợp của tất cả các chương trình khác nhau (ánh xạ đầu vào–đầu ra) mà chúng ta có thể tạo ra chỉ bằng cách thay đổi các tham số được gọi là một *nhóm* các mô hình.
+Và chương trình học tham số sử dụng tập dữ liệu để chọn ra các tham số được gọi là *thuật toán học*.
 
-<!-- =================== Kết thúc dịch Phần 2 ==================== -->
-
-<!-- =================== Bắt đầu dịch Phần 3 ==================== -->
 
 <!--
 Before we can go ahead and engage the learning algorithm,
 we have to define the problem precisely,
 pinning down the exact nature of the inputs and outputs,
 and choosing an appropriate model family.
-In this case, our model receives a snippet of audio as *input*,
-and it generates a selection among ``{yes, no}`` as *output*.
-If all goes according to plan the model's guesses will
-typically be correct as to whether (or not) the snippet contains the wake word.
+In this case, 
+our model receives a snippet of audio as *input*,
+and the model 
+generates a selection among 
+$\{\text{yes}, \text{no}\}$ as *output*.
+If all goes according to plan 
+the model's guesses will
+typically be correct as to 
+whether the snippet contains the wake word.
 -->
 
-Trước khi tiếp tục và bắt đầu với các thuật toán học, chúng ta phải định nghĩa rõ ràng vấn đề, hiểu chính xác bản chất của đầu vào và đầu ra và lựa chọn một nhóm mô hình thích hợp.
-Trong trường hợp này, mô hình của chúng ta nhận *đầu vào* là một đoạn âm thanh và *đầu ra* là một giá trị trong ``{đúng, sai}``.
-Nếu tất cả diễn ra như kế hoạch, mô hình thông thường sẽ dự đoán chính xác liệu đoạn âm thanh có hay không chứa hiệu lệnh kích hoạt.
+Trước khi tiếp tục và bắt đầu với các thuật toán học, chúng ta phải định nghĩa rõ ràng vấn đề, 
+hiểu chính xác bản chất của đầu vào và đầu ra và lựa chọn một nhóm mô hình thích hợp.
+Trong trường hợp này, mô hình của chúng ta nhận *đầu vào* là một đoạn âm thanh và *đầu ra* là một giá trị trong $\{\text{có}, \text{không}\}$.
+Nếu tất cả diễn ra như kế hoạch, mô hình thông thường sẽ dự đoán chính xác liệu đoạn âm thanh có chứa hay không chứa hiệu lệnh kích hoạt.
 
 
 <!--
 If we choose the right family of models,
-then there should exist one setting of the knobs
-such that the model fires ``yes`` every time it hears the word "Alexa".  Because the exact choice of the wake word is arbitrary,
+there should exist one setting of the knobs
+such that the model fires "yes" every time it hears the word "Alexa".
+Because the exact choice of the wake word is arbitrary,
 we will probably need a model family sufficiently rich that,
-via another setting of the knobs, it could fire ``yes``
+via another setting of the knobs, it could fire "yes"
 only upon hearing the word "Apricot".
 We expect that the same model family should be suitable
-for *"Alexa" recognition* and *"Apricot" recognition*
+for "Alexa" recognition and "Apricot" recognition
 because they seem, intuitively, to be similar tasks.
 However, we might need a different family of models entirely
 if we want to deal with fundamentally different inputs or outputs,
@@ -266,75 +289,84 @@ say if we wanted to map from images to captions,
 or from English sentences to Chinese sentences.
 -->
 
-Nếu chúng ta lựa chọn đúng nhóm mô hình, sẽ tồn tại một cách thiết lập các núm vặn mà mô hình sẽ đưa ra ``đúng`` mỗi khi nghe thấy từ "Alexa".
-Bởi vì việc lựa chọn hiệu lệnh đánh thức nào là tuỳ ý, chúng ta sẽ muốn có một nhóm mô hình đủ mạnh để trong trường hợp với một thiết lập khác của các núm quay, nó sẽ đưa ra kết quả ``đúng`` mỗi khi nghe từ "Apricot" ("quả mơ").
-Bằng trực giác ta có thể nhận thấy rằng việc *nhận dạng "Alexa"* và *nhận dạng "Apricot"* cũng tương tự nhau và có thể sử dụng chung một nhóm mô hình.
-Tuy nhiên, trong trường hợp có sự khác biệt về bản chất ở đầu vào và đầu ra, chẳng hạn như việc ánh xạ từ hình ảnh sang chú thích, hoặc từ câu tiếng Anh sang câu tiếng Trung thì ta có thể sẽ phải sử dụng các nhóm mô hình hoàn toàn khác nhau.
+Nếu chúng ta lựa chọn đúng nhóm mô hình, sẽ tồn tại một cách thiết lập các núm vặn mà mô hình sẽ đưa ra "đúng" mỗi khi nghe thấy từ "Alexa".
+Bởi vì việc lựa chọn hiệu lệnh đánh thức nào là tuỳ ý, chúng ta sẽ muốn có một nhóm mô hình đủ mạnh để trong trường hợp với một thiết lập khác của các núm quay, 
+nó sẽ đưa ra kết quả "đúng" mỗi khi nghe từ "Apricot" ("quả mơ").
+Bằng trực giác ta có thể nhận thấy rằng việc nhận dạng "Alexa" và nhận dạng "Apricot" cũng tương tự nhau và có thể sử dụng chung một nhóm mô hình.
+Tuy nhiên, trong trường hợp có sự khác biệt về bản chất ở đầu vào và đầu ra, chẳng hạn như việc ánh xạ từ hình ảnh sang chú thích, 
+hoặc từ câu tiếng Anh sang câu tiếng Trung thì ta có thể sẽ phải sử dụng các nhóm mô hình hoàn toàn khác nhau.
+
 
 <!--
 As you might guess, if we just set all of the knobs randomly,
-it is not likely that our model will recognize "Alexa",
+it is unlikely that our model will recognize "Alexa",
 "Apricot", or any other English word.
-In deep learning, the *learning* is the process
+In machine learning, 
+the *learning* is the process
 by which we discover the right setting of the knobs
 coercing the desired behavior from our model.
 -->
 
-Dễ dàng nhận thấy, nếu như chúng ta chỉ thiết lập một cách ngẫu nhiên các núm vặn, thì mô hình gần như sẽ không có khả năng nhận dạng "Alexa", "Apricot" hay bất cứ từ tiếng Anh nào khác.
-Trong học sâu, *học* là quá trình khám phá ra thiết lập đúng của các núm vặn để mô hình có thể hành xử như chúng ta mong muốn.
+Dễ dàng nhận thấy, nếu như chúng ta chỉ thiết lập một cách ngẫu nhiên các núm vặn, 
+thì mô hình gần như sẽ không có khả năng nhận dạng "Alexa", "Apricot" hay bất cứ từ tiếng Anh nào khác.
+Trong học máy, *học* là quá trình khám phá ra thiết lập đúng của các núm vặn để mô hình có thể hành xử như chúng ta mong muốn.
+
 
 <!--
-As shown in :numref:`fig_ml_loop`, the training process usually looks like this:
+In other words,
+we *train* our model with data.
+As shown in :numref:`fig_ml_loop`, the training process usually looks like the following:
 -->
 
+Nói các khác, ta huấn luyện mô hình của mình với dữ liệu.
 Quá trình huấn luyện thường giống như mô tả trong hình :numref:`fig_ml_loop`:
+
 
 <!--
 1. Start off with a randomly initialized model that cannot do anything useful.
-2. Grab some of your labeled data (e.g., audio snippets and corresponding ``{yes, no}`` labels)
-3. Tweak the knobs so the model sucks less with respect to those examples
-4. Repeat until the model is awesome.
+1. Grab some of your data (e.g., audio snippets and corresponding $\{\text{yes}, \text{no}\}$ labels).
+1. Tweak the knobs so the model sucks less with respect to those examples.
+1. Repeat Step 2 and 3 until the model is awesome.
 -->
 
 1. Khởi tạo mô hình một cách ngẫu nhiên. Lúc này nó vẫn chưa thể thực hiện bất kỳ tác vụ có ích nào.
-2. Thu thập một số dữ liệu đã được gán nhán (ví dụ như đoạn âm thanh kèm nhãn ``{có, không}`` tương ứng).
+2. Thu thập một số dữ liệu (ví dụ như đoạn âm thanh kèm nhãn $\{\text{có}, \text{không}\}$ tương ứng).
 3. Thay đổi các núm vặn để mô hình dự đoán chính xác hơn trên các mẫu.
-4. Lặp lại cho đến khi có một mô hình hoạt động tốt.
+4. Lặp lại bước 2 và 3 cho đến khi có một mô hình hoạt động tốt.
+
 
 <!--
 ![A typical training process. ](../img/ml-loop.svg)
 -->
 
-![Một quá trình huấn luyện điển hình](../img/ml-loop.svg)
+![Một quá trình huấn luyện điển hình.](../img/ml-loop.svg)
 :label:`fig_ml_loop`
 
-<!-- =================== Kết thúc dịch Phần 3 ==================== -->
-
-<!-- =================== Bắt đầu dịch Phần 4 ==================== -->
 
 <!--
 To summarize, rather than code up a wake word recognizer,
 we code up a program that can *learn* to recognize wake words,
-*if we present it with a large labeled dataset*.
+if we present it with a large labeled dataset.
 You can think of this act of determining a program's behavior
 by presenting it with a dataset as *programming with data*.
-We can "program" a cat detector by providing our machine learning system
-with many examples of cats and dogs, such as the images below:
+That is to say,
+we can "program" a cat detector by providing our machine learning system
+with many examples of cats and dogs.
+This way the detector will eventually learn to emit a very large positive number if it is a cat, a very large negative number if it is a dog,
+and something closer to zero if it is not sure,
+and this barely scratches the surface of what machine learning can do.
+Deep learning,
+which we will explain in greater detail later,
+is just one among many popular methods
+for solving machine learning problems.
 -->
 
-Tóm lại, thay vì tự lập trình một chương trình nhận dạng từ đánh thức, ta tạo ra một chương trình có thể *học* cách nhận dạng các từ đánh thức *khi được cho xem một tập lớn những ví dụ đã được gán nhãn*.
+Tóm lại, thay vì tự lập trình một chương trình nhận dạng từ đánh thức, ta tạo ra một chương trình có thể *học* cách nhận dạng các từ đánh thức 
+khi được cho xem một tập lớn những ví dụ đã được gán nhãn.
 Ta có thể gọi việc xác định hành vi của một chương trình bằng cách cho nó xem một tập dữ liệu là *lập trình với dữ liệu*.
+
 Chúng ta có thể "lập trình" một bộ phát hiện mèo bằng cách cung cấp cho hệ thống học máy nhiều mẫu ảnh chó và mèo, ví dụ như các hình ảnh dưới đây:
 
-<!--
-| ![cat1](../img/cat1.png) | ![cat2](../img/cat2.jpg) | ![dog1](../img/dog1.jpg) |![dog2](../img/dog2.jpg) |
-|:---------------:|:---------------:|:---------------:|:---------------:|
-|cat|cat|dog|dog|
--->
-
-| ![cat1](../img/cat3.jpg) | ![cat2](../img/cat2.jpg) | ![dog1](../img/dog1.jpg) |![dog2](../img/dog2.jpg) |
-|:---------------:|:---------------:|:---------------:|:---------------:|
-|mèo|mèo|chó|chó|
 
 <!--
 This way the detector will eventually learn to emit a very large positive number if it is a cat, a very large negative number if it is a dog,
@@ -654,7 +686,7 @@ Because lower is better, these functions are sometimes called
 -->
 
 Để có thể phát triển một mô hình toán học chính quy cho học máy, chúng ta cần những phép đo chính quy xem mô hình đang tốt (hoặc tệ) như thế nào.
-Trong học máy, hay rộng hơn là lĩnh vực tối ưu hoá, ta gọi chúng là các hàm mục tiêu (_objective function_).
+Trong học máy, hay rộng hơn là lĩnh vực tối ưu hóa, ta gọi chúng là các hàm mục tiêu (_objective function_).
 Theo quy ước, ta thường định nghĩa các hàm tối ưu sao cho giá trị càng thấp thì mô hình càng tốt.
 Nhưng đó cũng chỉ là một quy ước ngầm.
 Bạn có thể lấy một hàm $f$ sao cho giá trị càng cao thì càng tốt, sau đó đặt một hàm tương đương $f' = -f$, có giá trị càng thấp thì mô hình càng tốt.
@@ -884,7 +916,7 @@ We will visit many of these problems in depth
 throughout the first 9 parts of this book.
 -->
 
-Ngay cả với mô tả đơn giản là "dự đoán mục tiêu từ đầu vào", học có giám sát đã có nhiều hình thái đa dạng và đòi hỏi đưa ra nhiều quyết định mô hình hoá khác nhau, tuỳ thuộc vào kiểu, kích thước, số lượng của cặp đầu vào và đầu ra cũng như các yếu tố khác.
+Ngay cả với mô tả đơn giản là "dự đoán mục tiêu từ đầu vào", học có giám sát đã có nhiều hình thái đa dạng và đòi hỏi đưa ra nhiều quyết định mô hình hóa khác nhau, tuỳ thuộc vào kiểu, kích thước, số lượng của cặp đầu vào và đầu ra cũng như các yếu tố khác.
 Ví dụ, ta sử dụng các mô hình khác nhau để xử lý các chuỗi (như chuỗi ký tự hay dữ liệu chuỗi thời gian) và các biểu diễn vector với chiều dài cố định.
 Chúng ta sẽ đào sâu vào rất nhiều bài toán dạng này thông qua chín phần đầu của cuốn sách.
 
@@ -1075,8 +1107,8 @@ the high-level idea behind linear regression
 
 Tuy nhiên, nếu bạn có thể diễn đạt bài toán của bạn bằng câu hỏi "Đây có phải là \_?" thì khả năng cao đó là bài toán phân loại, một dạng khác của bài toán học có giám sát mà chúng ta sẽ thảo luận trong phần tiếp theo.
 Ngay cả khi bạn chưa từng làm việc với học máy, bạn có thể đã làm việc với các bài toán hồi quy một cách không chính thức.
-Ví dụ, hãy tưởng tượng bạn cần sửa chữa đường ống cống và người thợ đã dành $x_1=3$ giờ để thông cống rồi gửi hoá đơn $y_1 = \$350$.
-Bây giờ bạn của bạn thuê cũng thuê người thợ đó trong $x_2 = 2$ tiếng và cô ấy nhận được hoá đơn là $y_2 = \$250$.
+Ví dụ, hãy tưởng tượng bạn cần sửa chữa đường ống cống và người thợ đã dành $x_1=3$ giờ để thông cống rồi gửi hóa đơn $y_1 = \$350$.
+Bây giờ bạn của bạn thuê cũng thuê người thợ đó trong $x_2 = 2$ tiếng và cô ấy nhận được hóa đơn là $y_2 = \$250$.
 Nếu một người khác sau đó hỏi bạn giá dự tính phải trả cho việc thông cống, bạn có thể có một vài giả sử có lý, chẳng hạn như mất nhiều thời gian sẽ tốn nhiều tiền hơn.
 Bạn cũng có thể giả sử rằng có một mức phí cơ bản và sau đó người thợ tính tiền theo giờ.
 Nếu giả sử này là đúng, thì với hai điểm dữ liệu trên, bạn đã có thể tính được cách mà người thợ tính tiền công: \$100 cho mỗi giờ cộng với \$50 để có mặt tại nhà bạn.
@@ -1102,7 +1134,7 @@ where
 
 Trong trường hợp này, chúng ta có thể tìm được các tham số sao cho mô hình ước tính chính xác được chi phí người thợ sửa ống cống đưa ra.
 Đôi khi việc này là không khả thi, ví dụ một biến thể nào đó gây ra bởi các yếu tố ngoài hai đặc trưng kể trên.
-Trong những trường hợp này, ta sẽ cố học các mô hình sao cho khoảng cách giữa các giá trị dự đoán và các giá trị thực sự được cực tiểu hoá.
+Trong những trường hợp này, ta sẽ cố học các mô hình sao cho khoảng cách giữa các giá trị dự đoán và các giá trị thực sự được cực tiểu hóa.
 Trong hầu hết các chương, chúng ta sẽ tập trong vào một trong hai hàm mất mát phổ biến nhất: hàm [mất mát L1](http://mxnet.incubator.apache.org/api/python/gluon/loss.html#mxnet.gluon.loss.L1Loss), ở đó
 
 $$l(y, y') = \sum_i |y_i-y_i'|$$
@@ -1206,7 +1238,7 @@ It is not the only notion of uncertainty
 and we will discuss others in more advanced chapters.
 -->
 
-Khi cuốn sách đi sâu hơn vào các vấn đề kỹ thuật, chúng ta sẽ bàn về các lý do tại sao lại khó hơn để tối ưu hoá một mô hình mà đầu ra là các giá trị hạng mục rời rạc, ví dụ, *mèo* hoặc *chó*.
+Khi cuốn sách đi sâu hơn vào các vấn đề kỹ thuật, chúng ta sẽ bàn về các lý do tại sao lại khó hơn để tối ưu hóa một mô hình mà đầu ra là các giá trị hạng mục rời rạc, ví dụ, *mèo* hoặc *chó*.
 Trong những trường hợp này, thường sẽ dễ hơn khi thay vào đó, ta biểu diễn mô hình dưới ngôn ngữ xác suất.
 Cho trước một mẫu $\mathbf{x}$, mô hình cần gán một giá trị xác suất $\hat{y}_k$ cho mỗi nhãn $k$.
 Vì là các giá trị xác suất, chúng phải là các số dương có tổng bằng $1$.
@@ -1458,7 +1490,7 @@ the ordering within the set matters.
 
 Đôi khi ta không chỉ muốn gán một lớp hoặc một giá trị vào một mẫu.
 Trong lĩnh vực thu thập thông tin (_information retrieval_), ta muốn gán thứ hạng cho một tập các mẫu.
-Lấy ví dụ trong tìm kiếm trang web, mục tiêu không chỉ dừng lại ở việc xác định liệu một trang web có liên quan tới từ khoá tìm kiếm, mà xa hơn, trang web nào trong số vô vàn kết quả trả về *liên quan nhất* tới người dùng.
+Lấy ví dụ trong tìm kiếm trang web, mục tiêu không chỉ dừng lại ở việc xác định liệu một trang web có liên quan tới từ khóa tìm kiếm, mà xa hơn, trang web nào trong số vô vàn kết quả trả về *liên quan nhất* tới người dùng.
 Chúng ta rất quan tâm đến thứ tự của các kết quả tìm kiếm và thuật toán cần đưa ra các tập con có thứ tự từ những thành phần trong một tập lớn hơn.
 Nói cách khác, nếu được hỏi đưa ra năm chữ cái từ bảng chữ cái, hai kết quả ``A B C D E`` và ``C A B E D`` là khác nhau.
 Ngay cả khi các phần tử trong hai tập kết quả là như nhau, thứ tự các phần tử trong mỗi tập mới là điều quan trọng.
@@ -1482,7 +1514,7 @@ There are entire academic conferences devoted to this subject.
 
 Một giải pháp khả dĩ cho bài toán này là trước tiên gán cho mỗi phần tử trong tập hợp một số điểm về sự phù hợp và sau đó trả về những phẩn tử có điểm cao nhất.
 [PageRank](https://en.wikipedia.org/wiki/PageRank), vũ khí bí mật đằng sau cỗ máy tìm kiếm của Google, là một trong những ví dụ đầu tiên của hệ thống tính điểm kiểu này.
-Tuy nhiên, điều bất thường là nó không phụ thuộc vào từ khoá tìm kiếm.
+Tuy nhiên, điều bất thường là nó không phụ thuộc vào từ khóa tìm kiếm.
 Chúng phụ thuộc vào một bộ lọc đơn giản để xác định tập hợp các trang phù hợp rồi sau đó mới dùng PageRank để sắp xếp các kết quả có chứa cụm tìm kiếm.
 Có cả những hội thảo khoa học chuyên nghiên cứu về lĩnh vực này.
 
@@ -1512,7 +1544,7 @@ e.g., for retail products, music, or news recommendation.
 -->
 
 Hệ thống gợi ý là một bài toán khác liên quan đến tìm kiếm và xếp hạng.
-Tuy có chung mục đích hiển thị một tập các kết quả liên quan tới người dùng, hệ thống gợi ý nhấn mạnh việc *cá nhân hoá* cho từng người dùng cụ thể.
+Tuy có chung mục đích hiển thị một tập các kết quả liên quan tới người dùng, hệ thống gợi ý nhấn mạnh việc *cá nhân hóa* cho từng người dùng cụ thể.
 Ví dụ khi gợi ý phim ảnh, kết quả gợi ý cho một fan của phim khoa học viễn tưởng và cho một người sành sỏi hài Peter Sellers có thể khác nhau một cách đáng kể.
 Các bài toán gợi ý khác có thể bao gồm hệ thống gợi ý sản phẩm bán lẻ, âm nhạc hoặc tin tức.
 
@@ -1546,7 +1578,7 @@ of deep learning books recommended by Amazon based on personalization algorithms
 
 Với một mô hình như vậy, cho một người dùng bất kỳ, ta có thể thu thập một tập các sản phẩm với điểm $y_{ij}$ lớn nhất để gợi ý cho khách hàng.
 Các hệ thống đang vận hành trong thương mại còn cao cấp hơn nữa. Chúng sử dụng hành vi của người dùng và các thuộc tính sản phẩm để tính điểm.
-:numref:`fig_deeplearning_amazon` là một ví dụ về các cuốn sách học sâu được gợi ý bởi Amazon dựa trên các thuật toán cá nhân hoá được điều chỉnh phù hợp với sở thích của tác giả cuốn sách này.
+:numref:`fig_deeplearning_amazon` là một ví dụ về các cuốn sách học sâu được gợi ý bởi Amazon dựa trên các thuật toán cá nhân hóa được điều chỉnh phù hợp với sở thích của tác giả cuốn sách này.
 
 <!--
 ![Deep learning books recommended by Amazon.](../img/deeplearning_amazon.png)
@@ -1971,7 +2003,7 @@ opens a whole set of new modeling questions.
 Does the environment:
 -->
 
-Xem xét việc tương tác với môi trường mở ra một loạt những câu hỏi về mô hình hoá mới.
+Xem xét việc tương tác với môi trường mở ra một loạt những câu hỏi về mô hình hóa mới.
 Liệu môi trường có:
 
 <!--
@@ -2240,7 +2272,7 @@ averaging the length of 16 adult men's feet to obtain the average foot length.
 -->
 
 Ngay cả trong thời kỳ trung cổ, các nhà toán học đã có một trực giác nhạy bén trong các ước tính của mình.
-Chẳng hạn, cuốn sách hình học của [Jacob Köbel (1460-1533)](https://www.maa.org/press/periodicals/convergence/mathematical-treasures-jacob-kobels-geometry) minh hoạ việc lấy trung bình chiều dài 16 bàn chân của những người đàn ông trưởng thành để có được chiều dài bàn chân trung bình.
+Chẳng hạn, cuốn sách hình học của [Jacob Köbel (1460-1533)](https://www.maa.org/press/periodicals/convergence/mathematical-treasures-jacob-kobels-geometry) minh họa việc lấy trung bình chiều dài 16 bàn chân của những người đàn ông trưởng thành để có được chiều dài bàn chân trung bình.
 
 <!--
 ![Estimating the length of a foot](../img/koebel.jpg)
@@ -2261,7 +2293,7 @@ averaging only over the remainder.
 This is one of the earliest examples of the trimmed mean estimate.
 -->
 
-:numref:`fig_koebel` minh hoạ cách các công cụ ước tính này hoạt động.
+:numref:`fig_koebel` minh họa cách các công cụ ước tính này hoạt động.
 16 người đàn ông trưởng thành được yêu cầu xếp hàng nối tiếp nhau khi rời nhà thờ.
 Tổng chiều dài của các bàn chân sau đó được chia cho 16 để có được ước tính trị số hiện tại tầm 1 feet.
 "Thuật toán" này đã được cải tiến ngay sau đó nhằm giải quyết trường hợp bàn chân bị biến dạng -- 2 người đàn ông có bàn chân ngắn nhất và dài nhất tương ứng được loại ra, trung bình chỉ được tính trong phần còn lại.
@@ -2284,13 +2316,10 @@ in industry and the natural sciences.
 
 Thống kê thật sự khởi sắc với việc thu thập và có sẵn dữ liệu.
 Một trong số những người phi thường đã đóng góp lớn vào lý thuyết và ứng dụng của nó trong di truyền học, đó là [Ronald Fisher (1890-1962)](https://en.wikipedia.org/wiki/Ronald_Fisher).
-Nhiều thuật toán và công thức của ông (như Phân tích biệt thức tuyến tính - Linear Discriminant Analysis hay Ma trận thông tin Fisher - Fisher Information Matrix) vẫn được sử dụng thường xuyên cho đến ngày nay (ngay cả bộ dữ liệu Iris mà ông công bố năm 1936 đôi khi vẫn được sử dụng để minh hoạ cho các thuật toán học máy).
+Nhiều thuật toán và công thức của ông (như Phân tích biệt thức tuyến tính - Linear Discriminant Analysis hay Ma trận thông tin Fisher - Fisher Information Matrix) vẫn được sử dụng thường xuyên cho đến ngày nay (ngay cả bộ dữ liệu Iris mà ông công bố năm 1936 đôi khi vẫn được sử dụng để minh họa cho các thuật toán học máy).
 Fisher cũng là một người ủng hộ thuyết ưu sinh. 
 Điều này nhắc chúng ta rằng việc áp dụng khoa học dữ liệu vào những ứng dụng mờ ám trên phương diện đạo đức cũng như các ứng dụng có ích trong công nghiệp và khoa học tự nhiên đều đã có lịch sử tồn tại và phát triển lâu đời.
 
-<!-- =================== Kết thúc dịch Phần 27 ==================== -->
-
-<!-- =================== Bắt đầu dịch Phần 28 ==================== -->
 
 <!--
 A second influence for machine learning came from Information Theory
@@ -2478,7 +2507,7 @@ of the ideas that have helped researchers achieve tremendous progress
 over the past decade.
 -->
 
-Những tiến bộ gần đây trong các mô hình thống kê, các ứng dụng và các thuật toán đôi khi được liên hệ với Sự bùng nổ kỷ Cambry: thời điểm phát triển nhanh chóng trong sự tiến hoá của các loài.
+Những tiến bộ gần đây trong các mô hình thống kê, các ứng dụng và các thuật toán đôi khi được liên hệ với Sự bùng nổ kỷ Cambry: thời điểm phát triển nhanh chóng trong sự tiến hóa của các loài.
 Thật vậy, các kỹ thuật tiên tiến nhất hiện nay không chỉ đơn thuần chỉ là hệ quả của việc các kỹ thuật cũ được áp dụng với các nguồn tài nguyên hiện tại.
 Danh sách dưới đây còn chưa thấm vào đâu với số lượng những ý tưởng đã và đang giúp các nhà nghiên cứu đạt được những thành tựu khổng lồ trong thập kỷ vừa qua.
 
@@ -2851,12 +2880,6 @@ Thời điểm này của cuộc cách mạng công nghiệp có thể có nhữ
 Việc sử dụng các thuật toán này một cách cẩn thận là rất quan trọng.
 Với những gì ta biết ngày nay, việc này dấy lên một nỗi lo lớn hơn so với khả năng hủy diệt loài người của các siêu trí tuệ độc ác. 
 
-<!-- =================== Kết thúc dịch Phần 33 ==================== -->
-<!-- =================== Bắt đầu dịch Phần 34 ==================== -->
-
-<!-- ========================================= REVISE PHẦN 1.6 - KẾT THÚC =================================== -->
-
-<!-- ========================================= REVISE PHẦN 1.7, 1.8 & 1.9 - BẮT ĐẦU =================================== -->
 
 <!--
 ## Summary
@@ -2895,45 +2918,23 @@ Sự sẵn có của các framework học sâu hiệu quả giúp cho việc thi
 4. Where else can you apply the end-to-end training approach? Physics? Engineering? Econometrics?
 -->
 
-1. Phần nào của mã nguồn mà bạn đang viết có thể "được học", tức có thể được cải thiện bằng cách học và tự động xác định các lựa chọn thiết kế?
+1. Phần nào của mã nguồn mà bạn đang viết có thể "được học", 
+tức có thể được cải thiện bằng cách học và tự động xác định các lựa chọn thiết kế?
 Trong mã nguồn của bạn có hiện diện các lựa chọn thiết kế dựa trên trực giác không?
-
 2. Những bài toán nào bạn từng gặp có nhiều cách giải quyết, nhưng lại không có cách cụ thể nào để tự động hóa?
 Những bài toán này có thể rất phù hợp để áp dụng học sâu.
-
-3. Nếu xem sự phát triển của trí tuệ nhân tạo như một cuộc cách mạng công nghiệp mới thì mối quan hệ giữa thuật toán và dữ liệu là gì?
+3. Nếu xem sự phát triển của trí tuệ nhân tạo như một cuộc cách mạng công nghiệp mới 
+thì mối quan hệ giữa thuật toán và dữ liệu là gì?
 Nó có tương tự như động cơ hơi nước và than đá không (sự khác nhau căn bản là gì)?
-
 4. Bạn còn có thể áp dụng phương pháp huấn luyện đầu-cuối ở lĩnh vực nào nữa?
 Vật lý? Kỹ thuật? Kinh tế lượng?
 
-<!--
-## [Discussions](https://discuss.mxnet.io/t/2310)
--->
 
 ## Thảo luận
 * [Tiếng Anh](https://discuss.mxnet.io/t/2310)
 * [Tiếng Việt](https://forum.machinelearningcoban.com/c/d2l)
-<!--
-![](../img/qr_introduction.svg)
--->
 
-<!-- =================== Kết thúc dịch Phần 34 ==================== -->
 
-<!-- ========================================= REVISE PHẦN 1.7, 1.8 & 1.9 - KẾT THÚC =================================== -->
-
-## Những người thực hiện
-Bản dịch trong trang này được thực hiện bởi:
-<!--
-Tác giả của mỗi Pull Request điền tên mình và tên những người review mà bạn thấy
-hữu ích vào từng phần tương ứng. Mỗi dòng một tên.
-
-Lưu ý:
-* Mỗi tên chỉ xuất hiện một lần: Nếu bạn đã dịch hoặc review phần 1 của trang này
-thì không cần điền vào các phần sau nữa.
-* Nếu reviewer không cung cấp tên, bạn có thể dùng tên tài khoản GitHub của họ
-với dấu `@` ở đầu. Ví dụ: @aivivn.
--->
 
 * Lê Khắc Hồng Phúc
 * Vũ Hữu Tiệp
