@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>9.4. Mạng Nơ-ron Hồi tiếp Hai chiều &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9.5. Dịch Máy và Tập dữ liệu" href="machine-translation-and-dataset_vn.html" />
+    <link rel="prev" title="9.3. Mạng Nơ-ron Hồi tiếp Sâu" href="deep-rnn_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">9. </span>Mạng Nơ-ron Hồi tiếp Hiện đại</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">9.4. </span>Mạng Nơ-ron Hồi tiếp Hai chiều</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_recurrent-modern/bi-rnn_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ==================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Bidirectional Recurrent Neural Networks
+--><div class="section" id="mang-no-ron-hoi-tiep-hai-chieu">
+<span id="sec-bi-rnn"></span><h1><span class="section-number">9.4. </span>Mạng Nơ-ron Hồi tiếp Hai chiều<a class="headerlink" href="#mang-no-ron-hoi-tiep-hai-chieu" title="Permalink to this headline">¶</a></h1>
+<!--
+So far we assumed that our goal is to model the next word given what we have seen so far, e.g., in the context of a time series or in the context of a language model.
+While this is a typical scenario, it is not the only one we might encounter.
+To illustrate the issue, consider the following three tasks of filling in the blanks in a text:
+--><p>Cho đến nay ta giả định mục tiêu là để mô hình hóa bước thời gian kế
+tiếp dựa trên những thông tin trước đó, điển hình như chuỗi thời gian
+hay một mô hình ngôn ngữ. Tuy nhiên, đây không phải là trường hợp duy
+nhất chúng ta có thể gặp. Để minh họa cho vấn đề này, hãy xem xét ba tác
+vụ điền vào chỗ trống dưới đây:</p>
+<!--
+1. `I am _____`
+2. `I am _____ very hungry.`
+3. `I am _____ very hungry, I could eat half a pig.`
+--><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">Tôi</span> <span class="pre">_____</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Tôi</span> <span class="pre">_____</span> <span class="pre">đói</span> <span class="pre">lắm.</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Tôi</span> <span class="pre">_____</span> <span class="pre">đói</span> <span class="pre">lắm,</span> <span class="pre">tôi</span> <span class="pre">có</span> <span class="pre">thể</span> <span class="pre">ăn</span> <span class="pre">một</span> <span class="pre">nửa</span> <span class="pre">con</span> <span class="pre">lợn.</span></code></li>
+</ol>
+<!--
+Depending on the amount of information available, we might fill the blanks with very different words such as "happy", "not", and "very".
+Clearly the end of the phrase (if available) conveys significant information about which word to pick.
+A sequence model that is incapable of taking advantage of this will perform poorly on related tasks.
+For instance, to do well in named entity recognition (e.g., to recognize whether "Green" refers to "Mr. Green" or to the color) longer-range context is equally vital.
+To get some inspiration for addressing the problem let us take a detour to graphical models.
+--><p>Tuỳ thuộc vào số lượng thông tin có sẵn, chúng ta có thể điền vào chỗ
+trống với các từ khác nhau như “hạnh phúc”, “không”, và “đang”. Rõ ràng
+phần kết (nếu có) của câu mang thông tin quan trọng ảnh hưởng lớn đến
+việc chọn từ. Một mô hình chuỗi sẽ thực hiện các tác vụ liên quan kém
+hiệu quả nếu nó không khai thác tốt được đặc điểm này. Chẳng hạn, để
+nhận dạng thực thể có tên (ví dụ: phân biệt từ “Bảy” đề cập đến “ông
+Bảy” hay là số bảy) một cách hiệu quả, ngữ cảnh khoảng dài cũng không
+kém phần quan trọng. Chúng ta sẽ dành một chút thời gian tìm hiểu các mô
+hình đồ thị để tìm nguồn cảm hứng giải quyết bài toán trên.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!--
+## Dynamic Programming
+--><div class="section" id="quy-hoach-dong">
+<h2><span class="section-number">9.4.1. </span>Quy hoạch Động<a class="headerlink" href="#quy-hoach-dong" title="Permalink to this headline">¶</a></h2>
+<!--
+This section serves to illustrate the dynamic programming problem.
+The specific technical details do not matter for understanding the deep learning counterpart but they help in motivating why one might use deep learning and why one might pick specific architectures.
+--><p>Trong phần này, chúng ta sẽ tìm hiểu bài toán quy hoạch động. Không cần
+thiết phải hiểu chi tiết về quy hoạch động để hiểu kỹ thuật tương ứng
+trong học sâu nhưng chúng góp phần giải thích lý do tại sao học sâu được
+sử dụng và tại sao một vài kiến trúc mạng nhất định lại được lựa chọn.</p>
+<!--
+If we want to solve the problem using graphical models we could for instance design a latent variable model as follows.
+We assume that there exists some latent variable $h_t$ which governs the emissions $x_t$ that we observe via $p(x_t \mid h_t)$.
+Moreover, the transitions $h_t \to h_{t+1}$ are given by some state transition probability $p(h_t+1 \mid h_{t})$.
+The graphical model is then a Hidden Markov Model (HMM) as in :numref:`fig_hmm`.
+--><p>Nếu muốn giải quyết bài toán bằng mô hình đồ thị thì chúng ta có thể
+thiết kế một mô hình biến tiềm ẩn như ví dụ sau đây. Giả sử tồn tại biến
+tiềm ẩn <span class="math notranslate nohighlight">\(h_t\)</span> quyết định giá trị quan sát <span class="math notranslate nohighlight">\(x_t\)</span> qua xác suất
+<span class="math notranslate nohighlight">\(p(x_t \mid h_t)\)</span>. Hơn nữa, quá trình chuyển đổi
+<span class="math notranslate nohighlight">\(h_t \to h_{t+1}\)</span> được cho bởi xác suất chuyển trạng thái
+<span class="math notranslate nohighlight">\(p(h_t+1 \mid h_{t})\)</span>. Mô hình đồ thị khi đó là mô hình Markov ẩn
+(<em>Hidden Markov Model</em> - HMM) như trong <a class="reference internal" href="#fig-hmm"><span class="std std-numref">Fig. 9.4.1</span></a>.</p>
+<!--
+![ Hidden Markov Model. ](../img/hmm.svg)
+--><div class="figure align-default" id="id5">
+<span id="fig-hmm"></span><img alt="../_images/hmm.svg" src="../_images/hmm.svg" /><p class="caption"><span class="caption-number">Fig. 9.4.1 </span><span class="caption-text">Mô hình Markov ẩn.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Thus, for a sequence of $T$ observations we have the following joint probability distribution over observed and hidden states:
+--><p>Như vậy, với chuỗi có <span class="math notranslate nohighlight">\(T\)</span> quan sát, chúng ta có phân phối xác suất
+kết hợp của các trạng thái ẩn và các quan sát như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-0">
+<span class="eqno">(9.4.1)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-0" title="Permalink to this equation">¶</a></span>\[p(x, h) = p(h_1) p(x_1 \mid h_1) \prod_{t=2}^T p(h_t \mid h_{t-1}) p(x_t \mid h_t).\]</div>
+<!--
+Now assume that we observe all $x_i$ with the exception of some $x_j$ and it is our goal to compute $p(x_j \mid x^{-j})$, where $x^{-j} = (x_1, x_2, \ldots, x_{j-1})$.
+To accomplish this we need to sum over all possible choices of $h = (h_1, \ldots, h_T)$.
+In case $h_i$ can take on $k$ distinct values, this means that we need to sum over $k^T$ terms---mission impossible!
+Fortunately there is an elegant solution for this: dynamic programming.
+To see how it works, consider summing over the first two hidden variable $h_1$ and $h_2$.
+This yields:
+--><div class="line-block">
+<div class="line">Bây giờ giả sử chúng ta đã có tất cả các quan sát <span class="math notranslate nohighlight">\(x_i\)</span> ngoại
+trừ một vài quan sát <span class="math notranslate nohighlight">\(x_j\)</span>, mục tiêu là tính xác suất
+<span class="math notranslate nohighlight">\(p(x_j \mid x^{-j})\)</span>, trong đó
+<span class="math notranslate nohighlight">\(x^{-j} = (x_1, x_2, \ldots, x_{j-1})\)</span>. Để thực hiện điều này,
+chúng ta cần tính tổng xác suất trên tất cả các khả năng có thể của
+<span class="math notranslate nohighlight">\(h = (h_1, \ldots, h_T)\)</span>. Trong trường hợp <span class="math notranslate nohighlight">\(h_i\)</span> nhận
+<span class="math notranslate nohighlight">\(k\)</span> giá trị khác nhau, chúng ta cần tính tổng của <span class="math notranslate nohighlight">\(k^T\)</span> số
+hạng - đây là một nhiệm vụ bất khả thi. May mắn thay có một phương
+pháp rất hiệu quả cho bài toán trên, đó là quy hoạch động.</div>
+<div class="line">Để hiểu hơn về phương pháp này, hãy xem xét tổng của hai biến ẩn đầu
+tiên <span class="math notranslate nohighlight">\(h_1\)</span> và <span class="math notranslate nohighlight">\(h_2\)</span>. Ta có:</div>
+</div>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-1">
+<span class="eqno">(9.4.2)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-1" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+    p(x) &amp; = \sum_{h_1, \ldots, h_T} p(x_1, \ldots, x_T; h_1, \ldots, h_T) \\
+    &amp; = \sum_{h_1, \ldots, h_T} p(h_1) p(x_1 \mid h_1) \prod_{t=2}^T p(h_t \mid h_{t-1}) p(x_t \mid h_t) \\
+    &amp; = \sum_{h_2, \ldots, h_T} \underbrace{\left[\sum_{h_1} p(h_1) p(x_1 \mid h_1) p(h_2 \mid h_1)\right]}_{=: \pi_2(h_2)}
+    p(x_2 \mid h_2) \prod_{t=3}^T p(h_t \mid h_{t-1}) p(x_t \mid h_t) \\
+    &amp; = \sum_{h_3, \ldots, h_T} \underbrace{\left[\sum_{h_2} \pi_2(h_2) p(x_2 \mid h_2) p(h_3 \mid h_2)\right]}_{=: \pi_3(h_3)}
+    p(x_3 \mid h_3) \prod_{t=4}^T p(h_t \mid h_{t-1}) p(x_t \mid h_t)\\
+    &amp; = \dots \\
+    &amp; = \sum_{h_T} \pi_T(h_T) p(x_T \mid h_T).
+\end{aligned}\end{split}\]</div>
+<!--
+In general we have the *forward recursion* as
+--><p>Cơ bản, chúng ta có công thức <em>đệ quy xuôi</em> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-2">
+<span class="eqno">(9.4.3)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-2" title="Permalink to this equation">¶</a></span>\[\pi_{t+1}(h_{t+1}) = \sum_{h_t} \pi_t(h_t) p(x_t \mid h_t) p(h_{t+1} \mid h_t).\]</div>
+<!--
+The recursion is initialized as $\pi_1(h_1) = p(h_1)$.
+In abstract terms this can be written as $\pi_{t+1} = f(\pi_t, x_t)$, where $f$ is some learnable function.
+This looks very much like the update equation in the hidden variable models we discussed so far in the context of RNNs.
+Entirely analogously to the forward recursion, we can also start a backward recursion.
+This yields:
+--><p>Phép đệ quy được khởi tạo với <span class="math notranslate nohighlight">\(\pi_1(h_1) = p(h_1)\)</span>. Nói chung,
+công thức đệ quy có thể được viết lại là
+<span class="math notranslate nohighlight">\(\pi_{t+1} = f(\pi_t, x_t)\)</span>, trong đó <span class="math notranslate nohighlight">\(f\)</span> là một hàm được
+học. Trông rất giống với phương trình cập nhật trong các mô hình biến ẩn
+mà chúng ta đã thảo luận trong phần RNN. Tương tự, chúng ta có thể tính
+<em>đệ quy ngược</em> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-3">
+<span class="eqno">(9.4.4)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-3" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+    p(x) &amp; = \sum_{h_1, \ldots, h_T} p(x_1, \ldots, x_T; h_1, \ldots, h_T) \\
+    &amp; = \sum_{h_1, \ldots, h_T} \prod_{t=1}^{T-1} p(h_t \mid h_{t-1}) p(x_t \mid h_t) \cdot p(h_T \mid h_{T-1}) p(x_T \mid h_T) \\
+    &amp; = \sum_{h_1, \ldots, h_{T-1}} \prod_{t=1}^{T-1} p(h_t \mid h_{t-1}) p(x_t \mid h_t) \cdot
+    \underbrace{\left[\sum_{h_T} p(h_T \mid h_{T-1}) p(x_T \mid h_T)\right]}_{=: \rho_{T-1}(h_{T-1})} \\
+    &amp; = \sum_{h_1, \ldots, h_{T-2}} \prod_{t=1}^{T-2} p(h_t \mid h_{t-1}) p(x_t \mid h_t) \cdot
+    \underbrace{\left[\sum_{h_{T-1}} p(h_{T-1} \mid h_{T-2}) p(x_{T-1} \mid h_{T-1}) \rho_{T-1}(h_{T-1}) \right]}_{=: \rho_{T-2}(h_{T-2})} \\
+    &amp; = \ldots, \\
+    &amp; = \sum_{h_1} p(h_1) p(x_1 \mid h_1)\rho_{1}(h_{1}).
+\end{aligned}\end{split}\]</div>
+<!--
+We can thus write the *backward recursion* as
+--><p>Từ đó, chúng ta có thể viết <em>đệ quy ngược</em> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-4">
+<span class="eqno">(9.4.5)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-4" title="Permalink to this equation">¶</a></span>\[\rho_{t-1}(h_{t-1})= \sum_{h_{t}} p(h_{t} \mid h_{t-1}) p(x_{t} \mid h_{t}) \rho_{t}(h_{t}),\]</div>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!--
+with initialization $\rho_T(h_T) = 1$.
+These two recursions allow us to sum over $T$ variables in $\mathcal{O}(kT)$ (linear) time over all values of $(h_1, \ldots, h_T)$ rather than in exponential time.
+This is one of the great benefits of the probabilistic inference with graphical models.
+It is a very special instance of the :cite:`Aji.McEliece.2000` proposed in 2000 by Aji and McEliece.
+Combining both forward and backward pass, we are able to compute
+--><div class="line-block">
+<div class="line">khi khởi tạo <span class="math notranslate nohighlight">\(\rho_T(h_T) = 1\)</span>. Hai biểu thức đệ quy này cho
+phép ta tính tổng trên tất cả <span class="math notranslate nohighlight">\(T\)</span> biến trong khoảng
+<span class="math notranslate nohighlight">\((h_1, \ldots, h_T)\)</span> với thời gian <span class="math notranslate nohighlight">\(\mathcal{O}(kT)\)</span> tăng
+tuyến tính thay vì luỹ thừa. Đây là một trong những điểm mạnh của kỹ
+thuật suy luận xác suất với các mô hình đồ thị. Đây là một trường hợp
+đặc biệt của kỹ thuật được trình bày trong <a class="bibtex reference internal" href="../chapter_references/zreferences.html#aji-mceliece-2000" id="id1">[Aji &amp; McEliece, 2000]</a>
+bởi Aji và McEliece vào năm 2000.</div>
+<div class="line">Kết hợp cả biểu thức xuôi và ngược ta có thể tính được:</div>
+</div>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-5">
+<span class="eqno">(9.4.6)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-5" title="Permalink to this equation">¶</a></span>\[p(x_j \mid x_{-j}) \propto \sum_{h_j} \pi_j(h_j) \rho_j(h_j) p(x_j \mid h_j).\]</div>
+<!--
+Note that in abstract terms the backward recursion can be written as $\rho_{t-1} = g(\rho_t, x_t)$, where $g$ is a learnable function.
+Again, this looks very much like an update equation, just running backwards unlike what we have seen so far in RNNs.
+Indeed, HMMs benefit from knowing future data when it is available.
+Signal processing scientists distinguish between the two cases of knowing and not knowing future observations as interpolation v.s. extrapolation.
+See the introductory chapter of the book by :cite:`Doucet.De-Freitas.Gordon.2001` on sequential Monte Carlo algorithms for more details.
+--><div class="line-block">
+<div class="line">Cần phải chú ý rằng khi suy rộng ra, biểu thức đệ quy ngược có thể
+được viết dưới dạng <span class="math notranslate nohighlight">\(\rho_{t-1} = g(\rho_t, x_t)\)</span>, trong đó
+<span class="math notranslate nohighlight">\(g\)</span> là một hàm số được học. Một lần nữa, nó trông giống như một
+phương trình cập nhật chỉ chạy ngược lại, không giống như những gì
+chúng ta thấy ở RNN.</div>
+<div class="line">Thật vậy, HMM sẽ có lợi từ việc học các dữ liệu trong tương lai (nếu
+có thể). Các nhà khoa học chuyên về xử lí tín hiệu sẽ tách biệt 2
+trường hợp biết trước và không biết trước các kết quả trong tương lai
+thành nội suy và ngoại suy. Ta có thể tham khảo chương giới thiệu của
+cuốn <a class="bibtex reference internal" href="../chapter_references/zreferences.html#doucet-de-freitas-gordon-2001" id="id2">[Doucet et al., 2001]</a> về các thuật toán Monte
+Carlo tuần tự để biết thêm chi tiết.</div>
+</div>
+<!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+## Bidirectional Model
+--></div>
+<div class="section" id="mo-hinh-hai-chieu">
+<h2><span class="section-number">9.4.2. </span>Mô hình Hai chiều<a class="headerlink" href="#mo-hinh-hai-chieu" title="Permalink to this headline">¶</a></h2>
+<!--
+If we want to have a mechanism in RNNs that offers comparable look-ahead ability as in HMMs, we need to modify the recurrent net design that we have seen so far.
+Fortunately, this is easy conceptually.
+Instead of running an RNN only in the forward mode starting from the first symbol, we start another one from the last symbol running from back to front.
+*Bidirectional recurrent neural networks* add a hidden layer that passes information in a backward direction to more flexibly process such information.
+:numref:`fig_birnn` illustrates the architecture of a bidirectional recurrent neural network with a single hidden layer.
+--><p>Nếu chúng ta muốn mạng RNN có một cơ chế nhìn trước giống như HMM thì ta
+cần phải chỉnh sửa một chút thiết kế của các mạng hồi tiếp truyền thống.
+May mắn là, điều này khá đơn giản về mặt khái niệm. Thay vì chỉ vận hành
+một RNN chạy từ kí tự đầu đến cuối, ta sẽ khởi tạo một RNN nữa chạy từ
+kí tự cuối lên đầu. <em>Mạng nơ ron hồi tiếp hai chiều</em> (<em>Bidirectional
+recurrent neural network</em>) sẽ thêm một tầng ẩn cho phép xử lý dữ liệu
+theo chiều ngược lại một cách linh hoạt hơn so với RNN truyền thống.
+<a class="reference internal" href="#fig-birnn"><span class="std std-numref">Fig. 9.4.2</span></a> mô tả cấu trúc của mạng nơ-ron hồi tiếp hai chiều
+với một tầng ẩn.</p>
+<!--
+![ Architecture of a bidirectional recurrent neural network. ](../img/birnn.svg)
+--><div class="figure align-default" id="id6">
+<span id="fig-birnn"></span><img alt="../_images/birnn.svg" src="../_images/birnn.svg" /><p class="caption"><span class="caption-number">Fig. 9.4.2 </span><span class="caption-text"><em>Cấu trúc của mạng nơ ron hồi tiếp hai chiều.</em></span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+In fact, this is not too dissimilar to the forward and backward recursion we encountered above.
+The main distinction is that in the previous case these equations had a specific statistical meaning.
+Now they are devoid of such easily accessible interpretation and we can just treat them as generic functions.
+This transition epitomizes many of the principles guiding the design of modern deep networks:
+first, use the type of functional dependencies of classical statistical models, and then use the models in a generic form.
+--><p>Trên thực tế, điều này không quá khác biệt với phép đệ quy xuôi và ngược
+mà ta đã đề cập ở phần trước. Điểm khác biệt chính là trước đây các
+phương trình này có một ý nghĩa thống kê nhất định. Còn bây giờ thì
+chúng không còn mang một ý nghĩa dễ hiểu nào nhất định, thay vào đó ta
+sẽ chỉ xét chúng như những hàm tổng quát. Quá trình chuyển đổi này là
+điển hình cho nhiều nguyên tắc thiết kế các mạng học sâu hiện đại: đầu
+tiên, sử dụng các dạng quan hệ phụ thuộc hàm của các mô hình thống kê cổ
+điển, sau đó sử dụng các mô hình này dưới dạng tổng quát.</p>
+<!-- ===================== Kết thúc dịch Phần 3 ===================== --><!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!--
+### Definition
+--><div class="section" id="dinh-nghia">
+<h3><span class="section-number">9.4.2.1. </span>Định nghĩa<a class="headerlink" href="#dinh-nghia" title="Permalink to this headline">¶</a></h3>
+<!--
+Bidirectional RNNs were introduced by :cite:`Schuster.Paliwal.1997`.
+For a detailed discussion of the various architectures see also the paper by :cite:`Graves.Schmidhuber.2005`.
+Let us look at the specifics of such a network.
+--><p>Các mạng nơ-ron hồi tiếp hai chiều đã được giới thiệu bởi
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#schuster-paliwal-1997" id="id3">[Schuster &amp; Paliwal, 1997]</a>. Ta có thể xem thêm
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#graves-schmidhuber-2005" id="id4">[Graves &amp; Schmidhuber, 2005]</a> về những thảo luận chi tiết của các
+kiến trúc khác nhau. Còn giờ ta hãy đi vào chi tiết của một mạng như
+vậy.</p>
+<!--
+For a given timestep $t$, the minibatch input is $\mathbf{X}_t \in \mathbb{R}^{n \times d}$ (number of examples: $n$, number of inputs: $d$) and the ßßhidden layer activation function is $\phi$.
+In the bidirectional architecture, we assume that the forward and backward hidden states for this timestep are
+$\overrightarrow{\mathbf{H}}_t  \in \mathbb{R}^{n \times h}$ and $\overleftarrow{\mathbf{H}}_t  \in \mathbb{R}^{n \times h}$ respectively.
+Here $h$ indicates the number of hidden units.
+We compute the forward and backward hidden state updates as follows:
+--><p>Cho một bước thời gian <span class="math notranslate nohighlight">\(t\)</span>, đầu vào minibatch là
+<span class="math notranslate nohighlight">\(\mathbf{X}_t \in \mathbb{R}^{n \times d}\)</span> (<span class="math notranslate nohighlight">\(n\)</span> là số lượng
+mẫu, <span class="math notranslate nohighlight">\(d\)</span> là số lượng đầu vào) và hàm kích hoạt của tầng ẩn là
+<span class="math notranslate nohighlight">\(\phi\)</span>. Trong kiến thúc hai chiều, ta giả định rằng trạng thái ẩn
+xuôi và ngược của bước thời gian này lần lượt là
+<span class="math notranslate nohighlight">\(\overrightarrow{\mathbf{H}}_t \in \mathbb{R}^{n \times h}\)</span> và
+<span class="math notranslate nohighlight">\(\overleftarrow{\mathbf{H}}_t \in \mathbb{R}^{n \times h}\)</span>.
+<span class="math notranslate nohighlight">\(h\)</span> ở đây chỉ số lượng nút ẩn. Chúng ta tính toán việc cập nhật
+xuôi và ngược của trạng thái ẩn như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-6">
+<span class="eqno">(9.4.7)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-6" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\overrightarrow{\mathbf{H}}_t &amp;= \phi(\mathbf{X}_t \mathbf{W}_{xh}^{(f)} + \overrightarrow{\mathbf{H}}_{t-1} \mathbf{W}_{hh}^{(f)}  + \mathbf{b}_h^{(f)}),\\
+\overleftarrow{\mathbf{H}}_t &amp;= \phi(\mathbf{X}_t \mathbf{W}_{xh}^{(b)} + \overleftarrow{\mathbf{H}}_{t+1} \mathbf{W}_{hh}^{(b)}  + \mathbf{b}_h^{(b)}).
+\end{aligned}\end{split}\]</div>
+<!--
+Here, the weight parameters
+$\mathbf{W}_{xh}^{(f)} \in \mathbb{R}^{d \times h}, \mathbf{W}_{hh}^{(f)} \in \mathbb{R}^{h \times h}, \mathbf{W}_{xh}^{(b)} \in \mathbb{R}^{d \times h}, \text{ and } \mathbf{W}_{hh}^{(b)} \in \mathbb{R}^{h \times h}$, and bias parameters $\mathbf{b}_h^{(f)} \in \mathbb{R}^{1 \times h} \text{ and } \mathbf{b}_h^{(b)} \in \mathbb{R}^{1 \times h}$
+are all model parameters.
+--><p>Ở đây, các trọng số
+<span class="math notranslate nohighlight">\(\mathbf{W}_{xh}^{(f)} \in \mathbb{R}^{d \times h}, \mathbf{W}_{hh}^{(f)} \in \mathbb{R}^{h \times h}, \mathbf{W}_{xh}^{(b)} \in \mathbb{R}^{d \times h}, \text{ và } \mathbf{W}_{hh}^{(b)} \in \mathbb{R}^{h \times h}\)</span>
+và các độ chệch
+<span class="math notranslate nohighlight">\(\mathbf{b}_h^{(f)} \in \mathbb{R}^{1 \times h} \text{ và } \mathbf{b}_h^{(b)} \in \mathbb{R}^{1 \times h}\)</span>
+đều là tham số mô hình.</p>
+<!--
+Then we concatenate the forward and backward hidden states $\overrightarrow{\mathbf{H}}_t$ and $\overleftarrow{\mathbf{H}}_t$
+to obtain the hidden state $\mathbf{H}_t \in \mathbb{R}^{n \times 2h}$ and feed it to the output layer.
+In deep bidirectional RNNs, the information is passed on as *input* to the next bidirectional layer.
+Last, the output layer computes the output $\mathbf{O}_t \in \mathbb{R}^{n \times q}$ (number of outputs: $q$):
+--><p>Sau đó, chúng ta nối các trạng thái ẩn xuôi và ngược
+(<span class="math notranslate nohighlight">\(\overrightarrow{\mathbf{H}}_t\)</span>,
+<span class="math notranslate nohighlight">\(\overleftarrow{\mathbf{H}}_t\)</span>) để thu được trạng thái ẩn
+<span class="math notranslate nohighlight">\(\mathbf{H}_t \in \mathbb{R}^{n \times 2h}\)</span> và truyền nó đến tầng
+đầu ra. Trong các mạng nơ-ron hồi tiếp hai chiều sâu, thông tin được
+truyền đi như là <em>đầu vào</em> cho tầng hai chiều (<em>bidirectional layer</em>)
+tiếp theo. Cuối cùng, tầng đầu ra sẽ tính toán đầu ra
+<span class="math notranslate nohighlight">\(\mathbf{O}_t \in \mathbb{R}^{n \times q}\)</span> (<span class="math notranslate nohighlight">\(q\)</span> là số lượng
+đầu ra) như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-modern-bi-rnn-vn-7">
+<span class="eqno">(9.4.8)<a class="headerlink" href="#equation-chapter-recurrent-modern-bi-rnn-vn-7" title="Permalink to this equation">¶</a></span>\[\mathbf{O}_t = \mathbf{H}_t \mathbf{W}_{hq} + \mathbf{b}_q.\]</div>
+<!--
+Here, the weight parameter $\mathbf{W}_{hq} \in \mathbb{R}^{2h \times q}$ and the bias parameter $\mathbf{b}_q \in \mathbb{R}^{1 \times q}$ are the model parameters of the output layer.
+The two directions can have different numbers of hidden units.
+--><p>Ở đây, trọng số <span class="math notranslate nohighlight">\(\mathbf{W}_{hq} \in \mathbb{R}^{2h \times q}\)</span> và
+độ chệch <span class="math notranslate nohighlight">\(\mathbf{b}_q \in \mathbb{R}^{1 \times q}\)</span> là các tham số
+mô hình của tầng đầu ra. Hai chiều ngược và xuôi có thể có số nút ẩn
+khác nhau.</p>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!--
+### Computational Cost and Applications
+--></div>
+<div class="section" id="chi-phi-tinh-toan-va-ung-dung">
+<h3><span class="section-number">9.4.2.2. </span>Chi phí Tính toán và Ứng dụng<a class="headerlink" href="#chi-phi-tinh-toan-va-ung-dung" title="Permalink to this headline">¶</a></h3>
+<!--
+One of the key features of a bidirectional RNN is that information from both ends of the sequence is used to estimate the output.
+That is, we use information from both future and past observations to predict the current one (a smoothing scenario).
+In the case of language models this is not quite what we want.
+After all, we do not have the luxury of knowing the next to next symbol when predicting the next one.
+Hence, if we were to use a bidirectional RNN naively we would not get a very good accuracy: during training we have past and future data to estimate the present.
+During test time we only have past data and thus poor accuracy (we will illustrate this in an experiment below).
+--><p>Một trong những tính năng chính của RNN hai chiều là thông tin từ cả hai
+đầu của chuỗi được sử dụng để ước lượng kết quả đầu ra. Chúng ta sử dụng
+thông tin từ các quan sát trong tương lai và quá khứ để dự đoán hiện tại
+(như để làm mượt). Trong trường hợp mô hình ngôn ngữ, đây không hẳn là
+điều chúng ta muốn. Rốt cuộc, chúng ta không thể biết biểu tượng tiếp
+sau biểu tượng đang cần dự đoán. Do đó, nếu chúng ta sử dụng RNN hai
+chiều một cách ngây thơ, chúng ta sẽ không có được độ chính xác đủ tốt:
+trong quá trình huấn luyện, chúng ta có cả dữ liệu quá khứ và tương lai
+để ước tính hiện tại. Trong quá trình dự đoán, chúng ta chỉ có dữ liệu
+trong quá khứ và do đó kết quả dự đoán có độ chính xác kém (điều này
+được minh họa trong thí nghiệm bên dưới).</p>
+<!--
+To add insult to injury, bidirectional RNNs are also exceedingly slow.
+The main reasons for this are that they require both a forward and a backward pass and that the backward pass is dependent on the outcomes of the forward pass.
+Hence, gradients will have a very long dependency chain.
+--><p>Tệ hơn, RNN hai chiều cũng cực kỳ chậm. Những lý do chính cho điều này
+là vì chúng cần cả lượt truyền xuôi và lượt truyền ngược, và lượt truyền
+ngược thì phụ thuộc vào kết quả của lượt truyền xuôi. Do đó, gradient sẽ
+có một chuỗi phụ thuộc rất dài.</p>
+<!--
+In practice bidirectional layers are used very sparingly and only for a narrow set of applications, such as filling in missing words, annotating tokens
+(e.g., for named entity recognition), or encoding sequences wholesale as a step in a sequence processing pipeline (e.g., for machine translation).
+In short, handle with care!
+--><p>Trong thực tế, các tầng hai chiều được sử dụng rất ít và chỉ dành cho
+một số ít ứng dụng, chẳng hạn như điền từ còn thiếu, chú thích token (ví
+dụ cho nhận dạng thực thể có tên) hoặc mã hóa nguyên chuỗi tại một bước
+trong pipeline xử lý chuỗi (ví dụ trong dịch máy). Tóm lại, hãy sử dụng
+nó một cách cẩn thận!</p>
+<!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Training a Bidirectional RNN for the Wrong Application
+--></div>
+<div class="section" id="huan-luyen-mang-rnn-hai-chieu-cho-ung-dung-khong-phu-hop">
+<h3><span class="section-number">9.4.2.3. </span>Huấn luyện Mạng RNN Hai chiều cho Ứng dụng không Phù hợp<a class="headerlink" href="#huan-luyen-mang-rnn-hai-chieu-cho-ung-dung-khong-phu-hop" title="Permalink to this headline">¶</a></h3>
+<!--
+If we were to ignore all advice regarding the fact that bidirectional LSTMs use past and future data and simply apply it to language models, we will get estimates with acceptable perplexity.
+Nonetheless, the ability of the model to predict future symbols is severely compromised as the example below illustrates.
+Despite reasonable perplexity, it only generates gibberish even after many iterations.
+We include the code below as a cautionary example against using them in the wrong context.
+--><p>Nếu chúng ta bỏ qua tất cả các lời khuyên về việc LSTM hai chiều sử dụng
+cả dữ liệu trong quá khứ và tương lai, và cứ áp dụng nó cho các mô hình
+ngôn ngữ, chúng ta sẽ có được các ước lượng với perplexity chấp nhận
+được. Tuy nhiên, khả năng dự đoán các ký tự trong tương lai của mô hình
+bị tổn hại nghiêm trọng như minh họa trong ví dụ dưới đây. Mặc dù đạt
+được mức perplexity hợp lý, nó chỉ sinh ra các chuỗi vô nghĩa ngay cả
+sau nhiều vòng lặp. Chúng tôi sử dụng đoạn mã dưới đây như một ví dụ
+cảnh báo về việc sử dụng chúng ở sai bối cảnh.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">rnn</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="c1"># Load data</span>
+<span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">35</span>
+<span class="n">train_iter</span><span class="p">,</span> <span class="n">vocab</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_data_time_machine</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+<span class="c1"># Define the model</span>
+<span class="n">vocab_size</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span> <span class="n">ctx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">),</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">()</span>
+<span class="n">lstm_layer</span> <span class="o">=</span> <span class="n">rnn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">num_hiddens</span><span class="p">,</span> <span class="n">num_layers</span><span class="p">,</span> <span class="n">bidirectional</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">RNNModel</span><span class="p">(</span><span class="n">lstm_layer</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">))</span>
+<span class="c1"># Train the model</span>
+<span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">train_ch8</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">perplexity</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">65233.4</span> <span class="n">tokens</span><span class="o">/</span><span class="n">sec</span> <span class="n">on</span> <span class="n">gpu</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">time</span> <span class="n">travellerererererererererererererererererererererererererer</span>
+<span class="n">travellerererererererererererererererererererererererererer</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_bi-rnn_vn_1f8ce9_1_1.svg" src="../_images/output_bi-rnn_vn_1f8ce9_1_1.svg" /></div>
+<!--
+The output is clearly unsatisfactory for the reasons described above.
+For a discussion of more effective uses of bidirectional models, please see the sentiment classification in :numref:`sec_sentiment_rnn`.
+--><p>Đầu ra rõ ràng không hề tốt vì những lý do trên. Để thảo luận về việc sử
+dụng hiệu quả hơn các mô hình hai chiều, vui lòng xem bài toán phân loại
+cảm xúc trong <a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html#sec-sentiment-rnn"><span class="std std-numref">Section 15.2</span></a>.</p>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">9.4.3. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* In bidirectional recurrent neural networks, the hidden state for each timestep is simultaneously determined by the data prior to and after the current timestep.
+* Bidirectional RNNs bear a striking resemblance with the forward-backward algorithm in graphical models.
+* Bidirectional RNNs are mostly useful for sequence embedding and the estimation of observations given bidirectional context.
+* Bidirectional RNNs are very costly to train due to long gradient chains.
+--><ul class="simple">
+<li>Trong các mạng nơ-ron hồi tiếp hai chiều, trạng thái ẩn tại mỗi bước
+thời gian được xác định đồng thời bởi dữ liệu ở trước và sau bước
+thời gian đó.</li>
+<li>Các RNN hai chiều có sự tương đồng đáng kinh ngạc với thuật toán
+xuôi–ngược trong các mô hình đồ thị.</li>
+<li>RNN hai chiều chủ yếu hữu ích cho việc tạo embedding chuỗi và việc
+ước lượng dữ liệu quan sát được khi biết bối cảnh hai chiều.</li>
+<li>Việc huấn luyện RNN hai chiều rất tốn kém do các chuỗi gradient dài.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">9.4.4. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. If the different directions use a different number of hidden units, how will the shape of $\mathbf{H}_t$ change?
+2. Design a bidirectional recurrent neural network with multiple hidden layers.
+3. Implement a sequence classification algorithm using bidirectional RNNs.
+Hint: use the RNN to embed each word and then aggregate (average) all embedded outputs before sending the output into an MLP for classification.
+For instance, if we have $(\mathbf{o}_1, \mathbf{o}_2, \mathbf{o}_3)$, we compute $\bar{\mathbf{o}} = \frac{1}{3} \sum_i \mathbf{o}_i$ first and then use the latter for sentiment classification.
+--><ol class="arabic simple">
+<li>Nếu các hướng khác nhau sử dụng số nút ẩn khác nhau, kích thước của
+<span class="math notranslate nohighlight">\(\mathbf{H}_t\)</span> sẽ thay đổi như thế nào?</li>
+<li>Thiết kế một mạng nơ-ron hồi tiếp hai chiều với nhiều tầng ẩn.</li>
+<li>Lập trình thuật toán phân loại chuỗi bằng cách sử dụng các RNN hai
+chiều. <strong>Gợi ý:</strong> sử dụng RNN để tạo embedding cho từng từ và sau đó
+tổng hợp (lấy trung bình) tất cả các embedding đầu ra trước khi đưa
+chúng vào mô hình MLP để phân loại. Chẳng hạn, nếu chúng ta có
+<span class="math notranslate nohighlight">\((\mathbf{o}_1, \mathbf{o}_2, \mathbf{o}_3)\)</span>, ta sẽ tính
+<span class="math notranslate nohighlight">\(\bar{\mathbf{o}} = \frac{1}{3} \sum_i \mathbf{o}_i\)</span> trước rồi
+sử dụng nó để phân loại cảm xúc.</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">9.4.5. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2370">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">9.4.6. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Quang</li>
+<li>Nguyễn Văn Cường</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Đinh Phước Lộc</li>
+<li>Võ Tấn Phát</li>
+<li>Nguyễn Thanh Hòa</li>
+<li>Trần Yến Thy</li>
+<li>Phạm Hồng Vinh</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a><ul>
+<li><a class="reference internal" href="#quy-hoach-dong">9.4.1. Quy hoạch Động</a></li>
+<li><a class="reference internal" href="#mo-hinh-hai-chieu">9.4.2. Mô hình Hai chiều</a><ul>
+<li><a class="reference internal" href="#dinh-nghia">9.4.2.1. Định nghĩa</a></li>
+<li><a class="reference internal" href="#chi-phi-tinh-toan-va-ung-dung">9.4.2.2. Chi phí Tính toán và Ứng dụng</a></li>
+<li><a class="reference internal" href="#huan-luyen-mang-rnn-hai-chieu-cho-ung-dung-khong-phu-hop">9.4.2.3. Huấn luyện Mạng RNN Hai chiều cho Ứng dụng không Phù hợp</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">9.4.3. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">9.4.4. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">9.4.5. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">9.4.6. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="deep-rnn_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>9.3. Mạng Nơ-ron Hồi tiếp Sâu</div>
+         </div>
+     </a>
+     <a id="button-next" href="machine-translation-and-dataset_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>9.5. Dịch Máy và Tập dữ liệu</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>18.6. Biến Ngẫu nhiên &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="18.7. Hợp lý Cực đại" href="maximum-likelihood_vn.html" />
+    <link rel="prev" title="18.5. Giải tích Tích phân" href="integral-calculus_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">18. </span>Phụ lục: Toán học cho Học Sâu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">18.6. </span>Biến Ngẫu nhiên</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_appendix-mathematics-for-deep-learning/random-variables_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Random Variables
+--><div class="section" id="bien-ngau-nhien">
+<span id="sec-random-variables"></span><h1><span class="section-number">18.6. </span>Biến Ngẫu nhiên<a class="headerlink" href="#bien-ngau-nhien" title="Permalink to this headline">¶</a></h1>
+<!--
+In :numref:`sec_prob` we saw the basics of how to work with discrete random variables,
+which in our case refer to those random variables which take either a finite set of possible values, or the integers.
+In this section, we develop the theory of *continuous random variables*, which are random variables which can take on any real value.
+--><p><a class="reference internal" href="../chapter_preliminaries/probability_vn.html#sec-prob"><span class="std std-numref">Section 2.6</span></a> đã giới thiệu các phương pháp cơ bản để làm việc
+với biến ngẫu nhiên rời rạc, mà trong trường hợp của ta các biến ngẫu
+nhiên này có thể chỉ có một tập hữu hạn các giá trị khả dĩ, hoặc có thể
+là toàn bộ các số nguyên. Trong phần này, ta tìm hiểu lý thuyết cho
+<em>biến ngẫu nhiên liên tục</em>, là các biến ngẫu nhiên có thể nhận bất cứ
+giá trị số thực nào.</p>
+<!--
+## Continuous Random Variables
+--><div class="section" id="bien-ngau-nhien-lien-tuc">
+<h2><span class="section-number">18.6.1. </span>Biến Ngẫu nhiên Liên tục<a class="headerlink" href="#bien-ngau-nhien-lien-tuc" title="Permalink to this headline">¶</a></h2>
+<!--
+Continuous random variables are a significantly more subtle topic than discrete random variables.
+A fair analogy to make is that the technical jump is comparable to the jump between adding lists of numbers and integrating functions.
+As such, we will need to take some time to develop the theory.
+--><p>Biến ngẫu nhiên liên tục phức tạp hơn đáng kể so với biến ngẫu nhiên rời
+rạc. Từ làm việc với các biến rời rạc chuyển sang làm việc với các biến
+liên tục cũng đòi hòi một bước nhảy về kiến thức chuyên môn tương tự như
+chuyển từ tính tổng dãy số sang tính tích phân hàm số. Như vậy, ta sẽ
+cần dành một chút thời gian để phát triển lý thuyết.</p>
+<!--
+### From Discrete to Continuous
+--><div class="section" id="tu-roi-rac-den-lien-tuc">
+<h3><span class="section-number">18.6.1.1. </span>Từ Rời rạc đến Liên tục<a class="headerlink" href="#tu-roi-rac-den-lien-tuc" title="Permalink to this headline">¶</a></h3>
+<!--
+To understand the additional technical challenges encountered when working with continuous random variables, let us perform a thought experiment.
+Suppose that we are throwing a dart at the dart board, and we want to know the probability that it hits exactly $2 \text{cm}$ from the center of the board.
+--><p>Để hiểu các thách thức kỹ thuật phát sinh khi làm việc với biến ngẫu
+nhiên liên tục, ta hãy thực hiện một thí nghiệm tưởng tượng sau đây. Giả
+sử ta chơi phóng phi tiêu vào một bảng phi tiêu, và muốn biết xác suất
+nó cắm chính xác vào điểm cách hồng tâm <span class="math notranslate nohighlight">\(2 \text{cm}\)</span>.</p>
+<!--
+To start with, we imagine measuring a single digit of accuracy, that is to say with bins for $0 \text{cm}$, $1 \text{cm}$, $2 \text{cm}$, and so on.
+We throw say $100$ darts at the dart board, and if $20$ of them fall into the bin for $2\text{cm}$
+we conclude that $20\%$ of the darts we throw hit the board $2 \text{cm}$ away from the center.
+--><p>Để bắt đầu, hãy hình dung ta thực hiện phép đo với độ chính xác một chữ
+số, tức là chia thành các vùng <span class="math notranslate nohighlight">\(0 \text{cm}\)</span>, <span class="math notranslate nohighlight">\(1 \text{cm}\)</span>,
+<span class="math notranslate nohighlight">\(2 \text{cm}\)</span>, v.v. Phóng <span class="math notranslate nohighlight">\(100\)</span> phi tiêu vào bảng phi tiêu,
+và nếu <span class="math notranslate nohighlight">\(20\)</span> trong số đó rơi vào vùng <span class="math notranslate nohighlight">\(2\text{cm}\)</span>, ta kết
+luận là <span class="math notranslate nohighlight">\(20\%\)</span> phi tiêu ta phóng cắm vào điểm cách tâm
+<span class="math notranslate nohighlight">\(2 \text{cm}\)</span>.</p>
+<!--
+However, when we look closer, this does not match our question!
+We wanted exact equality, whereas these bins hold all that fell between say $1.5\text{cm}$ and $2.5\text{cm}$.
+--><p>Tuy nhiên, khi xét kỹ hơn, câu trả lời này không thỏa đáng! Ta muốn một
+giá trị chính xác, trong khi các vùng đó lại chứa tất cả điểm nằm giữa
+<span class="math notranslate nohighlight">\(1.5\text{cm}\)</span> và <span class="math notranslate nohighlight">\(2.5\text{cm}\)</span>.</p>
+<!--
+Undeterred, we continue further.
+We measure even more precisely, say $1.9\text{cm}$, $2.0\text{cm}$, $2.1\text{cm}$,
+and now see that perhaps $3$ of the $100$ darts hit the board in the $2.0\text{cm}$ bucket.
+Thus we conclude the probability is $3\%$.
+--><p>Hãy tiếp tục với độ chính xác cao hơn, như là <span class="math notranslate nohighlight">\(1.9\text{cm}\)</span>,
+<span class="math notranslate nohighlight">\(2.0\text{cm}\)</span>, <span class="math notranslate nohighlight">\(2.1\text{cm}\)</span>, và bây giờ ta thấy khoảng
+<span class="math notranslate nohighlight">\(3\)</span> trong số <span class="math notranslate nohighlight">\(100\)</span> phi tiêu cắm vào bảng trong vùng
+<span class="math notranslate nohighlight">\(2.0\text{cm}\)</span>. Do đó ta kết luận xác suất lúc này là <span class="math notranslate nohighlight">\(3\%\)</span>.</p>
+<!--
+However, this does not solve anything!  We have just pushed the issue down one digit further. Let us abstract a bit.
+Imagine we know the probability that the first $k$ digits match with $2.00000\ldots$ and we want to know the probability it matches for the first $k+1$ digits.
+It is fairly reasonable to assume that the ${k+1}^{\mathrm{th}}$ digit is essentially a random choice from the set $\{0, 1, 2, \ldots, 9\}$.
+At least, we cannot conceive of a physically meaningful process which would force the number of micrometers away form the center to prefer to end in a $7$ vs a $3$.
+--><p>Tuy nhiên, điều này chưa giải quyết bất cứ điều gì! Ta chỉ vừa đẩy vấn
+đề độ chính xác lên thêm một chữ số thập phân. Thay vào đó hãy trừu
+tượng hóa vấn đề lên một chút. Hình dung ta biết xác suất mà <span class="math notranslate nohighlight">\(k\)</span>
+chữ số đầu tiên khớp với <span class="math notranslate nohighlight">\(2.00000\ldots\)</span> và ta muốn biết xác suất
+nó khớp với <span class="math notranslate nohighlight">\(k+1\)</span> chữ số đầu tiên. Khá hợp lý khi giả định là chữ
+số thứ <span class="math notranslate nohighlight">\(k+1\)</span> có thể nhận giá trị ngẫu nhiên từ tập
+<span class="math notranslate nohighlight">\(\{0, 1, 2, \ldots, 9\}\)</span>. Ít nhất là ta không thể nghĩ ra được bất
+kỳ tác nhân vật lý có ý nghĩa nào mà lại có ảnh hưởng tới độ chính xác ở
+mức micro mét, để chữ số cuối cùng là chữ số <span class="math notranslate nohighlight">\(7\)</span> thay vì chữ số
+<span class="math notranslate nohighlight">\(3\)</span> chẳng hạn.</p>
+<!--
+What this means is that in essence each additional digit of accuracy we require should decrease probability of matching by a factor of $10$.
+Or put another way, we would expect that
+--><p>Về cơ bản, việc tăng độ chính xác thêm một chữ số đòi hỏi xác suất khớp
+sẽ giảm xuống 10 lần. Hay nói cách khác, ta kỳ vọng là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-0">
+<span class="eqno">(18.6.1)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-0" title="Permalink to this equation">¶</a></span>\[P(\text{khoảng cách là}\; 2.00\ldots, \;\text{đến}\; k \;\text{chữ số} ) \approx p\cdot10^{-k}.\]</div>
+<!--
+The value $p$ essentially encodes what happens with the first few digits, and the $10^{-k}$ handles the rest.
+--><p>Giá trị <span class="math notranslate nohighlight">\(p\)</span> là xác suất khớp các chữ số đầu, và <span class="math notranslate nohighlight">\(10^{-k}\)</span> mô
+tả cho phần còn lại.</p>
+<!--
+Notice that if we know the position accurate to $k=4$ digits after the decimal.
+That means we know the value falls within the interval say $[(1.99995,2.00005]$ which is an interval of length $2.00005-1.99995 = 10^{-4}$.
+Thus, if we call the length of this interval $\epsilon$, we can say
+--><p>Lưu ý rằng nếu ta biết vị trí chính xác đến <span class="math notranslate nohighlight">\(k = 4\)</span> chữ số thập
+phân, có nghĩa là ta biết giá trị sẽ nằm trong khoảng
+<span class="math notranslate nohighlight">\([(1.99995,2.00005]\)</span> có độ dài <span class="math notranslate nohighlight">\(2.00005-1.99995 = 10^{-4}\)</span>.
+Do đó, nếu gọi độ dài của khoảng này là <span class="math notranslate nohighlight">\(\epsilon\)</span>, ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-1">
+<span class="eqno">(18.6.2)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-1" title="Permalink to this equation">¶</a></span>\[P(\text{khoảng cách nằm trong khoảng rộng}\; \epsilon\text{xung quanh}\; 2 ) \approx \epsilon \cdot p.\]</div>
+<!--
+Let us take this one final step further.
+We have been thinking about the point $2$ the entire time, but never thinking about other points.
+Nothing is different there fundamentally, but it is the case that the value $p$ will likely be different.
+We would at least hope that a dart thrower was more likely to hit a point near the center, like $2\text{cm}$ rather than $20\text{cm}$.
+Thus, the value $p$ is not fixed, but rather should depend on the point $x$.
+This tells us that we should expect
+--><p>Ta hãy tổng quát hóa thêm một bước cuối. Ta hiện chỉ đang xét điểm
+<span class="math notranslate nohighlight">\(2\)</span>, chưa nghĩ đến các điểm khác. Về cơ bản, giá trị <span class="math notranslate nohighlight">\(p\)</span> tại
+các điểm khác nhau có thể sẽ khác nhau. Ít nhất ta hy vọng rằng người
+ném phi tiêu nhiều khả năng sẽ ngắm trúng vùng gần tâm,
+<span class="math notranslate nohighlight">\(2 \text{cm}\)</span> hơn là <span class="math notranslate nohighlight">\(20 \text{cm}\)</span>. Do đó, giá trị
+<span class="math notranslate nohighlight">\(p\)</span> là không cố định, mà phụ thuộc vào điểm <span class="math notranslate nohighlight">\(x\)</span>. Điều này
+cho thấy ta nên kỳ vọng:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pdf-deriv">
+<span class="eqno">(18.6.3)<a class="headerlink" href="#equation-eq-pdf-deriv" title="Permalink to this equation">¶</a></span>\[P(\text{khoảng cách nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; x ) \approx \epsilon \cdot p(x).\]</div>
+<!--
+Indeed, :eqref:`eq_pdf_deriv` precisely defines the *probability density function*.
+It is a function $p(x)$ which encodes the relative probability of hitting near one point vs. another.
+Let us visualize what such a function might look like.
+--><p><a class="reference internal" href="#equation-eq-pdf-deriv">(18.6.3)</a> định nghĩa <em>hàm mật độ xác suất - probability
+density function (p.d.f.)</em>, là hàm <span class="math notranslate nohighlight">\(p(x)\)</span> biểu diễn xác suất tương
+đối của việc ném trúng gần vị trí này so với vị trí khác. Ta hãy trực
+quan hóa một hàm như vậy.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="c1"># Plot the probability density function for some random variable</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> \
+    <span class="mf">0.8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_1_0.svg" src="../_images/output_random-variables_vn_cbc293_1_0.svg" /></div>
+<!--
+The locations where the function value is large indicates regions where we are more likely to find the random value.
+The low portions are areas where we are unlikely to find the random value.
+--><p>Các vị trí mà giá trị hàm lớn cho biết có nhiều khả năng giá trị ngẫu
+nhiên sẽ rơi vào đó. Các vùng giá trị thấp là những vùng tại đó ít có
+khả năng giá trị ngẫu nhiên xuất hiện.</p>
+<!--
+### Probability Density Functions
+--></div>
+<div class="section" id="ham-mat-do-xac-suat">
+<h3><span class="section-number">18.6.1.2. </span>Hàm Mật độ Xác suất<a class="headerlink" href="#ham-mat-do-xac-suat" title="Permalink to this headline">¶</a></h3>
+<!--
+Let us now investigate this further.
+We have already seen what a probability density function is intuitively for a random variable $X$, namely the density function is a function $p(x)$ so that
+--><p>Bây giờ ta hãy tìm hiểu sâu hơn. Chúng ta đã quan sát trực quan hàm mật
+độ xác suất <span class="math notranslate nohighlight">\(p(x)\)</span> là gì đối với một biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span>, cụ
+thể:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pdf-def">
+<span class="eqno">(18.6.4)<a class="headerlink" href="#equation-eq-pdf-def" title="Permalink to this equation">¶</a></span>\[P(X \; \text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; x ) \approx \epsilon \cdot p(x).\]</div>
+<!--
+But what does this imply for the properties of $p(x)$?
+--><p>Nhưng phương trình này ám chỉ các tính chất gì của <span class="math notranslate nohighlight">\(p(x)\)</span>?</p>
+<!--
+First, probabilities are never negative, thus we should expect that $p(x) \ge 0$ as well.
+--><p>Đầu tiên, xác suất không bao giờ âm, do đó $p(x) :raw-latex:<a href="#id1"><span class="problematic" id="id2">`</span></a>ge <a href="#id3"><span class="problematic" id="id4">`</span></a>0 $.</p>
+<!--
+Second, let us imagine that we slice up the $\mathbb{R}$ into an infinite number of slices which are $\epsilon$ wide, say with slices $(\epsilon\cdot i, \epsilon \cdot (i+1)]$.
+For each of these, we know from :eqref:`eq_pdf_def` the probability is approximately
+--><p>Thứ hai, hãy tưởng tượng việc cắt <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> thành vô số lát cắt
+có chiều rộng <span class="math notranslate nohighlight">\(\epsilon\)</span>, mỗi lát cắt là nửa khoảng
+<span class="math notranslate nohighlight">\((\epsilon\cdot i, \epsilon \cdot (i + 1)]\)</span>. Đối với mỗi lắt cắt
+này, ta biết từ <a class="reference internal" href="#equation-eq-pdf-def">(18.6.4)</a>, thì xác suất xấp xỉ</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-2">
+<span class="eqno">(18.6.5)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-2" title="Permalink to this equation">¶</a></span>\[P(X \; \text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; x ) \approx \epsilon \cdot p(\epsilon \cdot i),\]</div>
+<!--
+so summed over all of them it should be
+--><p>vì vậy tổng tất cả chúng sẽ là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-3">
+<span class="eqno">(18.6.6)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-3" title="Permalink to this equation">¶</a></span>\[P(X\in\mathbb{R}) \approx \sum_i \epsilon \cdot p(\epsilon\cdot i).\]</div>
+<!--
+This is nothing more than the approximation of an integral discussed in :numref:`sec_integral_calculus`, thus we can say that
+--><p>Đây chỉ là xấp xỉ của một tích phân mà ta đã thảo luận trong
+<a class="reference internal" href="integral-calculus_vn.html#sec-integral-calculus"><span class="std std-numref">Section 18.5</span></a>, do đó có thể nói rằng</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-4">
+<span class="eqno">(18.6.7)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-4" title="Permalink to this equation">¶</a></span>\[P(X\in\mathbb{R}) = \int_{-\infty}^{\infty} p(x) \; dx.\]</div>
+<!--
+We know that $P(X\in\mathbb{R}) = 1$, since the random variable must take on *some* number, we can conclude that for any density
+--><p>Ta biết là <span class="math notranslate nohighlight">\(P(X\in\mathbb{R}) = 1\)</span>, vì biến ngẫu nhiên này phải
+nhận một giá trị <em>nào đó</em> trong tập số thực, do đó ta có thể kết luận
+rằng với bất kỳ hàm mật độ nào:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-5">
+<span class="eqno">(18.6.8)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-5" title="Permalink to this equation">¶</a></span>\[\int_{-\infty}^{\infty} p(x) \; dx = 1.\]</div>
+<!--
+Indeed, digging into this further shows that for any $a$, and $b$, we see that
+--><p>Thật vậy, đi sâu hơn vào phương trình này, ta thấy rằng với bất kỳ
+<span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span> nào:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-6">
+<span class="eqno">(18.6.9)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-6" title="Permalink to this equation">¶</a></span>\[P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.\]</div>
+<!--
+We may approximate this in code by using the same discrete approximation methods as before.
+In this case we can approximate the probability of falling in the blue region.
+--><p>Ta có thể xấp xỉ phương trình này trong chương trình máy tính bằng cách
+sử dụng các phương pháp xấp xỉ rời rạc như trước đây. Trong trường hợp
+này, ta có thể ước tính xác suất nằm trong vùng màu xanh lam.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Approximate probability using numerical integration</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> \
+    <span class="mf">0.8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">],</span> <span class="n">p</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_3_0.svg" src="../_images/output_random-variables_vn_cbc293_3_0.svg" /></div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;approximate Probability: 0.7736172&#39;</span>
+</pre></div>
+</div>
+<!--
+It turns out that these two properties describe exactly the space of possible probability density functions (or *p.d.f.*'s for the commonly encountered abbreviation).
+They are non-negative functions $p(x) \ge 0$ such that
+--><p>Hai tính chất trên mô tả chính xác không gian của các hàm mật độ xác
+suất. Chúng là các hàm không âm <span class="math notranslate nohighlight">\(p(x) \ge 0\)</span> sao cho</p>
+<div class="math notranslate nohighlight" id="equation-eq-pdf-int-one">
+<span class="eqno">(18.6.10)<a class="headerlink" href="#equation-eq-pdf-int-one" title="Permalink to this equation">¶</a></span>\[\int_{-\infty}^{\infty} p(x) \; dx = 1.\]</div>
+<!--
+We interpret this function by using integration to obtain the probability our random variable is in a specific interval:
+--><p>Ta cũng có thể thu được xác suất biến ngẫu nhiên nằm trong một khoảng cụ
+thể bằng cách tính tích phân:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pdf-int-int">
+<span class="eqno">(18.6.11)<a class="headerlink" href="#equation-eq-pdf-int-int" title="Permalink to this equation">¶</a></span>\[P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.\]</div>
+<!--
+In :numref:`sec_distributions` we will see a number of common distributions, but let us continue working in the abstract.
+--><p>Trong <a class="reference internal" href="distributions_vn.html#sec-distributions"><span class="std std-numref">Section 18.8</span></a>, ta sẽ gặp một số phân phối thông
+dụng, giờ hãy tiếp tục tìm hiểu các khái niệm lý thuyết.</p>
+<!--
+### Cumulative Distribution Functions
+--></div>
+<div class="section" id="ham-phan-phoi-tich-luy">
+<h3><span class="section-number">18.6.1.3. </span>Hàm Phân phối Tích lũy<a class="headerlink" href="#ham-phan-phoi-tich-luy" title="Permalink to this headline">¶</a></h3>
+<!--
+In the previous section, we saw the notion of the p.d.f.
+In practice, this is a commonly encountered method to discuss continuous random variables,
+but it has one significant pitfall: that the values of the p.d.f. are not themselves probabilities, but rather a function that we must integrate to yield probabilities.
+There is nothing wrong with a density being larger than $10$, as long as it is not larger than $10$ for more than an interval of length $1/10$.
+This can be counter-intuitive, so people often also think in terms of the *cumulative distribution function*, or c.d.f., which *is* a probability.
+--><p>Trong phần trước, chúng ta đã biết về hàm mật độ xác suất (p.d.f). Trong
+thực tế, đây là một phương pháp thường dùng để thảo luận về các biến
+ngẫu nhiên liên tục, nhưng nó có một nhược điểm khá lớn: bản thân các
+giá trị của p.d.f. không phải là các giá trị xác suất, mà ta phải tích
+phân hàm này để có xác suất. Không có gì sai với môt hàm mật độ lớn hơn
+<span class="math notranslate nohighlight">\(10\)</span>, miễn là nó không lớn hơn <span class="math notranslate nohighlight">\(10\)</span> trong khoảng có chiều
+dài lớn hơn <span class="math notranslate nohighlight">\(1/10\)</span>. Điều này có thể hơi phản trực giác, do đó
+người ta thường dùng <em>hàm phân phối tích lũy - cumulative distribution
+function</em> hoặc c.d.f., mà có giá trị trả về <em>là</em> xác suất.</p>
+<!--
+In particular, by using :eqref:`eq_pdf_int_int`, we define the c.d.f. for a random variable $X$ with density $p(x)$ by
+--><p>Cụ thể, với việc sử dụng <a class="reference internal" href="#equation-eq-pdf-int-int">(18.6.11)</a>, ta định nghĩa c.d.f.
+cho một biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> với mật độ <span class="math notranslate nohighlight">\(p(x)\)</span> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-7">
+<span class="eqno">(18.6.12)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-7" title="Permalink to this equation">¶</a></span>\[F(x) = \int _ {-\infty}^{x} p(x) \; dx = P(X \le x).\]</div>
+<!--
+Let us observe a few properties.
+--><p>Hãy quan sát một vài tính chất của hàm này</p>
+<!--
+* $F(x) \rightarrow 0$ as $x\rightarrow -\infty$.
+* $F(x) \rightarrow 1$ as $x\rightarrow \infty$.
+* $F(x)$ is non-decreasing ($y > x \implies F(y) \ge F(x)$).
+* $F(x)$ is continuous (has no jumps) if $X$ is a continuous random variable.
+--><ul class="simple">
+<li>$F(x):raw-latex:<cite>rightarrow `0 $ khi :math:`xrightarrow -infty</cite>.</li>
+<li>$F(x):raw-latex:<cite>rightarrow `1 $ khi :math:`xrightarrow infty</cite>.</li>
+<li><span class="math notranslate nohighlight">\(F(x)\)</span> không giảm (<span class="math notranslate nohighlight">\(y &gt; x \implies F(y) \ge F(x)\)</span>).</li>
+<li><span class="math notranslate nohighlight">\(F(x)\)</span> là liên tục (không có bước nhảy) nếu <span class="math notranslate nohighlight">\(X\)</span> là một
+biến ngẫu nhiên liên tục.</li>
+</ul>
+<!--
+With the fourth bullet point, note that this would not be true if $X$ were discrete, say taking the values $0$ and $1$ both with probability $1/2$. In that case
+--><p>Ở gạch đầu dòng thứ tư, lưu ý rằng điều này không đúng nếu <span class="math notranslate nohighlight">\(X\)</span> là
+rời rạc, ví dụ như khi <span class="math notranslate nohighlight">\(X\)</span> chỉ nhận hai giá trị <span class="math notranslate nohighlight">\(0\)</span> và
+<span class="math notranslate nohighlight">\(1\)</span> với xác suất <span class="math notranslate nohighlight">\(1/2\)</span>. Trong trường hợp đó:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-8">
+<span class="eqno">(18.6.13)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-8" title="Permalink to this equation">¶</a></span>\[\begin{split}F(x) = \begin{cases}
+0 &amp; x &lt; 0, \\
+\frac{1}{2} &amp; x &lt; 1, \\
+1 &amp; x \ge 1.
+\end{cases}\end{split}\]</div>
+<!--
+In this example, we see one of the benefits of working with the c.d.f.,
+the ability to deal with continuous or discrete random variables in the same framework, or indeed mixtures of the two
+(flip a coin: if heads return the roll of a die, if tails return the distance of a dart throw from the center of a dart board).
+--><p>Trong ví dụ này, ta thấy một trong các lợi ích của việc sử dụng c.d.f.,
+khả năng xử lý các biến ngẫu nhiên liên tục hoặc rời rạc với cùng một
+công cụ, hay thậm chí là hỗn hợp của cả hai (tung một đồng xu: nếu mặt
+ngửa thì trả về giá trị khi thả xúc xắc, nếu mặt sấp thì trả về khoảng
+cách ném phi tiêu từ tâm của bảng hồng tâm).</p>
+<!--
+### Means
+--></div>
+<div class="section" id="ky-vong">
+<h3><span class="section-number">18.6.1.4. </span>Kỳ vọng<a class="headerlink" href="#ky-vong" title="Permalink to this headline">¶</a></h3>
+<!--
+Suppose that we are dealing with a random variables $X$.
+The distribution itself can be hard to interpret.
+It is often useful to be able to summarize the behavior of a random variable concisely.
+Numbers that help us capture the behavior of a random variable are called *summary statistics*.
+The most commonly encountered ones are the *mean*, the *variance*, and the *standard deviation*.
+--><p>Giả sử ta đang làm việc với một biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span>. Phân phối của
+biến này có thể khó để diễn giải. Thường sẽ có ích nếu ta có thể tóm
+lược hành vi của một biến ngẫu nhiên một cách súc tích. Những giá trị
+giúp ta nắm bắt được hành vi của một biến ngẫu nhiên được gọi là <em>thống
+kê tóm tắt</em>. Các thống kê tóm tắt thường gặp nhất là <em>kỳ vọng</em>, <em>phương
+sai</em> và <em>độ lệch chuẩn</em>.</p>
+<!--
+The *mean* encodes the average value of a random variable.
+If we have a discrete random variable $X$, which takes the values $x_i$ with probabilities $p_i$,
+then the mean is given by the weighted average: sum the values times the probability that the random variable takes on that value:
+--><p><em>Kỳ vọng</em> là giá trị trung bình của một biến ngẫu nhiên. Nếu ta có một
+biến ngẫu nhiên rời rạc <span class="math notranslate nohighlight">\(X\)</span>, nhận giá trị <span class="math notranslate nohighlight">\(x_i\)</span> với xác suất
+<span class="math notranslate nohighlight">\(p_i\)</span>, thì kỳ vọng được tính từ trung bình có trọng số: tổng các
+tích của giá trị biến với xác suất nhận giá trị đó:</p>
+<div class="math notranslate nohighlight" id="equation-eq-exp-def">
+<span class="eqno">(18.6.14)<a class="headerlink" href="#equation-eq-exp-def" title="Permalink to this equation">¶</a></span>\[\mu_X = E[X] = \sum_i x_i p_i.\]</div>
+<!--
+The way we should interpret the mean (albeit with caution) is that it tells us essentially where the random variable tends to be located.
+--><p>Với một vài lưu ý, giá trị kỳ vọng này về cơ bản cho ta biết biến ngẫu
+nhiên có xu hướng nhận giá trị nào.</p>
+<!--
+As a minimalistic example that we will examine throughout this section,
+let us take $X$ to be the random variable which takes the value $a-2$ with probability $p$, $a+2$ with probability $p$ and $a$ with probability $1-2p$.
+We can compute using :eqref:`eq_exp_def` that, for any possible choice of $a$ and $p$, the mean is
+--><p>Xét một ví dụ tối giản xuyên suốt phần này, gọi <span class="math notranslate nohighlight">\(X\)</span> là biến ngẫu
+nhiên nhận giá trị <span class="math notranslate nohighlight">\(a-2\)</span> với xác suất <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(a + 2\)</span> với
+xác suất <span class="math notranslate nohighlight">\(p\)</span> và <span class="math notranslate nohighlight">\(a\)</span> với xác suất <span class="math notranslate nohighlight">\(1-2p\)</span>. Theo
+<a class="reference internal" href="#equation-eq-exp-def">(18.6.14)</a>, với bất kỳ giá trị khả dĩ nào của <span class="math notranslate nohighlight">\(a\)</span> và
+<span class="math notranslate nohighlight">\(p\)</span>, giá trị kỳ vọng là:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-9">
+<span class="eqno">(18.6.15)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-9" title="Permalink to this equation">¶</a></span>\[\mu_X = E[X] = \sum_i x_i p_i = (a-2)p + a(1-2p) + (a+2)p = a.\]</div>
+<!--
+Thus we see that the mean is $a$. This matches the intuition since $a$ is the location around which we centered our random variable.
+--><p>Ta thấy rằng giá trị kỳ vọng là <span class="math notranslate nohighlight">\(a\)</span>. Điều này đúng với trực giác
+vì <span class="math notranslate nohighlight">\(a\)</span> là vị trí trung tâm của biến ngẫu nhiên này.</p>
+<!--
+Because they are helpful, let us summarize a few properties.
+--><p>Bởi sự hữu dụng của kỳ vọng, hãy tổng hợp một vài tính chất của chúng.</p>
+<!--
+* For any random variable $X$ and numbers $a$ and $b$, we have that $\mu_{aX+b} = a\mu_X + b$.
+* If we have two random variables $X$ and $Y$, we have $\mu_{X+Y} = \mu_X+\mu_Y$.
+--><ul class="simple">
+<li>Với bất kỳ biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và hai số <span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span>
+nào, <span class="math notranslate nohighlight">\(\mu_{aX + b} = a\mu_X + b\)</span>.</li>
+<li>Với hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span>,
+<span class="math notranslate nohighlight">\(\mu_{X + Y} = \mu_X+\mu_Y\)</span>.</li>
+</ul>
+<!--
+Means are useful for understanding the average behavior of a random variable, however the mean is not sufficient to even have a full intuitive understanding.
+Making a profit of $\$10 \pm \$1$ per sale is very different from making $\$10 \pm \$15$ per sale despite having the same average value.
+The second one has a much larger degree of fluctuation, and thus represents a much larger risk.
+Thus, to understand the behavior of a random variable, we will need at minimum one more measure: some measure of how widely a random variable fluctuates.
+--><p>Kỳ vọng rất hữu ích để hiểu hành vi trung bình của một biến ngẫu nhiên,
+tuy nhiên nó vẫn không đủ để ta có được một cách nhìn trực quan toàn
+diện. Tạo ra lợi nhuận <span class="math notranslate nohighlight">\(\$10 \pm \$1\)</span> rất khác với việc tạo ra
+<span class="math notranslate nohighlight">\(\$10 \pm \$15\)</span> cho mỗi giao dịch mặc dù cả hai có cùng kỳ vọng.
+Trường hợp thứ hai có mức độ dao động lớn hơn nhiều và do đó rủi ro cũng
+lớn hơn nhiều. Vì vậy, để hiểu hành vi của một biến ngẫu nhiên, ta sẽ
+cần thêm tối thiểu một thước đo nữa thể hiện biên độ dao động của biến
+ngẫu nhiên đó.</p>
+<!--
+### Variances
+--></div>
+<div class="section" id="phuong-sai">
+<h3><span class="section-number">18.6.1.5. </span>Phương sai<a class="headerlink" href="#phuong-sai" title="Permalink to this headline">¶</a></h3>
+<!--
+This leads us to consider the *variance* of a random variable.
+This is a quantitative measure of how far a random variable deviates from the mean.
+Consider the expression $X - \mu_X$. This is the deviation of the random variable from its mean.
+This value can be positive or negative, so we need to do something to make it positive so that we are measuring the magnitude of the deviation.
+--><p>Điều này dẫn tới khái niệm <em>phương sai</em> của biến ngẫu nhiên. Đây là một
+thước đo định lượng khoảng dao động quanh giá trị kỳ vọng của một biến
+ngẫu nhiên. Xét biểu thức <span class="math notranslate nohighlight">\(X - \mu_X\)</span>. Đây là độ lệch
+(<em>deviation</em>) của biến ngẫu nhiên so với kỳ vọng của nó. Giá trị này có
+thể dương hoặc âm, vì vậy ta cần thực hiện thêm thao tác để lấy độ lớn
+(luôn dương) của độ lệch này.</p>
+<!--
+A reasonable thing to try is to look at $\left|X-\mu_X\right|$, and indeed this leads to a useful quantity called the *mean absolute deviation*,
+however due to connections with other areas of mathematics and statistics, people often use a different solution.
+--><p>Một cách hợp lý là lấy <span class="math notranslate nohighlight">\(\left|X-\mu_X\right|\)</span>, và thực sự điều này
+dẫn đến một đại lượng hữu dụng là <em>trung bình độ lệch tuyệt đối - mean
+absolute deviation</em>, tuy nhiên do mối liên hệ với các lĩnh vực toán học
+và thống kê khác, người ta thường dùng một giải pháp khác.</p>
+<!--
+In particular, they look at $(X-\mu_X)^2.$.  If we look at the typical size of this quantity by taking the mean, we arrive at the variance
+--><p>Cụ thể là <span class="math notranslate nohighlight">\((X-\mu_X)^2.\)</span>. Nếu lấy giá trị kỳ vọng của đại lượng
+này, ta có phương sai:</p>
+<div class="math notranslate nohighlight" id="equation-eq-var-def">
+<span class="eqno">(18.6.16)<a class="headerlink" href="#equation-eq-var-def" title="Permalink to this equation">¶</a></span>\[\sigma_X^2 = \mathrm{Var}(X) = E\left[(X-\mu_X)^2\right] = E[X^2] - \mu_X^2.\]</div>
+<!--
+The last equality in :eqref:`eq_var_def` holds by expanding out the definition in the middle, and applying the properties of expectation.
+--><p>Đẳng thức cuối cùng trong <a class="reference internal" href="#equation-eq-var-def">(18.6.16)</a> có được bằng cách khai
+triển các số hạng trong vế giữa và vận dụng các tính chất của kỳ vọng.</p>
+<!--
+Let us look at our example where $X$ is the random variable which takes the value $a-2$ with probability $p$, $a+2$ with probability $p$ and $a$ with probability $1-2p$.
+In this case $\mu_X = a$, so all we need to compute is $E\left[X^2\right]$. This can readily be done:
+--><p>Hãy cùng xem lại ví dụ trong đó <span class="math notranslate nohighlight">\(X\)</span> là biến ngẫu nhiên nhận giá
+trị <span class="math notranslate nohighlight">\(a-2\)</span> với xác suất <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(a+2\)</span> với xác suất
+<span class="math notranslate nohighlight">\(p\)</span> và <span class="math notranslate nohighlight">\(a\)</span> với xác suất <span class="math notranslate nohighlight">\(1-2p\)</span>. Trong trường hợp này,
+ta đã biết <span class="math notranslate nohighlight">\(\mu_X = a\)</span>, vì vậy chỉ cần tính
+<span class="math notranslate nohighlight">\(E\left[X^2\right]\)</span> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-10">
+<span class="eqno">(18.6.17)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-10" title="Permalink to this equation">¶</a></span>\[E\left[X^2\right] = (a-2)^2p + a^2(1-2p) + (a+2)^2p = a^2 + 8p.\]</div>
+<!--
+Thus, we see that by :eqref:`eq_var_def` our variance is
+--><p>Sau đó, theo <a class="reference internal" href="#equation-eq-var-def">(18.6.16)</a> ta có phương sai:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-11">
+<span class="eqno">(18.6.18)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-11" title="Permalink to this equation">¶</a></span>\[\sigma_X^2 = \mathrm{Var}(X) = E[X^2] - \mu_X^2 = a^2 + 8p - a^2 = 8p.\]</div>
+<!--
+This result again makes sense. The largest $p$ can be is $1/2$ which corresponds to picking $a-2$ or $a+2$ with a coin flip.
+The variance of this being $4$ corresponds to the fact that both $a-2$ and $a+2$ are $2$ units away from the mean, and $2^2 = 4$.
+On the other end of the spectrum, if $p=0$, this random variable always takes the value $0$ and so it has no variance at all.
+--><p>Kết quả này cũng hợp lý. Giá trị lớn nhất có thể của <span class="math notranslate nohighlight">\(p\)</span> là
+<span class="math notranslate nohighlight">\(1/2\)</span>, tương ứng với việc chọn <span class="math notranslate nohighlight">\(a-2\)</span> hoặc <span class="math notranslate nohighlight">\(a+2\)</span> (tương
+tự khi tung đồng xu). Lúc này giá trị phương sai tính theo công thức
+trên bằng <span class="math notranslate nohighlight">\(4\)</span>, đúng với thực tế là cả <span class="math notranslate nohighlight">\(a-2\)</span> và <span class="math notranslate nohighlight">\(a+2\)</span>
+cùng có độ lệch khỏi giá trị trung bình là <span class="math notranslate nohighlight">\(2\)</span> và <span class="math notranslate nohighlight">\(2^2 = 4\)</span>.
+Ngược lại, nếu <span class="math notranslate nohighlight">\(p=0\)</span>, tức biến ngẫu nhiên này luôn nhận giá trị
+<span class="math notranslate nohighlight">\(0\)</span> và vì thế có phương sai bằng <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<!--
+We will list a few properties of variance below:
+--><p>Hãy liệt kê một vài tính chất của phương sai:</p>
+<!--
+* For any random variable $X$, $\mathrm{Var}(X) \ge 0$, with $\mathrm{Var}(X) = 0$ if and only if $X$ is a constant.
+* For any random variable $X$ and numbers $a$ and $b$, we have that $\mathrm{Var}(aX+b) = a^2\mathrm{Var}(X)$.
+* If we have two *independent* random variables $X$ and $Y$, we have $\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)$.
+--><ul class="simple">
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> bất kỳ: <span class="math notranslate nohighlight">\(\mathrm{Var}(X) \ge 0\)</span>,
+với <span class="math notranslate nohighlight">\(\mathrm{Var}(X) = 0\)</span> khi và chỉ khi <span class="math notranslate nohighlight">\(X\)</span> là hằng số.</li>
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và hai số <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span> bất kỳ:
+<span class="math notranslate nohighlight">\(\mathrm{Var}(aX+b) = a^2\mathrm{Var}(X)\)</span>.</li>
+<li>Nếu hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> là <em>độc lập</em>:
+<span class="math notranslate nohighlight">\(\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y)\)</span>.</li>
+</ul>
+<!--
+When interpreting these values, there can be a bit of a hiccup.
+In particular, let us try imagining what happens if we keep track of units through this computation.
+Suppose that we are working with the star rating assigned to a product on the web page.
+Then $a$, $a-2$, and $a+2$ are all measured in units of stars.
+Similarly, the mean $\mu_X$ is then also measured in stars (being a weighted average).
+However, if we get to the variance, we immediately encounter an issue, which is we want to look at $(X-\mu_X)^2$, which is in units of *squared stars*.
+This means that the variance itself is not comparable to the original measurements.
+To make it interpretable, we will need to return to our original units.
+--><p>Khi diễn giải các giá trị này, ta có thể gặp một chút vướng mắc. Cụ thể,
+hãy để ý đến đơn vị của các phép tính. Giả sử ta đang làm việc với số
+sao được đánh giá cho một sản phẩm trên trang web. Khi đó <span class="math notranslate nohighlight">\(a\)</span>,
+<span class="math notranslate nohighlight">\(a-2\)</span>, and <span class="math notranslate nohighlight">\(a+2\)</span> đều được đo bằng đơn vị ngôi sao. Tương tự,
+kỳ vọng <span class="math notranslate nohighlight">\(\mu_X\)</span> sau đó cũng có đơn vị là ngôi sao (được tính là
+trung bình có trọng số). Tuy nhiên, nếu xét đến phương sai, ta ngay lập
+tức gặp phải vấn đề, đó là <span class="math notranslate nohighlight">\((X-\mu_X)^2\)</span> sẽ có đơn vị <em>bình
+phương</em> số sao. Điều này có nghĩa là bản thân phương sai không thể dùng
+để so sánh trong phép đo ban đầu. Để có thể diễn giải được nó, ta cần
+quay lại đơn vị gốc.</p>
+<!--
+### Standard Deviations
+--></div>
+<div class="section" id="do-lech-chuan">
+<h3><span class="section-number">18.6.1.6. </span>Độ lệch chuẩn<a class="headerlink" href="#do-lech-chuan" title="Permalink to this headline">¶</a></h3>
+<!--
+This summary statistics can always be deduced from the variance by taking the square root! Thus we define the *standard deviation* to be
+--><p><em>Độ lệch chuẩn</em> luôn có thể suy ra bằng cách lấy căn bậc hai của phương
+sai:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-12">
+<span class="eqno">(18.6.19)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-12" title="Permalink to this equation">¶</a></span>\[\sigma_X = \sqrt{\mathrm{Var}(X)}.\]</div>
+<!--
+In our example, this means we now have the standard deviation is $\sigma_X = 2\sqrt{2p}$.
+If we are dealing with units of stars for our review example, $\sigma_X$ is again in units of stars.
+--><p>Trong ví dụ trên, ta có độ lệch chuẩn <span class="math notranslate nohighlight">\(\sigma_X = 2\sqrt{2p}\)</span>. Nếu
+đơn vị ta đang xét là số sao trong ví dụ đánh giá của mình,
+<span class="math notranslate nohighlight">\(\sigma_X\)</span> vẫn có đơn vị này.</p>
+<!--
+The properties we had for the variance can be restated for the standard deviation.
+--><p>Các tính chất của phương sai có thể được áp dụng lại cho độ lệch chuẩn.</p>
+<!--
+* For any random variable $X$, $\sigma_{X} \ge 0$.
+* For any random variable $X$ and numbers $a$ and $b$, we have that $\sigma_{aX+b} = |a|\sigma_{X}$
+* If we have two *independent* random variables $X$ and $Y$, we have $\sigma_{X+Y} = \sqrt{\sigma_{X}^2 + \sigma_{Y}^2}$.
+--><ul class="simple">
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> bất kỳ: <span class="math notranslate nohighlight">\(\sigma_{X} \ge 0\)</span>.</li>
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và hai số <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span> bất kỳ:
+<span class="math notranslate nohighlight">\(\sigma_{aX+b} = |a|\sigma_{X}\)</span></li>
+<li>Nếu hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> là <em>độc lập</em>:
+<span class="math notranslate nohighlight">\(\sigma_{X+Y} = \sqrt{\sigma_{X}^2 + \sigma_{Y}^2}\)</span>.</li>
+</ul>
+<!--
+It is natural at this moment to ask, "If the standard deviation is in the units of our original random variable, does it represent something we can draw with regards to that random variable?"
+The answer is a resounding yes! Indeed much like the mean told we the typical location of our random variable, the standard deviation gives the typical range of variation of that random variable.
+We can make this rigorous with what is known as Chebyshev's inequality:
+--><p>Lúc này hãy đặt câu hỏi, “Nếu độ lệch chuẩn cùng đơn vị với biến ngẫu
+nhiên ban đầu, nó có cung cấp thông tin gì về biến ngẫu nhiên đó không?”
+Câu trả lời là có! Thật vậy, giống như kỳ vọng cho biết vị trí điển
+hình, độ lệch chuẩn cho biết khoảng biến thiên thường gặp của biến ngẫu
+nhiên đó. Ta có thể chứng minh chặt chẽ bằng bất đẳng thức Chebyshev:</p>
+<div class="math notranslate nohighlight" id="equation-eq-chebyshev">
+<span class="eqno">(18.6.20)<a class="headerlink" href="#equation-eq-chebyshev" title="Permalink to this equation">¶</a></span>\[P\left(X \not\in [\mu_X - \alpha\sigma_X, \mu_X + \alpha\sigma_X]\right) \le \frac{1}{\alpha^2}.\]</div>
+<!--
+Or to state it verbally in the case of $\alpha=10$, $99\%$ of the samples from any random variable fall within $10$ standard deviations of the mean.
+This gives an immediate interpretation to our standard summary statistics.
+--><p>Diễn giải bằng lời như sau: ví dụ khi <span class="math notranslate nohighlight">\(\alpha=10\)</span>, <span class="math notranslate nohighlight">\(99\%\)</span> số
+mẫu của bất kỳ biến ngẫu nhiên nào sẽ nằm trong khoảng <span class="math notranslate nohighlight">\(10\)</span> độ
+lệch chuẩn về 2 phía của giá trị kỳ vọng. Điều này cho ta một cách giải
+thích trực tiếp các thống kê tóm tắt tiêu chuẩn.</p>
+<!--
+To see how this statement is rather subtle, let us take a look at our running example again where $X$ is the random variable
+which takes the value $a-2$ with probability $p$, $a+2$ with probability $p$ and $a$ with probability $1-2p$.
+We saw that the mean was $a$ and the standard deviation was $2\sqrt{2p}$.
+This means, if we take Chebyshev's inequality :eqref:`eq_chebyshev` with $\alpha = 2$, we see that the expression is
+--><p>Để thấy sự tinh tế của mệnh đề này, hãy xét lại ví dụ trong đó <span class="math notranslate nohighlight">\(X\)</span>
+là biến ngẫu nhiên nhận giá trị <span class="math notranslate nohighlight">\(a-2\)</span> với xác suất <span class="math notranslate nohighlight">\(p\)</span>,
+<span class="math notranslate nohighlight">\(a+2\)</span> với xác suất <span class="math notranslate nohighlight">\(p\)</span> và <span class="math notranslate nohighlight">\(a\)</span> với xác suất
+<span class="math notranslate nohighlight">\(1-2p\)</span>. Ta có kỳ vọng là <span class="math notranslate nohighlight">\(a\)</span> và độ lệch chuẩn là
+<span class="math notranslate nohighlight">\(2\sqrt{2p}\)</span>. Từ bất đẳng thức Chebyshev :eqref:<code class="docutils literal notranslate"><span class="pre">eq_chebyshev</span></code>
+với <span class="math notranslate nohighlight">\(\alpha = 2\)</span>, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-13">
+<span class="eqno">(18.6.21)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-13" title="Permalink to this equation">¶</a></span>\[P\left(X \not\in [a - 4\sqrt{2p}, a + 4\sqrt{2p}]\right) \le \frac{1}{4}.\]</div>
+<!--
+This means that $75\%$ of the time, this random variable will fall within this interval for any value of $p$.
+Now, notice that as $p \rightarrow 0$, this interval also converges to the single point $a$.
+But we know that our random variable takes the values $a-2, a$, and $a+2$ only so eventually we can be certain $a-2$ and $a+2$ will fall outside the interval!
+The question is, at what $p$ does that happen. So we want to solve: for what $p$ does $a+4\sqrt{2p} = a+2$, which is solved when $p=1/8$,
+which is *exactly* the first $p$ where it could possibly happen without violating our claim that no more than $1/4$ of samples from
+the distribution would fall outside the interval ($1/8$ to the left, and $1/8$ to the right).
+--><p>Điều này có nghĩa là trong <span class="math notranslate nohighlight">\(75\%\)</span> số lần lấy mẫu, biến ngẫu nhiên
+sẽ rơi vào khoảng trên, bất kể giá trị của <span class="math notranslate nohighlight">\(p\)</span>. Bây giờ, hãy lưu ý
+rằng khi <span class="math notranslate nohighlight">\(p \rightarrow 0\)</span>, thì khoảng này cũng hội tụ đến điểm
+duy nhất là <span class="math notranslate nohighlight">\(a\)</span>. Tuy nhiên biến ngẫu nhiên chỉ nhận các giá trị
+<span class="math notranslate nohighlight">\(a-2, a\)</span> và <span class="math notranslate nohighlight">\(a+2\)</span> nên <span class="math notranslate nohighlight">\(a-2\)</span> và <span class="math notranslate nohighlight">\(a+2\)</span> chắc chắn
+sẽ nằm ngoài khoảng này! Câu hỏi đặt ra là giá trị <span class="math notranslate nohighlight">\(p\)</span> bằng bao
+nhiêu để <span class="math notranslate nohighlight">\(a-2\)</span> và <span class="math notranslate nohighlight">\(a+2\)</span> nằm trong khoảng đó? Ta cần giải
+phương trình: <span class="math notranslate nohighlight">\(a+4\sqrt{2p} = a+2\)</span> để ra nghiệm <span class="math notranslate nohighlight">\(p=1/8\)</span>, đó
+<em>chính xác</em> là giá trị <span class="math notranslate nohighlight">\(p\)</span> nhỏ nhất thỏa mãn yêu cầu rằng không
+quá <span class="math notranslate nohighlight">\(1/4\)</span> số mẫu nằm ngoài khoảng (<span class="math notranslate nohighlight">\(1/8\)</span> về phía trái và
+<span class="math notranslate nohighlight">\(1/8\)</span> về phía phải giá trị kỳ vọng).</p>
+<!--
+Let us visualize this. We will show the probability of getting the three values as three vertical bars with height proportional to the probability.
+The interval will be drawn as a horizontal line in the middle. The first plot shows what happens for $p > 1/8$ where the interval safely contains all points.
+--><p>Hãy cùng trực quan hóa điều này. Chúng ta sẽ đưa ra xác suất nhận được
+ba giá trị tương ứng là ba thanh dọc có chiều cao tỷ lệ với xác suất.
+Khoảng trên sẽ được biểu diễn dưới dạng một đường ngang ở giữa. Biểu đồ
+đầu tiên cho thấy khi <span class="math notranslate nohighlight">\(p&gt; 1/8\)</span>, khoảng này chứa hoàn toàn các
+điểm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a helper to plot these figures</span>
+<span class="k">def</span> <span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">([</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="n">use_line_collection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p.m.f.&#39;</span><span class="p">)</span>
+
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span>
+                   <span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p = </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Plot interval when p &gt; 1/8</span>
+<span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_5_0.svg" src="../_images/output_random-variables_vn_cbc293_5_0.svg" /></div>
+<!--
+The second shows that at $p = 1/8$, the interval exactly touches the two points.
+This shows that the inequality is *sharp*, since no smaller interval could be taken while keeping the inequality true.
+--><p>Biểu đồ thứ hai cho thấy tại <span class="math notranslate nohighlight">\(p = 1/8\)</span>, khoảng này tiếp xúc với
+hai điểm. Khoảng này là <em>vừa đủ</em>, vì không thể chọn khoảng nhỏ hơn mà
+bất đẳng thức vẫn đúng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot interval when p = 1/8</span>
+<span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_7_0.svg" src="../_images/output_random-variables_vn_cbc293_7_0.svg" /></div>
+<!--
+The third shows that for $p < 1/8$ the interval only contains the center.
+This does not invalidate the inequality since we only needed to ensure that no more than $1/4$ of the probability falls outside the interval,
+which means that once $p < 1/8$, the two points at $a-2$ and $a+2$ can be discarded.
+--><p>Biểu đồ thứ ba cho thấy với <span class="math notranslate nohighlight">\(p &lt; 1/8\)</span> thì khoảng chỉ chứa giá trị
+trung tâm. Điều này không vi phạm bất đẳng thức vì ta chỉ cần đảm bảo
+rằng không quá <span class="math notranslate nohighlight">\(1/4\)</span> xác suất nằm ngoài khoảng, trên thực tế khi
+<span class="math notranslate nohighlight">\(p &lt; 1/8\)</span>, biến ngẫu nhiên không thể nhận hai giá trị <span class="math notranslate nohighlight">\(a-2\)</span>
+và <span class="math notranslate nohighlight">\(a+2\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot interval when p &lt; 1/8</span>
+<span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_9_0.svg" src="../_images/output_random-variables_vn_cbc293_9_0.svg" /></div>
+<!--
+### Means and Variances in the Continuum
+--></div>
+<div class="section" id="ky-vong-va-phuong-sai-tren-mien-lien-tuc">
+<h3><span class="section-number">18.6.1.7. </span>Kỳ vọng và Phương sai trên Miền liên tục<a class="headerlink" href="#ky-vong-va-phuong-sai-tren-mien-lien-tuc" title="Permalink to this headline">¶</a></h3>
+<!--
+This has all been in terms of discrete random variables, but the case of continuous random variables is similar.
+To intuitively understand how this works, imagine that we split the real number line into intervals of length $\epsilon$ given by $(\epsilon i, \epsilon (i+1)]$.
+Once we do this, our continuous random variable has been made discrete and we can use :eqref:`eq_exp_def` say that
+--><p>Tới giờ ta đều mới chỉ xét biến ngẫu nhiên rời rạc, tuy nhiên trường hợp
+biến ngẫu nhiên liên tục cũng tương tự. Để hiểu cách hoạt động của các
+biến liên tục một cách trực quan, hãy tưởng tượng ta chia trục số nguyên
+thành nhiều khoảng với độ dài <span class="math notranslate nohighlight">\(\epsilon\)</span> trong khoảng
+<span class="math notranslate nohighlight">\([\epsilon i, \epsilon (i+1)]\)</span>. Sau khi thực hiện điều này, biến
+ngẫu nhiên liên tục trên trở thành dạng rời rạc và ta có thể áp dụng
+<a class="reference internal" href="#equation-eq-exp-def">(18.6.14)</a> dưới dạng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-14">
+<span class="eqno">(18.6.22)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-14" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mu_X &amp; \approx \sum_{i} (\epsilon i)P(X \in (\epsilon i, \epsilon (i+1)]) \\
+&amp; \approx \sum_{i} (\epsilon i)p_X(\epsilon i)\epsilon, \\
+\end{aligned}\end{split}\]</div>
+<!--
+where $p_X$ is the density of $X$. This is an approximation to the integral of $xp_X(x)$, so we can conclude that
+--><p>trong đó <span class="math notranslate nohighlight">\(p_X\)</span> là hàm mật độ của <span class="math notranslate nohighlight">\(X\)</span>. Đây là xấp xỉ tích
+phân của <span class="math notranslate nohighlight">\(xp_X(x)\)</span>, do đó ta có thể kết luận rằng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-15">
+<span class="eqno">(18.6.23)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-15" title="Permalink to this equation">¶</a></span>\[\mu_X = \int_{-\infty}^\infty xp_X(x) \; dx.\]</div>
+<!--
+Similarly, using :eqref:`eq_var_def` the variance can be written as
+--><p>Tương tự, áp dụng <a class="reference internal" href="#equation-eq-var-def">(18.6.16)</a>, phương sai có thể được biểu
+diễn như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-16">
+<span class="eqno">(18.6.24)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-16" title="Permalink to this equation">¶</a></span>\[\sigma^2_X = E[X^2] - \mu_X^2 = \int_{-\infty}^\infty x^2p_X(x) \; dx - \left(\int_{-\infty}^\infty xp_X(x) \; dx\right)^2.\]</div>
+<!--
+Everything stated above about the mean, the variance, and the standard deviation still applies in this case.
+For instance, if we consider the random variable with density
+--><p>Tất cả những tính chất về kỳ vọng, phương sai và độ lệch chuẩn cho biến
+ngẫu nhiên rời rạc đều có thể áp dụng trong trường hợp liên tục. Ví dụ,
+xét biến ngẫu nhiên với hàm mật độ:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-17">
+<span class="eqno">(18.6.25)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-17" title="Permalink to this equation">¶</a></span>\[\begin{split}p(x) = \begin{cases}
+1 &amp; x \in [0,1], \\
+0 &amp; \text{otherwise}.
+\end{cases}\end{split}\]</div>
+<!--
+we can compute
+--><p>ta có thể tính:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-18">
+<span class="eqno">(18.6.26)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-18" title="Permalink to this equation">¶</a></span>\[\mu_X = \int_{-\infty}^\infty xp(x) \; dx = \int_0^1 x \; dx = \frac{1}{2}.\]</div>
+<p>và</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-19">
+<span class="eqno">(18.6.27)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-19" title="Permalink to this equation">¶</a></span>\[\sigma_X^2 = \int_{-\infty}^\infty x^2p(x) \; dx - \left(\frac{1}{2}\right)^2 = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}.\]</div>
+<!--
+As a warning, let us examine one more example, known as the *Cauchy distribution*. This is the distribution with p.d.f. given by
+--><p>Để lưu ý, hãy quan sát thêm một ví dụ về <em>phân phối Cauchy</em>, với hàm mật
+độ:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-20">
+<span class="eqno">(18.6.28)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-20" title="Permalink to this equation">¶</a></span>\[p(x) = \frac{1}{1+x^2}.\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the Cauchy distribution p.d.f.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;p.d.f.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_11_0.svg" src="../_images/output_random-variables_vn_cbc293_11_0.svg" /></div>
+<!--
+This function looks innocent, and indeed consulting a table of integrals will show it has area one under it, and thus it defines a continuous random variable.
+--><p>Hàm này nhìn có vẻ không có vấn đề gì, và quả thật tra cứu bảng tích
+phân chỉ ra rằng diện tích vùng dưới nó bằng 1, và do đó nó định nghĩa
+một biến ngẫu nhiên liên tục.</p>
+<!--
+To see what goes astray, let us try to compute the variance of this.  This would involve using :eqref:`eq_var_def` computing
+--><p>Để xem có vấn đề gì ở đây, hãy thử tính phương sai của hàm này bằng
+<a class="reference internal" href="#equation-eq-var-def">(18.6.16)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-21">
+<span class="eqno">(18.6.29)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-21" title="Permalink to this equation">¶</a></span>\[\int_{-\infty}^\infty \frac{x^2}{1+x^2}\; dx.\]</div>
+<!--
+The function on the inside looks like this:
+--><p>Hàm bên trong tích phân có dạng:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the integrand needed to compute the variance</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;integrand&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_13_0.svg" src="../_images/output_random-variables_vn_cbc293_13_0.svg" /></div>
+<!--
+This function clearly has infinite area under it since it is essentially the constant one with a small dip near zero, and indeed we could show that
+--><p>Hàm này rõ ràng có phần diện tích bên dưới là vô hạn do về cơ bản nó là
+hằng số 1 với một đoạn trũng xuống gần 0, và quả thật:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-22">
+<span class="eqno">(18.6.30)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-22" title="Permalink to this equation">¶</a></span>\[\int_{-\infty}^\infty \frac{x^2}{1+x^2}\; dx = \infty.\]</div>
+<!--
+This means it does not have a well-defined finite variance.
+--><p>Điều này có nghĩa là nó không có một phương sai hữu hạn đúng nghĩa.</p>
+<!--
+However, looking deeper shows an even more disturbing result.  Let us try to compute the mean using :eqref:`eq_exp_def`.  Using the change of variables formula, we see
+--><p>Tuy vậy, nếu quan sát kĩ hơn ta có thể thấy một kết quả khó hiểu hơn
+nhiều. Hãy thử tính kỳ vọng sử dụng <a class="reference internal" href="#equation-eq-exp-def">(18.6.14)</a>. Sử dụng đổi
+biến, ta được:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-23">
+<span class="eqno">(18.6.31)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-23" title="Permalink to this equation">¶</a></span>\[\mu_X = \int_{-\infty}^{\infty} \frac{x}{1+x^2} \; dx = \frac{1}{2}\int_1^\infty \frac{1}{u} \; du.\]</div>
+<!--
+The integral inside is the definition of the logarithm, so this is in essence $\log(\infty) = \infty$, so there is no well-defined average value either!
+--><p>Hàm tích phân bên trong chính là định nghĩa của hàm logarit, do đó tích
+phân này có kết quả <span class="math notranslate nohighlight">\(\log(\infty) = \infty\)</span>, nên cũng không tồn
+tại giá trị kỳ vọng xác định!</p>
+<!--
+Machine learning scientists define their models so that we most often do not need to deal with these issues,
+and will in the vast majority of cases deal with random variables with well-defined means and variances.
+However, every so often random variables with *heavy tails* (that is those random variables where the probabilities of
+getting large values are large enough to make things like the mean or variance undefined) are helpful in modeling physical systems, thus it is worth knowing that they exist.
+--><p>Các nhà khoa học học máy định nghĩa mô hình của họ để thường không phải
+đối mặt với những vấn đề này, và trong đại đa số các trường hợp, ta sẽ
+xử lý những biến ngẫu nhiên với kỳ vọng và phương sai xác định. Tuy vậy,
+đôi khi biến ngẫu nhiên với <em>đuôi nặng (heavy tails)</em> (có xác suất thu
+được các giá trị lớn là đủ lớn để khiến kỳ vọng hay phương sai không xác
+định) vẫn có ích trong việc mô hình hóa những hệ thống vật lý, vậy nên
+sự tồn tại của chúng đáng để biết tới.</p>
+<!--
+### Joint Density Functions
+--></div>
+<div class="section" id="ham-mat-do-ket-hop">
+<h3><span class="section-number">18.6.1.8. </span>Hàm Mật độ Kết hợp<a class="headerlink" href="#ham-mat-do-ket-hop" title="Permalink to this headline">¶</a></h3>
+<!--
+The above work all assumes we are working with a single real valued random variable.
+But what if we are dealing with two or more potentially highly correlated random variables?
+This circumstance is the norm in machine learning: imagine random variables like $R_{i, j}$
+which encode the red value of the pixel at the $(i, j)$ coordinate in an image, or $P_t$ which is a random variable given by a stock price at time $t$.
+Nearby pixels tend to have similar color, and nearby times tend to have similar prices.
+We cannot treat them as separate random variables, and expect to create a successful model
+(we will see in :numref:`sec_naive_bayes` a model that under-performs due to such an assumption).
+We need to develop the mathematical language to handle these correlated continuous random variables.
+--><p>Toàn bộ phần phía trên đều chỉ xét biến ngẫu nhiên đơn lẻ có giá trị
+thực. Trường hợp có hai hay nhiều biến ngẫu nhiên hơn, mà thường giữa
+chúng có mối tương quan cao, thì sao? Tình huống này rất hay gặp trong
+học máy: tưởng tượng biến ngẫu nhiên <span class="math notranslate nohighlight">\(R_{i, j}\)</span> mã hóa giá trị màu
+đỏ của điểm ảnh tại toạ độ <span class="math notranslate nohighlight">\((i, j)\)</span> trong một ảnh, hay biến
+<span class="math notranslate nohighlight">\(P_t\)</span> biểu diễn giá chứng khóan tại thời điểm <span class="math notranslate nohighlight">\(t\)</span>. Những
+điểm ảnh lân cận thường có màu tương tự, và giá tại các thời điểm lân
+cận thường tương tự. Ta không thể xem chúng như những biến ngẫu nhiên
+riêng biệt, và cũng không thể xây dựng một mô hình tốt (trong
+<a class="reference internal" href="naive-bayes_vn.html#sec-naive-bayes"><span class="std std-numref">Section 18.9</span></a> có ví dụ một mô hình hoạt động kém do giả sử
+như vậy). Ta cần phát triển lý thuyết toán học để làm việc với những
+biến ngẫu nhiên liên tục có tương quan với nhau như vậy.</p>
+<!--
+Thankfully, with the multiple integrals in :numref:`sec_integral_calculus` we can develop such a language.
+Suppose that we have, for simplicity, two random variables $X, Y$ which can be correlated.
+Then, similar to the case of a single variable, we can ask the question:
+--><p>May mắn thay, với tích phân bội trong <a class="reference internal" href="integral-calculus_vn.html#sec-integral-calculus"><span class="std std-numref">Section 18.5</span></a>,
+ta có thể phát triển một lý thuyết như vậy. Để đơn giản, giả sử ta có
+hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X, Y\)</span> có thể tương quan với nhau. Sau đó,
+tương tự như trường hợp đơn biến, ta có thể đặt câu hỏi:</p>
+<!-- $$
+P(X \;\text{is in an}\; \epsilon \text{-sized interval around}\; x \; \text{and} \;Y \;\text{is in an}\; \epsilon \text{-sized interval around}\; y ).
+$$ --><div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-24">
+<span class="eqno">(18.6.32)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-24" title="Permalink to this equation">¶</a></span>\[P(X \;\text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; x \; \text{và} \;Y \;\text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; y ).\]</div>
+<!--
+Similar reasoning to the single variable case shows that this should be approximately
+--><p>Suy luận tương tự như trường hợp biến đơn chỉ ra rằng mệnh đề trên có
+thể xấp xỉ với:</p>
+<!-- $$
+P(X \;\text{is in an}\; \epsilon \text{-sized interval around}\; x \; \text{and} \;Y \;\text{is in an}\; \epsilon \text{-sized interval around}\; y ) \approx \epsilon^{2}p(x, y),
+$$ --><div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-25">
+<span class="eqno">(18.6.33)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-25" title="Permalink to this equation">¶</a></span>\[P(X \;\text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; x \; \text{và} \;Y \;\text{nằm trong khoảng rộng}\; \epsilon \text{xung quanh}\; y ) \approx \epsilon^{2}p(x, y),\]</div>
+<!--
+for some function $p(x, y)$.  This is referred to as the joint density of $X$ and $Y$.
+Similar properties are true for this as we saw in the single variable case. Namely:
+--><p>với một hàm <span class="math notranslate nohighlight">\(p(x, y)\)</span> nào đó. Đây được gọi là mật độ kết hợp của
+<span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span>. Những tính chất của hàm mật độ cho biến đơn vẫn
+đúng cho trường hợp này:</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(p(x, y) \ge 0\)</span>;</li>
+<li><span class="math notranslate nohighlight">\(\int _ {\mathbb{R}^2} p(x, y) \;dx \;dy = 1\)</span>;</li>
+<li><span class="math notranslate nohighlight">\(P((X, Y) \in \mathcal{D}) = \int _ {\mathcal{D}} p(x, y) \;dx \;dy\)</span>.</li>
+</ul>
+<!--
+In this way, we can deal with multiple, potentially correlated random variables.
+If we wish to work with more than two random variables, we can extend the multivariate density to as many coordinates as desired by considering $p(\mathbf{x}) = p(x_1, \ldots, x_n)$.
+The same properties of being non-negative, and having total integral of one still hold.
+--><p>Bằng cách này, ta có thể làm việc với nhiều biến ngẫu nhiên tương quan
+với nhau. Nếu số biến ngẫu nhiên nhiều hơn 2, ta có thể mở rộng hàm mật
+độ nhiều chiều: <span class="math notranslate nohighlight">\(p(\mathbf{x}) = p(x_1, \ldots, x_n)\)</span>. Những thuộc
+tính như không âm, có tổng tích phân bằng một vẫn đúng.</p>
+<!--
+### Marginal Distributions
+--></div>
+<div class="section" id="phan-phoi-bien">
+<h3><span class="section-number">18.6.1.9. </span>Phân phối Biên<a class="headerlink" href="#phan-phoi-bien" title="Permalink to this headline">¶</a></h3>
+<!--
+When dealing with multiple variables, we oftentimes want to be able to ignore the relationships and ask,
+"how is this one variable distributed?"  Such a distribution is called a *marginal distribution*.
+--><p>Khi làm việc với nhiều biến ngẫu nhiên, ta thường muốn bỏ qua các tương
+quan và đặt câu hỏi, “biến ngẫu nhiên đơn lẻ này có phân phối như thế
+nào?” Phân phối như vậy được gọi là <em>phân phối biên (marginal
+distribution)</em>.</p>
+<!--
+To be concrete, let us suppose that we have two random variables $X, Y$ with joint density given by $p _ {X, Y}(x, y)$.
+We will be using the subscript to indicate what random variables the density is for.
+The question of finding the marginal distribution is taking this function, and using it to find $p _ X(x)$.
+--><p>Cụ thể, giả sử ta có hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X, Y\)</span> với mật độ kết hợp
+<span class="math notranslate nohighlight">\(p _ {X, Y}(x, y)\)</span>. Ta sẽ sử dụng chỉ số dưới để chỉ mật độ này
+của biến ngẫu nhiên nào. Bài toán trở thành sử dụng hàm này để tìm phân
+phối biên <span class="math notranslate nohighlight">\(p _ X(x)\)</span>.</p>
+<!--
+As with most things, it is best to return to the intuitive picture to figure out what should be true.
+Recall that the density is the function $p _ X$ so that
+--><p>Như đa số trường hợp, hãy đưa ra một bức tranh trực quan để hiểu tường
+tận khái niệm. Nhắc lại rằng hàm mật độ <span class="math notranslate nohighlight">\(p _ X\)</span> thoả mãn</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-26">
+<span class="eqno">(18.6.34)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-26" title="Permalink to this equation">¶</a></span>\[P(X \in [x, x+\epsilon]) \approx \epsilon \cdot p _ X(x).\]</div>
+<!--
+There is no mention of $Y$, but if all we are given is $p _{X, Y}$, we need to include $Y$ somehow. We can first observe that this is the same as
+--><p>Hàm này không nhắc đến <span class="math notranslate nohighlight">\(Y\)</span>, nhưng nếu ta chỉ có <span class="math notranslate nohighlight">\(p _{X, Y}\)</span>,
+ta cần đưa <span class="math notranslate nohighlight">\(Y\)</span> vào bằng cách nào đó. Đầu tiên ta thấy hàm này
+giống với:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-27">
+<span class="eqno">(18.6.35)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-27" title="Permalink to this equation">¶</a></span>\[P(X \in [x, x+\epsilon] \text{, và } Y \in \mathbb{R}) \approx \epsilon \cdot p _ X(x).\]</div>
+<!--
+Our density does not directly tell us about what happens in this case, we need to split into small intervals in $y$ as well, so we can write this as
+--><p>Trong trường hợp này mật độ không trực tiếp cho ta biết điều gì, ta cũng
+cần chia <span class="math notranslate nohighlight">\(y\)</span> thành các khoảng nhỏ, do đó ta có thể viết lại hàm
+này như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-28">
+<span class="eqno">(18.6.36)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-28" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\epsilon \cdot p _ X(x) &amp; \approx \sum _ {i} P(X \in [x, x+\epsilon] \text{, và } Y \in [\epsilon \cdot i, \epsilon \cdot (i+1)]) \\
+&amp; \approx \sum _ {i} \epsilon^{2} p _ {X, Y}(x, \epsilon\cdot i).
+\end{aligned}\end{split}\]</div>
+<!--
+![By summing along the columns of our array of probabilities, we are able to obtain the marginal distribution for just the random variable represented along the $x$-axis.](../img/marginal.svg)
+--><div class="figure align-default" id="id5">
+<span id="fig-marginal"></span><img alt="chapter_appendix-mathematics-for-deep-learning/../img/marginal.svg" src="chapter_appendix-mathematics-for-deep-learning/../img/marginal.svg" /><p class="caption"><span class="caption-number">Fig. 18.6.1 </span><span class="caption-text">Bằng cách lấy tổng theo cột trên mảng xác suất, ta có thể thu được
+phân phối biên cho biến ngẫu nhiên được biểu diễn theo trục
+<span class="math notranslate nohighlight">\(x\)</span>.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+This tells us to add up the value of the density along a series of squares in a line as is shown in :numref:`fig_marginal`.
+Indeed, after canceling one factor of epsilon from both sides, and recognizing the sum on the right is the integral over $y$, we can conclude that
+--><p>Điều này tức là lấy tổng giá trị mật độ trên chuỗi các hình vuông theo
+cột như trong <a class="reference internal" href="#fig-marginal"><span class="std std-numref">Fig. 18.6.1</span></a>. Thật vậy, sau khi khử số hạng
+epsilon ở cả hai vế, tổng vế phải chính là tích phân theo <span class="math notranslate nohighlight">\(y\)</span> và
+ta có thể kết luận rằng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-29">
+<span class="eqno">(18.6.37)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-29" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+ p _ X(x) &amp;  \approx \sum _ {i} \epsilon p _ {X, Y}(x, \epsilon\cdot i) \\
+ &amp; \approx \int_{-\infty}^\infty p_{X, Y}(x, y) \; dy.
+\end{aligned}\end{split}\]</div>
+<!--
+Thus we see
+--><p>Do đó:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-30">
+<span class="eqno">(18.6.38)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-30" title="Permalink to this equation">¶</a></span>\[p _ X(x) = \int_{-\infty}^\infty p_{X, Y}(x, y) \; dy.\]</div>
+<!--
+This tells us that to get a marginal distribution, we integrate over the variables we do not care about.
+This process is often referred to as *integrating out* or *marginalized out* the unneeded variables.
+--><p>Tức để thu được phân phối biên của một biến, ta cần lấy tích phân trên
+các biến còn lại. Quá trình này thường được gọi là <em>lấy tích phân -
+integrating out</em> hay <em>biên hóa - marginalized out</em> những biến không cần
+thiết.</p>
+<!--
+### Covariance
+--></div>
+<div class="section" id="hiep-phuong-sai">
+<h3><span class="section-number">18.6.1.10. </span>Hiệp phương sai<a class="headerlink" href="#hiep-phuong-sai" title="Permalink to this headline">¶</a></h3>
+<!--
+When dealing with multiple random variables, there is one additional summary statistic which is helpful to know: the *covariance*.
+This measures the degree that two random variable fluctuate together.
+--><p>Khi làm việc với nhiều biến ngẫu nhiên, còn có một thông số thống kê nữa
+rất có ích: <em>hiệp phương sai (covariance)</em>. Thông số này đo mức độ biến
+thiên cùng nhau của hai biến ngẫu nhiên.</p>
+<!--
+Suppose that we have two random variables $X$ and $Y$, to begin with, let us suppose they are discrete, taking on values $(x_i, y_j)$ with probability $p_{ij}$.
+In this case, the covariance is defined as
+--><p>Để bắt đầu, giả sử ta có hai biến ngẫu nhiên rời rạc <span class="math notranslate nohighlight">\(X\)</span> và
+<span class="math notranslate nohighlight">\(Y\)</span>, xác suất mang giá trị <span class="math notranslate nohighlight">\((x_i, y_j)\)</span> là <span class="math notranslate nohighlight">\(p_{ij}\)</span>.
+Trong trường hợp này, hiệp phương sai được định nghĩa như sau:</p>
+<div class="math notranslate nohighlight" id="equation-eq-cov-def">
+<span class="eqno">(18.6.39)<a class="headerlink" href="#equation-eq-cov-def" title="Permalink to this equation">¶</a></span>\[\sigma_{XY} = \mathrm{Cov}(X, Y) = \sum_{i, j} (x_i - \mu_X) (y_j-\mu_Y) p_{ij}. = E[XY] - E[X]E[Y].\]</div>
+<!--
+To think about this intuitively: consider the following pair of random variables.
+Suppose that $X$ takes the values $1$ and $3$, and $Y$ takes the values $-1$ and $3$.
+Suppose that we have the following probabilities
+--><p>Để hiểu một cách trực quan về công thức trên, xét cặp biến ngẫu nhiên:
+<span class="math notranslate nohighlight">\(X\)</span> có thể nhận giá trị <span class="math notranslate nohighlight">\(1\)</span> và <span class="math notranslate nohighlight">\(3\)</span>, và <span class="math notranslate nohighlight">\(Y\)</span> có
+thể nhận giá trị <span class="math notranslate nohighlight">\(-1\)</span> và <span class="math notranslate nohighlight">\(3\)</span>. Giả sử ta có các xác suất sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-31">
+<span class="eqno">(18.6.40)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-31" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+P(X = 1 \; \text{và} \; Y = -1) &amp; = \frac{p}{2}, \\
+P(X = 1 \; \text{và} \; Y = 3) &amp; = \frac{1-p}{2}, \\
+P(X = 3 \; \text{và} \; Y = -1) &amp; = \frac{1-p}{2}, \\
+P(X = 3 \; \text{và} \; Y = 3) &amp; = \frac{p}{2},
+\end{aligned}\end{split}\]</div>
+<!--
+where $p$ is a parameter in $[0,1]$ we get to pick.
+Notice that if $p=1$ then they are both always their minimum or maximum values simultaneously,
+and if $p=0$ they are guaranteed to take their flipped values simultaneously (one is large when the other is small and vice versa).
+If $p=1/2$, then the four possibilities are all equally likely, and neither should be related.
+Let us compute the covariance. First, note $\mu_X = 2$ and $\mu_Y = 1$, so we may compute using :eqref:`eq_cov_def`:
+--><p>trong đó <span class="math notranslate nohighlight">\(p\)</span> là tham số tùy ý trong đoạn <span class="math notranslate nohighlight">\([0,1]\)</span>. Nếu
+<span class="math notranslate nohighlight">\(p=1\)</span> thì <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> luôn đồng thời mang giá trị lớn
+nhất hoặc nhỏ nhất của chúng, và nếu <span class="math notranslate nohighlight">\(p=0\)</span> thì một biến mang giá
+trị lớn nhất trong khi biến còn lại mang giá trị nhỏ nhất. Nếu
+<span class="math notranslate nohighlight">\(p=1/2\)</span> thì bốn khả năng có xác suất xảy ra như nhau, và không
+liên quan đến nhau. Hãy cùng tính hiệp phương sai. Đầu tiên,
+<span class="math notranslate nohighlight">\(\mu_X = 2\)</span> và <span class="math notranslate nohighlight">\(\mu_Y = 1\)</span>, do đó theo
+<a class="reference internal" href="#equation-eq-cov-def">(18.6.39)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-32">
+<span class="eqno">(18.6.41)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-32" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mathrm{Cov}(X, Y) &amp; = \sum_{i, j} (x_i - \mu_X) (y_j-\mu_Y) p_{ij} \\
+&amp; = (1-2)(-1-1)\frac{p}{2} + (1-2)(3-1)\frac{1-p}{2} + (3-2)(-1-1)\frac{1-p}{2} + (3-2)(3-1)\frac{p}{2} \\
+&amp; = 4p-2.
+\end{aligned}\end{split}\]</div>
+<!--
+When $p=1$ (the case where they are both maximally positive or negative at the same time) has a covariance of $2$.
+When $p=0$ (the case where they are flipped) the covariance is $-2$.
+Finally, when $p=1/2$ (the case where they are unrelated), the covariance is $0$.
+Thus we see that the covariance measures how these two random variables are related.
+--><p>Khi <span class="math notranslate nohighlight">\(p=1\)</span> (trường hợp mà trong cùng một thời điểm chúng cùng là
+giá trị lớn nhất hoặc nhỏ nhất) hiệp phương sai bằng <span class="math notranslate nohighlight">\(2\)</span>. Khi
+<span class="math notranslate nohighlight">\(p=0\)</span> (trường hợp mà chúng ngược nhau) hiệp phương sai bằng
+<span class="math notranslate nohighlight">\(-2\)</span>. Cuối cùng, khi <span class="math notranslate nohighlight">\(p=1/2\)</span> (trường hợp chúng không liên
+quan đến nhau), hiệp phương sai bằng <span class="math notranslate nohighlight">\(0\)</span>. Từ đó ta thấy rằng hiệp
+phương sai biểu thị quan hệ của hai biến ngẫu nhiên này với nhau.</p>
+<!--
+A quick note on the covariance is that it only measures these linear relationships.
+More complex relationships like $X = Y^2$ where $Y$ is randomly chosen from $\{-2, -1, 0, 1, 2\}$ with equal probability can be missed.
+Indeed a quick computation shows that these random variables have covariance zero, despite one being a deterministic function of the other.
+--><p>Chú ý là hiệp phương sai chỉ biểu thị mối quan hệ tuyến tính. Các quan
+hệ phức tạp hơn như <span class="math notranslate nohighlight">\(X = Y^2\)</span>, trong đó <span class="math notranslate nohighlight">\(Y\)</span> được chọn ngẫu
+nhiên với xác suất bằng nhau từ tập <span class="math notranslate nohighlight">\(\{-2, -1, 0, 1, 2\}\)</span>, có thể
+không được thể hiện. Quả thật ta có thể tính được hiệp phương sai của
+hai biến ngẫu nhiên này bằng không, mặc dù một biến là hàm tất định của
+biến còn lại.</p>
+<!--
+For continuous random variables, much the same story holds.
+At this point, we are pretty comfortable with doing the transition between discrete and continuous,
+so we will provide the continuous analogue of :eqref:`eq_cov_def` without any derivation.
+--><p>Với biến ngẫu nhiên liên tục, khái niệm hiệp phương sai không đổi. Lúc
+này ta đã quen với việc biến đổi giữa miền rời rạc và liên tục, nên
+chúng tôi sẽ chỉ cung cấp dạng liên tục của <a class="reference internal" href="#equation-eq-cov-def">(18.6.39)</a> mà
+không giải thích thêm:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-33">
+<span class="eqno">(18.6.42)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-33" title="Permalink to this equation">¶</a></span>\[\sigma_{XY} = \int_{\mathbb{R}^2} (x-\mu_X)(y-\mu_Y)p(x, y) \;dx \;dy.\]</div>
+<!--
+For visualization, let us take a look at a collection of random variables with tunable covariance.
+--><p>Để hiển thị, hãy quan sát tập các biến ngẫu nhiên có hiệp phương sai có
+thể điều chỉnh được.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot a few random variables adjustable covariance</span>
+<span class="n">covs</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cov = </span><span class="si">{</span><span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_15_0.svg" src="../_images/output_random-variables_vn_cbc293_15_0.svg" /></div>
+<!--
+Let us see some properties of covariances:
+--><p>Hãy xem xét một vài tính chất của hiệp phương sai:</p>
+<!--
+* For any random variable $X$, $\mathrm{Cov}(X, X) = \mathrm{Var}(X)$.
+* For any random variables $X, Y$ and numbers $a$ and $b$, $\mathrm{Cov}(aX+b, Y) = \mathrm{Cov}(X, aY+b) = a\mathrm{Cov}(X, Y)$.
+* If $X$ and $Y$ are independent then $\mathrm{Cov}(X, Y) = 0$.
+--><ul class="simple">
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> bất kỳ:
+<span class="math notranslate nohighlight">\(\mathrm{Cov}(X, X) = \mathrm{Var}(X)\)</span>.</li>
+<li>Với hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X, Y\)</span> và hai số <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>
+bất kỳ:
+<span class="math notranslate nohighlight">\(\mathrm{Cov}(aX+b, Y) = \mathrm{Cov}(X, aY+b) = a\mathrm{Cov}(X, Y)\)</span>.</li>
+<li>Nếu <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> độc lập: <span class="math notranslate nohighlight">\(\mathrm{Cov}(X, Y) = 0\)</span>.</li>
+</ul>
+<!--
+In addition, we can use the covariance to expand a relationship we saw before.
+Recall that is $X$ and $Y$ are two independent random variables then
+--><p>Ngoài ra, ta có thể sử dụng hiệp phương sai để mở rộng một hệ thức ta đã
+thấy trước đó. Hãy nhớ lại nếu <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> là hai biến ngẫu
+nhiên độc lập thì:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-34">
+<span class="eqno">(18.6.43)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-34" title="Permalink to this equation">¶</a></span>\[\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y).\]</div>
+<!--
+With knowledge of covariances, we can expand this relationship.  Indeed, some algebra can show that in general,
+--><p>Với kiến thức về hiệp phương sai, ta có thể khai triển hệ thức này. Quả
+nhiên, sử dụng đại số có thể chứng minh tổng quát rằng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-35">
+<span class="eqno">(18.6.44)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-35" title="Permalink to this equation">¶</a></span>\[\mathrm{Var}(X+Y) = \mathrm{Var}(X) + \mathrm{Var}(Y) + 2\mathrm{Cov}(X, Y).\]</div>
+<!--
+This allows us to generalize the variance summation rule for correlated random variables.
+--><p>Công thức này là dạng tổng quát của quy tắc tính tổng phương sai cho các
+biến ngẫu nhiên tương quan.</p>
+<!--
+### Correlation
+--></div>
+<div class="section" id="do-tuong-quan">
+<h3><span class="section-number">18.6.1.11. </span>Độ tương quan<a class="headerlink" href="#do-tuong-quan" title="Permalink to this headline">¶</a></h3>
+<!--
+As we did in the case of means and variances, let us now consider units.
+If $X$ is measured in one unit (say inches), and $Y$ is measured in another (say dollars),
+the covariance is measured in the product of these two units $\text{inches} \times \text{dollars}$.
+These units can be hard to interpret. What we will often want in this case is a unit-less measurement of relatedness.
+Indeed, often we do not care about exact quantitative correlation, but rather ask if the correlation is in the same direction, and how strong the relationship is.
+--><p>Như trong trường hợp của kỳ vọng và phương sai, hãy xét đến đơn vị. Nếu
+<span class="math notranslate nohighlight">\(X\)</span> được đo bằng một đơn vị (giả sử là inch), và <span class="math notranslate nohighlight">\(Y\)</span> được đo
+bởi đơn vị khác (giả sử là đô-la), phương sai được tính bởi tích của hai
+đơn vị này <span class="math notranslate nohighlight">\(\text{inch} \times \text{đô-la}\)</span>. Những đơn vị này khó
+diễn giải, nên ta muốn có một phép đo sự tương quan mà không phụ thuộc
+vào đơn vị. Thật vậy, ta thường không quan tâm tới định lượng tương quan
+một cách chính xác, mà thường muốn biết sự tương quan này cùng hay ngược
+hướng, và mạnh như thế nào.</p>
+<!--
+To see what makes sense, let us perform a thought experiment.
+Suppose that we convert our random variables in inches and dollars to be in inches and cents.
+In this case the random variable $Y$ is multiplied by $100$. If we work through the definition, this means that $\mathrm{Cov}(X, Y)$ will be multiplied by $100$.
+Thus we see that in this case a change of units change the covariance by a factor of $100$.
+Thus, to find our unit-invariant measure of correlation, we will need to divide by something else that also gets scaled by $100$.
+Indeed we have a clear candidate, the standard deviation! Indeed if we define the *correlation coefficient* to be
+--><p>Để cắt nghĩa, hãy thực hiện một thí nghiệm tưởng tượng. Giả sử ta chuyển
+đổi các biến ngẫu nhiên có đơn vị inch và đô-la thành inch và xu. Trong
+trường hợp này biến ngẫu nhiên <span class="math notranslate nohighlight">\(Y\)</span> được nhân thêm <span class="math notranslate nohighlight">\(100\)</span>.
+Theo định nghĩa, <span class="math notranslate nohighlight">\(\mathrm{Cov}(X, Y)\)</span> cũng sẽ được nhân thêm
+<span class="math notranslate nohighlight">\(100\)</span>. Như vậy sự thay đổi đơn vị làm tăng hiệp phương sai
+<span class="math notranslate nohighlight">\(100\)</span> lần. Do đó, để có độ tương quan không phụ thuộc vào đơn vị,
+ta cần chia cho một đại lượng nào đó cũng được tăng thêm <span class="math notranslate nohighlight">\(100\)</span>
+lần. Một lựa chọn rõ ràng chính là độ lệch chuẩn! Có thể định nghĩa <em>hệ
+số tương quan - correlation coefficient</em> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-eq-cor-def">
+<span class="eqno">(18.6.45)<a class="headerlink" href="#equation-eq-cor-def" title="Permalink to this equation">¶</a></span>\[\rho(X, Y) = \frac{\mathrm{Cov}(X, Y)}{\sigma_{X}\sigma_{Y}},\]</div>
+<!--
+we see that this is a unit-less value. A little mathematics can show that this number is
+between $-1$ and $1$ with $1$ meaning maximally positively correlated, whereas $-1$ means maximally negatively correlated.
+--><p>ta thấy đây là giá trị không phụ thuộc vào đơn vị. Một chút toán có thể
+chứng minh rằng <span class="math notranslate nohighlight">\(\rho(X, Y)\)</span> nằm giữa <span class="math notranslate nohighlight">\(-1\)</span> và <span class="math notranslate nohighlight">\(1\)</span> với
+<span class="math notranslate nohighlight">\(1\)</span> ứng với tương quan cực đại dương, còn <span class="math notranslate nohighlight">\(-1\)</span> ứng với tương
+quan cực đại âm.</p>
+<!--
+Returning to our explicit discrete example above, we can see that $\sigma_X = 1$ and $\sigma_Y = 2$,
+so we can compute the correlation between the two random variables using :eqref:`eq_cor_def` to see that
+--><p>Quay lại ví dụ ở miền rời rạc phía trên, ta có <span class="math notranslate nohighlight">\(\sigma_X = 1\)</span> và
+<span class="math notranslate nohighlight">\(\sigma_Y = 2\)</span>, và tương quan giữa hai biến ngẫu nhiên có thể tính
+bằng <a class="reference internal" href="#equation-eq-cor-def">(18.6.45)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-36">
+<span class="eqno">(18.6.46)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-36" title="Permalink to this equation">¶</a></span>\[\rho(X, Y) = \frac{4p-2}{1\cdot 2} = 2p-1.\]</div>
+<!--
+This now ranges between $-1$ and $1$ with the expected behavior of $1$ meaning most correlated, and $-1$ meaning minimally correlated.
+--><p>Đại lượng này bây giờ nằm trong khoảng <span class="math notranslate nohighlight">\(-1\)</span> và <span class="math notranslate nohighlight">\(1\)</span> với
+<span class="math notranslate nohighlight">\(1\)</span> nghĩa là tương quan dương nhiều nhất, <span class="math notranslate nohighlight">\(-1\)</span> nghĩa là
+tương quan âm nhiều nhất.</p>
+<!--
+As another example, consider $X$ as any random variable, and $Y=aX+b$ as any linear deterministic function of $X$. Then, one can compute that
+--><p>Một ví dụ khác, xét biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> bất kỳ, và <span class="math notranslate nohighlight">\(Y=aX+b\)</span>
+là một hàm tuyến tính tất định của <span class="math notranslate nohighlight">\(X\)</span>. Ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-37">
+<span class="eqno">(18.6.47)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-37" title="Permalink to this equation">¶</a></span>\[\sigma_{Y} = \sigma_{aX+b} = |a|\sigma_{X},\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-38">
+<span class="eqno">(18.6.48)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-38" title="Permalink to this equation">¶</a></span>\[\mathrm{Cov}(X, Y) = \mathrm{Cov}(X, aX+b) = a\mathrm{Cov}(X, X) = a\mathrm{Var}(X),\]</div>
+<!--
+and thus by :eqref:`eq_cor_def` that
+--><p>và do đó theo <a class="reference internal" href="#equation-eq-cor-def">(18.6.45)</a> ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-39">
+<span class="eqno">(18.6.49)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-39" title="Permalink to this equation">¶</a></span>\[\rho(X, Y) = \frac{a\mathrm{Var}(X)}{|a|\sigma_{X}^2} = \frac{a}{|a|} = \mathrm{sign}(a).\]</div>
+<!--
+Thus we see that the correlation is $+1$ for any $a > 0$, and $-1$ for any $a < 0$ illustrating
+that correlation measures the degree and directionality the two random variables are related, not the scale that the variation takes.
+--><p>Ta thấy rằng độ tương quan là <span class="math notranslate nohighlight">\(+1\)</span> cho <span class="math notranslate nohighlight">\(a &gt; 0\)</span>, và
+<span class="math notranslate nohighlight">\(-1\)</span> cho <span class="math notranslate nohighlight">\(a &lt; 0\)</span>, tức độ tương quan đo mức độ và hướng của
+sự tương quan giữa hai biến ngẫu nhiên, không phải tỷ lệ biến đổi.</p>
+<!--
+Let us again plot a collection of random variables with tunable correlation.
+--><p>Ta hãy minh họa một vài biến ngẫu nhiên với tương quan có thể điều
+chỉnh.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot a few random variables adjustable correlations</span>
+<span class="n">cors</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cor = </span><span class="si">{</span><span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_random-variables_vn_cbc293_17_0.svg" src="../_images/output_random-variables_vn_cbc293_17_0.svg" /></div>
+<!--
+Let us list a few properties of the correlation below.
+--><p>Ta liệt kê một vài tính chất của tương quan:</p>
+<!--
+* For any random variable $X$, $\rho(X, X) = 1$.
+* For any random variables $X, Y$ and numbers $a$ and $b$, $\rho(aX+b, Y) = \rho(X, aY+b) = \rho(X, Y)$.
+* If $X$ and $Y$ are independent with non-zero variance then $\rho(X, Y) = 0$.
+--><ul class="simple">
+<li>Với biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> bất kỳ, <span class="math notranslate nohighlight">\(\rho(X, X) = 1\)</span>.</li>
+<li>Với hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X, Y\)</span> và hai số <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(b\)</span>
+bất kỳ, <span class="math notranslate nohighlight">\(\rho(aX+b, Y) = \rho(X, aY+b) = \rho(X, Y)\)</span>.</li>
+<li>Nếu <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> độc lập với phương sai khác không:
+<span class="math notranslate nohighlight">\(\rho(X, Y) = 0\)</span>.</li>
+</ul>
+<!--
+As a final note, you may feel like some of these formulae are familiar.
+Indeed, if we expand everything out assuming that $\mu_X = \mu_Y = 0$, we see that this is
+--><p>Lưu ý cuối cùng, bạn có thể thấy rằng một vài công thức trên khá quen
+thuộc. Quả thật, nếu khai triển tất cả với giả định
+<span class="math notranslate nohighlight">\(\mu_X = \mu_Y = 0\)</span>, ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-40">
+<span class="eqno">(18.6.50)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-40" title="Permalink to this equation">¶</a></span>\[\rho(X, Y) = \frac{\sum_{i, j} x_iy_ip_{ij}}{\sqrt{\sum_{i, j}x_i^2 p_{ij}}\sqrt{\sum_{i, j}y_j^2 p_{ij}}}.\]</div>
+<!--
+This looks like a sum of a product of terms divided by the square root of sums of terms.
+This is exactly the formula for the cosine of the angle between two vectors $\mathbf{v}, \mathbf{w}$ with the different coordinates weighted by $p_{ij}$:
+--><p>Đây giống như tổng của tích các số hạng chia cho căn bặc hai của tổng
+bình phương các số hạng. Đó chính xác là công thức cho cô-sin của góc
+giữa hai vector <span class="math notranslate nohighlight">\(\mathbf{v}, \mathbf{w}\)</span> với trọng số tọa độ
+<span class="math notranslate nohighlight">\(p_{ij}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-41">
+<span class="eqno">(18.6.51)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-random-variables-vn-41" title="Permalink to this equation">¶</a></span>\[\cos(\theta) = \frac{\mathbf{v}\cdot \mathbf{w}}{\|\mathbf{v}\|\|\mathbf{w}\|} = \frac{\sum_{i} v_iw_i}{\sqrt{\sum_{i}v_i^2}\sqrt{\sum_{i}w_i^2}}.\]</div>
+<!--
+Indeed if we think of norms as being related to standard deviations, and correlations as being cosines of angles,
+much of the intuition we have from geometry can be applied to thinking about random variables.
+--><p>Quả thật nếu nghĩ chuẩn (<em>norm</em>) liên quan tới độ lệch chuẩn, và độ
+tương quan là cô-sin của các góc, các trực giác ta có từ hình học có thể
+được áp dụng để tư duy về các biến ngẫu nhiên.</p>
+</div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">18.6.2. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Continuous random variables are random variables that can take on a continuum of values.
+They have some technical difficulties that make them more challenging to work with compared to discrete random variables.
+* The probability density function allows us to work with continuous random variables by giving
+a function where the area under the curve on some interval gives the probability of finding a sample point in that interval.
+* The cumulative distribution function is the probability of observing the random variable to be less than a given threshold.
+It can provide a useful alternate viewpoint which unifies discrete and continuous variables.
+* The mean is the average value of a random variable.
+* The variance is the expected square of the difference between the random variable and its mean.
+* The standard deviation is the square root of the variance.
+It can be thought of as measuring the range of values the random variable may take.
+* Chebyshev's inequality allows us to make this intuition rigorous by giving an explicit interval that contains the random variable most of the time.
+* Joint densities allow us to work with correlated random variables.
+We may marginalize joint densities by integrating over unwanted random variables to get the distribution of the desired random variable.
+* The covariance and correlation coefficient provide a way to measure any linear relationship between two correlated random variables.
+--><ul class="simple">
+<li>Biến ngẫu nhiên liên tục là các biến ngẫu nhiên có thể lấy một dãy
+các giá trị liên tục. Chúng có một vài cản trở kỹ thuật khó giải
+quyết hơn so với biến ngẫu nhiên rời rạc.</li>
+<li>Hàm mật độ xác suất cho phép làm việc với các biến ngẫu nhiên liên
+tục bằng một hàm số mà diện tích dưới đường cong ở một khoảng là xác
+suất tìm được một mẫu trong khoảng đó.</li>
+<li>Hàm phân phối tích lũy là xác suất biến ngẫu nhiên nhận giá trị nhỏ
+hơn một ngưỡng nhất định. Đây là một góc nhìn hữu ích để hợp nhất các
+biến rời rạc và liên tục.</li>
+<li>Kỳ vọng là giá trị trung bình của một biến ngẫu nhiên.</li>
+<li>Phương sai là trung bình bình phương sự chênh lệch giữa biến ngẫu
+nhiên và kỳ vọng của nó.</li>
+<li>Độ lệch chuẩn là căn bậc hai của phương sai, được dùng để đo phạm vi
+giá trị mà biến ngẫu nhiên có thể nhận.</li>
+<li>Bất đẳng thức Chebyshev chặt chẽ hóa điều này bằng cách đưa ra một
+khoảng tường minh mà hầu hết các giá trị của biến ngẫu nhiên sẽ rơi
+vào.</li>
+<li>Mật độ kết hợp (<em>joint density</em>) cho phép ta làm việc với các biến
+ngẫu nhiên tương quan. Ta có thể biên hóa mật độ kết hợp bằng cách
+lấy tích phân theo các biến ngẫu nhiên khác để thu được phân phối của
+biến ngẫu nhiên mong muốn.</li>
+<li>Hiệp phương sai và hệ số tương quan là một cách đo bất kỳ mối quan hệ
+tuyến tính nào giữa hai biến ngẫu nhiên tương quan.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">18.6.3. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Suppose that we have the random variable with density given by $p(x) = \frac{1}{x^2}$ for $x \ge 1$ and $p(x) = 0$ otherwise. What is $P(X > 2)$?
+2. The Laplace distribution is a random variable whose density is given by $p(x = \frac{1}{2}e^{-|x|}$.
+What is the mean and the standard deviation of this function?
+As a hint, $\int_0^\infty xe^{-x} \; dx = 1$ and $\int_0^\infty x^2e^{-x} \; dx = 2$.
+3. I walk up to you on the street and say "I have a random variable with mean $1$, standard deviation $2$,
+and I observed $25\%$ of my samples taking a value larger than $9$." Do you believe me? Why or why not?
+4. Suppose that you have two random variables $X, Y$, with joint density given by $p_{XY}(x, y) = 4xy$ for
+$x, y \in [0,1]$ and $p_{XY}(x, y) = 0$ otherwise. What is the covariance of $X$ and $Y$?
+--><ol class="arabic simple">
+<li>Giả sử ta có biến ngẫu nhiên với mật độ <span class="math notranslate nohighlight">\(p(x) = \frac{1}{x^2}\)</span>
+nếu <span class="math notranslate nohighlight">\(x \ge 1\)</span>, ngược lại <span class="math notranslate nohighlight">\(p(x) = 0\)</span>. Tính
+<span class="math notranslate nohighlight">\(P(X &gt; 2)\)</span>.</li>
+<li>Phân phối Laplace là một biến ngẫu nhiên có mật độ
+<span class="math notranslate nohighlight">\(p(x = \frac{1}{2}e^{-|x|}\)</span>. Tính kỳ vọng và độ lệch chuẩn của
+biến ngẫu nhiên này. Gợi ý <span class="math notranslate nohighlight">\(\int_0^\infty xe^{-x} \; dx = 1\)</span> và
+<span class="math notranslate nohighlight">\(\int_0^\infty x^2e^{-x} \; dx = 2\)</span>.</li>
+<li>Tôi nói “Tôi có một biến ngẫu nhiên với kỳ vọng là <span class="math notranslate nohighlight">\(1\)</span>, độ lệch
+chuẩn là <span class="math notranslate nohighlight">\(2\)</span>, và tôi quan sát thấy <span class="math notranslate nohighlight">\(25\%\)</span> các mẫu của tôi
+có giá trị lớn hơn <span class="math notranslate nohighlight">\(9\)</span>.” Bạn có tin tôi không? Tại sao?</li>
+<li>Giả sử bạn có hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(X, Y\)</span>, với mật độ kết hợp
+<span class="math notranslate nohighlight">\(p_{XY}(x, y) = 4xy\)</span> nếu <span class="math notranslate nohighlight">\(x, y \in [0,1]\)</span>, ngược lại
+<span class="math notranslate nohighlight">\(p_{XY}(x, y) = 0\)</span>. Hiệp phương sai của <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span>
+là bao nhiêu?</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">18.6.4. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tiếng Anh: <a class="reference external" href="https://discuss.d2l.ai/t/415">MXNet</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1094">Pytorch</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1095">Tensorflow</a></li>
+<li>Tiếng Việt: <a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Diễn đàn Machine Learning Cơ
+Bản</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">18.6.5. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Phạm Đăng Khoa</li>
+<li>Đỗ Trường Giang</li>
+<li>Trần Yến Thy</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Hồng Vinh</li>
+<li>Phạm Minh Đức</li>
+<li>Nguyễn Văn Cường</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">18.6. Biến Ngẫu nhiên</a><ul>
+<li><a class="reference internal" href="#bien-ngau-nhien-lien-tuc">18.6.1. Biến Ngẫu nhiên Liên tục</a><ul>
+<li><a class="reference internal" href="#tu-roi-rac-den-lien-tuc">18.6.1.1. Từ Rời rạc đến Liên tục</a></li>
+<li><a class="reference internal" href="#ham-mat-do-xac-suat">18.6.1.2. Hàm Mật độ Xác suất</a></li>
+<li><a class="reference internal" href="#ham-phan-phoi-tich-luy">18.6.1.3. Hàm Phân phối Tích lũy</a></li>
+<li><a class="reference internal" href="#ky-vong">18.6.1.4. Kỳ vọng</a></li>
+<li><a class="reference internal" href="#phuong-sai">18.6.1.5. Phương sai</a></li>
+<li><a class="reference internal" href="#do-lech-chuan">18.6.1.6. Độ lệch chuẩn</a></li>
+<li><a class="reference internal" href="#ky-vong-va-phuong-sai-tren-mien-lien-tuc">18.6.1.7. Kỳ vọng và Phương sai trên Miền liên tục</a></li>
+<li><a class="reference internal" href="#ham-mat-do-ket-hop">18.6.1.8. Hàm Mật độ Kết hợp</a></li>
+<li><a class="reference internal" href="#phan-phoi-bien">18.6.1.9. Phân phối Biên</a></li>
+<li><a class="reference internal" href="#hiep-phuong-sai">18.6.1.10. Hiệp phương sai</a></li>
+<li><a class="reference internal" href="#do-tuong-quan">18.6.1.11. Độ tương quan</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">18.6.2. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">18.6.3. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">18.6.4. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">18.6.5. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="integral-calculus_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>18.5. Giải tích Tích phân</div>
+         </div>
+     </a>
+     <a id="button-next" href="maximum-likelihood_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>18.7. Hợp lý Cực đại</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

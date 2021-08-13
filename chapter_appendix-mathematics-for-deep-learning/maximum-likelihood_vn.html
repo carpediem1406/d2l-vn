@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>18.7. Hợp lý Cực đại &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="18.8. Các Phân phối Xác suất" href="distributions_vn.html" />
+    <link rel="prev" title="18.6. Biến Ngẫu nhiên" href="random-variables_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">18. </span>Phụ lục: Toán học cho Học Sâu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">18.7. </span>Hợp lý Cực đại</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Maximum Likelihood
+--><div class="section" id="hop-ly-cuc-dai">
+<span id="sec-maximum-likelihood"></span><h1><span class="section-number">18.7. </span>Hợp lý Cực đại<a class="headerlink" href="#hop-ly-cuc-dai" title="Permalink to this headline">¶</a></h1>
+<!--
+One of the most commonly encountered way of thinking in machine learning is the maximum likelihood point of view.
+This is the concept that when working with a probabilistic model with unknown parameters,
+the parameters which make the data have the highest probability are the most likely ones.
+--><p>Một trong những cách tư duy thường thấy nhất trong học máy là quan điểm
+về hợp lý cực đại. Đây là khái niệm mà khi làm việc với một mô hình xác
+suất mà các tham số chưa biết, các tham số làm cho các điểm dữ liệu đã
+quan sát có xác suất xảy ra cao nhất là những tham số hợp lý nhất.</p>
+<!--
+## The Maximum Likelihood Principle
+--><div class="section" id="nguyen-ly-hop-ly-cuc-dai">
+<h2><span class="section-number">18.7.1. </span>Nguyên lý Hợp lý Cực đại<a class="headerlink" href="#nguyen-ly-hop-ly-cuc-dai" title="Permalink to this headline">¶</a></h2>
+<!--
+This has a Bayesian interpretation which can be helpful to think about.
+Suppose that we have a model with parameters $\boldsymbol{\theta}$ and a collection of data examples $X$.
+For concreteness, we can imagine that $\boldsymbol{\theta}$ is a single value representing the probability that a coin comes up heads when flipped,
+and $X$ is a sequence of independent coin flips.
+We will look at this example in depth later.
+--><p>Nguyên lý này có cách diễn giải theo trường phái Bayes khá hữu ích. Giả
+sử rằng ta có một mô hình với các tham số <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> và
+một tập hợp các mẫu dữ liệu <span class="math notranslate nohighlight">\(X\)</span>. Cụ thể hơn, ta có thể tưởng tượng
+rằng <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> là một giá trị duy nhất đại diện cho
+xác suất một đồng xu ngửa khi tung, và <span class="math notranslate nohighlight">\(X\)</span> là một chuỗi các lần
+tung đồng xu độc lập. Chúng ta sẽ xem xét ví dụ này sâu hơn ở phần sau.</p>
+<!--
+If we want to find the most likely value for the parameters of our model, that means we want to find
+--><p>Nếu ta muốn tìm giá trị hợp lý nhất cho các tham số của mô hình, điều đó
+có nghĩa là ta muốn tìm</p>
+<div class="math notranslate nohighlight" id="equation-eq-max-like">
+<span class="eqno">(18.7.1)<a class="headerlink" href="#equation-eq-max-like" title="Permalink to this equation">¶</a></span>\[\mathop{\mathrm{argmax}} P(\boldsymbol{\theta}\mid X).\]</div>
+<!--
+By Bayes' rule, this is the same thing as
+--><p>Theo quy tắc Bayes, điều này giống với</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-0">
+<span class="eqno">(18.7.2)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-0" title="Permalink to this equation">¶</a></span>\[\mathop{\mathrm{argmax}} \frac{P(X \mid \boldsymbol{\theta})P(\boldsymbol{\theta})}{P(X)}.\]</div>
+<!--
+The expression $P(X)$, a parameter agnostic probability of generating the data, does not depend on $\boldsymbol{\theta}$ at all,
+and so can be dropped without changing the best choice of $\boldsymbol{\theta}$.
+Similarly, we may now posit that we have no prior assumption on which set of parameters are better than any others,
+so we may declare that $P(\boldsymbol{\theta})$ does not depend on theta either!
+This, for instance, makes sense in our coin flipping example where the probability it comes up heads could be
+any value in $[0,1]$ without any prior belief it is fair or not (often referred to as an *uninformative prior*).
+Thus we see that our application of Bayes' rule shows that our best choice of $\boldsymbol{\theta}$ is the maximum likelihood estimate for $\boldsymbol{\theta}$:
+--><p>Biểu thức <span class="math notranslate nohighlight">\(P(X)\)</span> là xác suất sinh dữ liệu độc lập tham số, và nó
+hoàn toàn không phụ thuộc vào tham số <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, do đó
+ta có thể bỏ qua nó mà không ảnh hưởng tới việc chọn ra
+<span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> tốt nhất. Tương tự, bây giờ ta có thể cho
+rằng chúng ta không có giả định trước về bộ tham số nào là tốt hơn hết
+thảy, vì vậy ta có thể phát biểu rằng <span class="math notranslate nohighlight">\(P(\boldsymbol{\theta})\)</span>
+cũng không phụ thuộc vào theta! Điều này hợp lý trong ví dụ tung đồng
+xu, ở đây xác suất để ra mặt ngửa có thể là bất kỳ giá trị nào trong
+khoảng <span class="math notranslate nohighlight">\([0,1]\)</span> khi mà ta không có bất kỳ niềm tin nào trước đó
+rằng đồng xu có cân xứng hay không (thường được gọi là <em>tiên nghiệm
+không chứa thông tin</em>). Do đó, ta thấy rằng việc áp dụng quy tắc Bayes
+sẽ chỉ ra lựa chọn tốt nhất cho <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> là ước lượng
+hợp lý cực đại cho <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-1">
+<span class="eqno">(18.7.3)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-1" title="Permalink to this equation">¶</a></span>\[\hat{\boldsymbol{\theta}} = \mathop{\mathrm{argmax}} _ {\boldsymbol{\theta}} P(X \mid \boldsymbol{\theta}).\]</div>
+<!--
+As a matter of common terminology, the probability of the data given the parameters ($P(X \mid \boldsymbol{\theta})$) is referred to as the *likelihood*.
+--><p>Theo thuật ngữ thông thường, xác suất của dữ liệu với các tham số đã cho
+(<span class="math notranslate nohighlight">\(P(X \mid \boldsymbol{\theta})\)</span>) được gọi là <em>độ hợp lý</em>.</p>
+<!--
+### A Concrete Example
+--><div class="section" id="mot-vi-du-cu-the">
+<h3><span class="section-number">18.7.1.1. </span>Một ví dụ Cụ thể<a class="headerlink" href="#mot-vi-du-cu-the" title="Permalink to this headline">¶</a></h3>
+<!--
+Let us see how this works in a concrete example.
+Suppose that we have a single parameter $\theta$ representing the probability that a coin flip is heads.
+Then the probability of getting a tails is $1-\theta$, and so if our observed data $X$ is a sequence with $n_H$ heads and $n_T$ tails,
+we can use the fact that independent probabilities multiply to see that
+--><p>Hãy cùng xem phương pháp này hoạt động như thế nào trong một ví dụ cụ
+thể. Giả sử rằng ta có một tham số duy nhất <span class="math notranslate nohighlight">\(\theta\)</span> biểu diễn cho
+xác suất tung đồng xu một lần được mặt ngửa. Khi đó, xác suất nhận được
+mặt sấp là <span class="math notranslate nohighlight">\(1-\theta\)</span>, và vì vậy nếu dữ liệu quan sát <span class="math notranslate nohighlight">\(X\)</span> là
+một chuỗi có <span class="math notranslate nohighlight">\(n_H\)</span> mặt ngửa và <span class="math notranslate nohighlight">\(n_T\)</span> mặt sấp, ta có thể sử
+dụng tính chất tích các xác suất độc lập với nhau để có được</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-2">
+<span class="eqno">(18.7.4)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-2" title="Permalink to this equation">¶</a></span>\[P(X \mid \theta) = \theta^{n_H}(1-\theta)^{n_T}.\]</div>
+<!--
+If we flip $13$ coins and get the sequence "HHHTHTTHHHHHT", which has $n_H = 9$ and $n_T = 4$, we see that this is
+--><p>Nếu ta tung <span class="math notranslate nohighlight">\(13\)</span> đồng xu và nhận được chuỗi “HHHTHTTHHHHHT”, tức
+ta có <span class="math notranslate nohighlight">\(n_H = 9\)</span> và <span class="math notranslate nohighlight">\(n_T = 4\)</span>, thì ta nhận được ở đây là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-3">
+<span class="eqno">(18.7.5)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-3" title="Permalink to this equation">¶</a></span>\[P(X \mid \theta) = \theta^9(1-\theta)^4.\]</div>
+<!--
+One nice thing about this example will be that we know the answer going in.
+Indeed, if we said verbally, "I flipped 13 coins, and 9 came up heads, what is our best guess for the probability that the coin comes us heads?, "
+everyone would correctly guess $9/13$.
+What this maximum likelihood method will give us is a way to get that number from first principals in a way that will generalize to vastly more complex situations.
+--><p>Một điều thú vị ở ví dụ này là ta biết trước câu trả lời. Thật vậy, nếu
+chúng ta phát biểu bằng lời, “Tôi đã tung 13 đồng xu và 9 đồng xu ra mặt
+ngửa, dự đoán tốt nhất cho xác suất tung đồng xu được mặt ngửa là bao
+nhiêu?” mọi người sẽ đều đoán đúng <span class="math notranslate nohighlight">\(9/13\)</span>. Điều mà phương pháp khả
+năng hợp lý cực đại cung cấp cho chúng ta là một cách để thu được con số
+đó từ các nguyên tắc cơ bản sao cho có thể khái quát được cho các tình
+huống phức tạp hơn rất nhiều.</p>
+<!--
+For our example, the plot of $P(X \mid \theta)$ is as follows:
+--><p>Với ví dụ này, đồ thị của <span class="math notranslate nohighlight">\(P(X \mid \theta)\)</span> có dạng như sau:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">autograd</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">theta</span><span class="o">**</span><span class="mi">9</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="mf">4.</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="s1">&#39;likelihood&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_maximum-likelihood_vn_ed288b_1_0.svg" src="../_images/output_maximum-likelihood_vn_ed288b_1_0.svg" /></div>
+<!--
+This has its maximum value somewhere near our expected $9/13 \approx 0.7\ldots$.
+To see if it is exactly there, we can turn to calculus.
+Notice that at the maximum, the function is flat.
+Thus, we could find the maximum likelihood estimate :eqref:`eq_max_like` by finding the values of $\theta$ where the derivative is zero,
+and finding the one that gives the highest probability. We compute:
+--><p>Xác suất này có giá trị tối đa ở đâu đó gần
+<span class="math notranslate nohighlight">\(9/13 \approx 0.7\ldots\)</span> như đã dự đoán. Để kiểm tra xem nó có nằm
+chính xác ở đó không, chúng ta có thể nhờ đến giải tích. Chú ý rằng ở
+điểm cực đại, hàm này sẽ phẳng. Do đó, ta có thể tìm ước lượng hợp lý
+cực đại <a class="reference internal" href="#equation-eq-max-like">(18.7.1)</a> bằng cách tìm các giá trị của
+<span class="math notranslate nohighlight">\(\theta\)</span> để đạo hàm bằng 0, rồi xem giá trị nào trả về xác suất
+cao nhất. Ta tính toán:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-4">
+<span class="eqno">(18.7.6)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+0 &amp; = \frac{d}{d\theta} P(X \mid \theta) \\
+&amp; = \frac{d}{d\theta} \theta^9(1-\theta)^4 \\
+&amp; = 9\theta^8(1-\theta)^4 - 4\theta^9(1-\theta)^3 \\
+&amp; = \theta^8(1-\theta)^3(9-13\theta).
+\end{aligned}\end{split}\]</div>
+<!--
+This has three solutions: $0$, $1$ and $9/13$.
+The first two are clearly minima, not maxima as they assign probability $0$ to our sequence.
+The final value does *not* assign zero probability to our sequence, and thus must be the maximum likelihood estimate $\hat \theta = 9/13$.
+--><p>Phương trình này có ba nghiệm: <span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(1\)</span> và <span class="math notranslate nohighlight">\(9/13\)</span>. Hai
+giá trị đầu tiên rõ ràng là cực tiểu, không phải cực đại vì chúng cho
+xác suất bằng <span class="math notranslate nohighlight">\(0\)</span> đối với chuỗi kết quả tung đồng xu. Giá trị cuối
+cùng <em>không</em> cho xác suất bằng 0 với chuỗi đã cho và do đó nó phải là
+ước lượng hợp lý cực đại <span class="math notranslate nohighlight">\(\hat \theta = 9/13\)</span>.</p>
+<!--
+## Numerical Optimization and the Negative Log-Likelihood
+--></div>
+<div class="section" id="toi-uu-hoa-so-hoc-va-ham-log-hop-li-am">
+<h3><span class="section-number">18.7.1.2. </span>Tối ưu hóa Số học và hàm Log hợp lí Âm<a class="headerlink" href="#toi-uu-hoa-so-hoc-va-ham-log-hop-li-am" title="Permalink to this headline">¶</a></h3>
+<!--
+The previous example is nice, but what if we have billions of parameters and data examples.
+--><p>Ví dụ trước khá ổn, nhưng điều gì sẽ xảy ra nếu chúng ta có hàng tỷ tham
+số và mẫu dữ liệu.</p>
+<!--
+First notice that, if we make the assumption that all the data examples are independent,
+we can no longer practically consider the likelihood itself as it is a product of many probabilities.
+Indeed, each probability is in $[0,1]$, say typically of value about $1/2$, and the product of $(1/2)^{1000000000}$ is far below machine precision.
+We cannot work with that directly.
+--><p>Trước tiên, hãy lưu ý rằng, nếu chúng ta giả định rằng tất cả các mẫu dữ
+liệu là độc lập, thì ta có thể không còn thấy tính khả thi từ độ hợp lý
+khi chính nó là tích của nhiều xác suất. Thật vậy, mỗi xác suất nằm
+trong đoạn <span class="math notranslate nohighlight">\([0,1]\)</span>, giá trị thường là <span class="math notranslate nohighlight">\(1/2\)</span> và tích của
+<span class="math notranslate nohighlight">\((1/2)^{1000000000}\)</span> nhỏ hơn nhiều so với độ chính xác của máy. Ta
+không thể làm việc trực tiếp với biểu thức này.</p>
+<!--
+However, recall that the logarithm turns products to sums, in which case
+--><p>Tuy nhiên, nhắc lại rằng hàm log chuyển đổi tích thành tổng, trong
+trường hợp này thì</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-5">
+<span class="eqno">(18.7.7)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-5" title="Permalink to this equation">¶</a></span>\[\log((1/2)^{1000000000}) = 1000000000\cdot\log(1/2) \approx -301029995.6\ldots\]</div>
+<!--
+This number fits perfectly within even a single precision $32$-bit float.
+Thus, we should consider the *log-likelihood*, which is
+--><p>Con số này hoàn toàn nằm trong khoảng giá trị của một số thực dấu phẩy
+động <span class="math notranslate nohighlight">\(32\)</span>-bit với độ chính xác đơn. Vì vậy, chúng ta nên xem xét
+<em>độ hợp lý thang log</em> (<em>log-likelihood</em>), chính là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-6">
+<span class="eqno">(18.7.8)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-6" title="Permalink to this equation">¶</a></span>\[\log(P(X \mid \boldsymbol{\theta})).\]</div>
+<!--
+Since the function $x \mapsto \log(x)$ is increasing, maximizing the likelihood is the same thing as maximizing the log-likelihood.
+Indeed in :numref:`sec_naive_bayes` we will see this reasoning applied when working with the specific example of the naive Bayes classifier.
+--><p>Vì hàm <span class="math notranslate nohighlight">\(x \mapsto \log(x)\)</span> đồng biến, việc cực đại hóa độ hợp lý
+đồng nghĩa với việc cực đại hóa log hợp lý. Thật vậy trong
+<a class="reference internal" href="naive-bayes_vn.html#sec-naive-bayes"><span class="std std-numref">Section 18.9</span></a>, ta sẽ thấy lập luận này được áp dụng khi
+làm việc với ví dụ cụ thể cho bộ phân loại Naive Bayes.</p>
+<!--
+We often work with loss functions, where we wish to minimize the loss.
+We may turn maximum likelihood into the minimization of a loss by taking $-\log(P(X \mid \boldsymbol{\theta}))$, which is the *negative log-likelihood*.
+--><p>Ta thường làm việc với các hàm mất mát, với mong muốn cực tiểu hóa
+chúng. Ta có thể đổi từ việc tìm hợp lý cực đại thành việc tìm cực tiểu
+mất mát bằng cách lấy <span class="math notranslate nohighlight">\(-\log(P(X \mid \boldsymbol{\theta}))\)</span>, tức
+<em>hàm đối log hợp lý (negative log-likelihood)</em>.</p>
+<!--
+To illustrate this, consider the coin flipping problem from before, and pretend that we do not know the closed form solution. We may compute that
+--><p>Để minh họa điều này, hãy xem xét bài toán tung đồng xu trước đó và giả
+sử rằng ta không biết nghiệm dạng đóng. Ta có thể tính ra</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-7">
+<span class="eqno">(18.7.9)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-7" title="Permalink to this equation">¶</a></span>\[-\log(P(X \mid \boldsymbol{\theta})) = -\log(\theta^{n_H}(1-\theta)^{n_T}) = -(n_H\log(\theta) + n_T\log(1-\theta)).\]</div>
+<!--
+This can be written into code, and freely optimized even for billions of coin flips.
+--><p>Đẳng thức này có thể được lập trình và được tối ưu hóa hoàn toàn ngay cả
+với hàng tỷ lần tung đồng xu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up our data</span>
+<span class="n">n_H</span> <span class="o">=</span> <span class="mi">8675309</span>
+<span class="n">n_T</span> <span class="o">=</span> <span class="mi">25624</span>
+
+<span class="c1"># Initialize our paramteres</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">theta</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+
+<span class="c1"># Perform gradient descent</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.00000000001</span>
+<span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">n_H</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">theta</span><span class="p">))</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">theta</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">theta</span><span class="o">.</span><span class="n">grad</span>
+
+<span class="c1"># Check output</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">n_H</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_H</span> <span class="o">+</span> <span class="n">n_T</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="mf">0.50172704</span><span class="p">),</span> <span class="mf">0.9970550284664874</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Numerical convenience is only one reason people like to use negative log-likelihoods.
+Indeed, there are a several reasons that it can be preferable.
+--><p>Sự thuận tiện số học chỉ là một trong những lý do khiến mọi người thích
+dùng hàm đối log hợp lý. Thật ra còn có một vài lý do khác mà nó có thể
+được lựa chọn.</p>
+<!--
+The second reason we consider the log-likelihood is the simplified application of calculus rules.
+As discussed above, due to independence assumptions, most probabilities we encounter in machine learning are products of individual probabilities.
+--><p>Lý do thứ hai mà ta xem xét đến hàm log hợp lý là việc áp dụng các quy
+tắc giải tích trở nên đơn giản hơn. Như đã thảo luận ở trên, do các giả
+định về tính độc lập, hầu hết các xác suất mà chúng ta gặp phải trong
+học máy là tích của các xác suất riêng lẻ.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-8">
+<span class="eqno">(18.7.10)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-8" title="Permalink to this equation">¶</a></span>\[P(X\mid\boldsymbol{\theta}) = p(x_1\mid\boldsymbol{\theta})\cdot p(x_2\mid\boldsymbol{\theta})\cdots p(x_n\mid\boldsymbol{\theta}).\]</div>
+<!--
+This means that if we directly apply the product rule to compute a derivative we get
+--><p>Điều này có nghĩa là nếu ta áp dựng trực tiếp quy tắc nhân để tính đạo
+hàm thì ta sẽ có được</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-9">
+<span class="eqno">(18.7.11)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-9" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\frac{\partial}{\partial \boldsymbol{\theta}} P(X\mid\boldsymbol{\theta}) &amp; = \left(\frac{\partial}{\partial \boldsymbol{\theta}}P(x_1\mid\boldsymbol{\theta})\right)\cdot P(x_2\mid\boldsymbol{\theta})\cdots P(x_n\mid\boldsymbol{\theta}) \\
+&amp; \quad + P(x_1\mid\boldsymbol{\theta})\cdot \left(\frac{\partial}{\partial \boldsymbol{\theta}}P(x_2\mid\boldsymbol{\theta})\right)\cdots P(x_n\mid\boldsymbol{\theta}) \\
+&amp; \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \vdots \\
+&amp; \quad + P(x_1\mid\boldsymbol{\theta})\cdot P(x_2\mid\boldsymbol{\theta}) \cdots \left(\frac{\partial}{\partial \boldsymbol{\theta}}P(x_n\mid\boldsymbol{\theta})\right).
+\end{aligned}\end{split}\]</div>
+<!--
+This requires $n(n-1)$ multiplications, along with $(n-1)$ additions, so it is total of quadratic time in the inputs!
+Sufficient cleverness in grouping terms will reduce this to linear time, but it requires some thought.
+For the negative log-likelihood we have instead
+--><p>Biểu thức này đòi hỏi <span class="math notranslate nohighlight">\(n(n-1)\)</span> phép nhân, cùng với <span class="math notranslate nohighlight">\((n-1)\)</span>
+phép cộng, vì vậy tổng thời gian chạy tỷ lệ bình phương với số lượng đầu
+vào! Nếu ta khôn khéo trong việc nhóm các phần tử thì độ phức tạp sẽ
+giảm xuống tuyến tính, nhưng việc này yêu cầu ta phải suy nghĩ một chút.
+Đối với hàm đối log hợp lý, chúng ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-10">
+<span class="eqno">(18.7.12)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-10" title="Permalink to this equation">¶</a></span>\[-\log\left(P(X\mid\boldsymbol{\theta})\right) = -\log(P(x_1\mid\boldsymbol{\theta})) - \log(P(x_2\mid\boldsymbol{\theta})) \cdots - \log(P(x_n\mid\boldsymbol{\theta})),\]</div>
+<!--
+which then gives
+--><p>điều này đưa đến kết quả là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-11">
+<span class="eqno">(18.7.13)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-11" title="Permalink to this equation">¶</a></span>\[- \frac{\partial}{\partial \boldsymbol{\theta}} \log\left(P(X\mid\boldsymbol{\theta})\right) = \frac{1}{P(x_1\mid\boldsymbol{\theta})}\left(\frac{\partial}{\partial \boldsymbol{\theta}}P(x_1\mid\boldsymbol{\theta})\right) + \cdots + \frac{1}{P(x_n\mid\boldsymbol{\theta})}\left(\frac{\partial}{\partial \boldsymbol{\theta}}P(x_n\mid\boldsymbol{\theta})\right).\]</div>
+<!--
+This requires only $n$ divides and $n-1$ sums, and thus is linear time in the inputs.
+--><p>Đẳng thức này chỉ yêu cầu <span class="math notranslate nohighlight">\(n\)</span> phép chia và <span class="math notranslate nohighlight">\(n-1\)</span> phép cộng,
+và do đó thời gian chạy tỷ lệ tuyến tính với số đầu vào.</p>
+<!--
+The third and final reason to consider the negative log-likelihood is the relationship to information theory,
+which we will discuss in detail in :numref:`sec_information_theory`.
+This is a rigorous mathematical theory which gives a way to measure the degree of information or randomness in a random variable.
+The key object of study in that field is the entropy which is
+--><p>Lý do thứ ba và cũng là cuối cùng khi xem xét hàm đối log hợp lý đó là
+sự liên hệ với lý thuyết thông tin, mà chúng ta sẽ thảo luận chi tiết
+tại phần <a class="reference internal" href="information-theory_vn.html#sec-information-theory"><span class="std std-numref">Section 18.11</span></a>. Đây là một lý thuyết toán
+học chặt chẽ đưa ra cách đo lường mức độ thông tin hoặc độ ngẫu nhiên
+của một biến ngẫu nhiên. Đối tượng nghiên cứu chính trong lĩnh vực đó là
+entropy</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-12">
+<span class="eqno">(18.7.14)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-12" title="Permalink to this equation">¶</a></span>\[H(p) = -\sum_{i} p_i \log_2(p_i),\]</div>
+<!--
+which measures the randomness of a source. Notice that this is nothing more than the average $-\log$ probability,
+and thus if we take our negative log-likelihood and divide by the number of data examples, we get a relative of entropy known as cross-entropy.
+This theoretical interpretation alone would be sufficiently compelling to motivate reporting the average negative log-likelihood over the dataset as a way of measuring model performance.
+--><p>công thức trên đo lường độ ngẫu nhiên của một nguồn. Hãy để ý rằng đây
+chỉ là giá trị trung bình của <span class="math notranslate nohighlight">\(-\log\)</span> xác suất, và do đó, nếu ta
+lấy hàm đối log hợp lý và chia cho số lượng mẫu dữ liệu, ta sẽ nhận được
+một đại lượng liên quan được gọi là entropy chéo. Chỉ riêng việc diễn
+giải mang tính lý thuyết này thôi là đủ thuyết phục để ta sử dụng giá
+trị đối log hợp lý trung bình trên một tập dữ liệu như một cách đo lường
+chất lượng của mô hình.</p>
+<!--
+## Maximum Likelihood for Continuous Variables
+--></div>
+</div>
+<div class="section" id="hop-ly-cuc-dai-cho-bien-lien-tuc">
+<h2><span class="section-number">18.7.2. </span>Hợp lý Cực đại cho Biến Liên tục<a class="headerlink" href="#hop-ly-cuc-dai-cho-bien-lien-tuc" title="Permalink to this headline">¶</a></h2>
+<!--
+Everything that we have done so far assumes we are working with discrete random variables, but what if we want to work with continuous ones?
+--><p>Tất cả những điều chúng ta đã làm ở trước đều giả định rằng ta đang làm
+việc với biến ngẫu nhiên rời rạc, nhưng nếu chúng ta muốn làm việc với
+các biến liên tục thì sao?</p>
+<!--
+The short summary is that nothing at all changes, except we replace all the instances of the probability with the probability density.
+Recalling that we write densities with lower case $p$, this means that for example we now say
+--><p>Nói ngắn gọn thì không có thứ gì thay đổi cả, ngoại trừ việc ta thay thế
+tất cả giá trị xác suất bằng mật độ xác suất. Nhắc lại rằng chúng ta ký
+hiệu mật độ bằng chữ thường <span class="math notranslate nohighlight">\(p\)</span>, nghĩa là bây giờ ta sẽ có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-13">
+<span class="eqno">(18.7.15)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-13" title="Permalink to this equation">¶</a></span>\[-\log\left(p(X\mid\boldsymbol{\theta})\right) = -\log(p(x_1\mid\boldsymbol{\theta})) - \log(p(x_2\mid\boldsymbol{\theta})) \cdots - \log(p(x_n\mid\boldsymbol{\theta})) = -\sum_i \log(p(x_i \mid \theta)).\]</div>
+<!--
+The question becomes, "Why is this OK?"
+After all, the reason we introduced densities was because probabilities of getting specific outcomes themselves was zero,
+and thus is not the probability of generating our data for any set of parameters zero?
+--><p>Câu hỏi lúc này trở thành, “Tại sao điều này lại ổn?” Rốt cuộc, lý do
+chúng ta đưa ra khái niệm mật độ là vì xác suất nhận được một kết quả cụ
+thể bằng không, và do đó chẳng phải xác suất sinh dữ liệu đối với tập
+hợp tham số bất kỳ sẽ bằng không sao?</p>
+<!--
+Indeed, this is the case, and understanding why we can shift to densities is an exercise in tracing what happens to the epsilons.
+--><p>Quả thật điều này là đúng, và việc hiểu tại sao chúng ta có thể chuyển
+sang mật độ là một bài tập trong việc truy ra những gì xảy ra đối với
+các epsilon.</p>
+<!--
+Let us first re-define our goal.
+Suppose that for continuous random variables we no longer want to compute the probability of getting exactly the right value,
+but instead matching to within some range $\epsilon$.
+For simplicity, we assume our data is repeated observations $x_1, \ldots, x_N$ of identically distributed random variables $X_1, \ldots, X_N$.
+As we have seen previously, this can be written as
+--><p>Đầu tiên hãy xác định lại mục tiêu của chúng ta. Giả sử rằng đối với các
+biến ngẫu nhiên liên tục, ta không còn muốn tính xác suất tại chính ngay
+mỗi giá trị, mà thay vào đó là tìm xác suất trong một phạm vi
+<span class="math notranslate nohighlight">\(\epsilon\)</span> nào đó. Để đơn giản, ta giả định rằng dữ liệu là các
+mẫu quan sát lặp lại <span class="math notranslate nohighlight">\(x_1, \ldots, x_N\)</span> của các biến ngẫu nhiên
+được phân phối giống nhau <span class="math notranslate nohighlight">\(X_1, \ldots, X_N\)</span>. Như chúng ta đã thấy
+trước đây, giả định này có thể được biểu diễn như sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-14">
+<span class="eqno">(18.7.16)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-14" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(X_1 \in [x_1, x_1+\epsilon], X_2 \in [x_2, x_2+\epsilon], \ldots, X_N \in [x_N, x_N+\epsilon]\mid\boldsymbol{\theta}) \\
+\approx &amp;\epsilon^Np(x_1\mid\boldsymbol{\theta})\cdot p(x_2\mid\boldsymbol{\theta}) \cdots p(x_n\mid\boldsymbol{\theta}).
+\end{aligned}\end{split}\]</div>
+<!--
+Thus, if we take negative logarithms of this we obtain
+--><p>Do đó, nếu ta lấy đối của logarit cho biểu thức này thì ta sẽ nhận được</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-15">
+<span class="eqno">(18.7.17)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-15" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;-\log(P(X_1 \in [x_1, x_1+\epsilon], X_2 \in [x_2, x_2+\epsilon], \ldots, X_N \in [x_N, x_N+\epsilon]\mid\boldsymbol{\theta})) \\
+\approx &amp; -N\log(\epsilon) - \sum_{i} \log(p(x_i\mid\boldsymbol{\theta})).
+\end{aligned}\end{split}\]</div>
+<!--
+If we examine this expression, the only place that the $\epsilon$ occurs is in the additive constant $-N\log(\epsilon)$.
+This does not depend on the parameters $\boldsymbol{\theta}$ at all, so the optimal choice of $\boldsymbol{\theta}$ does not depend on our choice of $\epsilon$!
+If we demand four digits or four-hundred, the best choice of $\boldsymbol{\theta}$ remains the same, thus we may freely drop the epsilon to see that what we want to optimize is
+--><p>Nếu chúng ta xem xét biểu thức này, vị trí duy nhất mà <span class="math notranslate nohighlight">\(\epsilon\)</span>
+xuất hiện là trong hằng số cộng <span class="math notranslate nohighlight">\(-N\log(\epsilon)\)</span>. Hằng số này
+hoàn toàn không phụ thuộc vào các tham số <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>,
+vì vậy lựa chọn tối ưu cho <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> không phụ thuộc
+vào việc lựa chọn <span class="math notranslate nohighlight">\(\epsilon\)</span>! Dù ta muốn lấy bốn hoặc bốn trăm chữ
+số, lựa chọn <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> tốt nhất sẽ không đổi, do đó ta
+có thể loại bỏ hẳn epsilon để có được biểu thức mà ta muốn tối ưu là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-16">
+<span class="eqno">(18.7.18)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-maximum-likelihood-vn-16" title="Permalink to this equation">¶</a></span>\[- \sum_{i} \log(p(x_i\mid\boldsymbol{\theta})).\]</div>
+<!--
+Thus, we see that the maximum likelihood point of view can operate with continuous random variables
+as easily as with discrete ones by replacing the probabilities with probability densities.
+--><p>Do đó, chúng ta thấy rằng quan điểm hợp lý cực đại có thể áp dụng được
+với các biến ngẫu nhiên liên tục dễ dàng như với các biến rời rạc bằng
+cách thay thế các xác suất bằng mật độ xác suất.</p>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">18.7.3. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* The maximum likelihood principle tells us that the best fit model for a given dataset is the one that generates the data with the highest probability.
+* Often people work with the negative log-likelihood instead for a variety of reasons: numerical stability,
+conversion of products to sums (and the resulting simplification of gradient computations), and theoretical ties to information theory.
+* While simplest to motivate in the discrete setting, it may be freely generalized to the continuous setting as well by maximizing the probability density assigned to the datapoints.
+--><ul class="simple">
+<li>Nguyên lý hợp lý cực đại cho ta biết rằng mô hình phù hợp nhất cho
+một tập dữ liệu nhất định là mô hình tạo ra các điểm dữ liệu đó với
+xác suất cao nhất.</li>
+<li>Tuy nhiên, thường thì mọi người hay làm việc với hàm đối log hợp lý
+vì nhiều lý do: tính ổn định số học, khả năng biến đổi tích thành
+tổng (dẫn tới việc đơn giản hóa các phép tính gradient) và mối liên
+hệ mật thiết về mặt lý thuyết với lý thuyết thông tin.</li>
+<li>Trong khi áp dụng phương pháp này là đơn giản nhất trong trường hợp
+rời rạc, nó cũng có thể hoàn toàn tổng quát hóa cho trường hợp liên
+tục bằng cách cực đại hóa mật độ xác suất của các điểm dữ liệu.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">18.7.4. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Suppose that you know that a random variable has density $\frac{1}{\alpha}e^{-\alpha x}$ for some value $\alpha$.
+You obtain a single observation from the random variable which is the number $3$.  What is the maximum likelihood estimate for $\alpha$?
+2. Suppose that you have a dataset of samples $\{x_i\}_{i=1}^N$ drawn from a Gaussian with unknown mean, but variance $1$.
+What is the maximum likelihood estimate for the mean?
+--><ol class="arabic simple">
+<li>Giả sử bạn biết rằng một biến ngẫu nhiên có mật độ bằng
+<span class="math notranslate nohighlight">\(\frac{1}{\alpha}e^{-\alpha x}\)</span> với một giá trị <span class="math notranslate nohighlight">\(\alpha\)</span>
+nào đó. Bạn nhận được một quan sát duy nhất từ biến ngẫu nhiên này là
+số <span class="math notranslate nohighlight">\(3\)</span>. Giá trị ước lượng hợp lý cực đại cho <span class="math notranslate nohighlight">\(\alpha\)</span> là
+bao nhiêu?</li>
+<li>Giả sử rằng bạn có tập dữ liệu với các mẫu <span class="math notranslate nohighlight">\(\{x_i\}_{i=1}^N\)</span>
+được lấy từ một phân phối Gauss với giá trị trung bình chưa biết,
+nhưng phương sai bằng <span class="math notranslate nohighlight">\(1\)</span>. Giá trị ước lượng hợp lý cực đại của
+trung bình là bao nhiêu?</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">18.7.5. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tiếng Anh: <a class="reference external" href="https://discuss.d2l.ai/t/416">MXNet</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1096">Pytorch</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1097">Tensorflow</a></li>
+<li>Tiếng Việt: <a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Diễn đàn Machine Learning Cơ
+Bản</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">18.7.6. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Trần Yến Thy</li>
+<li>Phạm Minh Đức</li>
+<li>Phạm Đăng Khoa</li>
+<li>Phạm Hồng Vinh</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">18.7. Hợp lý Cực đại</a><ul>
+<li><a class="reference internal" href="#nguyen-ly-hop-ly-cuc-dai">18.7.1. Nguyên lý Hợp lý Cực đại</a><ul>
+<li><a class="reference internal" href="#mot-vi-du-cu-the">18.7.1.1. Một ví dụ Cụ thể</a></li>
+<li><a class="reference internal" href="#toi-uu-hoa-so-hoc-va-ham-log-hop-li-am">18.7.1.2. Tối ưu hóa Số học và hàm Log hợp lí Âm</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hop-ly-cuc-dai-cho-bien-lien-tuc">18.7.2. Hợp lý Cực đại cho Biến Liên tục</a></li>
+<li><a class="reference internal" href="#tom-tat">18.7.3. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">18.7.4. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">18.7.5. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">18.7.6. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="random-variables_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>18.6. Biến Ngẫu nhiên</div>
+         </div>
+     </a>
+     <a id="button-next" href="distributions_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>18.8. Các Phân phối Xác suất</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

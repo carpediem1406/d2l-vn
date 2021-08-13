@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>18.10. Thống kê &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="18.11. Lý thuyết Thông tin" href="information-theory_vn.html" />
+    <link rel="prev" title="18.9. Bộ phân loại Naive Bayes" href="naive-bayes_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">18. </span>Phụ lục: Toán học cho Học Sâu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">18.10. </span>Thống kê</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_appendix-mathematics-for-deep-learning/statistics_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Statistics
+--><div class="section" id="thong-ke">
+<span id="sec-statistics"></span><h1><span class="section-number">18.10. </span>Thống kê<a class="headerlink" href="#thong-ke" title="Permalink to this headline">¶</a></h1>
+<!--
+Undoubtedly, to be a top deep learning practitioner, the ability to train the state-of-the-art and high accurate models is crucial.
+However, it is often unclear when improvements are significant, or only the result of random fluctuations in the training process.
+To be able to discuss uncertainty in estimated values, we must learn some statistics.
+--><p>Để trở thành chuyên gia Học sâu hàng đầu, điều kiện tiên quyết cần có là
+khả năng huấn luyện các mô hình hiện đại với độ chính xác cao. Tuy
+nhiên, thường khó có thể biết được những cải tiến trong mô hình là đáng
+kể, hay chúng chỉ là kết quả của những biến động ngẫu nhiên trong quá
+trình huấn luyện. Để có thể thảo luận về tính bất định trong các giá trị
+ước lượng, chúng ta cần có hiểu biết về thống kê.</p>
+<!--
+The earliest reference of *statistics* can be traced back to an Arab scholar Al-Kindi in the $9^{\mathrm{th}}$-century,
+who gave a detailed description of how to use statistics and frequency analysis to decipher encrypted messages.
+After 800 years, the modern statistics arose from Germany in 1700s, when the researchers focused on the demographic and economic data collection and analysis.
+Today, statistics is the science subject that concerns the collection, processing, analysis, interpretation and visualization of data.
+What is more, the core theory of statistics has been widely used in the research within academia, industry, and government.
+--><p>Tài liệu tham khảo đầu tiên về <em>thống kê</em> có thể được truy ngược về học
+giả người Ả Rập Al-Kindi từ thế kỉ thứ chín. Ông đã đưa ra những mô tả
+chi tiết về cách sử dụng thống kê và phân tích tần suất để giải mã những
+thông điệp mã hóa. Sau 800 năm, thống kê hiện đại trỗi dậy ở Đức vào
+những năm 1700, khi các nhà nghiên cứu tập trung vào việc thu thập và
+phân tích các dữ liệu nhân khẩu học và kinh tế. Hiện nay, khoa học thống
+kê quan tâm đến việc thu thập, xử lý, phân tích, diễn giải và biểu diễn
+dữ liệu. Hơn nữa, lý thuyết cốt lõi của thống kê đã được sử dụng rộng
+rãi cho nghiên cứu trong giới học thuật, doanh nghiệp và chính phủ.</p>
+<!--
+More specifically, statistics can be divided to *descriptive statistics* and *statistical inference*.
+The former focus on summarizing and illustrating the features of a collection of observed data, which is referred to as a *sample*.
+The sample is drawn from a *population*, denotes the total set of similar individuals, items, or events of our experiment interests.
+Contrary to descriptive statistics, *statistical inference* further deduces the characteristics of a population from the given *samples*,
+based on the assumptions that the sample distribution can replicate the population distribution at some degree.
+--><p>Cụ thể hơn, thống kê có thể được chia thành <em>thống kê mô tả</em>
+(<em>descriptive statistic</em>) và <em>suy luận thống kê</em> (<em>statistical
+inference</em>). Thống kê mô tả đặt trọng tâm vào việc tóm tắt và minh họa
+những đặc trưng của một tập hợp những dữ liệu đã được quan sát - được
+gọi là <em>mẫu</em>. Mẫu được lấy ra từ một <em>tổng thể</em> (<em>population</em>), là biểu
+diễn của toàn bộ những cá thể, đồ vật hay sự kiện tương tự nhau mà thí
+nghiệm của ta quan tâm. Trái với thống kê mô tả, <em>suy luận thống kê</em>
+(<em>statistical inference</em>) dự đoán những đặc điểm của một tổng thể qua
+những <em>mẫu</em> có sẵn, dựa theo giả định phân phối mẫu là một biểu diễn
+tương đối hợp lý của phân phối tổng thể.</p>
+<!--
+You may wonder: “What is the essential difference between machine learning and statistics?” Fundamentally speaking, statistics focuses on the inference problem.
+This type of problems includes modeling the relationship between the variables, such as causal inference, and testing the statistically significance of model parameters, such as A/B testing.
+In contrast, machine learning emphasizes on making accurate predictions, without explicitly programming and understanding each parameter's functionality.
+--><p>Bạn có thể tự hỏi: “Sự khác biệt cơ bản giữa học máy và thống kê là
+gì?”. Về căn bản, thống kê tập trung vào các vấn đề suy luận. Những vấn
+đề này bao gồm mô hình hóa mối quan hệ giữa các biến, ví dụ như suy luận
+nguyên nhân hoặc kiểm tra ý nghĩa thống kê của các tham số mô hình, ví
+dụ như phép thử A/B. Ngược lại, học máy đề cao việc dự đoán chính xác mà
+không yêu cầu lập trình một cách tường minh và hiểu rõ chức năng của
+từng tham số.</p>
+<!--
+In this section, we will introduce three types of statistics inference methods: evaluating and comparing estimators, conducting hypothesis tests, and constructing confidence intervals.
+These methods can help us infer the characteristics of a given population, i.e., the true parameter $\theta$.
+For brevity, we assume that the true parameter $\theta$ of a given population is a scalar value.
+It is straightforward to extend to the case where $\theta$ is a vector or a tensor, thus we omit it in our discussion.
+--><p>Trong chương này, chúng tôi sẽ giới thiệu ba loại suy luận thống kê:
+đánh giá và so sánh các bộ ước lượng, tiến hành kiểm định giả thuyết và
+xây dựng khoảng tin cậy. Các phương pháp này có thể giúp chúng ta suy
+luận những đặc tính của một tổng thể, hay nói cách khác, tham số thực
+<span class="math notranslate nohighlight">\(\theta\)</span>. Nói ngắn gọn, chúng tôi giả sử tham số thực
+<span class="math notranslate nohighlight">\(\theta\)</span> của một tổng thể cho trước là một số vô hướng. Việc mở
+rộng ra các trường hợp <span class="math notranslate nohighlight">\(\theta\)</span> là một vector hoặc tensor là khá
+đơn giản nên chúng tôi sẽ không đề cập ở đây.</p>
+<!--
+## Evaluating and Comparing Estimators
+--><div class="section" id="danh-gia-va-so-sanh-cac-bo-uoc-luong">
+<h2><span class="section-number">18.10.1. </span>Đánh giá và So sánh các Bộ ước lượng<a class="headerlink" href="#danh-gia-va-so-sanh-cac-bo-uoc-luong" title="Permalink to this headline">¶</a></h2>
+<!--
+In statistics, an *estimator* is a function of given samples used to estimate the true parameter $\theta$.
+We will write $\hat{\theta}_n = \hat{f}(x_1, \ldots, x_n)$ for the estimate of $\theta$ after observing the samples {$x_1, x_2, \ldots, x_n$}.
+--><p>Trong thống kê, một <em>bộ ước lượng</em> là một hàm sử dụng những mẫu có sẵn
+để ước lượng giá trị thực của tham số <span class="math notranslate nohighlight">\(\theta\)</span>. Ta gọi
+<span class="math notranslate nohighlight">\(\hat{\theta}_n = \hat{f}(x_1, \ldots, x_n)\)</span> là ước lượng của
+<span class="math notranslate nohighlight">\(\theta\)</span> sau khi quan sát các mẫu {<span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_n\)</span>}.</p>
+<!--
+We've seen simple examples of estimators before in section :numref:`sec_maximum_likelihood`.
+If you have a number of samples from a Bernoulli random variable, then the maximum likelihood estimate for
+the probability the random variable is one can be obtained by counting the number of ones observed and dividing by the total number of samples.
+Similarly, an exercise asked you to show that the maximum likelihood estimate of the mean of a Gaussian given a number of samples is given by the average value of all the samples.
+These estimators will almost never give the true value of the parameter, but ideally for a large number of samples the estimate will be close.
+--><p>Ta đã thấy nhiều ví dụ đơn giản của bộ ước lượng trong phần
+<a class="reference internal" href="maximum-likelihood_vn.html#sec-maximum-likelihood"><span class="std std-numref">Section 18.7</span></a>. Nếu bạn có một số mẫu ngẫu nhiên từ
+phân phối Bernoulli, thì ước lượng hợp lý cực đại (<em>maximum likelihood
+estimate</em>) cho xác xuất của biến ngẫu nhiên có thể được tính bằng cách
+đếm số lần biến cố xuất hiện rồi chia cho tổng số mẫu. Tương tự, đã có
+một bài tập yêu cầu bạn chứng minh rằng ước lượng hợp lý cực đại của kỳ
+vọng phân phối Gauss với một số lượng mẫu cho trước là giá trị trung
+bình của tập mẫu đó. Các bộ ước lượng này dường như sẽ không bao giờ cho
+ra giá trị chính xác của tham số, nhưng với số lượng mẫu đủ lớn, ước
+lượng có được sẽ gần với giá trị thực.</p>
+<!--
+As an example, we show below the true density of a Gaussian random variable with mean zero and variance one, along with a collection samples from that Gaussian.
+We constructed the $y$ coordinate so every point is visible and the relationship to the original density is clearer.
+--><p>Xét ví dụ sau, chúng tôi biểu diễn mật độ của phân phối Gauss với kỳ
+vọng là không và phương sai là một, cùng với một tập các mẫu lấy ra từ
+phân phối đó. Tọa độ <span class="math notranslate nohighlight">\(y\)</span> được xây dựng sao cho tất các điểm đều có
+thể nhìn thấy được và mối quan hệ giữa mật độ mẫu và mật độ gốc của phân
+phối có thể được nhìn thấy rõ hơn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+<span class="c1"># Sample datapoints and create y coordinate</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">8675309</span><span class="p">)</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,))</span>
+<span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">xs</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">epsilon</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+             <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">epsilon</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">))]</span>
+<span class="c1"># Compute true density</span>
+<span class="n">xd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">yd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">xd</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="c1"># Plot the results</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xd</span><span class="p">,</span> <span class="n">yd</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;sample mean: </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xs</span><span class="p">))</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_statistics_vn_b34841_1_0.svg" src="../_images/output_statistics_vn_b34841_1_0.svg" /></div>
+<!--
+There can be many ways to compute an estimator of a parameter $\hat{\theta}_n$.
+In this section, we introduce three common methods to evaluate and compare estimators: the mean squared error, the standard deviation, and statistical bias.
+--><p>Có nhiều cách để tính toán một bộ ước lượng cho một tham số
+<span class="math notranslate nohighlight">\(\hat{\theta}_n\)</span>. Trong phần này, ta sẽ điểm qua ba phương thức
+phổ biến để đánh giá và so sánh các bộ ước lượng: trung bình bình phương
+sai số, độ lệch chuẩn và độ chệch thống kê.</p>
+<!--
+### Mean Squared Error
+--><div class="section" id="trung-binh-binh-phuong-sai-so">
+<h3><span class="section-number">18.10.1.1. </span>Trung bình Bình phương Sai số<a class="headerlink" href="#trung-binh-binh-phuong-sai-so" title="Permalink to this headline">¶</a></h3>
+<!--
+Perhaps the simplest metric used to evaluate estimators is the *mean squared error (MSE)* (or *$l_2$ loss*) of an estimator can be defined as
+--><p>Có lẽ phép đo đơn giản nhất được sử dụng để đánh giá bộ ước lượng là
+<em>trung bình bình phương sai số (mean squared error – MSE)</em> (hay <em>mất mát
+:math:`l_2`</em>). Trung bình bình phương sai số của một bộ ước lượng được
+định nghĩa</p>
+<div class="math notranslate nohighlight" id="equation-eq-mse-est">
+<span class="eqno">(18.10.1)<a class="headerlink" href="#equation-eq-mse-est" title="Permalink to this equation">¶</a></span>\[\mathrm{MSE} (\hat{\theta}_n, \theta) = E[(\hat{\theta}_n - \theta)^2].\]</div>
+<!--
+This allows us to quantify the average squared deviation from the true value.
+MSE is always non-negative. If you have read :numref:`sec_linear_regression`, you will recognize it as the most commonly used regression loss function.
+As a measure to evaluate an estimator, the closer its value to zero, the closer the estimator is close to the true parameter $\theta$.
+--><p>Phương pháp này cho phép ta định lượng trung bình bình phương độ lệch so
+với giá trị thực. MSE là một đại lượng không âm. Nếu đã đọc
+<a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html#sec-linear-regression"><span class="std std-numref">Section 3.1</span></a>, bạn sẽ nhận ra đây là hàm mất mát
+được sử dụng phổ biến nhất trong bài toán hồi quy. Như một phép đo để
+đánh giá bộ ước lượng, giá trị của nó càng gần không thì bộ ước lượng
+càng gần với tham số thực <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<!--
+### Statistical Bias
+--></div>
+<div class="section" id="do-chech-thong-ke">
+<h3><span class="section-number">18.10.1.2. </span>Độ chệch Thống kê<a class="headerlink" href="#do-chech-thong-ke" title="Permalink to this headline">¶</a></h3>
+<!--
+The MSE provides a natural metric, but we can easily imagine multiple different phenomena that might make it large.
+Two that we will see are fundamentally important are the fluctuation in the estimator due to randomness in the dataset, and systematic error in the estimator due to the estimation procedure.
+--><p>MSE cung cấp một phép đo tự nhiên, nhưng ta có thể dễ dàng nghĩ tới các
+trường hợp khác nhau mà ở đó giá trị MSE sẽ lớn. Ta sẽ bàn tới hai
+trường hợp cơ bản đó là biến động của bộ ước lượng do sự ngẫu nhiên
+trong bộ dữ liệu, và sai số hệ thống của bộ ước lượng xảy ra trong quá
+trình ước lượng.</p>
+<!--
+First, let's measure the systematic error.
+For an estimator $\hat{\theta}_n$, the mathematical illustration of *statistical bias* can be defined as
+--><p>Đầu tiên, ta hãy đo sai số hệ thống. Với một bộ ước lượng
+<span class="math notranslate nohighlight">\(\hat{\theta}_n\)</span>, biểu diễn toán học của <em>độ chệch thống kê</em> được
+định nghĩa</p>
+<div class="math notranslate nohighlight" id="equation-eq-bias">
+<span class="eqno">(18.10.2)<a class="headerlink" href="#equation-eq-bias" title="Permalink to this equation">¶</a></span>\[\mathrm{bias}(\hat{\theta}_n) = E(\hat{\theta}_n - \theta) = E(\hat{\theta}_n) - \theta.\]</div>
+<!--
+Note that when $\mathrm{bias}(\hat{\theta}_n) = 0$, the expectation of the estimator $\hat{\theta}_n$ is equal to the true value of parameter.
+In this case, we say $\hat{\theta}_n$ is an unbiased estimator.
+In general, an unbiased estimator is better than a biased estimator since its expectation is the same as the true parameter.
+--><p>Lưu ý rằng khi <span class="math notranslate nohighlight">\(\mathrm{bias}(\hat{\theta}_n) = 0\)</span>, kỳ vọng của bộ
+ước lượng <span class="math notranslate nohighlight">\(\hat{\theta}_n\)</span> sẽ bằng với giá trị thực của tham số.
+Trường hợp này, ta nói <span class="math notranslate nohighlight">\(\hat{\theta}_n\)</span> là một bộ ước lượng không
+thiên lệch. Nhìn chung, một bộ ước lượng không thiên lệch sẽ tốt hơn một
+bộ ước lượng thiên lệch vì kỳ vọng của nó sẽ bằng với tham số thực.</p>
+<!--
+It is worth being aware, however, that biased estimators are frequently used in practice.
+There are cases where unbiased estimators do not exist without further assumptions, or are intractable to compute.
+This may seem like a significant flaw in an estimator, however the majority of estimators encountered in practice are at least asymptotically unbiased
+in the sense that the bias tends to zero as the number of available samples tends to infinity: $\lim_{n \rightarrow \infty} \mathrm{bias}(\hat{\theta}_n) = 0$.
+--><div class="line-block">
+<div class="line">Tuy nhiên, những bộ ước lượng thiên lệch vẫn thường xuyên được sử dụng
+trong thực tế.</div>
+<div class="line">Có những trường hợp không tồn tại các bộ ước lượng không thiên lệch
+nếu không có thêm giả định, hoặc rất khó để tính toán. Đây có thể xem
+như một khuyết điểm lớn trong bộ ước lượng, tuy nhiên phần lớn các bộ
+ước lượng gặp trong thực tiễn đều ít nhất tiệm cận không thiên lệch
+theo nghĩa độ chệch có xu hướng tiến về không khi số lượng mẫu có được
+tiến về vô cực:
+<span class="math notranslate nohighlight">\(\lim_{n \rightarrow \infty} \mathrm{bias}(\hat{\theta}_n) = 0\)</span>.</div>
+</div>
+<!--
+### Variance and Standard Deviation
+--></div>
+<div class="section" id="phuong-sai-va-do-lech-chuan">
+<h3><span class="section-number">18.10.1.3. </span>Phương sai và Độ lệch Chuẩn<a class="headerlink" href="#phuong-sai-va-do-lech-chuan" title="Permalink to this headline">¶</a></h3>
+<!--
+Second, let's measure the randomness in the estimator.
+Recall from :numref:`sec_random_variables`, the *standard deviation* (or *standard error*) is defined as the squared root of the variance.
+We may measure the degree of fluctuation of an estimator by measuring the standard deviation or variance of that estimator.
+--><p>Tiếp theo, hãy cùng tính độ ngẫu nhiên trong bộ ước lượng. Nhắc lại từ
+<a class="reference internal" href="random-variables_vn.html#sec-random-variables"><span class="std std-numref">Section 18.6</span></a>, <em>độ lệch chuẩn</em> (<em>standard deviation</em>)
+(còn được gọi là <em>sai số chuẩn</em> – <em>standard error</em>) được định nghĩa là
+căn bậc hai của phương sai. Chúng ta có thể đo được độ dao động của bộ
+ước lượng bằng cách tính độ lệch chuẩn hoặc phương sai của bộ ước lượng
+đó.</p>
+<div class="math notranslate nohighlight" id="equation-eq-var-est">
+<span class="eqno">(18.10.3)<a class="headerlink" href="#equation-eq-var-est" title="Permalink to this equation">¶</a></span>\[\sigma_{\hat{\theta}_n} = \sqrt{\mathrm{Var} (\hat{\theta}_n )} = \sqrt{E[(\hat{\theta}_n - E(\hat{\theta}_n))^2]}.\]</div>
+<!--
+It is important to compare :eqref:`eq_var_est` to :eqref:`eq_mse_est`.
+In this equation we do not compare to the true population value $\theta$, but instead to $E(\hat{\theta}_n)$, the expected sample mean.
+Thus we are not measuring how far the estimator tends to be from the true value, but instead we measuring the fluctuation of the estimator itself.
+--><p>So sánh <a class="reference internal" href="#equation-eq-var-est">(18.10.3)</a> và <a class="reference internal" href="#equation-eq-mse-est">(18.10.1)</a> là một việc quan
+trọng. Trong công thức này, thay vì so sánh với giá trị thực
+<span class="math notranslate nohighlight">\(\theta\)</span> của tổng thể, chúng ta sử dụng <span class="math notranslate nohighlight">\(E(\hat{\theta}_n)\)</span>
+là giá trị trung bình mẫu kỳ vọng. Do đó chúng ta không đo độ lệch của
+bộ ước lượng so với giá trị thực mà là độ dao động của chính bộ ước
+lượng.</p>
+<!--
+### The Bias-Variance Trade-off
+--></div>
+<div class="section" id="su-danh-doi-do-chechphuong-sai">
+<h3><span class="section-number">18.10.1.4. </span>Sự đánh đổi Độ chệch–Phương sai<a class="headerlink" href="#su-danh-doi-do-chechphuong-sai" title="Permalink to this headline">¶</a></h3>
+<!--
+It is intuitively clear that these two components contribute to the mean squared error.
+What is somewhat shocking is that we can show that this is actually a *decomposition* of the mean squared error into two contributions.
+That is to say that we can write the mean squared error as the sum of the variance and the square or the bias.
+--><p>Cả hai yếu tố trên rõ ràng đều ảnh hưởng đến trung bình bình phương sai
+số. Một điều ngạc nhiên là chúng ta có thể chứng minh hai thành phần
+trên là <em>phân tách</em> của trung bình bình phương sai số. Điều này có nghĩa
+là ta có thể viết trung bình bình phương sai số bằng tổng của phương sai
+và bình phương độ chệch.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-0">
+<span class="eqno">(18.10.4)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-0" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mathrm{MSE} (\hat{\theta}_n, \theta) &amp;= E[(\hat{\theta}_n - \theta)^2] \\
+ &amp;= E[(\hat{\theta}_n)^2] + E[\theta^2] - 2E[\hat{\theta}_n\theta] \\
+ &amp;= \mathrm{Var} [\hat{\theta}_n] + E[\hat{\theta}_n]^2 + \mathrm{Var} [\theta] + E[\theta]^2 - 2E[\hat{\theta}_n]E[\theta] \\
+ &amp;= (E[\hat{\theta}_n] - E[\theta])^2 + \mathrm{Var} [\hat{\theta}_n] + \mathrm{Var} [\theta] \\
+ &amp;= (E[\hat{\theta}_n - \theta])^2 + \mathrm{Var} [\hat{\theta}_n] + \mathrm{Var} [\theta] \\
+ &amp;= (\mathrm{bias} [\hat{\theta}_n])^2 + \mathrm{Var} (\hat{\theta}_n) + \mathrm{Var} [\theta].\\
+\end{aligned}\end{split}\]</div>
+<!--
+We refer the above formula as *bias-variance trade-off*.
+The mean squared error can be divided into three sources of error: the error from high bias, the error from high variance and the irreducible error.
+On the one hand, the bias error is commonly seen in a simple model (such as a linear regression model), which cannot extract high dimensional relations between the features and the outputs.
+If a model suffers from high bias error, we often say it is *underfitting* or lack of *flexibilty* as introduced in (:numref:`sec_model_selection`).
+On the flip side, the other error source---high variance usually results from a too complex model, which overfits the training data.
+As a result, an *overfitting* model is sensitive to small fluctuations in the data.
+If a model suffers from high variance, we often say it is *overfitting* and lack of *generalization* as introduced in (:numref:`sec_model_selection`).
+The irreducible error is the result from noise in the $\theta$ itself.
+--><p>Chúng tôi gọi công thức trên là <em>sự đánh đổi độ chệch-phương sai</em>. Giá
+trị trung bình bình phương sai số có thể được phân tách chính xác thành
+ba nguồn sai số khác nhau: sai số từ độ chệch cao, sai số từ phương sai
+cao và sai số không tránh được (<em>irreducible error</em>). Sai số độ chệch
+thường xuất hiện ở các mô hình đơn giản (ví dụ như hồi quy tuyến tính),
+vì chúng không thể trích xuất những quan hệ đa chiều giữa các đặc trưng
+và đầu ra. Nếu một mô hình có độ chệch cao, chúng ta thường nói rằng nó
+<em>dưới khớp</em> (<em>underfitting</em>) hoặc là thiếu sự <em>uyển chuyển</em> như đã giới
+thiệu ở (<a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html#sec-model-selection"><span class="std std-numref">Section 4.4</span></a>). Ngược lại, một mô hình <em>quá
+khớp</em> (<em>overfitting</em>) lại rất nhạy cảm với những dao động nhỏ trong dữ
+liệu. Nếu một mô hình có phương sai cao, chúng ta thường nói rằng nó
+<em>quá khớp</em> và thiếu <em>tổng quát hóa</em> như đã giới thiệu ở
+(<a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html#sec-model-selection"><span class="std std-numref">Section 4.4</span></a>). Sai số không tránh được xuất phát từ
+nhiễu trong chính bản thân <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+</div>
+<div class="section" id="danh-gia-cac-bo-uoc-luong-qua-lap-trinh">
+<h3><span class="section-number">18.10.1.5. </span>Đánh giá các Bộ ước lượng qua Lập trình<a class="headerlink" href="#danh-gia-cac-bo-uoc-luong-qua-lap-trinh" title="Permalink to this headline">¶</a></h3>
+<!--
+Since the standard deviation of an estimator has been implementing in MXNet by simply calling `a.std()` for a `ndarray` "a",
+we will skip it but implement the statistical bias and the mean squared error in MXNet.
+--><p>Vì độ lệch chuẩn của bộ ước lượng đã được triển khai trong MXNet bằng
+cách gọi <code class="docutils literal notranslate"><span class="pre">a.std()</span></code> của đối tượng <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> “a”, chúng ta sẽ bỏ qua
+bước này và thực hiện tính độ chệch thống kê và trung bình bình phương
+sai số trong MXNet.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistical bias</span>
+<span class="k">def</span> <span class="nf">stat_bias</span><span class="p">(</span><span class="n">true_theta</span><span class="p">,</span> <span class="n">est_theta</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">est_theta</span><span class="p">)</span> <span class="o">-</span> <span class="n">true_theta</span><span class="p">)</span>
+<span class="c1"># Mean squared error</span>
+<span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">true_theta</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">true_theta</span><span class="p">)))</span>
+</pre></div>
+</div>
+<!--
+To illustrate the equation of the bias-variance trade-off, let's simulate of normal distribution $\mathcal{N}(\theta, \sigma^2)$ with $10,000$ samples.
+Here, we use a $\theta = 1$ and $\sigma = 4$.
+As the estimator is a function of the given samples, here we use the mean of the samples as an estimator for true $\theta$ in this normal distribution $\mathcal{N}(\theta, \sigma^2)$ .
+--><p>Để minh họa cho phương trình sự đánh đổi độ chệch-phương sai, cùng giả
+lập một phân phối chuẩn <span class="math notranslate nohighlight">\(\mathcal{N}(\theta, \sigma^2)\)</span> với
+<span class="math notranslate nohighlight">\(10,000\)</span> mẫu. Ở đây, ta sử dụng <span class="math notranslate nohighlight">\(\theta = 1\)</span> và
+<span class="math notranslate nohighlight">\(\sigma = 4\)</span>. Với bộ ước lượng là một hàm số từ các mẫu đã cho, ở
+đây chúng ta sử dụng trung bình của các mẫu như là bộ ước lượng cho giá
+trị thực <span class="math notranslate nohighlight">\(\theta\)</span> trong phân phối chuẩn này
+<span class="math notranslate nohighlight">\(\mathcal{N}(\theta, \sigma^2)\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">theta_true</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">sample_len</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">theta_true</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">sample_len</span><span class="p">)</span>
+<span class="n">theta_est</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">theta_est</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">0.9503336</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Let's validate the trade-off equation by calculating the summation of the squared bias and the variance of our estimator. First, calculate the MSE of our estimator.
+--><p>Cùng xác thực phương trình đánh đổi bằng cách tính tổng độ chệch bình
+phương và phương sai từ bộ ước lượng của chúng ta. Đầu tiên, tính trung
+bình bình phương sai số của bộ ước lượng:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mse</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">theta_true</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">15.781996</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Next, we calculate $\mathrm{Var} (\hat{\theta}_n) + [\mathrm{bias} (\hat{\theta}_n)]^2$ as below. As you can see, the two values agree to numerical precision.
+--><p>Tiếp theo, chúng ta tính
+<span class="math notranslate nohighlight">\(\mathrm{Var} (\hat{\theta}_n) + [\mathrm{bias} (\hat{\theta}_n)]^2\)</span>
+như dưới đây. Bạn có thể thấy đại lượng này gần giống với trung bình
+bình phương sai số đã tính ở trên.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bias</span> <span class="o">=</span> <span class="n">stat_bias</span><span class="p">(</span><span class="n">theta_true</span><span class="p">,</span> <span class="n">theta_est</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">std</span><span class="p">())</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">bias</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">15.781995</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+## Conducting Hypothesis Tests
+--></div>
+</div>
+<div class="section" id="tien-hanh-kiem-dinh-gia-thuyet">
+<h2><span class="section-number">18.10.2. </span>Tiến hành Kiểm định Giả thuyết<a class="headerlink" href="#tien-hanh-kiem-dinh-gia-thuyet" title="Permalink to this headline">¶</a></h2>
+<!--
+The most commonly encountered topic in statistical inference is hypothesis testing.
+While hypothesis testing was popularized in the early 20th century, the first use can be traced back to John Arbuthnot in the 1700s.
+John tracked 80-year birth records in London and concluded that more men were born than women each year.
+Following that, the modern significance testing is the intelligence heritage by Karl Pearson who invented $p$-value and Pearson's chi-squared test),
+William Gosset who is the father of Student's t-distribution, and Ronald Fisher who initialed the null hypothesis and the significance test.
+--><p>Chủ đề thường gặp nhất trong suy luận thống kê là kiểm định giả thuyết.
+Tuy kiểm định giả thuyết trở nên phổ biến từ đầu thế kỷ 20, trường hợp
+sử dụng đầu tiên được ghi nhận bởi John Arbuthnot từ tận những năm 1700.
+John đã theo dõi hồ sơ khai sinh trong 80 năm ở London và kết luận rằng
+mỗi năm nhiều bé trai được sinh ra hơn so với bé gái. Tiếp đó, phép thử
+nghiệm độ tin cậy ngày nay là di sản trí tuệ của Karl Pearson, người đã
+phát minh ra <span class="math notranslate nohighlight">\(p\)</span>-value (<em>trị số p</em>) và bài kiểm định Chi bình
+phương Pearson (<em>Pearson’s chi-squared test</em>), William Gosses, cha đẻ
+của phân phối Student và Ronald Fisher, người đã khởi xướng giả thuyết
+gốc và kiểm định độ tin cậy.</p>
+<!--
+A *hypothesis test* is a way of evaluating some evidence against the default statement about a population.
+We refer the default statement as the *null hypothesis* $H_0$, which we try to reject using the observed data.
+Here, we use $H_0$ as a starting point for the statistical significance testing.
+The *alternative hypothesis* $H_A$ (or $H_1$) is a statement that is contrary to the null hypothesis.
+A null hypothesis is often stated in a declarative form which posits a relationship between variables.
+It should reflect the brief as explicit as possible, and be testable by statistics theory.
+--><p>Một bài <em>kiểm định giả thuyết</em> sẽ đánh giá các bằng chứng chống lại mệnh
+đề mặc định của một tổng thể. Chúng ta gọi các mệnh đề mặc định là <em>giả
+thuyết gốc - null hypothesis</em> <span class="math notranslate nohighlight">\(H_0\)</span>, giả thuyết mà chúng ta cố
+gắng bác bỏ thông qua các dữ liệu quan sát được. Tại đây, chúng tả sử
+dụng <span class="math notranslate nohighlight">\(H_0\)</span> là điểm bắt đầu cho việc thử nghiệm độ tin cậy thống
+kê. <em>Giả thuyết đối - alternative hypothesis</em> <span class="math notranslate nohighlight">\(H_A\)</span> (hay
+<span class="math notranslate nohighlight">\(H_1\)</span>) là mệnh đề đối lập với giả thuyết gốc. Giả thuyết gốc
+thường được định nghĩa dưới dạng khai báo mà mà ở đó nó ấn định mối quan
+hệ giữa các biến. Nó nên phản ánh mệnh đề một cách rõ ràng nhất, và có
+thể kiểm chứng được bằng lý thuyết thống kê.</p>
+<!--
+Imagine you are a chemist. After spending thousands of hours in the lab, you develop a new medicine which can dramatically improve one's ability to understand math.
+To show its magic power, you need to test it.
+Naturally, you may need some volunteers to take the medicine and see whether it can help them learn math better. How do you get started?
+--><p>Tưởng tượng bạn là một nhà hóa học. Sau hàng ngàn giờ nghiên cứu trong
+phòng thí nghiệm, bạn đã phát triển được một loại thuốc mới giúp cải
+thiện đáng kể khả năng hiểu về toán của con người. Để chứng minh sức
+mạnh ma thuật của thuốc, bạn cần kiểm tra nó. Thông thường, bạn cần một
+số tình nguyện viên sử dụng loại thuốc này để kiểm tra xem liệu nó có
+giúp họ học toán tốt hơn hay không. Bạn sẽ bắt đầu điều này như thế nào?</p>
+<!--
+First, you will need carefully random selected two groups of volunteers, so that there is no difference between their math understanding ability measured by some metrics.
+The two groups are commonly referred to as the test group and the control group.
+The *test group* (or *treatment group*) is a group of individuals who will experience the medicine,
+while the *control group* represents the group of users who are set aside as a benchmark, i.e., identical environment setups except taking this medicine.
+In this way, the influence of all the variables are minimized, except the impact of the independent variable in the treatment.
+--><p>Đầu tiên, bạn cần cẩn thận lựa chọn ngẫu nhiên hai nhóm tình nguyện viên
+để đảm bảo rằng không có sự khác biệt đáng kể dựa trên các tiêu chuẩn đo
+lường được về khả năng hiểu toán của họ. Hai nhóm này thường được gọi là
+nhóm thử nghiệm và nhóm kiểm soát. <em>Nhóm thử nghiệm</em> (hay <em>nhóm trị
+liệu</em>) là nhóm người được cho sử dụng thuốc, trong khi <em>nhóm kiểm soát</em>
+được đặt làm chuẩn so sánh; tức là, họ có các yếu tố môi trường giống
+hệt với nhóm thử nghiệm trừ việc sử dụng thuốc. Bằng cách này, sự ảnh
+hưởng của tất cả các biến được giảm thiểu, trừ sự tác động của biến độc
+lập trong quá trình điều trị.</p>
+<!--
+Second, after a period of taking the medicine, you will need to measure the two groups' math understanding by the same metrics,
+such as letting the volunteers do the same tests after learning a new math formula.
+Then, you can collect their performance and compare the results.
+In this case, our null hypothesis will be that there is no difference between the two groups, and our alternate will be that there is.
+--><p>Thứ hai, sau một thời gian sử dụng thuốc, bạn cần đo khả năng hiểu toán
+của hai nhóm trên bằng tiêu chuẩn đo lường chung, ví dụ như cho các tình
+nguyện viên làm cùng một bài kiểm tra sau khi học một công thức toán
+mới. Sau đó bạn có thể thu thập kết quả năng lực của họ và so sánh
+chúng. Trong trường hợp này, giả thuyết gốc của chúng ta đó là không có
+sự khác biệt nào giữa hai nhóm, và giả thuyết đối là có sự khác biệt.</p>
+<!--
+This is still not fully formal.
+There are many details you have to think of carefully.
+For example, what is the suitable metrics to test their math understanding ability?
+How many volunteers for your test so you can be confident to claim the effectiveness of your medicine?
+How long should you run the test? How do you decided if there is a difference between the two groups?
+Do you care about the average performance only, or do you also the range of variation of the scores. And so on.
+--><p>Quy trình trên vẫn chưa hoàn toàn chính quy. Có rất nhiều chi tiết mà
+bạn phải suy nghĩ cẩn trọng. Ví dụ, đâu là tiêu chuẩn đo lường thích hợp
+để kiểm tra khả năng hiểu toán? Bao nhiêu tình nguyện viên thực hiện bài
+kiểm tra là đủ để bạn có thể tự tin khẳng định sự hiệu quả của thuốc?
+Bài kiểm tra nên kéo dài trong bao lâu? Làm cách nào để bạn quyết định
+được có sự khác biệt rõ rệt giữa hai nhóm? Bạn chỉ quan tâm đến kết quả
+trung bình hay cả phạm vi biến thiên của các điểm số, v.v.</p>
+<!--
+In this way, hypothesis testing provides framework for experimental design and reasoning about certainty in observed results.
+If we can now show that the null hypothesis is very unlikely to be true, we may reject it with confidence.
+--><p>Bằng cách này, kiểm định giả thuyết cung cấp một khuôn khổ cho thiết kế
+thử nghiệm và cách suy luận về sự chắc chắn của những kết quả quan sát
+được. Nếu chứng minh được giả thuyết gốc khả năng rất cao là không đúng,
+thì chúng ta có thể tự tin bác bỏ nó.</p>
+<!--
+To complete the story of how to work with hypothesis testing, we need to now introduce some additional terminology and make some of our concepts above formal.
+--><p>Để hiểu rõ hơn về cách làm việc với kiểm định giả thuyết, chúng ta cần
+bổ sung thêm một số thuật ngữ và toán học hóa các khái niệm ở trên.</p>
+<!--
+### Statistical Significance
+--><div class="section" id="y-nghia-thong-ke">
+<h3><span class="section-number">18.10.2.1. </span>Ý nghĩa Thống kê<a class="headerlink" href="#y-nghia-thong-ke" title="Permalink to this headline">¶</a></h3>
+<!--
+The *statistical significance* measures the probability of erroneously reject the null hypothesis, $H_0$, when it should not be rejected, i.e.,
+--><p><em>Ý nghĩa thống kê</em> (<em>statistical significance</em>) đo xác suất lỗi khi bác
+bỏ giả thuyết gốc, <span class="math notranslate nohighlight">\(H_0\)</span>, trong khi đúng ra không nên bác bỏ nó.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-1">
+<span class="eqno">(18.10.5)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-1" title="Permalink to this equation">¶</a></span>\[\text{ ý nghĩa thống kê }= 1 - \alpha = 1 - P(\text{ bác bỏ } H_0 \mid H_0 \text{ là đúng } ).\]</div>
+<!--
+It is also referred to as the *type I error* or *false positive*.
+The $\alpha$, is called as the *significance level* and its commonly used value is $5\%$, i.e., $1-\alpha = 95\%$.
+The level of statistical significance level can be explained as the level of risk that we are willing to take, when we reject a true null hypothesis.
+--><p>Đây còn được gọi là <em>lỗi loại I</em> hay <em>dương tính giả</em>. <span class="math notranslate nohighlight">\(\alpha\)</span> ở
+đây là <em>mức ý nghĩa</em> và thường được chọn ở giá trị <span class="math notranslate nohighlight">\(5\%\)</span>, tức là
+<span class="math notranslate nohighlight">\(1-\alpha = 95\%\)</span>. Mức ý nghĩa thống kê còn có thể hiểu như mức độ
+rủi ro mà chúng ta chấp nhận khi bác bỏ nhầm một giả thuyết gốc chính
+xác.</p>
+<!--
+:numref:`fig_statistical_significance` shows the the observations' values and probability of a given normal distribution in a two-sample hypothesis test.
+If the observation data point is located outsides the $95\%$ threshold, it will be a very unlikely observation under the null hypothesis assumption.
+Hence, there might be something wrong with the null hypothesis and we will reject it.
+--><p><a class="reference internal" href="#fig-statistical-significance"><span class="std std-numref">Fig. 18.10.1</span></a> thể hiện các giá trị quan sát
+và xác suất của một phân phối chuẩn trong một bài kiểm định giả thuyết
+thống kê hai mẫu. Nếu các điểm dữ liệu quan sát nằm ngoài ngưỡng
+<span class="math notranslate nohighlight">\(95\%\)</span>, chúng sẽ rất khó xảy ra dưới giả định của giả thuyết gốc.
+Do đó, giả thuyết gốc có điều gì đó không đúng và chúng ta sẽ bác bỏ nó.</p>
+<!--
+![Statistical significance.](../img/statistical-significance.svg)
+--><div class="figure align-default" id="id3">
+<span id="fig-statistical-significance"></span><img alt="../_images/statistical-significance.svg" src="../_images/statistical-significance.svg" /><p class="caption"><span class="caption-number">Fig. 18.10.1 </span><span class="caption-text">Ý nghĩa thống kê.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+### Statistical Power
+--></div>
+<div class="section" id="nang-luc-thong-ke">
+<h3><span class="section-number">18.10.2.2. </span>Năng lực Thống kê<a class="headerlink" href="#nang-luc-thong-ke" title="Permalink to this headline">¶</a></h3>
+<!--
+The *statistical power* (or *sensitivity*) measures the probability of reject the null hypothesis, $H_0$, when it should be rejected, i.e.,
+--><p><em>Năng lực thống kê</em> (hay còn gọi là <em>độ nhạy</em>) là xác suất bác bỏ giả
+thuyết gốc, <span class="math notranslate nohighlight">\(H_0\)</span>, biết rằng nó nên bị bác bỏ, tức là:</p>
+<!--
+$$ \text{statistical power }= 1 - \beta = 1 - P(\text{ fail to reject } H_0  \mid H_0 \text{ is false} ).$$
+--><div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-2">
+<span class="eqno">(18.10.6)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-2" title="Permalink to this equation">¶</a></span>\[\text{ năng lực thống kê }= 1 - \beta = 1 - P(\text{ không bác bỏ } H_0  \mid H_0 \text{ là sai } ).\]</div>
+<!--
+Recall that a *type I error* is error caused by rejecting the null hypothesis when it is true,
+whereas a *type II error* is resulted from failing to reject the null hypothesis when it is false.
+A type II error is usually denoted as $\beta$, and hence the corresponding statistical power is $1-\beta$.
+--><p>Nhớ lại <em>lỗi loại I</em> là lỗi do bác bỏ giả thuyết gốc khi nó đúng, còn
+<em>lỗi loại II</em> xảy ra do không bác bỏ giả thuyết gốc khi nó sai. Lỗi loại
+II thường được kí hiệu là <span class="math notranslate nohighlight">\(\beta\)</span>, vậy nên năng lực thống kê tương
+ứng là <span class="math notranslate nohighlight">\(1-\beta\)</span>.</p>
+<!--
+Intuitively, statistical power can be interpreted as how likely our test will detect a real discrepancy of some minimum magnitude at a desired statistical significance level.
+$80\%$ is a commonly used statistical power threshold. The higher the statistical power, the more likely we are to detect true differences.
+--><p>Một cách trực quan, năng lực thống kê có thể được xem như khả năng phép
+kiểm định phát hiện được một sai lệch thực sự với độ lớn tối thiểu nào
+đó, ở một mức ý nghĩa thống kê mong muốn. <span class="math notranslate nohighlight">\(80\%\)</span> là một ngưỡng
+năng lực thống kê phổ biến. Năng lực thống kê càng cao, ta càng có nhiều
+khả năng phát hiện được những sai lệch thực sự.</p>
+<!--
+One of the most common uses of statistical power is in determining the number of samples needed.
+The probability you reject the null hypothesis when it is false depends on the degree to which it is false (known as the *effect size*) and the number of samples you have.
+As you might expect, small effect sizes will require a very large number of samples to be detectable with high probability.
+While beyond the scope of this brief appendix to derive in detail, as an example,
+want to be able to reject a null hypothesis that our sample came from a mean zero variance one Gaussian,
+and we believe that our sample's mean is actually close to one, we can do so with acceptable error rates with a sample size of only $8$.
+However, if we think our sample population true mean is close to $0.01$, then we'd need a sample size of nearly $80000$ to detect the difference.
+--><p>Một trong những ứng dụng phổ biến nhất của năng lực thống kê là để xác
+định số lượng mẫu cần thiết. Xác suất bạn bác bỏ giả thuyết gốc khi nó
+sai phụ thuộc vào mức độ sai của nó (hay còn gọi là <em>kích thước ảnh
+hưởng - effect size</em>) và số lượng mẫu bạn có. Có thể đoán rằng sẽ cần
+một số lượng mẫu rất lớn để có thể phát hiện kích thước ảnh hưởng nhỏ
+với xác suất cao. Việc đi sâu vào chi tiết nằm ngoài phạm vi của phần
+phụ lục ngắn gọn này, nhưng đây là một ví dụ. Giả sử ta có giả thuyết
+gốc rằng các mẫu được lấy từ một phân phối Gauss với kỳ vọng là không và
+phương sai là một. Nếu ta tin rằng giá trị trung bình của tập mẫu gần
+với một, ta chỉ cần <span class="math notranslate nohighlight">\(8\)</span> mẫu là có thể bác bỏ giả thuyết gốc với tỷ
+lệ lỗi chấp nhận được. Tuy nhiên, nếu ta cho rằng giá trị trung bình
+thực sự của tổng thể gần với <span class="math notranslate nohighlight">\(0.01\)</span>, thì ta cần cỡ khoảng
+<span class="math notranslate nohighlight">\(80000\)</span> mẫu để có thể phát hiện được sự sai lệch.</p>
+<!--
+We can imagine the power as a water filter. In this analogy, a high power hypothesis test is like a high quality water filtration system
+that will reduce harmful substances in the water as much as possible.
+On the other hand, a smaller discrepancy is like a low quality water filter, where some relative small substances may easily escape from the gaps.
+Similarly, if the statistical power is not of enough high power, then the test may not catch the smaller discrepancy.
+--><p>Ta có thể hình dung năng lực thống kê như một cái máy lọc nước. Trong
+phép so sánh này, một kiểm định với năng lực cao giống như một hệ thống
+lọc nước chất lượng tốt, loại bỏ được các chất độc trong nước nhiều nhất
+có thể. Ngược lại, các sai lệch nhỏ cũng giống các chất cặn bẩn nhỏ, một
+cái máy lọc chất lượng kém sẽ để lọt các chất bẩn nhỏ đó. Tương tự, nếu
+năng lực thống kê không đủ cao, phép kiểm định có thể không phát hiện
+được các sai lệch nhỏ.</p>
+<!--
+### Test Statistic
+--></div>
+<div class="section" id="tieu-chuan-kiem-dinh">
+<h3><span class="section-number">18.10.2.3. </span>Tiêu chuẩn Kiểm định<a class="headerlink" href="#tieu-chuan-kiem-dinh" title="Permalink to this headline">¶</a></h3>
+<!--
+A *test statistic* $T(x)$ is a scalar which summarizes some characteristic of the sample data.
+The goal of defining such a statistic is that it should allow us to distinguish between different distributions and conduct our hypothesis test.
+hinking back to our chemist example, if we wish to show that one population performs better than the other, it could be reasonable to take the mean as the test statistic.
+Different choices of test statistic can lead to statistical test with drastically different statistical power.
+--><p><em>Tiêu chuẩn kiểm định</em> <span class="math notranslate nohighlight">\(T(x)\)</span> là một số vô hướng có khả năng khái
+quát một đặc tính nào đó của dữ liệu mẫu. Mục đích của việc đặt ra một
+tiêu chuẩn như vậy là để phân biệt các phân phối khác nhau và tiến hành
+kiểm định thống kê. Nhìn lại ví dụ về nhà hóa học, nếu ta muốn chỉ ra
+rằng một tổng thể có chất lượng tốt hơn một tổng thể khác, việc lấy giá
+trị trung bình làm tiêu chuẩn kiểm định có vẻ hợp lý. Các chọn lựa tiêu
+chuẩn kiểm định khác nhau có thể dẫn đến các phép kiểm định thống kê với
+năng lực thống kê khác nhau rõ rệt.</p>
+<!--
+Often, $T(X)$ (the distribution of the test statistic under our null hypothesis) will follow, at least approximately,
+a common probability distribution such as a normal distribution when considered under the null hypothesis.
+If we can derive explicitly such a distribution, and then measure our test statistic on our dataset,
+we can safely reject the null hypothesis if our statistic is far outside the range that we would expect.
+Making this quantitative leads us to the notion of $p$-values.
+--><p>Thường thì <span class="math notranslate nohighlight">\(T(X)\)</span> (phân phối của tiêu chuẩn kiểm định dưới giả
+thuyết gốc) sẽ (xấp xỉ) tuân theo một phân phối phổ biến như phân phối
+chuẩn, khi được xem xét dưới giả thuyết gốc. Nếu ta có thể chỉ rõ một
+phân phối như vậy, và sau đó tính tiêu chuẩn kiểm định trên tập dữ liệu,
+ta có thể yên tâm bác bỏ giả thuyết gốc nếu thống kê đó nằm xa bên ngoài
+khoảng mong đợi. Định lượng hóa ý tưởng này đưa ta đến với khái niệm trị
+số <span class="math notranslate nohighlight">\(p\)</span> (<em>:math:`p`-values</em>).</p>
+<!--
+### $p$-value
+--></div>
+<div class="section" id="tri-so-p">
+<h3><span class="section-number">18.10.2.4. </span>Trị số <span class="math notranslate nohighlight">\(p\)</span><a class="headerlink" href="#tri-so-p" title="Permalink to this headline">¶</a></h3>
+<!--
+The $p$-value (or the *probability value*) is the probability that $T(X)$ is at least as extreme as the observed test statistic $T(x)$ assuming that the null hypothesis is *true*, i.e.,
+--><p>Trị số <span class="math notranslate nohighlight">\(p\)</span> (hay còn gọi là <em>trị số xác suất</em>) là xác suất mà
+<span class="math notranslate nohighlight">\(T(X)\)</span> lớn hơn hoặc bằng tiêu chuẩn kiểm định ta thu được, giả sử
+rằng giả thuyết gốc đúng, tức là:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-3">
+<span class="eqno">(18.10.7)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-3" title="Permalink to this equation">¶</a></span>\[p\text{-value} = P_{H_0}(T(X) \geq T(x)).\]</div>
+<!--
+If the $p$-value is smaller than or equal to a predefined and fixed statistical significance level $\alpha$, we may reject the null hypothesis.
+Otherwise, we will conclude that we are lack of evidence to reject the null hypothesis.
+For a given population distribution, the *region of rejection* will be the interval contained of all the points which has a $p$-value smaller than the statistical significance level $\alpha$.
+--><p>Nếu trị số <span class="math notranslate nohighlight">\(p\)</span> nhỏ hơn hoặc bằng một mức ý nghĩa thống kê cố định
+<span class="math notranslate nohighlight">\(\alpha\)</span> cho trước, ta có thể bác bỏ giả thuyết gốc. Còn nếu
+không, ta kết luận không có đủ bằng chứng để bác bỏ giả thuyết gốc. Với
+một phân phối của tổng thể, <em>miền bác bỏ</em> là khoảng chứa tất cả các điểm
+có trị số <span class="math notranslate nohighlight">\(p\)</span> nhỏ hơn mức ý nghĩa thống kê <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+<!--
+### One-side Test and Two-sided Test
+--></div>
+<div class="section" id="kiem-dinh-mot-phia-va-kiem-dinh-hai-phia">
+<h3><span class="section-number">18.10.2.5. </span>Kiểm định Một phía và Kiểm định Hai phía<a class="headerlink" href="#kiem-dinh-mot-phia-va-kiem-dinh-hai-phia" title="Permalink to this headline">¶</a></h3>
+<!--
+Normally there are two kinds of significance test: the one-sided test and the two-sided test.
+The *one-sided test* (or *one-tailed test*) is applicable when the null hypothesis and the alternative hypothesis only have one direction.
+For example, the null hypothesis may state that the true parameter $\theta$ is less than or equal to a value $c$.
+The alternative hypothesis would be that $\theta$ is greater than $c$.
+That is, the region of rejection is on only one side of the sampling distribution.
+Contrary to the one-sided test, the *two-sided test* (or *two-tailed test*) is applicable when the region of rejection is on both sides of the sampling distribution.
+An example in this case may have a null hypothesis state that the true parameter $\theta$ is equal to a value $c$.
+The alternative hypothesis would be that $\theta$ is not equal to $c$.
+--><p>Thường thì có hai loại kiểm định ý nghĩa thống kê: kiểm định một phía và
+kiểm định hai phía. <em>Kiểm định một phía</em> (hay <em>kiểm định một đuôi</em>) có
+thể được áp dụng khi giả thuyết gốc và giả thuyết đối chỉ đi theo một
+hướng. Ví dụ, giả thuyết gốc có thể cho rằng tham số thực <span class="math notranslate nohighlight">\(\theta\)</span>
+nhỏ hơn hoặc bằng một giá trị <span class="math notranslate nohighlight">\(c\)</span>. Giả thuyết đối sẽ là
+<span class="math notranslate nohighlight">\(\theta\)</span> lớn hơn <span class="math notranslate nohighlight">\(c\)</span>. Nói cách khác, miền bác bỏ chỉ nằm ở
+một bên của phân phối mẫu. Trái với kiểm định một phía, <em>kiểm định hai
+phía</em> (hay <em>kiểm định hai đuôi</em>) có thể được áp dụng khi miền bác bỏ nằm
+ở cả hai phía của phân phối mẫu. Ví dụ cho trường hợp này có thể là một
+giả thuyết gốc cho rằng tham số thực <span class="math notranslate nohighlight">\(\theta\)</span> bằng một giá trị
+<span class="math notranslate nohighlight">\(c\)</span>. Giả thuyết đối lúc này sẽ là <span class="math notranslate nohighlight">\(\theta\)</span> nhỏ hơn và lớn
+hơn <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<!--
+### General Steps of Hypothesis Testing
+--></div>
+<div class="section" id="cac-buoc-thong-thuong-trong-kiem-dinh-gia-thuyet">
+<h3><span class="section-number">18.10.2.6. </span>Các bước Thông thường trong Kiểm định Giả thuyết<a class="headerlink" href="#cac-buoc-thong-thuong-trong-kiem-dinh-gia-thuyet" title="Permalink to this headline">¶</a></h3>
+<!--
+After getting familiar with the above concepts, let's go through the general steps of hypothesis testing.
+--><p>Sau khi làm quen với các khái niệm ở trên, hãy cùng xem các bước kiểm
+định giả thuyết thông thường.</p>
+<!--
+1. State the question and establish a null hypotheses $H_0$.
+2. Set the statistical significance level $\alpha$ and a statistical power ($1 - \beta$).
+3. Obtain samples through experiments. The number of samples needed will depend on the statistical power, and the expected effect size.
+4. Calculate the test statistic and the $p$-value.
+5. Make the decision to keep or reject the null hypothesis based on the $p$-value and the statistical significance level $\alpha$.
+--><ol class="arabic simple">
+<li>Đặt câu hỏi và đưa ra giả thuyết gốc <span class="math notranslate nohighlight">\(H_0\)</span>.</li>
+<li>Chọn mức ý nghĩa thống kê <span class="math notranslate nohighlight">\(\alpha\)</span> và năng lực thống kê
+(<span class="math notranslate nohighlight">\(1 - \beta\)</span>).</li>
+<li>Thu thập mẫu qua các thử nghiệm. Số lượng mẫu cần thiết sẽ phụ thuộc
+vào năng lực thống kê, và hệ số ảnh hưởng mong muốn.</li>
+<li>Tính tiêu chuẩn kiểm định và trị số <span class="math notranslate nohighlight">\(p\)</span>.</li>
+<li>Quyết định chấp nhận hoặc bác bỏ giả thuyết gốc dựa trên trị số
+<span class="math notranslate nohighlight">\(p\)</span> và mức ý nghĩa thống kê <span class="math notranslate nohighlight">\(\alpha\)</span>.</li>
+</ol>
+<!--
+To conduct a hypothesis test, we start by defining a null hypothesis and a level of risk that we are willing to take.
+Then we calculate the test statistic of the sample, taking an extreme value of the test statistic as evidence against the null hypothesis.
+If the test statistic falls within the reject region, we may reject the null hypothesis in favor of the alternative.
+--><p>Để tiến hành kiểm định giả thuyết, ta bắt đầu với việc định nghĩa giả
+thuyết gốc và mức rủi ro chấp nhận được. Sau đó ta tính tiêu chuẩn kiểm
+định của mẫu, lấy cực trị của tiêu chuẩn kiểm định làm bằng chứng để phủ
+định giả thuyết gốc. Nếu tiêu chuẩn kiểm định rơi vào miền bác bỏ, ta có
+thể bác bỏ giả thuyết gốc và ủng hộ giả thuyết đối.</p>
+<!--
+Hypothesis testing is applicable in a variety of scenarios such as the clinical trails and A/B testing.
+--><p>Kiểm định giả thuyết áp dụng được trong nhiều tình huống như thử nghiệm
+lâm sàng (<em>clinical trials</em>) và kiểm định A/B.</p>
+<!--
+## Constructing Confidence Intervals
+--></div>
+</div>
+<div class="section" id="xay-dung-khoang-tin-cay">
+<h2><span class="section-number">18.10.3. </span>Xây dựng khoảng Tin cậy<a class="headerlink" href="#xay-dung-khoang-tin-cay" title="Permalink to this headline">¶</a></h2>
+<!--
+When estimating the value of a parameter $\theta$, point estimators like $\hat \theta$ are of limited utility since they contain no notion of uncertainty.
+Rather, it would be far better if we could produce an interval that would contain the true parameter $\theta$ with high probability.
+If you were interested in such ideas a century ago, then you would have been excited to
+read "Outline of a Theory of Statistical Estimation Based on the Classical Theory of Probability" by Jerzy Neyman :cite:`Neyman.1937`,
+who first introduced the concept of confidence interval in 1937.
+--><p>Khi ước lượng giá trị của tham số <span class="math notranslate nohighlight">\(\theta\)</span>, sử dụng bộ ước lượng
+điểm như <span class="math notranslate nohighlight">\(\hat \theta\)</span> bị hạn chế vì chúng không bao hàm sự bất
+định. Thay vào đó, sẽ tốt hơn nhiều nếu ta có thể tìm ra một khoảng chứa
+tham số <span class="math notranslate nohighlight">\(\theta\)</span> thật sự với xác suất cao. Nếu bạn hứng thú với
+những khái niệm từ một thế kỷ trước như thế này, có lẽ bạn nên đọc cuốn
+“Outline of a Theory of Statistical Estimation Based on the Classical
+Theory of Probability” (<em>Đại cương về Lý thuyết Ước lượng Thống kê dựa
+trên Lý thuyết Xác suất Cổ điển</em>) của Jerzy Neyman
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#neyman-1937" id="id1">[Neyman, 1937]</a>, người đã đưa ra khái niệm về khoảng tin cậy vào
+năm 1937.</p>
+<!--
+To be useful, a confidence interval should be as small as possible for a given degree of certainty. Let's see how to derive it.
+--><p>Để có tính hữu dụng, khoảng tin cậy nên càng bé càng tốt với một mức độ
+chắc chắn cho trước. Hãy cùng xem xét cách tính khoảng tin cậy.</p>
+<!--
+### Definition
+--><div class="section" id="dinh-nghia">
+<h3><span class="section-number">18.10.3.1. </span>Định nghĩa<a class="headerlink" href="#dinh-nghia" title="Permalink to this headline">¶</a></h3>
+<!--
+Mathematically, a *confidence interval* for the true parameter $\theta$ is an interval $C_n$ that computed from the sample data such that
+--><p>Về mặt toán học, <em>khoảng tin cậy</em> <span class="math notranslate nohighlight">\(C_n\)</span> của tham số thực
+<span class="math notranslate nohighlight">\(\theta\)</span> được tính từ dữ liệu mẫu sao cho:</p>
+<div class="math notranslate nohighlight" id="equation-eq-confidence">
+<span class="eqno">(18.10.8)<a class="headerlink" href="#equation-eq-confidence" title="Permalink to this equation">¶</a></span>\[P_{\theta} (C_n \ni \theta) \geq 1 - \alpha, \forall \theta.\]</div>
+<!--
+Here $\alpha \in (0, 1)$, and $1 - \alpha$ is called the *confidence level* or *coverage* of the interval.
+This is the same $\alpha$ as the significance level as we discussed about above.
+--><p>Với <span class="math notranslate nohighlight">\(\alpha \in (0, 1)\)</span>, và <span class="math notranslate nohighlight">\(1 - \alpha\)</span> được gọi là <em>mức độ
+tin cậy</em> hoặc <em>độ phủ</em> của khoảng đó. Nó cũng chính là hệ số
+<span class="math notranslate nohighlight">\(\alpha\)</span> của mức ý nghĩa thống kê mà chúng ta đã bàn luận ở trên.</p>
+<!--
+Note that :eqref:`eq_confidence` is about variable $C_n$, not about the fixed $\theta$.
+To emphasize this, we write $P_{\theta} (C_n \ni \theta)$ rather than $P_{\theta} (\theta \in C_n)$.
+--><p>Chú ý rằng <a class="reference internal" href="#equation-eq-confidence">(18.10.8)</a> là về biến số <span class="math notranslate nohighlight">\(C_n\)</span>, chứ không
+phải giá trị cố định <span class="math notranslate nohighlight">\(\theta\)</span>. Để nhấn mạnh điều này, chúng ta
+viết <span class="math notranslate nohighlight">\(P_{\theta} (C_n \ni \theta)\)</span> thay cho
+<span class="math notranslate nohighlight">\(P_{\theta} (\theta \in C_n)\)</span>.</p>
+<!--
+### Interpretation
+--></div>
+<div class="section" id="dien-giai">
+<h3><span class="section-number">18.10.3.2. </span>Diễn giải<a class="headerlink" href="#dien-giai" title="Permalink to this headline">¶</a></h3>
+<!--
+It is very tempting to interpret a $95\%$ confidence interval as an interval where you can be $95\%$ sure the true parameter lies, however this is sadly not true.
+The true parameter is fixed, and it is the interval that is random.
+Thus a better interpretation would be to say that if you generated a large number of confidence intervals by this procedure,
+$95\%$ of the generated intervals would contain the true parameter.
+--><p>Rất dễ để cho rằng khoảng tin cậy <span class="math notranslate nohighlight">\(95\%\)</span> tương đương với việc chắc
+chắn <span class="math notranslate nohighlight">\(95\%\)</span> giá trị thật phân bố trong khoảng đó, tuy nhiên đáng
+buồn thay điều này lại không chính xác. Tham số thật là cố định và
+khoảng tin cậy mới là ngẫu nhiên. Vậy nên một cách diễn giải tốt hơn đó
+là nếu bạn tạo ra một số lượng lớn các khoảng tin cậy theo quy trình
+này, thì <span class="math notranslate nohighlight">\(95\%\)</span> các khoảng được tạo sẽ chứa tham số thật.</p>
+<!--
+This may seem pedantic, but it can have real implications for the interpretation of the results.
+In particular, we may satisfy :eqref:`eq_confidence` by constructing intervals that we are *almost certain* do not contain the true value, as long as we only do so rarely enough.
+We close this section by providing three tempting but false statements.
+An in-depth discussion of these points can be found in :cite:`Morey.Hoekstra.Rouder.ea.2016`.
+--><p>Điều này nghe có vẻ tiểu tiết, nhưng lại có một ý nghĩa quan trọng trong
+việc diễn giải các kết quả. Cụ thể, chúng ta có thể thỏa mãn
+<a class="reference internal" href="#equation-eq-confidence">(18.10.8)</a> bằng cách tạo ra các khoảng <em>gần như chắc chắn</em>
+không chứa tham số thật, miễn là số lượng các khoảng này đủ nhỏ. Chúng
+ta kết thúc mục này bằng ba mệnh đề nghe hợp lý nhưng lại không chính
+xác. Thảo luận sâu hơn về các mệnh đề này có thể tham khảo thêm ở
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#morey-hoekstra-rouder-ea-2016" id="id2">[Morey et al., 2016]</a>.</p>
+<!--
+* **Fallacy 1**. Narrow confidence intervals mean we can estimate the parameter precisely.
+* **Fallacy 2**. The values inside the confidence interval are more likely to be the true value than those outside the interval.
+* **Fallacy 3**. The probability that a particular observed $95\%$ confidence interval contains the true value is $95\%$.
+--><ul class="simple">
+<li><strong>Sai lầm 1</strong>: Khoảng tin cậy hẹp cho phép chúng ta dự đoán các giá
+trị một cách chính xác.</li>
+<li><strong>Sai lầm 2</strong>: Các giá trị nằm trong khoảng tin cậy có nhiều khả năng
+là giá trị thực hơn là các giá trị nằm bên ngoài.</li>
+<li><strong>Sai lầm 3</strong>: Xác xuất một khoảng tin cậy <span class="math notranslate nohighlight">\(95\%\)</span> chứa các giá
+trị thực là <span class="math notranslate nohighlight">\(95\%\)</span>.</li>
+</ul>
+<!--
+Sufficed to say, confidence intervals are subtle objects.  H
+owever, if you keep the interpretation clear, they can be powerful tools.
+--><p>Có thể nói, các khoảng tin cậy là những đối tượng khó ước lượng. Tuy
+nhiên nếu như ta diễn giải chúng một cách rõ ràng, thì chúng có thể trở
+thành những công cụ quyền năng.</p>
+<!--
+### A Gaussian Example
+--></div>
+<div class="section" id="mot-vi-du-ve-gaussian">
+<h3><span class="section-number">18.10.3.3. </span>Một ví dụ về Gaussian<a class="headerlink" href="#mot-vi-du-ve-gaussian" title="Permalink to this headline">¶</a></h3>
+<!--
+Let's discuss the most classical example, the confidence interval for the mean of a Gaussian of unknown mean and variance.
+Suppose we collect $n$ samples $\{x_i\}_{i=1}^n$ from our Gaussian $\mathcal{N}(\mu, \sigma^2)$.
+We can compute estimators for the mean and standard deviation by taking
+--><p>Cùng bàn về ví dụ kinh điển nhất, khoảng tin cậy cho giá trị trung bình
+của một phân phối Gaussian với kỳ vọng và phương sai chưa xác định. Giả
+sử chúng ta thu thập <span class="math notranslate nohighlight">\(n\)</span> mẫu <span class="math notranslate nohighlight">\(\{x_i\}_{i=1}^n\)</span> từ phân phối
+Gaussian <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \sigma^2)\)</span>. Chúng ta có thể ước lượng
+kỳ vọng và độ lệch chuẩn bằng công thức:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-4">
+<span class="eqno">(18.10.9)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-4" title="Permalink to this equation">¶</a></span>\[\hat\mu_n = \frac{1}{n}\sum_{i=1}^n x_i \;\text{và}\; \hat\sigma^2_n = \frac{1}{n-1}\sum_{i=1}^n (x_i - \hat\mu)^2.\]</div>
+<!--
+If we now consider the random variable
+--><p>Nếu bây giờ chúng ta xem xét biến ngẫu nhiên:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-5">
+<span class="eqno">(18.10.10)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-5" title="Permalink to this equation">¶</a></span>\[T = \frac{\hat\mu_n - \mu}{\hat\sigma_n/\sqrt{n}},\]</div>
+<!--
+we obtain a random variable following a well-known distribution called the *Student's t-distribution on* $n-1$ *degrees of freedom*.
+--><p>Chúng ta có được một biến ngẫu nhiên theo <em>phân phối t Student trên</em>
+<span class="math notranslate nohighlight">\(n - 1\)</span> <em>bậc tự do</em>.</p>
+<!--
+This distribution is very well studied, and it is known, for instance, that as $n\rightarrow \infty$,
+it is approximately a standard Gaussian, and thus by looking up values of the Gaussian c.d.f. in a table,
+we may conclude that the value of $T$ is in the interval $[-1.96, 1.96]$ at least $95\%$ of the time.
+For finite values of $n$, the interval needs to be somewhat larger, but are well known and precomputed in tables.
+--><p>Phân phối này đã được nghiên cứu rất chi tiết, và đã được chứng minh là
+khi <span class="math notranslate nohighlight">\(n\rightarrow \infty\)</span>, nó xấp xỉ với một phân phối Gauss tiêu
+chuẩn, và do đó bằng cách nhìn vào bảng giá trị phân phối tích lũy
+Gauss, chúng ta có thể kết luận rằng giá trị <span class="math notranslate nohighlight">\(T\)</span> nằm trong khoảng
+<span class="math notranslate nohighlight">\([-1.96, 1.96]\)</span> tối thiểu là <span class="math notranslate nohighlight">\(95\%\)</span> các trường hợp. Với giá
+trị <span class="math notranslate nohighlight">\(n\)</span> hữu hạn, khoảng tin cậy sẽ lớn hơn, nhưng chúng vẫn rõ
+ràng và thường được tính sẵn và trình bày thành bảng.</p>
+<!--
+Thus, we may conclude that for large $n$,
+--><p>Do đó, chúng ta có thể kết luận với giá trị <span class="math notranslate nohighlight">\(n\)</span> lớn:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-6">
+<span class="eqno">(18.10.11)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-6" title="Permalink to this equation">¶</a></span>\[P\left(\frac{\hat\mu_n - \mu}{\hat\sigma_n/\sqrt{n}} \in [-1.96, 1.96]\right) \ge 0.95.\]</div>
+<!--
+Rearranging this by multiplying both sides by $\hat\sigma_n/\sqrt{n}$ and then adding $\hat\mu_n$, we obtain
+--><p>Sắp xếp lại công thức này bằng cách nhân hai vế với
+<span class="math notranslate nohighlight">\(\hat\sigma_n/\sqrt{n}\)</span> và cộng thêm <span class="math notranslate nohighlight">\(\hat\mu_n\)</span>, ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-7">
+<span class="eqno">(18.10.12)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-7" title="Permalink to this equation">¶</a></span>\[P\left(\mu \in \left[\hat\mu_n - 1.96\frac{\hat\sigma_n}{\sqrt{n}}, \hat\mu_n + 1.96\frac{\hat\sigma_n}{\sqrt{n}}\right]\right) \ge 0.95.\]</div>
+<!--
+Thus we know that we have found our $95\%$ confidence interval:
+--><p>Như vậy chúng ta đã xác định được khoảng tin cậy <span class="math notranslate nohighlight">\(95\%\)</span> cần tìm:</p>
+<div class="math notranslate nohighlight" id="equation-eq-gauss-confidence">
+<span class="eqno">(18.10.13)<a class="headerlink" href="#equation-eq-gauss-confidence" title="Permalink to this equation">¶</a></span>\[\left[\hat\mu_n - 1.96\frac{\hat\sigma_n}{\sqrt{n}}, \hat\mu_n + 1.96\frac{\hat\sigma_n}{\sqrt{n}}\right].\]</div>
+<!--
+It is safe to say that :eqref:`eq_gauss_confidence` is one of the most used formula in statistics.
+Let's close our discussion of statistics by implementing it.
+For simplicity, we assume we are in the asymptotic regime.
+Small values of $N$ should include the correct value of `t_star` obtained either programmatically or from a $t$-table.
+--><p>Không quá khi nói rằng <a class="reference internal" href="#equation-eq-gauss-confidence">(18.10.13)</a> là một trong những
+công thức sử dụng nhiều nhất trong thống kê. Hãy kết thúc thảo luận về
+thống kê của chúng ta bằng cách lập trình tìm khoảng tin cậy. Để đơn
+giản, giả sử chúng ta đang làm việc ở vùng tiệm cận. Khi <span class="math notranslate nohighlight">\(N\)</span> nhỏ,
+nên xác định giá trị chính xác của <code class="docutils literal notranslate"><span class="pre">t_star</span></code> bằng phương pháp lập trình
+hoặc từ bảng tra phân phối tích lũy <span class="math notranslate nohighlight">\(t\)</span> Student.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of samples</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="c1"># Sample dataset</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,))</span>
+<span class="c1"># Lookup Students&#39;s t-distribution c.d.f.</span>
+<span class="n">t_star</span> <span class="o">=</span> <span class="mf">1.96</span>
+<span class="c1"># Construct interval</span>
+<span class="n">mu_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">sigma_hat</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">(</span><span class="n">mu_hat</span> <span class="o">-</span> <span class="n">t_star</span><span class="o">*</span><span class="n">sigma_hat</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">mu_hat</span> <span class="o">+</span> <span class="n">t_star</span><span class="o">*</span><span class="n">sigma_hat</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="mf">0.07853346</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">0.04412608</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">18.10.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Statistics focuses on inference problems, whereas deep learning emphasizes on making accurate predictions without explicitly programming and understanding.
+* There are three common statistics inference methods: evaluating and comparing estimators, conducting hypothesis tests, and constructing confidence intervals.
+* There are three most common estimators: statistical bias, standard deviation, and mean square error.
+* A confidence interval is an estimated range of a true population parameter that we can construct by given the samples.
+* Hypothesis testing is a way of evaluating some evidence against the default statement about a population.
+--><ul class="simple">
+<li>Thống kê tập trung vào các vấn đề suy luận, trong khi học sâu chú
+trọng vào đưa ra các dự đoán chuẩn xác mà không cần một phương pháp
+lập trình hay kiến thức rõ ràng.</li>
+<li>Ba phương pháp suy luận thống kê thông dụng nhất: đánh giá và so sánh
+các bộ ước lượng, tiến hành kiểm định giả thuyết, và tạo các khoảng
+tin cậy.</li>
+<li>Ba bộ ước lượng thông dụng nhất: độ chệch thống kê, độ lệch chuẩn, và
+trung bình bình phương sai số.</li>
+<li>Một khoảng tin cậy là khoảng ước tính của tập tham số thực mà chúng
+ta có thể tạo ra bằng các mẫu cho trước.</li>
+<li>Kiểm định giả thuyết là phương pháp để đánh giá các chứng cứ chống
+lại mệnh đề mặc định về một tổng thể.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">18.10.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Let $X_1, X_2, \ldots, X_n \overset{\text{iid}}{\sim} \mathrm{Unif}(0, \theta)$, where "iid" stands for *independent and identically distributed*. Consider the following estimators of $\theta$:
+$$\hat{\theta} = \max \{X_1, X_2, \ldots, X_n \};$$
+$$\tilde{\theta} = 2 \bar{X_n} = \frac{2}{n} \sum_{i=1}^n X_i.$$
+    * Find the statistical bias, standard deviation, and mean square error of $\hat{\theta}.$
+    * Find the statistical bias, standard deviation, and mean square error of $\tilde{\theta}.$
+    * Which estimator is better?
+2. For our chemist example in introduction, can you derive the 5 steps to conduct a two-sided hypothesis testing? Given the statistical significance level $\alpha = 0.05$ and the statistical power $1 - \beta = 0.8$.
+3. Run the confidence interval code with $N=2$ and $\alpha = 0.5$ for $100$ independently generated dataset, and plot the resulting intervals (in this case `t_star = 1.0`).  You will see several very short intervals which are very far from containing the true mean $0$.  Does this contradict the interpretation of the confidence interval?  Do you feel comfortable using short intervals to indicate high precision estimates?
+--><ol class="arabic">
+<li><p class="first">Cho
+<span class="math notranslate nohighlight">\(X_1, X_2, \ldots, X_n \overset{\text{iid}}{\sim} \mathrm{Unif}(0, \theta)\)</span>,
+với “iid” là viết tắt của <em>phân phối độc lập và giống nhau -
+independent and identically distributed</em>. Xét bộ ước lượng
+<span class="math notranslate nohighlight">\(\theta\)</span> dưới đây:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-8">
+<span class="eqno">(18.10.14)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-8" title="Permalink to this equation">¶</a></span>\[\hat{\theta} = \max \{X_1, X_2, \ldots, X_n \};\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-9">
+<span class="eqno">(18.10.15)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-statistics-vn-9" title="Permalink to this equation">¶</a></span>\[\tilde{\theta} = 2 \bar{X_n} = \frac{2}{n} \sum_{i=1}^n X_i.\]</div>
+<ul class="simple">
+<li>Tìm độ chệch thống kê, độ lệch chuẩn, và trung bình bình phương
+sai số của <span class="math notranslate nohighlight">\(\hat{\theta}.\)</span></li>
+<li>Tìm độ chệch thống kê, độ lệch chuẩn, và trung bình bình phương
+sai số của <span class="math notranslate nohighlight">\(\tilde{\theta}.\)</span></li>
+<li>Bộ ước lượng nào tốt hơn?</li>
+</ul>
+</li>
+<li><p class="first">Trở lại ví dụ về nhà hóa học của chúng ta ở phần mở đầu, liệt kê 5
+bước để tiến hành kiểm định giả thuyết hai chiều, biết mức ý nghĩa
+thống kê <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span> và năng lực thống kê
+<span class="math notranslate nohighlight">\(1 - \beta = 0.8\)</span>.</p>
+</li>
+<li><p class="first">Chạy đoạn mã lập trình khoảng tin cậy biết <span class="math notranslate nohighlight">\(N=2\)</span> và
+<span class="math notranslate nohighlight">\(\alpha = 0.5\)</span> với <span class="math notranslate nohighlight">\(100\)</span> dữ liệu được tạo độc lập, sau đó
+vẽ đồ thị các khoảng kết quả (trường hợp này <code class="docutils literal notranslate"><span class="pre">t_star</span> <span class="pre">=</span> <span class="pre">1.0</span></code>). Ban
+sẽ thấy một vài khoảng rất nhỏ cách xa khoảng chứa giá trị kỳ vọng
+thực <span class="math notranslate nohighlight">\(0\)</span>. Điều này có mâu thuẫn với việc diễn giải khoảng tin
+cậy không? Có đúng không khi sử dụng các khoảng nhỏ này để nói các
+ước lượng có độ chính xác cao?</p>
+</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">18.10.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tiếng Anh: <a class="reference external" href="https://discuss.d2l.ai/t/statistics/419">MXNet</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1102">Pytorch</a>,
+<a class="reference external" href="https://discuss.d2l.ai/t/1103">Tensorflow</a></li>
+<li>Tiếng Việt: <a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Diễn đàn Machine Learning Cơ
+Bản</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">18.10.7. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Ngô Thế Anh Khoa</li>
+<li>Phạm Hồng Vinh</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Mai Sơn Hải</li>
+<li>Phạm Minh Đức</li>
+<li>Nguyễn Cảnh Thướng</li>
+<li>Nguyễn Văn Cường</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">18.10. Thống kê</a><ul>
+<li><a class="reference internal" href="#danh-gia-va-so-sanh-cac-bo-uoc-luong">18.10.1. Đánh giá và So sánh các Bộ ước lượng</a><ul>
+<li><a class="reference internal" href="#trung-binh-binh-phuong-sai-so">18.10.1.1. Trung bình Bình phương Sai số</a></li>
+<li><a class="reference internal" href="#do-chech-thong-ke">18.10.1.2. Độ chệch Thống kê</a></li>
+<li><a class="reference internal" href="#phuong-sai-va-do-lech-chuan">18.10.1.3. Phương sai và Độ lệch Chuẩn</a></li>
+<li><a class="reference internal" href="#su-danh-doi-do-chechphuong-sai">18.10.1.4. Sự đánh đổi Độ chệch–Phương sai</a></li>
+<li><a class="reference internal" href="#danh-gia-cac-bo-uoc-luong-qua-lap-trinh">18.10.1.5. Đánh giá các Bộ ước lượng qua Lập trình</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tien-hanh-kiem-dinh-gia-thuyet">18.10.2. Tiến hành Kiểm định Giả thuyết</a><ul>
+<li><a class="reference internal" href="#y-nghia-thong-ke">18.10.2.1. Ý nghĩa Thống kê</a></li>
+<li><a class="reference internal" href="#nang-luc-thong-ke">18.10.2.2. Năng lực Thống kê</a></li>
+<li><a class="reference internal" href="#tieu-chuan-kiem-dinh">18.10.2.3. Tiêu chuẩn Kiểm định</a></li>
+<li><a class="reference internal" href="#tri-so-p">18.10.2.4. Trị số <span class="math notranslate nohighlight">\(p\)</span></a></li>
+<li><a class="reference internal" href="#kiem-dinh-mot-phia-va-kiem-dinh-hai-phia">18.10.2.5. Kiểm định Một phía và Kiểm định Hai phía</a></li>
+<li><a class="reference internal" href="#cac-buoc-thong-thuong-trong-kiem-dinh-gia-thuyet">18.10.2.6. Các bước Thông thường trong Kiểm định Giả thuyết</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xay-dung-khoang-tin-cay">18.10.3. Xây dựng khoảng Tin cậy</a><ul>
+<li><a class="reference internal" href="#dinh-nghia">18.10.3.1. Định nghĩa</a></li>
+<li><a class="reference internal" href="#dien-giai">18.10.3.2. Diễn giải</a></li>
+<li><a class="reference internal" href="#mot-vi-du-ve-gaussian">18.10.3.3. Một ví dụ về Gaussian</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">18.10.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">18.10.5. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">18.10.6. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">18.10.7. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="naive-bayes_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>18.9. Bộ phân loại Naive Bayes</div>
+         </div>
+     </a>
+     <a id="button-next" href="information-theory_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>18.11. Lý thuyết Thông tin</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

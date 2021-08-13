@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>4.5. Suy giảm trọng số &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.6. Dropout" href="dropout_vn.html" />
+    <link rel="prev" title="4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp" href="underfit-overfit_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">4. </span>Perceptron Đa tầng</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">4.5. </span>Suy giảm trọng số</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_multilayer-perceptrons/weight-decay_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">4. Perceptron Đa tầng</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">4. Perceptron Đa tầng</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ===================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Weight Decay
+--><div class="section" id="suy-giam-trong-so">
+<span id="sec-weight-decay"></span><h1><span class="section-number">4.5. </span>Suy giảm trọng số<a class="headerlink" href="#suy-giam-trong-so" title="Permalink to this headline">¶</a></h1>
+<!--
+Now that we have characterized the problem of overfitting, we can introduce some standard techniques for regularizing models.
+Recall that we can always mitigate overfitting by going out and collecting more training data, that can be costly, time consuming, or entirely out of our control, making it impossible in the short run.
+For now, we can assume that we already have as much high-quality data as our resources permit and focus on regularization techniques.
+--><p>Bởi chúng ta đã mô tả xong vấn đề quá khớp, giờ ta có thể tìm hiểu một
+vài kỹ thuật tiêu chuẩn trong việc điều chuẩn mô hình. Nhắc lại rằng
+chúng ta luôn có thể giảm thiểu hiện tượng quá khớp bằng cách thu thập
+thêm dữ liệu huấn luyện, nhưng trong trường hợp ngắn hạn thì giải pháp
+này có thể không khả thi do quá tốn kém, lãng phí thời gian, hoặc nằm
+ngoài khả năng của ta. Hiện tại, chúng ta có thể giả sử rằng ta đã thu
+thập được một lượng tối đa dữ liệu chất lượng và sẽ tập trung vào các kỹ
+thuật điều chuẩn.</p>
+<!--
+Recall that in our polynomial curve-fitting example (:numref:`sec_model_selection`) we could limit our model's capacity simply by tweaking the degree of the fitted polynomial.
+Indeed, limiting the number of features is a popular technique to avoid overfitting.
+However, simply tossing aside features can be too blunt a hammer for the job.
+Sticking with the polynomial curve-fitting example, consider what might happen with high-dimensional inputs.
+The natural extensions of polynomials to multivariate data are called *monomials*, which are simply products of powers of variables.
+The degree of a monomial is the sum of the powers.
+For example, $x_1^2 x_2$, and $x_3 x_5^2$ are both monomials of degree $3$.
+--><p>Nhắc lại rằng trong ví dụ về việc khớp đường cong đa thức
+(<a class="reference internal" href="underfit-overfit_vn.html#sec-model-selection"><span class="std std-numref">Section 4.4</span></a>), chúng ta có thể giới hạn năng lực của
+mô hình bằng việc đơn thuần điều chỉnh số bậc của đa thức. Đúng như vậy,
+giới hạn số đặc trưng là một kỹ thuật phổ biến để tránh hiện tượng quá
+khớp. Tuy nhiên, việc đơn thuần loại bỏ các đặc trưng có thể hơi quá mức
+cần thiết. Quay lại với ví dụ về việc khớp đường cong đa thức, hãy xét
+chuyện gì sẽ xảy ra với đầu vào nhiều chiều. Ta mở rộng đa thức cho dữ
+liệu đa biến bằng việc thêm các <em>đơn thức</em>, hay nói đơn giản là thêm
+tích của lũy thừa các biến. Bậc của một đơn thức là tổng của các số mũ.
+Ví dụ, <span class="math notranslate nohighlight">\(x_1^2 x_2\)</span>, và <span class="math notranslate nohighlight">\(x_3 x_5^2\)</span> đều là các đơn thức bậc
+<span class="math notranslate nohighlight">\(3\)</span>.</p>
+<!--
+Note that the number of terms with degree $d$ blows up rapidly as $d$ grows larger.
+Given $k$ variables, the number of monomials of degree $d$ is ${k - 1 + d} \choose {k - 1}$.
+Even small changes in degree, say, from $2$ to $3$ dramatically increase the complexity of our model.
+Thus we often need a more fine-grained tool for adjusting function complexity.
+--><p>Lưu ý rằng số lượng đơn thức bậc <span class="math notranslate nohighlight">\(d\)</span> tăng cực kỳ nhanh theo
+<span class="math notranslate nohighlight">\(d\)</span>. Với <span class="math notranslate nohighlight">\(k\)</span> biến, số lượng các đơn thức bậc <span class="math notranslate nohighlight">\(d\)</span> là
+<span class="math notranslate nohighlight">\({k - 1 + d} \choose {k - 1}\)</span>. Chỉ một thay đổi nhỏ về số bậc, ví
+dụ từ <span class="math notranslate nohighlight">\(2\)</span> lên <span class="math notranslate nohighlight">\(3\)</span> cũng sẽ tăng độ phức tạp của mô hình một
+cách chóng mặt. Do vậy, chúng ta cần có một công cụ tốt hơn để điều
+chỉnh độ phức tạp của hàm số.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!--
+## Squared Norm Regularization
+--><div class="section" id="dieu-chuan-chuan-binh-phuong">
+<h2><span class="section-number">4.5.1. </span>Điều chuẩn Chuẩn Bình phương<a class="headerlink" href="#dieu-chuan-chuan-binh-phuong" title="Permalink to this headline">¶</a></h2>
+<!--
+*Weight decay* (commonly called *L2* regularization), might be the most widely-used technique for regularizing parametric machine learning models.
+The technique is motivated by the basic intuition that among all functions $f$,
+the function $f = 0$ (assigning the value $0$ to all inputs) is in some sense the *simplest* and that we can measure the complexity of a function by its distance from zero.
+But how precisely should we measure the distance between a function and zero?
+There is no single right answer.
+In fact, entire branches of mathematics, including parts of functional analysis and the theory of Banach spaces are devoted to answering this issue.
+--><p><em>Suy giảm trọng số</em> (thường được gọi là điều chuẩn <em>L2</em>), có thể là kỹ
+thuật được sử dụng rộng rãi nhất để điều chuẩn các mô hình học máy có
+tham số. Kỹ thuật này dựa trên một quan sát cơ bản: trong tất cả các hàm
+<span class="math notranslate nohighlight">\(f\)</span>, hàm <span class="math notranslate nohighlight">\(f = 0\)</span> (gán giá trị <span class="math notranslate nohighlight">\(0\)</span> cho tất cả các đầu
+vào) có lẽ là hàm <em>đơn giản nhất</em> và ta có thể đo độ phức tạp của hàm số
+bằng khoảng cách giữa nó và giá trị không. Nhưng cụ thể thì ta đo khoảng
+cách giữa một hàm số và số không như thế nào? Không chỉ có duy nhất một
+câu trả lời đúng. Trong thực tế, có những nhánh toán học được dành riêng
+để trả lời câu hỏi này, bao gồm một vài nhánh con của giải tích hàm và
+lý thuyết không gian Banach.</p>
+<!--
+One simple interpretation might be to measure the complexity of a linear function $f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x}$ by some norm of its weight vector, e.g., $|| \mathbf{w} ||^2$.
+The most common method for ensuring a small weight vector is to add its norm as a penalty term to the problem of minimizing the loss.
+Thus we replace our original objective, *minimize the prediction loss on the training labels*, with new objective, *minimize the sum of the prediction loss and the penalty term*.
+Now, if our weight vector grows too large, our learning algorithm might *focus* on minimizing the weight norm $|| \mathbf{w} ||^2$ versus minimizing the training error.
+That is exactly what we want.
+To illustrate things in code, let's revive our previous example from :numref:`sec_linear_regression` for linear regression.
+There, our loss was given by
+--><p>Một cách đơn giản để đo độ phức tạp của hàm tuyến tính
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x}\)</span> là dựa vào chuẩn của
+vector trọng số, ví dụ như <span class="math notranslate nohighlight">\(|| \mathbf{w} ||^2\)</span>. Phương pháp phổ
+biến nhất để đảm bảo rằng ta sẽ có một vector trọng số nhỏ là thêm chuẩn
+của nó (đóng vai trò như một thành phần phạt) vào bài toán cực tiểu hóa
+hàm mất mát. Do đó, ta thay thế mục tiêu ban đầu: <em>cực tiểu hóa hàm mất
+mát dự đoán trên nhãn huấn luyện</em>, bằng mục tiêu mới, <em>cực tiểu hóa tổng
+của hàm mất mát dự đoán và thành phần phạt</em>. Bây giờ, nếu vector trọng
+số tăng quá lớn, thuật toán học sẽ <em>tập trung</em> giảm thiểu chuẩn trọng số
+<span class="math notranslate nohighlight">\(|| \mathbf{w} ||^2\)</span> thay vì giảm thiểu lỗi huấn luyện. Đó chính
+xác là những gì ta muốn. Để minh họa mọi thứ bằng mã, hãy xét lại ví dụ
+hồi quy tuyến tính trong <a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html#sec-linear-regression"><span class="std std-numref">Section 3.1</span></a>. Ở đó, hàm
+mất mát được định nghĩa như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-weight-decay-vn-0">
+<span class="eqno">(4.5.1)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-weight-decay-vn-0" title="Permalink to this equation">¶</a></span>\[l(\mathbf{w}, b) = \frac{1}{n}\sum_{i=1}^n \frac{1}{2}\left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right)^2.\]</div>
+<!--
+Recall that $\mathbf{x}^{(i)}$ are the observations, $y^{(i)}$ are labels, and $(\mathbf{w}, b)$ are the weight and bias parameters respectively.
+To penalize the size of the weight vector, we must somehow add $|| \mathbf{w} ||^2$ to the loss function, but how should the model trade off the standard loss for this new additive penalty?
+In practice, we characterize this tradeoff via the *regularization constant* $\lambda > 0$, a non-negative hyperparameter that we fit using validation data:
+--><p>Nhắc lại <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span> là các quan sát, <span class="math notranslate nohighlight">\(y^{(i)}\)</span> là
+các nhãn và <span class="math notranslate nohighlight">\((\mathbf{w}, b)\)</span> lần lượt là trọng số và hệ số điều
+chỉnh. Để phạt độ lớn của vector trọng số, bằng cách nào đó ta phải cộng
+thêm <span class="math notranslate nohighlight">\(||mathbf{w}||^2\)</span> vào hàm mất mát, nhưng mô hình nên đánh đổi
+hàm mất mát thông thường với thành phần phạt mới này như thế nào? Trong
+thực tế, ta mô tả sự đánh đổi này thông qua <em>hằng số điều chuẩn</em>
+<span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>, một siêu tham số không âm mà ta khớp được bằng cách
+sử dụng dữ liệu kiểm định:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-weight-decay-vn-1">
+<span class="eqno">(4.5.2)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-weight-decay-vn-1" title="Permalink to this equation">¶</a></span>\[l(\mathbf{w}, b) + \frac{\lambda}{2} \|\mathbf{w}\|^2.\]</div>
+<!--
+For $\lambda = 0$, we recover our original loss function.
+For $\lambda > 0$, we restrict the size of $|| \mathbf{w} ||$.
+The astute reader might wonder why we work with the squared norm and not the standard norm (i.e., the Euclidean distance).
+We do this for computational convenience.
+By squaring the L2 norm, we remove the square root, leaving the sum of squares of each component of the weight vector.
+This makes the derivative of the penalty easy to compute (the sum of derivatives equals the derivative of the sum).
+--><p>Với <span class="math notranslate nohighlight">\(\lambda = 0\)</span>, ta thu lại được hàm mất mát gốc. Với
+<span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>, ta giới hạn độ lớn của <span class="math notranslate nohighlight">\(|| \mathbf{w} ||\)</span>.
+Bạn đọc nào tinh ý có thể tự hỏi tại sao ta dùng chuẩn bình phương chứ
+không phải chuẩn thông thường (nghĩa là khoảng cách Euclide). Ta làm
+điều này để thuận tiện cho việc tính toán. Bằng cách bình phương chuẩn
+L2, ta khử được căn bậc hai, chỉ còn lại tổng bình phương từng thành
+phần của vector trọng số. Điều này giúp việc tính đạo hàm của thành phần
+phạt dễ dàng hơn (tổng các đạo hàm bằng đạo hàm của tổng).</p>
+<!--
+Moreover, you might ask why we work with the L2 norm in the first place and not, say, the L1 norm.
+--><p>Hơn nữa, có thể bạn sẽ hỏi tại sao ta lại dùng chuẩn L2 ngay từ đầu chứ
+không phải là chuẩn L1.</p>
+<!--
+In fact, other choices are valid and popular throughout statistics.
+While L2-regularized linear models constitute the classic *ridge regression* algorithm, L1-regularized linear regression is
+a similarly fundamental model in statistics (popularly known as *lasso regression*).
+--><p>Trong thực tế ngành thống kê, các lựa chọn khác đều hợp lệ và phổ biến.
+Trong khi các mô hình tuyến tính được điều chuẩn-L2 tạo thành thuật toán
+<em>hồi quy ridge</em> (<em>ridge regression</em>), hồi quy tuyến tính được điều
+chuẩn-L1 cũng là một mô hình cơ bản trong thống kê (thường được gọi là
+<em>hồi quy lasso</em>—<em>lasso regression</em>).</p>
+<!--
+More generally, the $\ell_2$ is just one among an infinite class of norms call p-norms, many of which you might encounter in the future.
+In general, for some number $p$, the $\ell_p$ norm is defined as
+--><p>Một cách tổng quát, chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> chỉ là một trong vô số các
+chuẩn được gọi chung là chuẩn-p, và sau này bạn sẽ có thể gặp một vài
+chuẩn như vậy. Thông thường, với một số <span class="math notranslate nohighlight">\(p\)</span>, chuẩn <span class="math notranslate nohighlight">\(\ell_p\)</span>
+được định nghĩa là:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-weight-decay-vn-2">
+<span class="eqno">(4.5.3)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-weight-decay-vn-2" title="Permalink to this equation">¶</a></span>\[\|\mathbf{w}\|_p^p := \sum_{i=1}^d |w_i|^p.\]</div>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!--
+One reason to work with the L2 norm is that it places and outsize penalty on large components of the weight vector.
+This biases our learning algorithm towards models that distribute weight evenly across a larger number of features.
+In practice, this might make them more robust to measurement error in a single variable.
+By contrast, L1 penalties lead to models that concentrate weight on a small set of features, which may be desirable for other reasons.
+--><p>Một lý do để sử dụng chuẩn L2 là vì nó phạt nặng những thành phần lớn
+của vector trọng số. Việc này khiến thuật toán học thiên vị các mô hình
+có trọng số được phân bổ đồng đều cho một số lượng lớn các đặc trưng.
+Trong thực tế, điều này có thể giúp giảm ảnh hưởng từ lỗi đo lường của
+từng biến đơn lẻ. Ngược lại, lượng phạt L1 hướng đến các mô hình mà
+trọng số chỉ tập trung vào một số lượng nhỏ các đặc trưng, và ta có thể
+muốn điều này vì một vài lý do khác.</p>
+<!--
+The stochastic gradient descent updates for L2-regularized regression follow:
+--><p>Việc cập nhật hạ gradient ngẫu nhiên cho hồi quy được chuẩn hóa L2 được
+tiến hành như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-weight-decay-vn-3">
+<span class="eqno">(4.5.4)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-weight-decay-vn-3" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
+\mathbf{w} &amp; \leftarrow \left(1- \eta\lambda \right) \mathbf{w} - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \mathbf{x}^{(i)} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right),
+\end{aligned}\]</div>
+<!--
+As before, we update $\mathbf{w}$ based on the amount by which our estimate differs from the observation.
+However, we also shrink the size of $\mathbf{w}$ towards $0$.
+That is why the method is sometimes called "weight decay": given the penalty term alone, our optimization algorithm *decays* the weight at each step of training.
+In contrast to feature selection, weight decay offers us a continuous mechanism for adjusting the complexity of $f$.
+Small values of $\lambda$ correspond to unconstrained $\mathbf{w}$, whereas large values of $\lambda$ constrain $\mathbf{w}$ considerably.
+Whether we include a corresponding bias penalty $b^2$ can vary across implementations, and may vary across layers of a neural network.
+Often, we do not regularize the bias term of a network's output layer.
+--><p>Như trước đây, ta cập nhật <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> dựa trên hiệu của giá trị
+ước lượng và giá trị quan sát được. Tuy nhiên, ta cũng sẽ thu nhỏ độ lớn
+của <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> về <span class="math notranslate nohighlight">\(0\)</span>. Đó là lý do tại sao phương pháp này
+còn đôi khi được gọi là “suy giảm trọng số”: nếu chỉ có số hạng phạt,
+thuật toán tối ưu sẽ <em>suy giảm</em> các trọng số ở từng bước huấn luyện.
+Trái ngược với việc lựa chọn đặc trưng, suy giảm trọng số cho ta một cơ
+chế liên tục để thay đổi độ phức tạp của <span class="math notranslate nohighlight">\(f\)</span>. Giá trị
+<span class="math notranslate nohighlight">\(\lambda\)</span> nhỏ tương ứng với việc <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> không bị ràng
+buộc, còn giá trị <span class="math notranslate nohighlight">\(\lambda\)</span> lớn sẽ ràng buộc <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>
+một cách đáng kể. Còn việc có nên thêm lượng phạt cho hệ số điều chỉnh
+tương ứng <span class="math notranslate nohighlight">\(b^2\)</span> hay không thì tùy thuộc ở mỗi cách lập trình, và
+có thể khác nhau giữa các tầng của mạng nơ-ron. Thông thường, ta không
+điều chuẩn hệ số điều chỉnh tại tầng đầu ra của mạng.</p>
+<!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+## High-Dimensional Linear Regression
+--></div>
+<div class="section" id="hoi-quy-tuyen-tinh-nhieu-chieu">
+<h2><span class="section-number">4.5.2. </span>Hồi quy Tuyến tính nhiều chiều<a class="headerlink" href="#hoi-quy-tuyen-tinh-nhieu-chieu" title="Permalink to this headline">¶</a></h2>
+<!--
+We can illustrate the benefits of weight decay over feature selection through a simple synthetic example.
+First, we generate some data as before
+--><p>Ta có thể minh họa các ưu điểm của suy giảm trọng số so với lựa chọn đặc
+trưng thông qua một ví dụ đơn giản với dữ liệu tự tạo. Đầu tiên, ta tạo
+ra dữ liệu giống như trước đây</p>
+<!--
+$$y = 0.05 + \sum_{i = 1}^d 0.01 x_i + \epsilon \text{ where }
+\epsilon \sim \mathcal{N}(0, 0.01).$$
+--><div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-weight-decay-vn-4">
+<span class="eqno">(4.5.5)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-weight-decay-vn-4" title="Permalink to this equation">¶</a></span>\[y = 0.05 + \sum_{i = 1}^d 0.01 x_i + \epsilon \text{ với }
+\epsilon \sim \mathcal{N}(0, 0.01).\]</div>
+<!--
+choosing our label to be a linear function of our inputs, corrupted by Gaussian noise with zero mean and variance 0.01.
+To make the effects of overfitting pronounced, we can increase the dimensinoality of our problem to $d = 200$
+and work with a small training set containing only 20 example.
+--><p>lựa chọn nhãn là một hàm tuyến tính của các đầu vào, bị biến dạng bởi
+nhiễu Gauss với trung bình bằng không và phương sai bằng 0.01. Để làm
+cho hiệu ứng của việc quá khớp trở nên rõ ràng, ta có thể tăng số chiều
+của bài toán lên <span class="math notranslate nohighlight">\(d = 200\)</span> và làm việc với một tập huấn luyện nhỏ
+bao gồm chỉ 20 mẫu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">autograd</span><span class="p">,</span> <span class="n">gluon</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">n_train</span><span class="p">,</span> <span class="n">n_test</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">5</span>
+<span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_inputs</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">synthetic_data</span><span class="p">(</span><span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="n">n_train</span><span class="p">)</span>
+<span class="n">train_iter</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_array</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">synthetic_data</span><span class="p">(</span><span class="n">true_w</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="n">n_test</span><span class="p">)</span>
+<span class="n">test_iter</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_array</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- ===================== Kết thúc dịch Phần 3 ===================== --><!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!--
+## Implementation from Scratch
+--></div>
+<div class="section" id="lap-trinh-tu-dau">
+<h2><span class="section-number">4.5.3. </span>Lập trình từ đầu<a class="headerlink" href="#lap-trinh-tu-dau" title="Permalink to this headline">¶</a></h2>
+<!--
+Next, we will implement weight decay from scratch, simply by adding the squared $\ell_2$ penalty to the original target function.
+--><p>Tiếp theo, chúng ta sẽ lập trình suy giảm trọng số từ đầu, chỉ đơn giản
+bằng cách cộng thêm bình phương lượng phạt <span class="math notranslate nohighlight">\(\ell_2\)</span> vào hàm mục
+tiêu ban đầu.</p>
+<!--
+### Initializing Model Parameters
+--><div class="section" id="khoi-tao-tham-so-mo-hinh">
+<h3><span class="section-number">4.5.3.1. </span>Khởi tạo Tham số Mô hình<a class="headerlink" href="#khoi-tao-tham-so-mo-hinh" title="Permalink to this headline">¶</a></h3>
+<!--
+First, we will define a function to randomly initialize our model parameters and run `attach_grad` on each to allocate memory for the gradients we will calculate.
+--><p>Đầu tiên, chúng ta khai báo một hàm để khởi tạo tham số cho mô hình một
+cách ngẫu nhiên và chạy <code class="docutils literal notranslate"><span class="pre">attach_grad</span></code> với mỗi tham số để cấp phát bộ
+nhớ cho gradient mà ta sẽ tính toán.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">init_params</span><span class="p">():</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+</pre></div>
+</div>
+<!--
+### Defining $\ell_2$ Norm Penalty
+--></div>
+<div class="section" id="dinh-nghia-luong-phat-chuan-ell-2">
+<h3><span class="section-number">4.5.3.2. </span>Định nghĩa Lượng phạt Chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span><a class="headerlink" href="#dinh-nghia-luong-phat-chuan-ell-2" title="Permalink to this headline">¶</a></h3>
+<!--
+Perhaps the most convenient way to implement this penalty is to square all terms in place and sum them up.
+We divide by $2$ by convention, (when we take the derivative of a quadratic function, the $2$ and $1/2$ cancel out, ensuring that the expression for the update looks nice and simple).
+--><p>Có lẽ cách thuận tiện nhất để lập trình lượng phạt này là bình phương
+tất cả các phần tử ngay tại chỗ và cộng chúng lại với nhau. Ta đem chia
+với <span class="math notranslate nohighlight">\(2\)</span> theo quy ước (khi ta tính đạo hàm của hàm bậc hai,
+<span class="math notranslate nohighlight">\(2\)</span> và <span class="math notranslate nohighlight">\(1/2\)</span> sẽ loại trừ nhau, đảm bảo biểu thức cập nhật
+trông đơn giản, dễ nhìn).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">l2_penalty</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<!--
+### Defining the Train and Test Functions
+--></div>
+<div class="section" id="dinh-nghia-ham-huan-luyen-va-kiem-tra">
+<h3><span class="section-number">4.5.3.3. </span>Định nghĩa hàm Huấn luyện và Kiểm tra<a class="headerlink" href="#dinh-nghia-ham-huan-luyen-va-kiem-tra" title="Permalink to this headline">¶</a></h3>
+<!--
+The following code fits a model on the training set and evaluates it on the test set.
+The linear network and the squared loss have not changed since the previous chapter, so we will just import them via `d2l.linreg` and `d2l.squared_loss`.
+The only change here is that our loss now includes the penalty term.
+--><p>Đoạn mã nguồn sau thực hiện việc khớp mô hình trên tập huấn luyện và
+đánh giá nó trên tập kiểm tra. Mạng tuyến tính và hàm mất mát bình
+phương không thay đổi gì so với chương trước, vì vậy ta chỉ cần nhập
+chúng qua <code class="docutils literal notranslate"><span class="pre">d2l.linreg</span></code> và <code class="docutils literal notranslate"><span class="pre">d2l.squared_loss</span></code>. Thay đổi duy nhất ở
+đây là hàm mất mát có thêm lượng phạt.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">lambd</span><span class="p">):</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">()</span>
+    <span class="n">net</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">d2l</span><span class="o">.</span><span class="n">linreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">squared_loss</span>
+    <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.003</span>
+    <span class="n">animator</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                            <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">train_iter</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+                <span class="c1"># The L2 norm penalty term has been added, and broadcasting</span>
+                <span class="c1"># makes l2_penalty(w) a vector whose length is batch_size</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">lambd</span> <span class="o">*</span> <span class="n">l2_penalty</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">d2l</span><span class="o">.</span><span class="n">sgd</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">),</span>
+                                 <span class="n">d2l</span><span class="o">.</span><span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;l1 norm of w:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<!--
+### Training without Regularization
+--></div>
+<div class="section" id="huan-luyen-khong-dieu-chuan">
+<h3><span class="section-number">4.5.3.4. </span>Huấn luyện không Điều chuẩn<a class="headerlink" href="#huan-luyen-khong-dieu-chuan" title="Permalink to this headline">¶</a></h3>
+<!--
+We now run this code with `lambd = 0`, disabling weight decay.
+Note that we overfit badly, decreasing the training error but not the test error---a textook case of overfitting.
+--><p>Giờ chúng ta sẽ chạy đoạn mã này với <code class="docutils literal notranslate"><span class="pre">lambd</span> <span class="pre">=</span> <span class="pre">0</span></code>, vô hiệu hóa suy giảm
+trọng số. Hãy để ý tới việc quá khớp nặng, lỗi huấn luyện giảm nhưng lỗi
+kiểm tra thì không—một trường hợp điển hình của hiện tượng quá khớp.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">lambd</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l1</span> <span class="n">norm</span> <span class="n">of</span> <span class="n">w</span><span class="p">:</span> <span class="mf">152.89601</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_weight-decay_vn_909412_9_1.svg" src="../_images/output_weight-decay_vn_909412_9_1.svg" /></div>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Using Weight Decay
+--></div>
+<div class="section" id="su-dung-suy-giam-trong-so">
+<h3><span class="section-number">4.5.3.5. </span>Sử dụng Suy giảm Trọng số<a class="headerlink" href="#su-dung-suy-giam-trong-so" title="Permalink to this headline">¶</a></h3>
+<!--
+Below, we run with substantial weight decay.
+Note that the training error increases but the test error decreases.
+This is precisely the effect we expect from regularization.
+As an exercise, you might want to check that the $\ell_2$ norm of the weights $\mathbf{w}$ has actually decreased.
+--><p>Dưới đây, chúng ta huấn luyện mô hình với trọng số bị suy giảm mạnh. Cần
+chú ý rằng lỗi huấn luyện tăng nhưng lỗi kiểm định lại giảm. Đây chính
+xác là hiệu ứng mà chúng ta mong đợi từ việc điều chuẩn. Bạn có thể tự
+kiểm tra xem chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> của các trọng số <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> có
+thực sự giảm hay không, như là một bài tập.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train</span><span class="p">(</span><span class="n">lambd</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l1</span> <span class="n">norm</span> <span class="n">of</span> <span class="n">w</span><span class="p">:</span> <span class="mf">4.2494426</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_weight-decay_vn_909412_11_1.svg" src="../_images/output_weight-decay_vn_909412_11_1.svg" /></div>
+<!--
+## Concise Implementation
+--></div>
+</div>
+<div class="section" id="cach-lap-trinh-suc-tich">
+<h2><span class="section-number">4.5.4. </span>Cách lập trình súc tích<a class="headerlink" href="#cach-lap-trinh-suc-tich" title="Permalink to this headline">¶</a></h2>
+<!--
+Because weight decay is ubiquitous in neural network optimization,
+Gluon makes it especially convenient, integrating weight decay into the optimization algorithm itself for easy use in combination with any loss function.
+Moreover, this integration serves a computational benefit, allowing implementation tricks to add weight decay to the algorithm, without any additional computational overhead.
+Since the weight decay portion of the update depends only on the current value of each parameter, and the optimizer must to touch each parameter once anyway.
+--><p>Bởi vì suy giảm trọng số có ở khắp mọi nơi trong việc tối ưu mạng
+nơ-ron, Gluon giúp cho việc áp dụng kĩ thuật này trở nên rất thuận tiện,
+bằng cách tích hợp suy giảm trọng số vào chính giải thuật tối ưu để có
+thể kết hợp với bất kì hàm mất mát nào. Hơn nữa, việc tích hợp này cũng
+đem lại lợi ích về mặt tính toán, cho phép ta sử dụng các thủ thuật lập
+trình để thêm suy giảm trọng số vào thuật toán mà không làm tăng tổng
+chi phí tính toán. Điều này khả thi bởi vì tại mỗi bước cập nhật, phần
+suy giảm trọng số chỉ phụ thuộc vào giá trị hiện tại của mỗi tham số và
+bộ tối ưu hoá đằng nào cũng phải đụng tới chúng.</p>
+<!--
+In the following code, we specify the weight decay hyperparameter directly through `wd` when instantiating our `Trainer`.
+By default, Gluon decays both weights and biases simultaneously.
+Note that the hyperparameter `wd` will be multiplied by `wd_mult` when updating model parameters.
+Thus, if we set `wd_mult` to $0$, the bias parameter $b$ will not decay.
+--><p>Trong đoạn mã nguồn sau đây, chúng ta chỉ định trực tiếp siêu tham số
+trong suy giảm trọng số thông qua giá trị <code class="docutils literal notranslate"><span class="pre">wd</span></code> khi khởi tạo
+<code class="docutils literal notranslate"><span class="pre">Trainer</span></code>. Theo mặc định, Gluon suy giảm đồng thời cả trọng số và hệ
+số điều chỉnh. Cần chú ý rằng siêu tham số <code class="docutils literal notranslate"><span class="pre">wd</span></code> sẽ được nhân với
+<code class="docutils literal notranslate"><span class="pre">wd_mult</span></code> khi cập nhật các tham số mô hình. Như vậy, nếu chúng ta đặt
+<code class="docutils literal notranslate"><span class="pre">wd_mult</span></code> bằng <span class="math notranslate nohighlight">\(0\)</span>, tham số hệ số điều chỉnh <span class="math notranslate nohighlight">\(b\)</span> sẽ không
+suy giảm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_gluon</span><span class="p">(</span><span class="n">wd</span><span class="p">):</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">L2Loss</span><span class="p">()</span>
+    <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.003</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span>
+                            <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">&#39;wd&#39;</span><span class="p">:</span> <span class="n">wd</span><span class="p">})</span>
+    <span class="c1"># The bias parameter has not decayed. Bias names generally end with &quot;bias&quot;</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(</span><span class="s1">&#39;.*bias&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span><span class="s1">&#39;wd_mult&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">animator</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                            <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">train_iter</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="n">trainer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">),</span>
+                                 <span class="n">d2l</span><span class="o">.</span><span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L1 norm of w:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">net</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">())</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<!--
+The plots look identical to those when we implemented weight decay from scratch.
+However, they run appreciably faster and are easier to implement, a benefit that will become more pronounced for large problems.
+--><p>Các đồ thị này nhìn giống hệt với những đồ thị khi chúng ta lập trình
+suy giảm trọng số từ đầu. Tuy nhiên, chúng chạy nhanh hơn rõ rệt và dễ
+lập trình hơn, một lợi ích đáng kể khi làm việc với các bài toán lớn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_gluon</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="n">norm</span> <span class="n">of</span> <span class="n">w</span><span class="p">:</span> <span class="mf">163.57935</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_weight-decay_vn_909412_15_1.svg" src="../_images/output_weight-decay_vn_909412_15_1.svg" /></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_gluon</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="n">norm</span> <span class="n">of</span> <span class="n">w</span><span class="p">:</span> <span class="mf">3.8904924</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_weight-decay_vn_909412_16_1.svg" src="../_images/output_weight-decay_vn_909412_16_1.svg" /></div>
+<!--
+So far, we only touched upon one notion of what constitutes a simple *linear* function.
+Moreover, what constitutes a simple *nonlinear* function, can be an even more complex question.
+For instance, [Reproducing Kernel Hilbert Spaces (RKHS)](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space) allow one to apply tools introduced for linear functions in a nonlinear context.
+Unfortunately, RKHS-based algorithms tend to scale purely to large, high-dimensional data.
+In this book we will default to the simple heuristic of applying weight decay on all layers of a deep network.
+--><!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><p>Tới giờ, chúng ta mới chỉ đề cập đến một ý niệm về những gì cấu thành
+nên một hàm <em>tuyến tính</em> đơn giản. Hơn nữa, những gì cấu thành nên một
+hàm <em>phi tuyến</em> đơn giản, thậm chí còn phức tạp hơn. Ví dụ, <a class="reference external" href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space">Tái tạo các
+không gian kernel Hilbert
+(RKHS)</a>
+cho phép chúng ta áp dụng các công cụ được giới thiệu cho các hàm tuyến
+tính trong một ngữ cảnh phi tuyến. Không may là, các giải thuật dựa vào
+RKHS thường không thể nhân rộng và hoạt động hiệu quả trên bộ dữ liệu
+lớn, đa chiều. Dựa trên một thực nghiệm đơn giản, chúng ta mặc định sẽ
+áp dụng phương pháp suy giảm trọng số cho tất cả các tầng của mạng học
+sâu trong quyển sách này.</p>
+<!--
+## Summary
+--></div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">4.5.5. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Regularization is a common method for dealing with overfitting. It adds a penalty term to the loss function on the training set to reduce the complexity of the learned model.
+* One particular choice for keeping the model simple is weight decay using an $\ell_2$ penalty. This leads to weight decay in the update steps of the learning algorithm.
+* Gluon provides automatic weight decay functionality in the optimizer by setting the hyperparameter `wd`.
+* You can have different optimizers within the same training loop, e.g., for different sets of parameters.
+--><ul class="simple">
+<li>Điều chuẩn là một phương pháp phổ biến để giải quyết vấn đề quá khớp.
+Nó thêm một lượng phạt vào hàm mất mát trong tập huấn luyện để giảm
+thiểu độ phức tạp của mô hình.</li>
+<li>Một cách cụ thể để giữ mô hình đơn giản là sử dụng suy giảm trọng số
+với lượng phạt <span class="math notranslate nohighlight">\(\ell_2\)</span>. Điều này dẫn đến việc giá trị trọng số
+sẽ suy giảm trong các bước cập nhật của giải thuật học.</li>
+<li>Gluon cung cấp tính năng suy giảm trọng số tự động trong bộ tối ưu
+hoá bằng cách thiết lập siêu tham số <code class="docutils literal notranslate"><span class="pre">wd</span></code>.</li>
+<li>Bạn có thể dùng nhiều bộ tối ưu hoá khác nhau trong cùng một vòng lặp
+huấn luyện, chẳng hạn như để dùng chúng cho các tập tham số khác
+nhau.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">4.5.6. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Experiment with the value of $\lambda$ in the estimation problem in this page. Plot training and test accuracy as a function of $\lambda$. What do you observe?
+2. Use a validation set to find the optimal value of $\lambda$. Is it really the optimal value? Does this matter?
+3. What would the update equations look like if instead of $\|\mathbf{w}\|^2$ we used $\sum_i |w_i|$ as our penalty of choice (this is called $\ell_1$ regularization).
+4. We know that $\|\mathbf{w}\|^2 = \mathbf{w}^\top \mathbf{w}$.
+Can you find a similar equation for matrices (mathematicians call this the [Frobenius norm](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm))?
+5. Review the relationship between training error and generalization error.
+In addition to weight decay, increased training, and the use of a model of suitable complexity, what other ways can you think of to deal with overfitting?
+6. In Bayesian statistics we use the product of prior and likelihood to arrive at a posterior via $P(w \mid x) \propto P(x \mid w) P(w)$. How can you identify $P(w)$ with regularization?
+--><ol class="arabic simple">
+<li>Thử nghiệm với giá trị của <span class="math notranslate nohighlight">\(\lambda\)</span> trong bài toán ước lượng ở
+trang này. Vẽ đồ thị biểu diễn độ chính xác của tập huấn luyện và tập
+kiểm tra như một hàm số của <span class="math notranslate nohighlight">\(\lambda\)</span>. Bạn quan sát được điều
+gì?</li>
+<li>Sử dụng tập kiểm định để tìm giá trị tối ưu của <span class="math notranslate nohighlight">\(\lambda\)</span>. Nó
+có thật sự là giá trị tối ưu hay không? Điều này có quan trọng lắm
+không?</li>
+<li>Các phương trình cập nhật sẽ có dạng như thế nào nếu thay vì
+<span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2\)</span>, chúng ta sử dụng lượng phạt
+<span class="math notranslate nohighlight">\(\sum_i |w_i|\)</span> (còn được gọi là điều chuẩn <span class="math notranslate nohighlight">\(\ell_1\)</span>).</li>
+<li>Chúng ta đã biết rằng
+<span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2 = \mathbf{w}^\top \mathbf{w}\)</span>. Bạn có thể tìm
+một phương trình tương tự cho các ma trận (các nhà toán học gọi nó là
+<a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm">chuẩn
+Frobenius</a>)
+hay không?</li>
+<li>Ôn lại mối quan hệ giữa lỗi huấn luyện và lỗi khái quát. Bên cạnh
+việc sử dụng suy giảm trọng số, huấn luyện thêm và lựa chọn một mô
+hình có độ phức tạp phù hợp, bạn có thể nghĩ ra cách nào khác để giải
+quyết vấn đề quá khớp không?</li>
+<li>Trong thống kê Bayesian chúng ta sử dụng tích của tiên nghiệm và hàm
+hợp lý để suy ra hậu nghiệm thông qua
+<span class="math notranslate nohighlight">\(P(w \mid x) \propto P(x \mid w) P(w)\)</span>. Làm thế nào để suy ra
+được hậu nghiệm <span class="math notranslate nohighlight">\(P(w)\)</span> khi sử dụng điều chuẩn?</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--><!--
+## [Discussions](https://discuss.mxnet.io/t/2342)
+--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">4.5.7. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2342">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">4.5.8. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Tâm</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Lý Phi Long</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Duy Du</li>
+<li>Phạm Minh Đức</li>
+<li>Lê Cao Thăng</li>
+<li>Nguyễn Lê Quang Nhật</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">4.5. Suy giảm trọng số</a><ul>
+<li><a class="reference internal" href="#dieu-chuan-chuan-binh-phuong">4.5.1. Điều chuẩn Chuẩn Bình phương</a></li>
+<li><a class="reference internal" href="#hoi-quy-tuyen-tinh-nhieu-chieu">4.5.2. Hồi quy Tuyến tính nhiều chiều</a></li>
+<li><a class="reference internal" href="#lap-trinh-tu-dau">4.5.3. Lập trình từ đầu</a><ul>
+<li><a class="reference internal" href="#khoi-tao-tham-so-mo-hinh">4.5.3.1. Khởi tạo Tham số Mô hình</a></li>
+<li><a class="reference internal" href="#dinh-nghia-luong-phat-chuan-ell-2">4.5.3.2. Định nghĩa Lượng phạt Chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span></a></li>
+<li><a class="reference internal" href="#dinh-nghia-ham-huan-luyen-va-kiem-tra">4.5.3.3. Định nghĩa hàm Huấn luyện và Kiểm tra</a></li>
+<li><a class="reference internal" href="#huan-luyen-khong-dieu-chuan">4.5.3.4. Huấn luyện không Điều chuẩn</a></li>
+<li><a class="reference internal" href="#su-dung-suy-giam-trong-so">4.5.3.5. Sử dụng Suy giảm Trọng số</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cach-lap-trinh-suc-tich">4.5.4. Cách lập trình súc tích</a></li>
+<li><a class="reference internal" href="#tom-tat">4.5.5. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">4.5.6. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">4.5.7. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">4.5.8. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="underfit-overfit_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</div>
+         </div>
+     </a>
+     <a id="button-next" href="dropout_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>4.6. Dropout</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

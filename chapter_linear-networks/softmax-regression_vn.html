@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>3.4. Hồi quy Softmax &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)" href="fashion-mnist_vn.html" />
+    <link rel="prev" title="3.3. Cách lập trình súc tích Hồi quy Tuyến tính" href="linear-regression-gluon_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">3. </span>Mạng nơ-ron Tuyến tính</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">3.4. </span>Hồi quy Softmax</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_linear-networks/softmax-regression_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ===================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Softmax Regression
+--><div class="section" id="hoi-quy-softmax">
+<span id="sec-softmax"></span><h1><span class="section-number">3.4. </span>Hồi quy Softmax<a class="headerlink" href="#hoi-quy-softmax" title="Permalink to this headline">¶</a></h1>
+<!--
+In :numref:`sec_linear_regression`, we introduced linear regression, working through implementations from scratch in :numref:`sec_linear_scratch`
+and again using Gluon in :numref:`sec_linear_gluon` to do the heavy lifting.
+--><p>Trong <a class="reference internal" href="linear-regression_vn.html#sec-linear-regression"><span class="std std-numref">Section 3.1</span></a>, chúng ta đã giới thiệu về hồi
+quy tuyến tính, từ việc tự xây dựng mô hình hồi quy tuyến tính từ đầu
+tại <a class="reference internal" href="linear-regression-scratch_vn.html#sec-linear-scratch"><span class="std std-numref">Section 3.2</span></a> cho đến xây dựng mô hình hồi quy
+tuyến tính với Gluon thực hiện phần việc nặng nhọc tại
+<a class="reference internal" href="linear-regression-gluon_vn.html#sec-linear-gluon"><span class="std std-numref">Section 3.3</span></a>.</p>
+<!--
+Regression is the hammer we reach for when we want to answer *how much?* or *how many?* questions.
+If you want to predict the number of dollars (the *price*) at which a house will be sold, or the number of wins a baseball team might have,
+or the number of days that a patient will remain hospitalized before being discharged, then you are probably looking for a regression model.
+--><p>Hồi quy là công cụ đắc lực có thể sử dụng khi ta muốn trả lời câu hỏi
+<em>bao nhiêu?</em>. Nếu bạn muốn dự đoán một ngôi nhà sẽ được bán với giá bao
+nhiêu tiền (<em>Đô la</em>), hay số trận thắng mà một đội bóng có thể đạt được,
+hoặc số ngày một bệnh nhân phải điều trị nội trú trước khi được xuất
+viện, thì có lẽ bạn đang cần một mô hình hồi quy.</p>
+<!--
+In practice, we are more often interested in classification: asking not *how much?* but *which one?*
+--><p>Trong thực tế, chúng ta thường quan tâm đến việc phân loại hơn: không
+phải câu hỏi <em>bao nhiêu?</em> mà là <em>loại nào?</em></p>
+<!--
+* Does this email belong in the spam folder or the inbox*?
+* Is this customer more likely *to sign up* or *not to sign up* for a subscription service?*
+* Does this image depict a donkey, a dog, a cat, or a rooster?
+* Which movie is Aston most likely to watch next?
+--><ul class="simple">
+<li>Email này có phải thư rác hay không?</li>
+<li>Khách hàng này nhiều khả năng <em>đăng ký</em> hay <em>không đăng ký</em> một dịch
+vụ thuê bao?</li>
+<li>Hình ảnh này mô tả một con lừa, một con chó, một con mèo hay một con
+gà trống?</li>
+<li>Bộ phim nào có khả năng cao nhất được Aston xem tiếp theo?</li>
+</ul>
+<!--
+Colloquially, machine learning practitioners overload the word *classification* to describe two subtly different problems:
+(i) those where we are interested only in *hard* assignments of examples to categories; and (ii) those where we wish to make *soft assignments*,
+i.e., to assess the *probability* that each category applies.
+The distinction tends to get blurred, in part, because often, even when we only care about hard assignments, we still use models that make soft assignments.
+--><p>Thông thường, những người làm về học máy dùng từ <em>phân loại</em> để mô tả
+đôi chút sự khác nhau giữa hai bài toán: (i) ta chỉ quan tâm đến việc
+gán <em>cứng</em> một danh mục cho mỗi ví dụ: là chó, là gà, hay là mèo?; và
+(ii) ta muốn <em>gán mềm</em> tất cả các danh mục cho mỗi ví dụ, tức đánh giá
+<em>xác suất</em> một ví dụ rơi vào từng danh mục khả dĩ: là chó (92%), là gà
+(1%), là mèo (7%). Sự khác biệt này thường không rõ ràng, một phần bởi
+vì thông thường ngay cả khi chúng ta chỉ quan tâm đến việc gán cứng,
+chúng ta vẫn sử dụng các mô hình thực hiện các phép gán mềm.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!--
+## Classification Problems
+--><div class="section" id="bai-toan-phan-loai">
+<h2><span class="section-number">3.4.1. </span>Bài toán Phân loại<a class="headerlink" href="#bai-toan-phan-loai" title="Permalink to this headline">¶</a></h2>
+<!--
+To get our feet wet, let's start off with a simple image classification problem.
+Here, each input consists of a $2\times2$ grayscale image.
+We can represent each pixel value with a single scalar, giving us four features $x_1, x_2, x_3, x_4$.
+Further, let's assume that each image belongs to one among the categories "cat", "chicken" and "dog".
+--><p>Hãy khởi động với một bài toán phân loại hình ảnh đơn giản. Ở đây, mỗi
+đầu vào là một ảnh xám có kích thước <span class="math notranslate nohighlight">\(2\times2\)</span>. Bằng cách biểu
+diễn mỗi giá trị điểm ảnh bởi một số vô hướng, ta thu được bốn đặc trưng
+<span class="math notranslate nohighlight">\(x_1, x_2, x_3, x_4\)</span>. Hơn nữa, giả sử rằng mỗi hình ảnh đều thuộc
+về một trong các danh mục “mèo”, “gà” và “chó”.</p>
+<!--
+Next, we have to choose how to represent the labels.
+We have two obvious choices.
+Perhaps the most natural impulse would be to choose $y \in \{1, 2, 3\}$, where the integers represent {dog, cat, chicken} respectively.
+This is a great way of *storing* such information on a computer.
+If the categories had some natural ordering among them, say if we were trying to predict {baby, toddler, adolescent, young adult, adult, geriatric},
+then it might even make sense to cast this problem as regression and keep the labels in this format.
+--><p>Tiếp theo, ta cần phải chọn cách biểu diễn nhãn. Ta có hai cách làm hiển
+nhiên. Cách tự nhiên nhất có lẽ là chọn <span class="math notranslate nohighlight">\(y \in \{1, 2, 3\}\)</span> lần
+lượt ứng với {chó, mèo, gà}. Đây là một cách <em>lưu trữ</em> thông tin tuyệt
+vời trên máy tính. Nếu các danh mục có một thứ tự tự nhiên giữa chúng,
+chẳng hạn như {trẻ sơ sinh, trẻ tập đi, thiếu niên, thanh niên, người
+trưởng thành, người cao tuổi}, sẽ là tự nhiên hơn nếu coi bài toán này
+là một bài toán hồi quy và nhãn sẽ được giữ nguyên dưới dạng số.</p>
+<!--
+But general classification problems do not come with natural orderings among the classes.
+Fortunately, statisticians long ago invented a simple way to represent categorical data: the *one hot encoding*.
+A one-hot encoding is a vector with as many components as we have categories.
+The component corresponding to particular instance's category is set to 1 and all other components are set to 0.
+--><p>Nhưng nhìn chung các lớp của bài toán phân loại không tuân theo một trật
+tự tự nhiên nào. May mắn thay, các nhà thông kê từ lâu đã tìm ra một
+cách đơn giản để có thể biểu diễn dữ liệu danh mục: <em>biểu diễn one-hot</em>.
+Biểu diễn one-hot là một vector với số lượng thành phần bằng số danh mục
+mà ta có. Thành phần tương ứng với từng danh mục cụ thể sẽ được gán giá
+trị 1 và tất cả các thành phần khác sẽ được gán giá trị 0.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-0">
+<span class="eqno">(3.4.1)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-0" title="Permalink to this equation">¶</a></span>\[y \in \{(1, 0, 0), (0, 1, 0), (0, 0, 1)\}.\]</div>
+<!--
+In our case, $y$ would be a three-dimensional vector, with $(1, 0, 0)$ corresponding to "cat", $(0, 1, 0)$ to "chicken" and $(0, 0, 1)$ to "dog".
+--><p>Trong trường hợp này, <span class="math notranslate nohighlight">\(y\)</span> sẽ là một vector 3 chiều, với
+<span class="math notranslate nohighlight">\((1, 0, 0)\)</span> tương ứng với “mèo”, <span class="math notranslate nohighlight">\((0, 1, 0)\)</span> ứng với “gà” và
+<span class="math notranslate nohighlight">\((0, 0, 1)\)</span> ứng với “chó”.</p>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+### Network Architecture
+--><div class="section" id="kien-truc-mang">
+<h3><span class="section-number">3.4.1.1. </span>Kiến trúc mạng<a class="headerlink" href="#kien-truc-mang" title="Permalink to this headline">¶</a></h3>
+<!--
+In order to estimate the conditional probabilities associated with each classes, we need a model with multiple outputs, one per class.
+To address classification with linear models, we will need as many linear functions as we have outputs.
+Each output will correspond to its own linear function.
+In our case, since we have 4 features and 3 possible output categories, we will need 12 scalars to represent the weights,
+($w$ with subscripts) and 3 scalars to represent the biases ($b$ with subscripts).
+We compute these three *logits*, $o_1, o_2$, and $o_3$, for each input:
+--><p>Để tính xác suất có điều kiện ứng với mỗi lớp, chúng ta cần một mô hình
+có nhiều đầu ra với một đầu ra cho mỗi lớp. Để phân loại với các mô hình
+tuyến tính, chúng ta cần số hàm tuyến tính tương đương số đầu ra. Mỗi
+đầu ra sẽ tương ứng với hàm tuyến tính của chính nó. Trong trường hợp
+này, vì có 4 đặc trưng và 3 đầu ra, chúng ta sẽ cần 12 số vô hướng để
+thể hiện các trọng số, (<span class="math notranslate nohighlight">\(w\)</span> với các chỉ số dưới) và 3 số vô hướng
+để thể hiện các hệ số điều chỉnh (<span class="math notranslate nohighlight">\(b\)</span> với các chỉ số dưới). Chúng
+ta sẽ tính ba <em>logits</em>, <span class="math notranslate nohighlight">\(o_1, o_2\)</span>, và <span class="math notranslate nohighlight">\(o_3\)</span>, cho mỗi đầu
+vào:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-1">
+<span class="eqno">(3.4.2)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-1" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+o_1 &amp;= x_1 w_{11} + x_2 w_{12} + x_3 w_{13} + x_4 w_{14} + b_1,\\
+o_2 &amp;= x_1 w_{21} + x_2 w_{22} + x_3 w_{23} + x_4 w_{24} + b_2,\\
+o_3 &amp;= x_1 w_{31} + x_2 w_{32} + x_3 w_{33} + x_4 w_{34} + b_3.
+\end{aligned}\end{split}\]</div>
+<!--
+We can depict this calculation with the neural network diagram shown in :numref:`fig_softmaxreg`.
+Just as in linear regression, softmax regression is also a single-layer neural network.
+And since the calculation of each output, $o_1, o_2$, and $o_3$, depends on all inputs, $x_1$, $x_2$, $x_3$, and $x_4$,
+the output layer of softmax regression can also be described as fully-connected layer.
+--><p>Chúng ta có thể mô tả phép tính này với biểu đồ mạng nơ-ron được thể
+hiện trong <a class="reference internal" href="#fig-softmaxreg"><span class="std std-numref">Fig. 3.4.1</span></a>. Như hồi quy tuyến tính, hồi quy
+softmax cũng là một mạng nơ-ron đơn tầng. Và vì sự tính toán của mỗi đầu
+ra, <span class="math notranslate nohighlight">\(o_1, o_2\)</span>, và <span class="math notranslate nohighlight">\(o_3\)</span>, phụ thuộc vào tất cả đầu vào,
+<span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, <span class="math notranslate nohighlight">\(x_3\)</span>, và <span class="math notranslate nohighlight">\(x_4\)</span>, tầng đầu ra của
+hồi quy softmax cũng có thể được xem như một tầng kết nối đầy đủ.</p>
+<!--
+![Softmax regression is a single-layer neural network.  ](../img/softmaxreg.svg)
+--><div class="figure align-default" id="id1">
+<span id="fig-softmaxreg"></span><img alt="../_images/softmaxreg.svg" src="../_images/softmaxreg.svg" /><p class="caption"><span class="caption-number">Fig. 3.4.1 </span><span class="caption-text">Hồi quy sofmax là một mạng nơ-ron đơn tầng</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+To express the model more compactly, we can use linear algebra notation.
+In vector form, we arrive at $\mathbf{o} = \mathbf{W} \mathbf{x} + \mathbf{b}$, a form better suited both for mathematics, and for writing code.
+Note that we have gathered all of our weights into a $3\times4$ matrix and that for a given example $\mathbf{x}$,
+our outputs are given by a matrix-vector product of our weights by our inputs plus our biases $\mathbf{b}$.
+--><p>Để biểu diễn mô hình gọn hơn, chúng ta có thể sử dụng ký hiệu đại số
+tuyến tính. Ở dạng vector, ta có
+<span class="math notranslate nohighlight">\(\mathbf{o} = \mathbf{W} \mathbf{x} + \mathbf{b}\)</span>, một dạng phù
+hợp hơn cho cả toán và lập trình. Chú ý rằng chúng ta đã tập hợp tất cả
+các trọng số vào một ma trận <span class="math notranslate nohighlight">\(3\times4\)</span> và với một mẫu cho trước
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, các đầu ra được tính bởi tích ma trận-vector của các
+trọng số và đầu vào cộng với vector hệ số điều chỉnh <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
+<!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!--
+### Softmax Operation
+--></div>
+<div class="section" id="ham-softmax">
+<h3><span class="section-number">3.4.1.2. </span>Hàm Softmax<a class="headerlink" href="#ham-softmax" title="Permalink to this headline">¶</a></h3>
+<!--
+The main approach that we are going to take here is to interpret the outputs of our model as probabilities.
+We will optimize our parameters to produce probabilities that maximize the likelihood of the observed data.
+Then, to generate predictions, we will set a threshold, for example, choosing the *argmax* of the predicted probabilities.
+--><p>Chúng ta sẽ xem các giá trị đầu ra của mô hình là các giá trị xác suất.
+Ta sẽ tối ưu hóa các tham số của mô hình sao cho khả năng xuất hiện dữ
+liệu quan sát được là cao nhất. Sau đó, ta sẽ đưa ra dự đoán bằng cách
+đặt ngưỡng xác suất, ví dụ dự đoán nhãn đúng là nhãn có xác suất cao
+nhất (dùng hàm <em>argmax</em>).</p>
+<!--
+Put formally, we would like outputs $\hat{y}_k$ that we can interpret as the probability that a given item belongs to class $k$.
+Then we can choose the class with the largest output value as our prediction $\operatorname*{argmax}_k y_k$.
+For example, if $\hat{y}_1$, $\hat{y}_2$, and $\hat{y}_3$ are $0.1$, $.8$, and $0.1$, respectively, then we predict category $2$, which (in our example) represents "chicken".
+--><p>Nói một cách chính quy hơn, ta mong muốn diễn dịch kết quả
+<span class="math notranslate nohighlight">\(\hat{y}_k\)</span> là xác suất để một điểm dữ liệu cho trước thuộc về một
+lớp <span class="math notranslate nohighlight">\(k\)</span> nào đó. Sau đó, ta có thể chọn lớp cho điểm đó tương ứng
+với giá trị lớn nhất mà mô hình dự đoán
+<span class="math notranslate nohighlight">\(\operatorname*{argmax}_k y_k\)</span>. Ví dụ, nếu <span class="math notranslate nohighlight">\(\hat{y}_1\)</span>,
+<span class="math notranslate nohighlight">\(\hat{y}_2\)</span> và <span class="math notranslate nohighlight">\(\hat{y}_3\)</span> lần lượt là <span class="math notranslate nohighlight">\(0.1\)</span>,
+<span class="math notranslate nohighlight">\(0.8\)</span>, and <span class="math notranslate nohighlight">\(0.1\)</span>, thì ta có thể dự đoán điểm đó thuộc về lớp
+số <span class="math notranslate nohighlight">\(2\)</span> là “gà” (ứng với trong ví dụ trước).</p>
+<!--
+You might be tempted to suggest that we interpret the logits $o$ directly as our outputs of interest.
+However, there are some problems with directly interpreting the output of the linear layer as a probability.
+Nothing constrains these numbers to sum to 1.
+Moreover, depending on the inputs, they can take negative values.
+These violate basic axioms of probability presented in :numref:`sec_prob`
+--><p>Bạn có thể muốn đề xuất rằng ta lấy trực tiếp logit <span class="math notranslate nohighlight">\(o\)</span> làm đầu ra
+mong muốn. Tuy nhiên, sẽ có vấn đề khi coi kết qủa trả về trực tiếp từ
+tầng tuyến tính như là các giá trị xác suất. Lý do là không có bất cứ
+điều kiện nào để ràng buộc tổng của những con số này bằng <span class="math notranslate nohighlight">\(1\)</span>. Hơn
+nữa, tùy thuộc vào đầu vào mà ta có thể nhận được giá trị âm. Các lý do
+trên khiến kết quả của tầng tuyến tính vi phạm vào các tiên đề cơ bản
+của xác xuất đã được nhắc đến trong <a class="reference internal" href="../chapter_preliminaries/probability_vn.html#sec-prob"><span class="std std-numref">Section 2.6</span></a>.</p>
+<!--
+To interpret our outputs as probabilities, we must guarantee that (even on new data), they will be nonnegative and sum up to 1.
+Moreover, we need a training objective that encourages the model to estimate faithfully *probabilities*.
+Of all instances when a classifier outputs $.5$, we hope that half of those examples will *actually* belong to the predicted class.
+This is a property called *calibration*.
+--><p>Để có thể diễn dịch kết quả đầu ra là xác xuất, ta phải đảm bảo rằng các
+kết quả không âm và tổng của chúng phải bằng 1 (điều này phải đúng trên
+cả dữ liệu mới). Hơn nữa, ta cần một hàm mục tiêu trong quá trình huấn
+luyện để cho mô hình có thể ước lượng <em>xác suất</em> một cách chính xác.
+Trong tất cả các trường hợp, khi kết quả phân lớp cho ra xác suất là
+<span class="math notranslate nohighlight">\(0.5\)</span> thì ta hy vọng phân nửa số mẫu đó <em>thực sự</em> thuộc về đúng
+lớp được dự đoán. Đây được gọi là <em>hiệu chuẩn</em>.</p>
+<!--
+The *softmax function*, invented in 1959 by the social scientist R Duncan Luce in the context of *choice models* does precisely this.
+To transform our logits such that they become nonnegative and sum to $1$, while requiring that the model remains differentiable,
+we first exponentiate each logit (ensuring non-negativity) and then divide by their sum (ensuring that they sum to $1$).
+--><p><em>Hàm softmax</em>, được phát minh vào năm 1959 bởi nhà khoa học xã hội R
+Duncan Luce với chủ đề <em>mô hình lựa chọn</em>, thỏa mãn chính xác những điều
+trên. Để biến đổi kết quả logit thành kết quả không âm và có tổng là
+<span class="math notranslate nohighlight">\(1\)</span>, trong khi vẫn giữ tính chất khả vi, đầu tiên ta cần lấy hàm
+mũ cho từng logit (để chắc chắn chúng không âm) và sau đó ta chia cho
+tổng của chúng (để chắc rằng tổng của chúng luôn bằng 1).</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-2">
+<span class="eqno">(3.4.3)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-2" title="Permalink to this equation">¶</a></span>\[\hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o})\quad \text{tại}\quad
+\hat{y}_i = \frac{\exp(o_i)}{\sum_j \exp(o_j)}.\]</div>
+<!--
+It is easy to see $\hat{y}_1 + \hat{y}_2 + \hat{y}_3 = 1$ with $0 \leq \hat{y}_i \leq 1$ for all $i$.
+Thus, $\hat{y}$ is a proper probability distribution and the values of $\hat{\mathbf{y}}$ can be interpreted accordingly.
+Note that the softmax operation does not change the ordering among the logits, and thus we can still pick out the most likely class by:
+--><p>Dễ thấy rằng <span class="math notranslate nohighlight">\(\hat{y}_1 + \hat{y}_2 + \hat{y}_3 = 1\)</span> với
+<span class="math notranslate nohighlight">\(0 \leq \hat{y}_i \leq 1\)</span> với mọi <span class="math notranslate nohighlight">\(i\)</span>. Do đó,
+<span class="math notranslate nohighlight">\(\hat{y}\)</span> là phân phối xác suất phù hợp và các giá trị của
+<span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span> có thể được hiểu theo đó. Lưu ý rằng hàm
+softmax không thay đổi thứ tự giữa các logit và do đó ta vẫn có thể chọn
+ra lớp phù hợp nhất bằng cách:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-3">
+<span class="eqno">(3.4.4)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-3" title="Permalink to this equation">¶</a></span>\[\hat{\imath}(\mathbf{o}) = \operatorname*{argmax}_i o_i = \operatorname*{argmax}_i \hat y_i.\]</div>
+<!--
+The logits $\mathbf{o}$ then are simply the pre-softmax values that determining the probabilities assigned to each category.
+Summarizing it all in vector notation we get ${\mathbf{o}}^{(i)} = \mathbf{W} {\mathbf{x}}^{(i)} + {\mathbf{b}}$, where ${\hat{\mathbf{y}}}^{(i)} = \mathrm{softmax}({\mathbf{o}}^{(i)})$.
+--><p>Các logit <span class="math notranslate nohighlight">\(\mathbf{o}\)</span> đơn giản chỉ là các giá trị trước khi cho
+qua hàm softmax để xác định xác xuất thuộc về mỗi danh mục. Tóm tắt lại,
+ta có ký hiệu dưới dạng vector như sau:
+<span class="math notranslate nohighlight">\({\mathbf{o}}^{(i)} = \mathbf{W} {\mathbf{x}}^{(i)} + {\mathbf{b}}\)</span>,
+với
+<span class="math notranslate nohighlight">\({\hat{\mathbf{y}}}^{(i)} = \mathrm{softmax}({\mathbf{o}}^{(i)})\)</span>.</p>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Vectorization for Minibatches
+--></div>
+<div class="section" id="vector-hoa-minibatch">
+<h3><span class="section-number">3.4.1.3. </span>Vector hóa Minibatch<a class="headerlink" href="#vector-hoa-minibatch" title="Permalink to this headline">¶</a></h3>
+<!--
+To improve computational efficiency and take advantage of GPUs, we typically carry out vector calculations for minibatches of data.
+Assume that we are given a minibatch $\mathbf{X}$ of examples with dimensionality $d$ and batch size $n$.
+Moreover, assume that we have $q$ categories (outputs).
+Then the minibatch features $\mathbf{X}$ are in $\mathbb{R}^{n \times d}$, weights $\mathbf{W} \in \mathbb{R}^{d \times q}$, and the bias satisfies $\mathbf{b} \in \mathbb{R}^q$.
+--><p>Để cải thiện hiệu suất tính toán và tận dụng GPU, ta thường phải thực
+hiện các phép tính vector cho các minibatch dữ liệu. Giả sử, ta có một
+minibatch <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> của mẫu với số chiều <span class="math notranslate nohighlight">\(d\)</span> và kích
+thước batch là <span class="math notranslate nohighlight">\(n\)</span>. Thêm vào đó, chúng ta có <span class="math notranslate nohighlight">\(q\)</span> lớp đầu ra.
+Như vậy, minibatch đặc trưng <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> sẽ thuộc
+<span class="math notranslate nohighlight">\(\mathbb{R}^{n \times d}\)</span>, trọng số
+<span class="math notranslate nohighlight">\(\mathbf{W} \in \mathbb{R}^{d \times q}\)</span>, và độ chệch sẽ thỏa mãn
+<span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^q\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-4">
+<span class="eqno">(3.4.5)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mathbf{O} &amp;= \mathbf{X} \mathbf{W} + \mathbf{b}, \\
+\hat{\mathbf{Y}} &amp; = \mathrm{softmax}(\mathbf{O}).
+\end{aligned}\end{split}\]</div>
+<!--
+This accelerates the dominant operation into a matrix-matrix product $\mathbf{W} \mathbf{X}$ vs the matrix-vector products we would be executing if we processed one example at a time.
+The softmax itself can be computed by exponentiating all entries in $\mathbf{O}$ and then normalizing them by the sum.
+--><p>Việc tăng tốc diễn ra chủ yếu tại tích ma trận - ma trận
+<span class="math notranslate nohighlight">\(\mathbf{W} \mathbf{X}\)</span> so với tích ma trận - vector nếu chúng ta
+xử lý từng mẫu một. Bản thân softmax có thể được tính bằng cách lũy thừa
+tất cả các mục trong <span class="math notranslate nohighlight">\(\mathbf{O}\)</span> và sau đó chuẩn hóa chúng theo
+tổng.</p>
+<!--
+## Loss Function
+--></div>
+</div>
+<div class="section" id="ham-mat-mat">
+<h2><span class="section-number">3.4.2. </span>Hàm mất mát<a class="headerlink" href="#ham-mat-mat" title="Permalink to this headline">¶</a></h2>
+<!--
+Next, we need a *loss function* to measure the quality of our predicted probabilities.
+We will rely on *likelihood maximization*, the very same concept that we encountered when providing a probabilistic justification for the least squares objective in linear regression
+(:numref:`sec_linear_regression`).
+--><p>Tiếp theo, chúng ta cần một <em>hàm mất mát</em> để đánh giá chất lượng các dự
+đoán xác suất. Chúng ta sẽ dựa trên <em>hợp lý cực đại</em>, khái niệm tương tự
+đã gặp khi đưa ra lý giải xác suất cho hàm mục tiêu bình phương nhỏ nhất
+trong hồi quy tuyến tính (<a class="reference internal" href="linear-regression_vn.html#sec-linear-regression"><span class="std std-numref">Section 3.1</span></a>).</p>
+<!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><!--
+### Log-Likelihood
+--><div class="section" id="log-hop-ly">
+<h3><span class="section-number">3.4.2.1. </span>Log hợp lý<a class="headerlink" href="#log-hop-ly" title="Permalink to this headline">¶</a></h3>
+<!--
+The softmax function gives us a vector $\hat{\mathbf{y}}$, which we can interpret as estimated conditional probabilities of each class given the input $x$,
+e.g., $\hat{y}_1$ = $\hat{P}(y=\mathrm{cat} \mid \mathbf{x})$.
+We can compare the estimates with reality by checking how probable the *actual* classes are according to our model, given the features.
+--><p>Hàm softmax cho chúng ta một vector <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>, có thể
+được hiểu như các xác suất có điểu kiện của từng lớp với đầu vào
+<span class="math notranslate nohighlight">\(x\)</span>. Ví dụ: <span class="math notranslate nohighlight">\(\hat{y}_1\)</span> =
+<span class="math notranslate nohighlight">\(\hat{P}(y=\mathrm{cat} \mid \mathbf{x})\)</span>. Để biết các ước lượng
+có sát với thực tế hay không, ta kiểm tra xác suất mà mô hình gán cho
+lớp <em>thật sự</em> khi biết các đặc trưng.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-5">
+<span class="eqno">(3.4.6)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-5" title="Permalink to this equation">¶</a></span>\[P(Y \mid X) = \prod_{i=1}^n P(y^{(i)} \mid x^{(i)})
+\text{ và vì vậy }
+-\log P(Y \mid X) = \sum_{i=1}^n -\log P(y^{(i)} \mid x^{(i)}).\]</div>
+<!--
+Maximizing $P(Y \mid X)$ (and thus equivalently minimizing $-\log P(Y \mid X)$) corresponds to predicting the label well.
+This yields the loss function (we dropped the superscript $(i)$ to avoid notation clutter):
+--><p>Cực đại hoá <span class="math notranslate nohighlight">\(P(Y \mid X)\)</span> (và vì vậy tương đương với cực tiểu hóa
+<span class="math notranslate nohighlight">\(-\log P(Y \mid X)\)</span>) giúp việc dự đoán nhãn tốt hơn. Điều này dẫn
+đến hàm mất mát (chúng tôi lược bỏ chỉ số trên <span class="math notranslate nohighlight">\((i)\)</span> để tránh sự
+nhập nhằng về kí hiệu):</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-6">
+<span class="eqno">(3.4.7)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-6" title="Permalink to this equation">¶</a></span>\[l = -\log P(y \mid x) = - \sum_j y_j \log \hat{y}_j.\]</div>
+<!--
+For reasons explained later on, this loss function is commonly called the *cross-entropy* loss.
+Here, we used that by construction $\hat{y}$ is a discrete probability distribution and that the vector $\mathbf{y}$ is a one-hot vector.
+Hence the the sum over all coordinates $j$ vanishes for all but one term.
+Since all $\hat{y}_j$ are probabilities, their logarithm is never larger than $0$.
+Consequently, the loss function cannot be minimized any further if we correctly predict $y$ with *certainty*, i.e., if $P(y \mid x) = 1$ for the correct label.
+Note that this is often not possible.
+For example, there might be label noise in the dataset (some examples may be mislabeled).
+It may also not be possible when the input features are not sufficiently informative to classify every example perfectly.
+--><p>Bởi vì những lý do sẽ được giải thích sau đây, hàm mất mát này thường
+được gọi là mất mát <em>entropy chéo</em>. Ở đây, chúng ta đã sử dụng nó bằng
+cách xây dựng <span class="math notranslate nohighlight">\(\hat{y}\)</span> giống như một phân phối xác suất rời rạc
+và vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> là một vector one-hot. Do đó, tổng các số
+hạng với chỉ số <span class="math notranslate nohighlight">\(j\)</span> sẽ tiêu biến tạo thành một giá trị duy nhất.
+Bởi mọi <span class="math notranslate nohighlight">\(\hat{y}_j\)</span> đều là xác suất, log của chúng không bao giờ
+lớn hơn <span class="math notranslate nohighlight">\(0\)</span>. Vì vậy, hàm mất mát sẽ không thể giảm thêm được nữa
+nếu chúng ta dự đoán chính xác <span class="math notranslate nohighlight">\(y\)</span> với <em>độ chắc chắn tuyệt đối</em>,
+tức <span class="math notranslate nohighlight">\(P(y \mid x) = 1\)</span> cho nhãn đúng. Chú ý rằng điều này thường
+không khả thi. Ví dụ, nhãn bị nhiễu sẽ xuất hiện trong tập dữ liệu (một
+vài mẫu bị dán nhầm nhãn). Điều này cũng khó xảy ra khi những đặc trưng
+đầu vào không chứa đủ thông tin để phân loại các mẫu một cách hoàn hảo.</p>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ===================== Bắt đầu dịch Phần 7 ===================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 4 - BẮT ĐẦU ===================================--><!--
+### Softmax and Derivatives
+--></div>
+<div class="section" id="softmax-va-dao-ham">
+<h3><span class="section-number">3.4.2.2. </span>Softmax và Đạo hàm<a class="headerlink" href="#softmax-va-dao-ham" title="Permalink to this headline">¶</a></h3>
+<!--
+Since the softmax and the corresponding loss are so common, it is worth while understanding a bit better how it is computed.
+Plugging $o$ into the definition of the loss $l$ and using the definition of the softmax we obtain:
+--><p>Vì softmax và hàm mất mát softmax rất phổ biến, nên việc hiểu cách tính
+giá trị các hàm này sẽ có ích về sau. Thay <span class="math notranslate nohighlight">\(o\)</span> vào định nghĩa của
+hàm mất mát <span class="math notranslate nohighlight">\(l\)</span> và dùng định nghĩa của softmax, ta được:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-7">
+<span class="eqno">(3.4.8)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-7" title="Permalink to this equation">¶</a></span>\[l = -\sum_j y_j \log \hat{y}_j = \sum_j y_j \log \sum_k \exp(o_k) - \sum_j y_j o_j
+= \log \sum_k \exp(o_k) - \sum_j y_j o_j.\]</div>
+<!--
+To understand a bit better what is going on, consider the derivative with respect to $o$. We get
+--><p>Để hiểu rõ hơn, hãy cùng xét đạo hàm riêng của <span class="math notranslate nohighlight">\(l\)</span> theo <span class="math notranslate nohighlight">\(o\)</span>.
+Ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-8">
+<span class="eqno">(3.4.9)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-8" title="Permalink to this equation">¶</a></span>\[\partial_{o_j} l = \frac{\exp(o_j)}{\sum_k \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j = P(y = j \mid x) - y_j.\]</div>
+<!--
+In other words, the gradient is the difference between the probability assigned to the true class by our model, as expressed by the probability $P(y \mid x)$, and what actually happened, as expressed by $y$.
+In this sense, it is very similar to what we saw in regression, where the gradient was the difference between the observation $y$ and estimate $\hat{y}$. This is not coincidence.
+In any [exponential family](https://en.wikipedia.org/wiki/Exponential_family) model, the gradients of the log-likelihood are given by precisely this term.
+This fact makes computing gradients easy in practice.
+--><p>Nói cách khác, gradient chính là hiệu giữa xác xuất mô hình gán cho lớp
+đúng <span class="math notranslate nohighlight">\(P(y \mid x)\)</span>, và nhãn của dữ liệu <span class="math notranslate nohighlight">\(y\)</span>. Điều này cũng
+tương tự như trong bài toán hồi quy, khi gradient là hiệu giữa dữ liệu
+quan sát được <span class="math notranslate nohighlight">\(y\)</span> và kết quả ước lượng <span class="math notranslate nohighlight">\(\hat{y}\)</span>. Đây không
+phải là ngẫu nhiên. Trong mọi mô hình <a class="reference external" href="https://en.wikipedia.org/wiki/Exponential_family">họ lũy
+thừa</a>, gradient của
+hàm log hợp lý đều có dạng như thế này. Điều này giúp cho việc tính toán
+gradient trong thực tế trở nên dễ dàng hơn.</p>
+<!-- ===================== Kết thúc dịch Phần 7 ===================== --><!-- ===================== Bắt đầu dịch Phần 8 ===================== --><!--
+### Cross-Entropy Loss
+--></div>
+<div class="section" id="ham-mat-mat-entropy-cheo">
+<h3><span class="section-number">3.4.2.3. </span>Hàm mất mát Entropy chéo<a class="headerlink" href="#ham-mat-mat-entropy-cheo" title="Permalink to this headline">¶</a></h3>
+<!--
+Now consider the case where we observe not just a single outcome but an entire distribution over outcomes.
+We can use the same representation as before for $y$.
+The only difference is that rather than a vector containing only binary entries, say $(0, 0, 1)$, we now have a generic probability vector, say $(0.1, 0.2, 0.7)$.
+The math that we used previously to define the loss $l$ still works out fine, just that the interpretation is slightly more general.
+It is the expected value of the loss for a distribution over labels.
+--><p>Giờ hãy xem xét trường hợp mà ta quan sát được toàn bộ phân phối của đầu
+ra thay vì chỉ một giá trị đầu ra duy nhất. Ta có thể biểu diễn
+<span class="math notranslate nohighlight">\(y\)</span> giống hệt như trước. Sự khác biệt duy nhất là thay vì có một
+vector chỉ chứa các phần tử nhị phân, giả sử như <span class="math notranslate nohighlight">\((0, 0, 1)\)</span>, giờ
+ta có một vector xác suất tổng quát, ví dụ như <span class="math notranslate nohighlight">\((0.1, 0.2, 0.7)\)</span>.
+Các công thức toán học ta dùng trước đó để định nghĩa hàm mất mát
+<span class="math notranslate nohighlight">\(l\)</span> vẫn áp dụng tốt ở đây nhưng khái quát hơn một chút. Giá trị
+của các phần tử trong vector tương ứng giá trị kỳ vọng của hàm mất mát
+trên phân phối của nhãn.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-9">
+<span class="eqno">(3.4.10)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-9" title="Permalink to this equation">¶</a></span>\[l(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_j y_j \log \hat{y}_j.\]</div>
+<!--
+This loss is called the cross-entropy loss and it is one of the most commonly used losses for multiclass classification.
+We can demystify the name by introducing the basics of information theory.
+--><p>Hàm trên được gọi là hàm mát mát entropy chéo và là một trong những hàm
+mất mát phổ biến nhất dùng cho bài toán phân loại đa lớp. Ta có thể làm
+sáng tỏ cái tên entropy chéo bằng việc giới thiệu các kiến thức cơ bản
+trong lý thuyết thông tin.</p>
+<!--
+## Information Theory Basics
+--></div>
+</div>
+<div class="section" id="ly-thuyet-thong-tin-co-ban">
+<h2><span class="section-number">3.4.3. </span>Lý thuyết Thông tin Cơ bản<a class="headerlink" href="#ly-thuyet-thong-tin-co-ban" title="Permalink to this headline">¶</a></h2>
+<!--
+Information theory deals with the problem of encoding, decoding, transmitting and manipulating information (also known as data) in as concise form as possible.
+--><p>Lý thuyết thông tin giải quyết các bài toán mã hóa, giải mã, truyền tải
+và xử lý thông tin (hay còn được gọi là dữ liệu) dưới dạng ngắn gọn nhất
+có thể.</p>
+<!-- ===================== Bắt đầu dịch Phần 9 ===================== --><!--
+### Entropy
+--><div class="section" id="entropy">
+<h3><span class="section-number">3.4.3.1. </span>Entropy<a class="headerlink" href="#entropy" title="Permalink to this headline">¶</a></h3>
+<!--
+The central idea in information theory is to quantify the information content in data.
+This quantity places a hard limit on our ability to compress the data.
+In information theory, this quantity is called the [entropy](https://en.wikipedia.org/wiki/Entropy) of a distribution $p$, and it is captured by the following equation:
+--><p>Ý tưởng cốt lõi trong lý thuyết thông tin chính là việc định lượng lượng
+thông tin chứa trong dữ liệu. Giá trị định lượng này chỉ ra giới hạn tối
+đa cho khả năng nén dữ liệu (khi tìm biểu diễn ngắn gọn nhất mà không
+mất thông tin). Giá trị định lượng này gọi là
+<a class="reference external" href="https://en.wikipedia.org/wiki/Entropy">entropy</a>, xác định trên phân
+phối <span class="math notranslate nohighlight">\(p\)</span> của bộ dữ liệu, được định nghĩa bằng phương trình dưới
+đây:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-10">
+<span class="eqno">(3.4.11)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-10" title="Permalink to this equation">¶</a></span>\[H[p] = \sum_j - p(j) \log p(j).\]</div>
+<!--
+One of the fundamental theorems of information theory states that in order to encode data drawn randomly from the distribution $p$, we need at least $H[p]$ "nats" to encode it.
+If you wonder what a "nat" is, it is the equivalent of bit but when using a code with base $e$ rather than one with base 2.
+One nat is $\frac{1}{\log(2)} \approx 1.44$ bit.
+$H[p] / 2$ is often also called the binary entropy.
+--><p>Một định lý căn bản của lý thuyết thông tin là để có thể mã hóa dữ liệu
+thu thập ngẫu nhiên từ phân phối <span class="math notranslate nohighlight">\(p\)</span>, chúng ta cần sử dụng ít nhất
+<span class="math notranslate nohighlight">\(H[p]\)</span> “nat”. “nat” là đơn vị biểu diễn dữ liệu sử dụng cơ số
+<span class="math notranslate nohighlight">\(e\)</span>, tương tự với bit biểu diễn dữ liệu sử dụng cơ số 2. Một nat
+bằng <span class="math notranslate nohighlight">\(\frac{1}{\log(2)} \approx 1.44\)</span> bit. <span class="math notranslate nohighlight">\(H[p] / 2\)</span> thường
+được gọi là entropy nhị phân.</p>
+<!--
+### Surprisal
+--></div>
+<div class="section" id="luong-tin">
+<h3><span class="section-number">3.4.3.2. </span>Lượng tin<a class="headerlink" href="#luong-tin" title="Permalink to this headline">¶</a></h3>
+<!--
+You might be wondering what compression has to do with prediction.
+Imagine that we have a stream of data that we want to compress.
+If it is always easy for us to predict the next token, then this data is easy to compress!
+Take the extreme example where every token in the stream always takes the same value.
+That is a very boring data stream!
+And not only is it boring, but it is easy to predict.
+Because they are always the same, we do not have to transmit any information to communicate the contents of the stream.
+Easy to predict, easy to compress.
+--><p>Có lẽ bạn sẽ tự hỏi việc nén dữ liệu thì liên quan gì với việc đưa ra dự
+đoán? Hãy tưởng tượng chúng ta có một luồng (stream) dữ liệu cần nén.
+Nếu ta luôn có thể dễ dàng đoán được đơn vị dữ liệu (token) kế tiếp thì
+dữ liệu này rất dễ nén! Ví như tất cả các đơn vị dữ liệu trong dòng dữ
+liệu luôn có một giá trị cố định thì đây là một dòng dữ liệu tẻ nhạt!
+Không những tẻ nhạt, mà nó còn dễ đoán nữa. Bởi vì chúng luôn có cùng
+giá trị, ta sẽ không phải truyền bất cứ thông tin nào để trao đổi nội
+dung của dòng dữ liệu này. Dễ đoán thì cũng dễ nén là vậy.</p>
+<!-- ===================== Kết thúc dịch Phần 9 ===================== --><!-- ===================== Bắt đầu dịch Phần 10 ===================== --><!--
+However if we cannot perfectly predict every event, then we might some times be surprised.
+Our surprise is greater when we assigned an event lower probability.
+For reasons that we will elaborate in the appendix,
+Claude Shannon settled on $\log(1/p(j)) = -\log p(j)$ to quantify one's *surprisal* at observing an event $j$ having assigned it a (subjective) probability $p(j)$.
+The entropy is then the *expected surprisal* when one assigned the correct probabilities (that truly match the data-generating process).
+The entropy of the data is then the least surprised that one can ever be (in expectation).
+--><p>Tuy nhiên, nếu ta không thể dự đoán một cách hoàn hảo cho mỗi sự kiện,
+thì thi thoảng ta sẽ thấy ngạc nhiên. Sự ngạc nhiên trong chúng ta sẽ
+lớn hơn khi ta gán một xác suất thấp hơn cho sự kiện. Vì nhiều lý do mà
+chúng ta sẽ nghiên cứu trong phần phụ lục, Claude Shannon đã đưa ra giải
+pháp <span class="math notranslate nohighlight">\(\log(1/p(j)) = -\log p(j)\)</span> để định lượng <em>sự ngạc nhiên</em> của
+một người lúc quan sát sự kiện <span class="math notranslate nohighlight">\(j\)</span> sau khi đã gán cho sự kiện đó
+một xác suất (chủ quan) <span class="math notranslate nohighlight">\(p(j)\)</span>. Entropy lúc này sẽ là <em>lượng tin
+(độ ngạc nhiên) kỳ vọng</em> khi mà xác suất của các sự kiện đó được gán
+chính xác, khớp với phân phối sinh dữ liệu. Nói cách khác, entropy là
+lượng thông tin hay mức độ ngạc nhiên tối thiểu mà dữ liệu sẽ đem lại
+theo kỳ vọng.</p>
+<!-- ========================================= REVISE PHẦN 4 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 5 - BẮT ĐẦU ===================================--><!--
+### Cross-Entropy Revisited
+--></div>
+<div class="section" id="xem-xet-lai-entropy-cheo">
+<h3><span class="section-number">3.4.3.3. </span>Xem xét lại Entropy chéo<a class="headerlink" href="#xem-xet-lai-entropy-cheo" title="Permalink to this headline">¶</a></h3>
+<!--
+So if entropy is level of surprise experienced by someone who knows the true probability, then you might be wondering, *what is cross-entropy?*
+The cross-entropy *from $p$ to $q$*, denoted H(p, q), is the expected surprisal of an observer with subjective probabilities $q$ upon seeing data that was actually generated according to probabilities $p$.
+The lowest possible cross-entropy is achieved when $p=q$.
+In this case, the cross-entropy from $p$ to $q$ is $H(p, p)= H(p)$.
+Relating this back to our classification objective, even if we get the best possible predictions, if the best possible possible, then we will never be perfect.
+Our loss is lower-bounded by the entropy given by the actual conditional distributions $P(\mathbf{y} \mid \mathbf{x})$.
+--><p>Nếu entropy là mức độ ngạc nhiên trải nghiệm bởi một người nắm rõ xác
+suất thật, thì bạn có thể băn khoăn rằng <em>entropy chéo là gì?</em> Entropy
+chéo <em>từ</em> <span class="math notranslate nohighlight">\(p\)</span> <em>đến</em> <span class="math notranslate nohighlight">\(q\)</span>, ký hiệu <span class="math notranslate nohighlight">\(H(p, q)\)</span>, là sự ngạc
+nhiên kỳ vọng của một người quan sát với các xác suất chủ quan <span class="math notranslate nohighlight">\(q\)</span>
+đối với dữ liệu sinh ra dựa trên các xác suất <span class="math notranslate nohighlight">\(p\)</span>. Giá trị entropy
+chéo thấp nhất có thể đạt được khi <span class="math notranslate nohighlight">\(p = q\)</span>. Trong trường hợp này,
+entropy chéo từ <span class="math notranslate nohighlight">\(p\)</span> đến <span class="math notranslate nohighlight">\(q\)</span> là <span class="math notranslate nohighlight">\(H(p, p) = H(p)\)</span>. Liên
+hệ điều này lại với mục tiêu phân loại của chúng ta, thậm chí khi ta có
+khả năng dự đoán tốt nhất có thể và cho rằng việc này là khả thi, thì ta
+sẽ không bao giờ đạt đến mức hoàn hảo. Mất mát của ta bị giới hạn dưới
+(<em>lower-bounded</em>) bởi entropy tạo bởi các phân phối thực tế có điều kiện
+<span class="math notranslate nohighlight">\(P(\mathbf{y} \mid \mathbf{x})\)</span>.</p>
+<!--
+### Kullback Leibler Divergence
+--></div>
+<div class="section" id="phan-ky-kullback-leibler">
+<h3><span class="section-number">3.4.3.4. </span>Phân kỳ Kullback Leibler<a class="headerlink" href="#phan-ky-kullback-leibler" title="Permalink to this headline">¶</a></h3>
+<!--
+Perhaps the most common way to measure the distance between two distributions is to calculate the *Kullback Leibler divergence* $D(p\|q)$.
+This is simply the difference between the cross-entropy and the entropy, i.e., the additional cross-entropy incurred over the irreducible minimum value it could take:
+--><p>Có lẽ cách thông dụng nhất để đo lường khoảng cách giữa hai phân phối là
+tính toán <em>phân kỳ Kullback Leibler</em> <span class="math notranslate nohighlight">\(D(p\|q)\)</span>. Phân kỳ Kullback
+Leibler đơn giản là sự khác nhau giữa entropy chéo và entropy, có nghĩa
+là giá trị entropy chéo bổ sung phát sinh so với giá trị nhỏ nhất không
+thể giảm được mà nó có thể nhận:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-linear-networks-softmax-regression-vn-11">
+<span class="eqno">(3.4.12)<a class="headerlink" href="#equation-chapter-linear-networks-softmax-regression-vn-11" title="Permalink to this equation">¶</a></span>\[D(p\|q) = H(p, q) - H[p] = \sum_j p(j) \log \frac{p(j)}{q(j)}.\]</div>
+<!--
+Note that in classification, we do not know the true $p$, so we cannot compute the entropy directly.
+However, because the entropy is out of our control, minimizing $D(p\|q)$ with respect to $q$ is equivalent to minimizing the cross-entropy loss.
+--><p>Lưu ý rằng trong bài toán phân loại, ta không biết giá trị thật của
+<span class="math notranslate nohighlight">\(p\)</span>, vì thế mà ta không thể tính toán entropy trực tiếp được. Tuy
+nhiên, bởi vì entropy nằm ngoài tầm kiểm soát của chúng ta, việc giảm
+thiểu <span class="math notranslate nohighlight">\(D(p\|q)\)</span> so với <span class="math notranslate nohighlight">\(q\)</span> là tương đương với việc giảm
+thiểu mất mát entropy chéo.</p>
+<!--
+In short, we can think of the cross-entropy classification objective in two ways: (i) as maximizing the likelihood of the observed data;
+and (ii) as minimizing our surprise (and thus the number of bits) required to communicate the labels.
+--><p>Tóm lại, chúng ta có thể nghĩ đến mục tiêu của phân loại entropy chéo
+theo hai hướng: (i) cực đại hóa khả năng xảy ra của dữ liệu được quan
+sát; và (ii) giảm thiểu sự ngạc nhiên của ta (cũng như số lượng các bit)
+cần thiết để truyền đạt các nhãn.</p>
+<!-- ===================== Kết thúc dịch Phần 10 ===================== --><!-- ===================== Bắt đầu dịch Phần 11 ===================== --><!--
+## Model Prediction and Evaluation
+--></div>
+</div>
+<div class="section" id="su-dung-mo-hinh-de-du-doan-va-danh-gia">
+<h2><span class="section-number">3.4.4. </span>Sử dụng Mô hình để Dự đoán và Đánh giá<a class="headerlink" href="#su-dung-mo-hinh-de-du-doan-va-danh-gia" title="Permalink to this headline">¶</a></h2>
+<!--
+After training the softmax regression model, given any example features,
+we can predict the probability of each output category.
+Normally, we use the category with the highest predicted probability as the output category. The prediction is correct if it is consistent with the actual category (label).
+In the next part of the experiment, we will use accuracy to evaluate the model’s performance.
+This is equal to the ratio between the number of correct predictions a nd the total number of predictions.
+--><p>Sau khi huấn luyện mô hình hồi quy softmax với các đặc trưng đầu vào bất
+kì, chúng ta có thể dự đoán xác suất đầu ra ứng với mỗi lớp. Thông
+thường, chúng ta sử dụng lớp với xác suất dự đoán cao nhất làm lớp đầu
+ra. Một dự đoán được xem là chính xác nếu nó trùng khớp hay tương thích
+với lớp thật sự (nhãn). Ở phần tiếp theo của thí nghiệm, chúng ta sẽ sử
+dụng độ chính xác để đánh giá chất lượng của mô hình. Giá trị này là tỉ
+lệ giữa số mẫu được dự đoán chính xác so với tổng số mẫu được dự đoán.</p>
+<!--
+## Summary
+--></div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">3.4.5. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* We introduced the softmax operation which takes a vector maps it into probabilities.
+* Softmax regression applies to classification problems. It uses the probability distribution of the output category in the softmax operation.
+* cross-entropy is a good measure of the difference between two probability distributions. It measures the number of bits needed to encode the data given our model.
+--><ul class="simple">
+<li>Chúng tôi đã giới thiệu về hàm softmax giúp ánh xạ một vector đầu vào
+sang các giá trị xác suất.</li>
+<li>Hồi quy softmax được áp dụng cho các bài toán phân loại. Nó sử dụng
+phân phối xác suất của các lớp đầu ra thông qua hàm softmax.</li>
+<li>Entropy chéo là một phép đánh giá tốt cho sự khác nhau giữa 2 phân
+phối xác suất. Nó đo lường số lượng bit cần để biểu diễn dữ liệu cho
+mô hình.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">3.4.6. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Show that the Kullback-Leibler divergence $D(p\|q)$ is nonnegative for all distributions $p$ and $q$. Hint: use Jensen's inequality, i.e., use the fact that $-\log x$ is a convex function.
+2. Show that $\log \sum_j \exp(o_j)$ is a convex function in $o$.
+3. We can explore the connection between exponential families and the softmax in some more depth
+    * Compute the second derivative of the cross-entropy loss $l(y,\hat{y})$ for the softmax.
+    * Compute the variance of the distribution given by $\mathrm{softmax}(o)$ and show that it matches the second derivative computed above.
+4. Assume that we three classes which occur with equal probability, i.e., the probability vector is $(\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$.
+    * What is the problem if we try to design a binary code for it? Can we match the entropy lower bound on the number of bits?
+    * Can you design a better code. Hint: what happens if we try to encode two independent observations? What if we encode $n$ observations jointly?
+5. Softmax is a misnomer for the mapping introduced above (but everyone in deep learning uses it). The real softmax is defined as $\mathrm{RealSoftMax}(a, b) = \log (\exp(a) + \exp(b))$.
+    * Prove that $\mathrm{RealSoftMax}(a, b) > \mathrm{max}(a, b)$.
+    * Prove that this holds for $\lambda^{-1} \mathrm{RealSoftMax}(\lambda a, \lambda b)$, provided that $\lambda > 0$.
+    * Show that for $\lambda \to \infty$ we have $\lambda^{-1} \mathrm{RealSoftMax}(\lambda a, \lambda b) \to \mathrm{max}(a, b)$.
+    * What does the soft-min look like?
+    * Extend this to more than two numbers.
+--><ol class="arabic simple">
+<li>Chứng minh rằng độ phân kì Kullback-Leibler <span class="math notranslate nohighlight">\(D(p\|q)\)</span> không âm
+với mọi phân phối <span class="math notranslate nohighlight">\(p\)</span> và <span class="math notranslate nohighlight">\(q\)</span>. Gợi ý: sử dụng bất đẳng
+thức Jensen hay nghĩa là sử dụng bổ đề <span class="math notranslate nohighlight">\(-\log x\)</span> là một hàm
+lồi.</li>
+<li>Chứng minh rằng <span class="math notranslate nohighlight">\(\log \sum_j \exp(o_j)\)</span> là một hàm lồi với
+<span class="math notranslate nohighlight">\(o\)</span>.</li>
+<li>Chúng ta có thể tìm hiểu sâu hơn về sự liên kết giữa các họ hàm mũ và
+softmax.<ul>
+<li>Tính đạo hàm cấp hai của hàm mất mát entropy chéo
+<span class="math notranslate nohighlight">\(l(y,\hat{y})\)</span> cho softmax.</li>
+<li>Tính phương sai của phân phối được cho bởi
+<span class="math notranslate nohighlight">\(\mathrm{softmax}(o)\)</span> và chứng minh rằng nó khớp với đạo hàm
+cấp hai được tính ở trên.</li>
+</ul>
+</li>
+<li>Giả sử rằng chúng ta có 3 lớp, xác suất xảy ra cho mỗi lớp bằng nhau,
+nói cách khác vector xác suất là
+<span class="math notranslate nohighlight">\((\frac{1}{3}, \frac{1}{3}, \frac{1}{3})\)</span>.<ul>
+<li>Vấn đề là gì nếu chúng ta cố gắng thiết kế một mã nhị phân cho nó?
+Chúng ta có thể làm khớp cận dưới của entropy trên số lượng bits
+hay không?</li>
+<li>Bạn có thể thiết kế một mã tốt hơn không? Gợi ý: Điều gì xảy ra
+nếu chúng ta cố gắng biểu diễn 2 quan sát độc lập và nếu chúng ta
+biểu diễn <span class="math notranslate nohighlight">\(n\)</span> quan sát đồng thời?</li>
+</ul>
+</li>
+<li>Softmax là một cách gọi sai cho phép ánh xạ đã được giới thiệu ở trên
+(nhưng cộng đồng học sâu vẫn sử dụng nó). Công thức thật sự của
+softmax là
+<span class="math notranslate nohighlight">\(\mathrm{RealSoftMax}(a, b) = \log (\exp(a) + \exp(b))\)</span>.<ul>
+<li>Chứng minh rằng
+<span class="math notranslate nohighlight">\(\mathrm{RealSoftMax}(a, b) &gt; \mathrm{max}(a, b)\)</span>.</li>
+<li>Chứng minh rằng
+<span class="math notranslate nohighlight">\(\lambda^{-1} \mathrm{RealSoftMax}(\lambda a, \lambda b) &gt; \mathrm{max}(a, b)\)</span>
+với <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>.</li>
+<li>Chứng minh rằng khi <span class="math notranslate nohighlight">\(\lambda \to \infty\)</span>, chúng ta có
+<span class="math notranslate nohighlight">\(\lambda^{-1} \mathrm{RealSoftMax}(\lambda a, \lambda b) \to \mathrm{max}(a, b)\)</span>.</li>
+<li>Soft-min sẽ trông như thế nào?</li>
+<li>Mở rộng nó cho nhiều hơn 2 số.</li>
+</ul>
+</li>
+</ol>
+<!-- ========================================= REVISE PHẦN 5 - KẾT THÚC ===================================--><!--
+## [Discussions](https://discuss.mxnet.io/t/2334)
+--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">3.4.7. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2334">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">3.4.8. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Trần Thị Hồng Hạnh</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Lý Phi Long</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Bùi Nhật Quân</li>
+<li>Nguyễn Minh Thư</li>
+<li>Trần Kiến An</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Dương Nhật Tân</li>
+<li>Nguyễn Văn Tâm</li>
+<li>Trần Yến Thy</li>
+<li>Đinh Minh Tân</li>
+<li>Phạm Hồng Vinh</li>
+<li>Nguyễn Cảnh Thướng</li>
+<li>Phạm Minh Đức</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">3.4. Hồi quy Softmax</a><ul>
+<li><a class="reference internal" href="#bai-toan-phan-loai">3.4.1. Bài toán Phân loại</a><ul>
+<li><a class="reference internal" href="#kien-truc-mang">3.4.1.1. Kiến trúc mạng</a></li>
+<li><a class="reference internal" href="#ham-softmax">3.4.1.2. Hàm Softmax</a></li>
+<li><a class="reference internal" href="#vector-hoa-minibatch">3.4.1.3. Vector hóa Minibatch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ham-mat-mat">3.4.2. Hàm mất mát</a><ul>
+<li><a class="reference internal" href="#log-hop-ly">3.4.2.1. Log hợp lý</a></li>
+<li><a class="reference internal" href="#softmax-va-dao-ham">3.4.2.2. Softmax và Đạo hàm</a></li>
+<li><a class="reference internal" href="#ham-mat-mat-entropy-cheo">3.4.2.3. Hàm mất mát Entropy chéo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ly-thuyet-thong-tin-co-ban">3.4.3. Lý thuyết Thông tin Cơ bản</a><ul>
+<li><a class="reference internal" href="#entropy">3.4.3.1. Entropy</a></li>
+<li><a class="reference internal" href="#luong-tin">3.4.3.2. Lượng tin</a></li>
+<li><a class="reference internal" href="#xem-xet-lai-entropy-cheo">3.4.3.3. Xem xét lại Entropy chéo</a></li>
+<li><a class="reference internal" href="#phan-ky-kullback-leibler">3.4.3.4. Phân kỳ Kullback Leibler</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#su-dung-mo-hinh-de-du-doan-va-danh-gia">3.4.4. Sử dụng Mô hình để Dự đoán và Đánh giá</a></li>
+<li><a class="reference internal" href="#tom-tat">3.4.5. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">3.4.6. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">3.4.7. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">3.4.8. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="linear-regression-gluon_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>3.3. Cách lập trình súc tích Hồi quy Tuyến tính</div>
+         </div>
+     </a>
+     <a id="button-next" href="fashion-mnist_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

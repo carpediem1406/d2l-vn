@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>13.12. Truyền tải Phong cách Nơ-ron &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="13.13. Phân loại ảnh (CIFAR-10) trên Kaggle" href="kaggle-cifar10_vn.html" />
+    <link rel="prev" title="13.11. Mạng Tích chập Đầy đủ" href="fcn_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">13. </span>Thị giác Máy tính</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">13.12. </span>Truyền tải Phong cách Nơ-ron</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_computer-vision/neural-style_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">13. Thị giác Máy tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">13. Thị giác Máy tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Neural Style Transfer
+--><div class="section" id="truyen-tai-phong-cach-no-ron">
+<h1><span class="section-number">13.12. </span>Truyền tải Phong cách Nơ-ron<a class="headerlink" href="#truyen-tai-phong-cach-no-ron" title="Permalink to this headline">¶</a></h1>
+<!--
+If you use social sharing apps or happen to be an amateur photographer, you are familiar with filters.
+Filters can alter the color styles of photos to make the background sharper or people's faces whiter.
+However, a filter generally can only change one aspect of a photo.
+To create the ideal photo, you often need to try many different filter combinations.
+This process is as complex as tuning the hyperparameters of a model.
+--><p>Nếu có sử dụng qua những ứng dụng mạng xã hội hoặc là một nhiếp ảnh gia
+không chuyên, chắc hẳn bạn cũng đã quen thuộc với những loại kính lọc
+(<em>filter</em>). Kính lọc có thể biến đổi tông màu của ảnh để làm cho khung
+cảnh phía sau sắc nét hơn hoặc khuôn mặt của những người trong ảnh trở
+nên trắng trẻo hơn. Tuy nhiên, thường một kính lọc chỉ có thể thay đổi
+một khía cạnh của bức ảnh. Để có được bức ảnh hoàn hảo, ta thường phải
+thử nghiệm kết hợp nhiều kính lọc khác nhau. Quá trình này phức tạp
+ngang với việc tinh chỉnh siêu tham số của mô hình.</p>
+<!--
+In this section, we will discuss how we can use convolution neural networks (CNNs) to automatically apply the style of one image to another image,
+an operation known as style transfer :cite:`Gatys.Ecker.Bethge.2016`.
+Here, we need two input images, one content image and one style image.
+We use a neural network to alter the content image so that its style mirrors that of the style image.
+In :numref:`fig_style_transfer`, the content image is a landscape photo the author took in Mount Rainier National Part near Seattle.
+The style image is an oil painting of oak trees in autumn.
+The output composite image retains the overall shapes of the objects in the content image,
+but applies the oil painting brushwork of the style image and makes the overall color more vivid.
+--><p>Trong phần này, ta sẽ thảo luận cách sử dụng mạng nơ-ron tích chập (CNN)
+để tự động áp dụng phong cách của ảnh này cho ảnh khác. Thao tác này
+được gọi là truyền tải phong cách (<em>style transfer</em>)
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#gatys-ecker-bethge-2016" id="id1">[Gatys et al., 2016]</a>. Ở đây ta sẽ cần hai ảnh đầu vào, một
+ảnh nội dung và một ảnh phong cách. Ta sẽ dùng mạng nơ-ron để biến đổi
+ảnh nội dung sao cho phong cách của nó giống như ảnh phong cách đã cho.
+Trong <a class="reference internal" href="#fig-style-transfer"><span class="std std-numref">Fig. 13.12.1</span></a>, ảnh nội dung là một bức ảnh phong
+cảnh được tác giả chụp ở công viên quốc gia Mount Rainier, gần Seattle.
+Ảnh phong cách là một bức tranh sơn dầu vẽ cây gỗ sồi vào mùa thu. Ảnh
+kết hợp đầu ra giữ lại được hình dạng tổng thể của các vật trong ảnh nội
+dung, nhưng được áp dụng phong cách tranh sơn dầu của ảnh phong cách,
+nhờ đó khiến màu sắc tổng thể trở nên sống động hơn.</p>
+<!--
+![Content and style input images and composite image produced by style transfer.](../img/style-transfer.svg)
+--><div class="figure align-default" id="id2">
+<span id="fig-style-transfer"></span><img alt="../_images/style-transfer.svg" src="../_images/style-transfer.svg" /><p class="caption"><span class="caption-number">Fig. 13.12.1 </span><span class="caption-text">Ảnh nội dung và ảnh phong cách đầu vào cùng với ảnh kết hợp được tạo
+ra từ việc truyền tải phong cách.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+## Technique
+--><div class="section" id="ky-thuat">
+<h2><span class="section-number">13.12.1. </span>Kỹ thuật<a class="headerlink" href="#ky-thuat" title="Permalink to this headline">¶</a></h2>
+<!--
+The CNN-based style transfer model is shown in :numref:`fig_style_transfer_model`.
+First, we initialize the composite image.
+For example, we can initialize it as the content image.
+This composite image is the only variable that needs to be updated in the style transfer process, i.e., the model parameter to be updated in style transfer.
+Then, we select a pre-trained CNN to extract image features.
+These model parameters do not need to be updated during training.
+The deep CNN uses multiple neural layers that successively extract image features.
+We can select the output of certain layers to use as content features or style features.
+If we use the structure in :numref:`fig_style_transfer_model`, the pre-trained neural network contains three convolutional layers.
+The second layer outputs the image content features, while the outputs of the first and third layers are used as style features.
+Next, we use forward propagation (in the direction of the solid lines) to compute the style transfer loss function
+and backward propagation (in the direction of the dotted lines) to update the model parameter, constantly updating the composite image.
+The loss functions used in style transfer generally have three parts:
+1. Content loss is used to make the composite image approximate the content image as regards content features.
+2. Style loss is used to make the composite image approximate the style image in terms of style features.
+3. Total variation loss helps reduce the noise in the composite image.
+Finally, after we finish training the model, we output the style transfer model parameters to obtain the final composite image.
+--><p>Mô hình truyền tải phong cách dựa trên CNN được biểu diễn trong
+<a class="reference internal" href="#fig-style-transfer-model"><span class="std std-numref">Fig. 13.12.2</span></a>. Đầu tiên ta sẽ khởi tạo ảnh kết
+hợp, có thể bằng cách sử dụng ảnh nội dung. Ảnh kết hợp này là biến (tức
+tham số mô hình) duy nhất cần được cập nhật trong quá trình truyền tải
+phong cách. Sau đó, ta sẽ chọn một CNN đã được tiền huấn luyện để thực
+hiện trích xuất đặc trưng của ảnh. Ta không cần phải cập nhật tham số
+của mạng CNN này trong quá trình huấn luyện. Mạng CNN sâu sử dụng nhiều
+tầng nơ-ron liên tiếp để trích xuất đặc trưng của ảnh. Ta có thể chọn
+đầu ra của một vài tầng nhất định làm đặc trưng nội dung hoặc đặc trưng
+phong cách. Nếu ta sử dụng cấu trúc trong
+<a class="reference internal" href="#fig-style-transfer-model"><span class="std std-numref">Fig. 13.12.2</span></a>, mạng nơ-ron đã tiền huấn luyện sẽ
+chứa ba tầng tích chập. Đầu ra của tầng thứ hai là đặc trưng nội dung
+ảnh, trong khi đầu ra của tầng thứ nhất và thứ ba được sử dụng làm đặc
+trưng phong cách. Tiếp theo, ta thực hiện lan truyền xuôi (theo hướng
+của các đường nét liền) để tính hàm mất mát truyền tải phong cách và lan
+truyền ngược (theo hướng của các đường nét đứt) để liên tục cập nhật ảnh
+kết hợp. Hàm mất mát được sử dụng trong việc truyền tải phong cách
+thường có ba phần: 1. Mất mát nội dung giúp ảnh kết hợp có đặc trưng nội
+dung xấp xỉ với ảnh nội dung. 2. Mất mát phong cách giúp ảnh kết hợp có
+đặc trưng phong cách xấp xỉ với ảnh phong cách. 3. Mất mát biến thiên
+toàn phần giúp giảm nhiễu trong ảnh kết hợp. Cuối cùng, sau khi huấn
+luyện xong, ta sẽ có tham số của mô hình truyền tải phong cách và từ đó
+thu được ảnh kết hợp cuối.</p>
+<!--
+![CNN-based style transfer process. Solid lines show the direction of forward propagation and dotted lines show backward propagation.](../img/neural-style.svg)
+--><div class="figure align-default" id="id3">
+<span id="fig-style-transfer-model"></span><img alt="../_images/neural-style.svg" src="../_images/neural-style.svg" /><p class="caption"><span class="caption-number">Fig. 13.12.2 </span><span class="caption-text">Quá trình truyền tải phong cách dựa trên CNN. Các đường nét liền thể
+hiện hướng của lan truyền xuôi và các đường nét đứt thể hiện hướng
+của lan truyền ngược.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Next, we will perform an experiment to help us better understand the technical details of style transfer.
+--><p>Tiếp theo, ta sẽ thực hiện một thí nghiệm để hiểu rõ hơn các chi tiết kỹ
+thuật của truyền tải phong cách.</p>
+<!--
+## Reading the Content and Style Images
+--></div>
+<div class="section" id="doc-anh-noi-dung-va-anh-phong-cach">
+<h2><span class="section-number">13.12.2. </span>Đọc ảnh Nội dung và Ảnh phong cách<a class="headerlink" href="#doc-anh-noi-dung-va-anh-phong-cach" title="Permalink to this headline">¶</a></h2>
+<!--
+First, we read the content and style images.
+By printing out the image coordinate axes, we can see that they have different dimensions.
+--><p>Trước hết, ta đọc ảnh nội dung và ảnh phong cách. Bằng cách in ra các
+trục tọa độ ảnh, ta có thể thấy rằng chúng có các chiều khác nhau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">autograd</span><span class="p">,</span> <span class="n">gluon</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">content_img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../img/rainier.jpg&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">content_img</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">());</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_neural-style_vn_7639da_1_0.svg" src="../_images/output_neural-style_vn_7639da_1_0.svg" /></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">style_img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../img/autumn_oak.jpg&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">style_img</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">());</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_neural-style_vn_7639da_2_0.svg" src="../_images/output_neural-style_vn_7639da_2_0.svg" /></div>
+<!--
+## Preprocessing and Postprocessing
+--></div>
+<div class="section" id="tien-xu-ly-va-hau-xu-ly">
+<h2><span class="section-number">13.12.3. </span>Tiền xử lý và Hậu xử lý<a class="headerlink" href="#tien-xu-ly-va-hau-xu-ly" title="Permalink to this headline">¶</a></h2>
+<!--
+Below, we define the functions for image preprocessing and postprocessing.
+The `preprocess` function normalizes each of the three RGB channels of the input images and transforms the results to a format that can be input to the CNN.
+The `postprocess` function restores the pixel values in the output image to their original values before normalization.
+Because the image printing function requires that each pixel has a floating point value from 0 to 1,
+we use the `clip` function to replace values smaller than 0 or greater than 1 with 0 or 1, respectively.
+--><p>Dưới đây, ta định nghĩa các hàm tiền xử lý và hậu xử lý ảnh. Hàm
+<code class="docutils literal notranslate"><span class="pre">preprocess</span></code> chuẩn hóa các kênh RGB của ảnh đầu vào và chuyển kết quả
+sang định dạng có thể đưa vào mạng CNN. Hàm <code class="docutils literal notranslate"><span class="pre">postprocess</span></code> khôi phục
+các giá trị điểm ảnh của ảnh đầu ra về các giá trị gốc trước khi chuẩn
+hóa. Vì hàm in ảnh đòi hỏi mỗi điểm ảnh có giá trị thực từ 0 tới 1, ta
+sử dụng hàm <code class="docutils literal notranslate"><span class="pre">clip</span></code> để thay thế các giá trị nhỏ hơn 0 hoặc lớn hơn 1
+lần lượt bằng 0 hoặc 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rgb_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">])</span>
+<span class="n">rgb_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imresize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="o">*</span><span class="n">image_shape</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">rgb_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">rgb_std</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_in_ctx</span><span class="p">(</span><span class="n">rgb_std</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rgb_std</span> <span class="o">+</span> <span class="n">rgb_mean</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+## Extracting Features
+--></div>
+<div class="section" id="trich-xuat-dac-trung">
+<h2><span class="section-number">13.12.4. </span>Trích xuất Đặc trưng<a class="headerlink" href="#trich-xuat-dac-trung" title="Permalink to this headline">¶</a></h2>
+<!--
+We use the VGG-19 model pre-trained on the ImageNet dataset to extract image features[1].
+--><p>Ta sử dụng mô hình VGG-19 tiền huấn luyện trên tập dữ liệu ImagNet để
+trích xuất các đặc trưng của ảnh [1].</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pretrained_net</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">model_zoo</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">vgg19</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Downloading</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">tiepvu</span><span class="o">/.</span><span class="n">mxnet</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">vgg19</span><span class="o">-</span><span class="n">ad2f660d</span><span class="o">.</span><span class="n">zip71faee8b</span><span class="o">-</span><span class="mi">6735</span><span class="o">-</span><span class="mi">4831</span><span class="o">-</span><span class="mi">9478</span><span class="o">-</span><span class="n">cde309e8a1f5</span> <span class="kn">from</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">apache</span><span class="o">-</span><span class="n">mxnet</span><span class="o">.</span><span class="n">s3</span><span class="o">-</span><span class="n">accelerate</span><span class="o">.</span><span class="n">dualstack</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gluon</span><span class="o">/</span><span class="n">models</span><span class="o">/</span><span class="n">vgg19</span><span class="o">-</span><span class="n">ad2f660d</span><span class="o">.</span><span class="n">zip</span><span class="o">...</span>
+</pre></div>
+</div>
+<!--
+To extract image content and style features, we can select the outputs of certain layers in the VGG network.
+In general, the closer an output is to the input layer, the easier it is to extract image detail information.
+The farther away an output is, the easier it is to extract global information.
+To prevent the composite image from retaining too many details from the content image, we select a VGG network layer near the output layer to output the image content features.
+This layer is called the content layer.
+We also select the outputs of different layers from the VGG network for matching local and global styles.
+These are called the style layers.
+As we mentioned in :numref:`sec_vgg`, VGG networks have five convolutional blocks.
+In this experiment, we select the last convolutional layer of the fourth convolutional block as the content layer and the first layer of each block as style layers.
+We can obtain the indexes for these layers by printing the `pretrained_net` instance.
+--><p>Để trích xuất các đặc trưng nội dung và phong cách, ta có thể chọn đầu
+ra của một số tầng nhất định trong mạng VGG. Nhìn chung, đầu ra càng gần
+với tầng đầu vào, việc trích xuất thông tin chi tiết của ảnh càng dễ
+hơn. Ngược lại khi đầu ra xa hơn thì dễ trích xuất các thông tin toàn
+cục hơn. Để ngăn ảnh tổng hợp không giữ quá nhiều chi tiết của ảnh nội
+dung, ta chọn một tầng mạng VGG gần tầng đầu ra để lấy các đặc trưng nội
+dung của ảnh đó. Tầng này được gọi là tầng nội dung. Ta cũng chọn đầu ra
+ở các tầng khác nhau từ mạng VGG để phối hợp với các phong cách cục bộ
+và toàn cục. Các tầng đó được gọi là các tầng phong cách. Như ta đã đề
+cập trong <a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html#sec-vgg"><span class="std std-numref">Section 7.2</span></a>, mạng VGG có năm khối tích chập. Trong thử
+nghiệm này, ta chọn tầng cuối của khối tích chập thứ tư làm tầng nội
+dung và tầng đầu tiên của mỗi khối làm các tầng phong cách. Ta có thể
+thu thập chỉ số ở các tầng đó thông qua việc in ra thực thể
+<code class="docutils literal notranslate"><span class="pre">pretrained_net</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">style_layers</span><span class="p">,</span> <span class="n">content_layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="p">[</span><span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<!--
+During feature extraction, we only need to use all the VGG layers from the input layer to the content or style layer nearest the output layer.
+Below, we build a new network, `net`, which only retains the layers in the VGG network we need to use. We then use `net` to extract features.
+--><p>Khi trích xuất đặc trưng, ta chỉ cần sử dụng tất cả các tầng VGG bắt đầu
+từ tầng đầu vào tới tầng nội dung hoặc tầng phong cách gần tầng đầu ra
+nhất. Dưới đây, ta sẽ xây dựng một mạng <code class="docutils literal notranslate"><span class="pre">net</span></code> mới, mạng này chỉ giữ
+lại các tầng ta cần trong mạng VGG. Sau đó ta sử dụng <code class="docutils literal notranslate"><span class="pre">net</span></code> để trích
+xuất đặc trưng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">content_layers</span> <span class="o">+</span> <span class="n">style_layers</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pretrained_net</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<!--
+Given input `X`, if we simply call the forward computation `net(X)`, we can only obtain the output of the last layer.
+Because we also need the outputs of the intermediate layers, we need to perform layer-by-layer computation and retain the content and style layer outputs.
+--><p>Với đầu vào <code class="docutils literal notranslate"><span class="pre">X</span></code>, nếu ta chỉ đơn thuần thực hiện lượt truyền xuôi
+<code class="docutils literal notranslate"><span class="pre">net(X)</span></code>, ta chỉ có thể thu được đầu ra của tầng cuối cùng. Bởi vì ta
+cũng cần đầu ra của các tầng trung gian, nên ta phải thực hiện phép tính
+theo từng tầng và giữ lại đầu ra của tầng nội dung và phong cách.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">content_layers</span><span class="p">,</span> <span class="n">style_layers</span><span class="p">):</span>
+    <span class="n">contents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">styles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">net</span><span class="p">)):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">net</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">style_layers</span><span class="p">:</span>
+            <span class="n">styles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">content_layers</span><span class="p">:</span>
+            <span class="n">contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">contents</span><span class="p">,</span> <span class="n">styles</span>
+</pre></div>
+</div>
+<!--
+Next, we define two functions: The `get_contents` function obtains the content features extracted from the content image,
+while the `get_styles` function obtains the style features extracted from the style image.
+Because we do not need to change the parameters of the pre-trained VGG model during training,
+we can extract the content features from the content image and style features from the style image before the start of training.
+As the composite image is the model parameter that must be updated during style transfer,
+we can only call the `extract_features` function during training to extract the content and style features of the composite image.
+--><p>Tiếp theo, ta định nghĩa hai hàm đó là: Hàm <code class="docutils literal notranslate"><span class="pre">get_contents</span></code> để lấy đặc
+trưng nội dung trích xuất từ ảnh nội dung, và hàm <code class="docutils literal notranslate"><span class="pre">get_styles</span></code> để lấy
+đặc trưng phong cách trích xuất từ ảnh phong cách. Do trong lúc huấn
+luyện, ta không cần thay đổi các tham số của của mô hình VGG đã được
+tiền huấn luyện, nên ta có thể trích xuất đặc trưng nội dung từ ảnh nội
+dung và đặc trưng phong cách từ ảnh phong cách trước khi bắt đầu huấn
+luyện. Bởi vì ảnh kết hợp là các tham số mô hình sẽ được cập nhật trong
+quá trình truyền tải phong cách, ta có thể chỉ cần gọi hàm
+<code class="docutils literal notranslate"><span class="pre">extract_features</span></code> trong lúc huấn luyện để trích xuất đặc trưng nội
+dung và phong cách của ảnh kết hợp.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_contents</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="n">content_X</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">content_img</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">)</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">contents_Y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">content_X</span><span class="p">,</span> <span class="n">content_layers</span><span class="p">,</span> <span class="n">style_layers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">content_X</span><span class="p">,</span> <span class="n">contents_Y</span>
+
+<span class="k">def</span> <span class="nf">get_styles</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="n">style_X</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">style_img</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">)</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">styles_Y</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">style_X</span><span class="p">,</span> <span class="n">content_layers</span><span class="p">,</span> <span class="n">style_layers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">style_X</span><span class="p">,</span> <span class="n">styles_Y</span>
+</pre></div>
+</div>
+<!--
+## Defining the Loss Function
+--></div>
+<div class="section" id="dinh-nghia-ham-mat-mat">
+<h2><span class="section-number">13.12.5. </span>Định nghĩa Hàm Mất mát<a class="headerlink" href="#dinh-nghia-ham-mat-mat" title="Permalink to this headline">¶</a></h2>
+<!--
+Next, we will look at the loss function used for style transfer.
+The loss function includes the content loss, style loss, and total variation loss.
+--><p>Tiếp theo, ta sẽ bàn về hàm mất mát được sử dụng trong truyền tải phong
+cách. Hàm mất mát gồm có mất mát nội dung, mất mát phong cách, và mất
+mát biến thiên toàn phần.</p>
+<!--
+### Content Loss
+--><div class="section" id="mat-mat-noi-dung">
+<h3><span class="section-number">13.12.5.1. </span>Mất mát Nội dung<a class="headerlink" href="#mat-mat-noi-dung" title="Permalink to this headline">¶</a></h3>
+<!--
+Similar to the loss function used in linear regression, content loss uses a square error function to measure the difference in content features between the composite image and content image.
+The two inputs of the square error function are both content layer outputs obtained from the `extract_features` function.
+--><p>Tương tự như hàm mất mát được sử dụng trong hồi quy tuyến tính, mất mát
+nội dụng sử dụng hàm bình phương sai số để đo sự khác biệt về đặc trưng
+nội dung giữa ảnh kết hợp và ảnh nội dung. Hai đầu vào của hàm bình
+phương sai số bao gồm cả hai đầu ra của tầng nội dung thu được từ hàm
+<code class="docutils literal notranslate"><span class="pre">extract_features</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">content_loss</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">Y_hat</span> <span class="o">-</span> <span class="n">Y</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<!--
+### Style Loss
+--></div>
+<div class="section" id="mat-mat-phong-cach">
+<h3><span class="section-number">13.12.5.2. </span>Mất mát Phong cách<a class="headerlink" href="#mat-mat-phong-cach" title="Permalink to this headline">¶</a></h3>
+<!--
+Style loss, similar to content loss, uses a square error function to measure the difference in style between the composite image and style image.
+To express the styles output by the style layers, we first use the `extract_features` function to compute the style layer output.
+Assuming that the output has 1 example, $c$ channels, and a height and width of $h$ and $w$, we can transform the output into the matrix $\mathbf{X}$, which has $c$ rows and $h \cdot w$ columns.
+You can think of matrix $\mathbf{X}$ as the combination of the $c$ vectors $\mathbf{x}_1, \ldots, \mathbf{x}_c$, which have a length of $hw$.
+Here, the vector $\mathbf{x}_i$ represents the style feature of channel $i$.
+In the Gram matrix of these vectors $\mathbf{X}\mathbf{X}^\top \in \mathbb{R}^{c \times c}$, element $x_{ij}$ in row $i$ column $j$ is the inner product of vectors $\mathbf{x}_i$ and $\mathbf{x}_j$.
+It represents the correlation of the style features of channels $i$ and $j$.
+We use this type of Gram matrix to represent the style output by the style layers.
+You must note that, when the $h \cdot w$ value is large, this often leads to large values in the Gram matrix.
+In addition, the height and width of the Gram matrix are both the number of channels $c$.
+To ensure that the style loss is not affected by the size of these values, we define the `gram` function below to divide the Gram matrix by the number of its elements, i.e., $c \cdot h \cdot w$.
+--><p>Tương tự như mất mát nội dung, mất mát phong cách sử dụng hàm bình
+phương sai số để đo sự khác biệt về đặc trưng phong cách giữa ảnh kết
+hợp và ảnh phong cách. Để biểu diễn đầu ra phong cách của các tầng phong
+cách, đầu tiên ta sử dụng hàm <code class="docutils literal notranslate"><span class="pre">extract_features</span></code> để tính toán đầu ra
+tầng phong cách. Giả sử đầu ra có một mẫu, <span class="math notranslate nohighlight">\(c\)</span> kênh, và có chiều
+cao và chiều rộng là <span class="math notranslate nohighlight">\(h\)</span> và <span class="math notranslate nohighlight">\(w\)</span>, ta có thể chuyển đổi đầu ra
+thành ma trận <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> có <span class="math notranslate nohighlight">\(c\)</span> hàng và <span class="math notranslate nohighlight">\(h \cdot w\)</span>
+cột. Bạn có thể xem ma trận <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> là tổ hợp của <span class="math notranslate nohighlight">\(c\)</span>
+vector <span class="math notranslate nohighlight">\(\mathbf{x}_1, \ldots, \mathbf{x}_c\)</span>, có độ dài là
+<span class="math notranslate nohighlight">\(hw\)</span>. Ở đây, vector <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> biểu diễn đặc trưng phong
+cách của kênh <span class="math notranslate nohighlight">\(i\)</span>. Trong ma trận Gram
+<span class="math notranslate nohighlight">\(\mathbf{X}\mathbf{X}^\top \in \mathbb{R}^{c \times c}\)</span> của các
+vector trên, phần tử <span class="math notranslate nohighlight">\(x_{ij}\)</span> nằm trên hàng <span class="math notranslate nohighlight">\(i\)</span> cột
+<span class="math notranslate nohighlight">\(j\)</span> là tích vô hướng của hai vector <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> và
+<span class="math notranslate nohighlight">\(\mathbf{x}_j\)</span>. Phần tử này biểu thị sự tương quan đặc trưng phong
+cách của hai kênh <span class="math notranslate nohighlight">\(i\)</span> và <span class="math notranslate nohighlight">\(j\)</span>. Ta sử dụng ma trận Gram này để
+biểu diễn đầu ra phong cách của các tầng phong cách. Độc giả chú ý rằng
+khi giá trị <span class="math notranslate nohighlight">\(h \cdot w\)</span> lớn, thì thường dẫn đến ma trận Gram cũng
+có các giá trị lớn. Hơn nữa, chiều cao và chiều rộng của ma trận Gram
+đều là số kênh <span class="math notranslate nohighlight">\(c\)</span>. Để đảm bảo rằng mất mát phong cách không bị
+ảnh hưởng bởi các giá trị kích thước, ta định nghĩa hàm <code class="docutils literal notranslate"><span class="pre">gram</span></code> dưới
+đây thực hiện phép chia ma trận Gram cho số các phần tử của nó, đó là,
+<span class="math notranslate nohighlight">\(c \cdot h \cdot w\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gram</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">num_channels</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_channels</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Naturally, the two Gram matrix inputs of the square error function for style loss are taken from the composite image and style image style layer outputs.
+Here, we assume that the Gram matrix of the style image, `gram_Y`, has been computed in advance.
+--><p>Thông thường, hai ma trận Gram đầu vào của hàm bình phương sai số cho
+mất mát phong cách được lấy từ ảnh kết hợp và ảnh phong cách của đầu ra
+tầng phong cách. Ở đây, ta giả sử ma trận Gram của ảnh phong cách,
+<code class="docutils literal notranslate"><span class="pre">gram_Y</span></code>, đã được tính toán trước.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">style_loss</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">gram_Y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">gram</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">)</span> <span class="o">-</span> <span class="n">gram_Y</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<!--
+### Total Variance Loss
+--></div>
+<div class="section" id="mat-mat-bien-thien-toan-phan">
+<h3><span class="section-number">13.12.5.3. </span>Mất mát Biến thiên Toàn phần<a class="headerlink" href="#mat-mat-bien-thien-toan-phan" title="Permalink to this headline">¶</a></h3>
+<!--
+Sometimes, the composite images we learn have a lot of high-frequency noise, particularly bright or dark pixels.
+One common noise reduction method is total variation denoising.
+We assume that $x_{i, j}$ represents the pixel value at the coordinate $(i, j)$, so the total variance loss is:
+--><p>Đôi khi các ảnh tổng hợp mà ta học có nhiều nhiễu tần số cao, cụ thể là
+các điểm ảnh sáng hoặc tối. Khử nhiễu biến thiên toàn phần (<em>total
+variation denoising</em>) là một phương pháp phổ biến nhằm giảm nhiễu. Giả
+định <span class="math notranslate nohighlight">\(x_{i, j}\)</span> biểu diễn giá trị điểm ảnh tại tọa độ
+<span class="math notranslate nohighlight">\((i, j)\)</span>, ta có mất mát biến thiên toàn phần:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-computer-vision-neural-style-vn-0">
+<span class="eqno">(13.12.1)<a class="headerlink" href="#equation-chapter-computer-vision-neural-style-vn-0" title="Permalink to this equation">¶</a></span>\[\sum_{i, j} \left|x_{i, j} - x_{i+1, j}\right| + \left|x_{i, j} - x_{i, j+1}\right|.\]</div>
+<!--
+We try to make the values of neighboring pixels as similar as possible.
+--><p>Ta sẽ cố gắng làm cho giá trị của các điểm ảnh lân cận càng giống nhau
+càng tốt.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tv_loss</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">Y_hat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span>
+                  <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">Y_hat</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<!--
+### The Loss Function
+--></div>
+<div class="section" id="ham-mat-mat">
+<h3><span class="section-number">13.12.5.4. </span>Hàm Mất mát<a class="headerlink" href="#ham-mat-mat" title="Permalink to this headline">¶</a></h3>
+<!--
+The loss function for style transfer is the weighted sum of the content loss, style loss, and total variance loss.
+By adjusting these weight hyperparameters, we can balance the retained content, transferred style, and noise reduction in the composite image according to their relative importance.
+--><p>Hàm mất mát truyền tải phong cách được tính bằng tổng có trọng số của
+mất mát nội dung, mất mát phong cách, và mất mát biến thiên toàn phần.
+Thông qua việc điều chỉnh các siêu tham số trọng số này, ta có thể cân
+bằng giữa phần nội dung giữ lại, phong cách truyền tải và mức giảm nhiễu
+trong ảnh tổng hợp dựa trên tầm ảnh hưởng tương ứng của chúng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">content_weight</span><span class="p">,</span> <span class="n">style_weight</span><span class="p">,</span> <span class="n">tv_weight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">compute_loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">contents_Y_hat</span><span class="p">,</span> <span class="n">styles_Y_hat</span><span class="p">,</span> <span class="n">contents_Y</span><span class="p">,</span> <span class="n">styles_Y_gram</span><span class="p">):</span>
+    <span class="c1"># Calculate the content, style, and total variance losses respectively</span>
+    <span class="n">contents_l</span> <span class="o">=</span> <span class="p">[</span><span class="n">content_loss</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">content_weight</span> <span class="k">for</span> <span class="n">Y_hat</span><span class="p">,</span> <span class="n">Y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">contents_Y_hat</span><span class="p">,</span> <span class="n">contents_Y</span><span class="p">)]</span>
+    <span class="n">styles_l</span> <span class="o">=</span> <span class="p">[</span><span class="n">style_loss</span><span class="p">(</span><span class="n">Y_hat</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span> <span class="o">*</span> <span class="n">style_weight</span> <span class="k">for</span> <span class="n">Y_hat</span><span class="p">,</span> <span class="n">Y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">styles_Y_hat</span><span class="p">,</span> <span class="n">styles_Y_gram</span><span class="p">)]</span>
+    <span class="n">tv_l</span> <span class="o">=</span> <span class="n">tv_loss</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">*</span> <span class="n">tv_weight</span>
+    <span class="c1"># Add up all the losses</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">styles_l</span> <span class="o">+</span> <span class="n">contents_l</span> <span class="o">+</span> <span class="p">[</span><span class="n">tv_l</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">contents_l</span><span class="p">,</span> <span class="n">styles_l</span><span class="p">,</span> <span class="n">tv_l</span><span class="p">,</span> <span class="n">l</span>
+</pre></div>
+</div>
+<!--
+## Creating and Initializing the Composite Image
+--></div>
+</div>
+<div class="section" id="khai-bao-va-khoi-tao-anh-tong-hop">
+<h2><span class="section-number">13.12.6. </span>Khai báo và Khởi tạo Ảnh Tổng hợp<a class="headerlink" href="#khai-bao-va-khoi-tao-anh-tong-hop" title="Permalink to this headline">¶</a></h2>
+<!--
+In style transfer, the composite image is the only variable that needs to be updated.
+Therefore, we can define a simple model, `GeneratedImage`, and treat the composite image as a model parameter.
+In the model, forward computation only returns the model parameter.
+--><p>Trong truyền tải phong cách, ảnh tổng hợp là biến số duy nhất mà ta cần
+cập nhật. Do đó, ta có thể định nghĩa một mô hình đơn giản,
+<code class="docutils literal notranslate"><span class="pre">GeneratedImage</span></code>, và xem ảnh tổng hợp như một tham số mô hình. Trong
+mô hình này, lượt truyền xuôi chỉ trả về tham số mô hình.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GeneratedImage</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Block</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_shape</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GeneratedImage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">img_shape</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</pre></div>
+</div>
+<!--
+Next, we define the `get_inits` function. This function creates a composite image model instance and initializes it to the image `X`.
+The Gram matrix for the various style layers of the style image, `styles_Y_gram`, is computed prior to training.
+--><p>Tiếp theo, ta định nghĩa hàm <code class="docutils literal notranslate"><span class="pre">get_inits</span></code>. Hàm này khai báo một đối
+tượng mô hình ảnh tổng hợp và khởi tạo đối tượng theo ảnh <code class="docutils literal notranslate"><span class="pre">X</span></code>. Ma trận
+Gram cho các tầng phong cách khác nhau của ảnh phong cách,
+<code class="docutils literal notranslate"><span class="pre">styles_Y_gram</span></code>, được tính trước khi huấn luyện.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_inits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">styles_Y</span><span class="p">):</span>
+    <span class="n">gen_img</span> <span class="o">=</span> <span class="n">GeneratedImage</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">gen_img</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">force_reinit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">gen_img</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span>
+                            <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">})</span>
+    <span class="n">styles_Y_gram</span> <span class="o">=</span> <span class="p">[</span><span class="n">gram</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="k">for</span> <span class="n">Y</span> <span class="ow">in</span> <span class="n">styles_Y</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">gen_img</span><span class="p">(),</span> <span class="n">styles_Y_gram</span><span class="p">,</span> <span class="n">trainer</span>
+</pre></div>
+</div>
+<!--
+## Training
+--></div>
+<div class="section" id="huan-luyen">
+<h2><span class="section-number">13.12.7. </span>Huấn luyện<a class="headerlink" href="#huan-luyen" title="Permalink to this headline">¶</a></h2>
+<!--
+During model training, we constantly extract the content and style features of the composite image and calculate the loss function.
+Recall our discussion of how synchronization functions force the front end to wait for computation results in :numref:`sec_async`.
+Because we only call the `asnumpy` synchronization function every 10 epochs, the process may occupy a great deal of memory.
+Therefore, we call the `waitall` synchronization function during every epoch.
+--><p>Trong suốt quá trình huấn luyện mô hình, ta liên tục trích xuất các đặc
+trưng nội dung và đặc trưng phong cách của ảnh tổng hợp và tính toán hàm
+mất mát. Nhớ lại thảo luận về cách mà các hàm đồng bộ hoá buộc front-end
+phải chờ kết quả tính toán trong <a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html#sec-async"><span class="std std-numref">Section 12.2</span></a>. Vì ta chỉ gọi
+hàm đồng bộ hoá <code class="docutils literal notranslate"><span class="pre">asnumpy</span></code> sau mỗi 10 epoch, quá trình huấn luyện có
+thể chiếm dụng lượng lớn bộ nhớ. Do đó, ta gọi đến hàm đồng bộ hoá
+<code class="docutils literal notranslate"><span class="pre">waitall</span></code> tại tất cả các epoch.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">contents_Y</span><span class="p">,</span> <span class="n">styles_Y</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">,</span> <span class="n">lr_decay_epoch</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">styles_Y_gram</span><span class="p">,</span> <span class="n">trainer</span> <span class="o">=</span> <span class="n">get_inits</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">styles_Y</span><span class="p">)</span>
+    <span class="n">animator</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span>
+                            <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span>
+                            <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="s1">&#39;TV&#39;</span><span class="p">],</span>
+                            <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+            <span class="n">contents_Y_hat</span><span class="p">,</span> <span class="n">styles_Y_hat</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">content_layers</span><span class="p">,</span> <span class="n">style_layers</span><span class="p">)</span>
+            <span class="n">contents_l</span><span class="p">,</span> <span class="n">styles_l</span><span class="p">,</span> <span class="n">tv_l</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">contents_Y_hat</span><span class="p">,</span> <span class="n">styles_Y_hat</span><span class="p">,</span> <span class="n">contents_Y</span><span class="p">,</span> <span class="n">styles_Y_gram</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">npx</span><span class="o">.</span><span class="n">waitall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">lr_decay_epoch</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">trainer</span><span class="o">.</span><span class="n">set_learning_rate</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">animator</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">postprocess</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+            <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">contents_l</span><span class="p">)),</span>
+                                 <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">styles_l</span><span class="p">)),</span>
+                                 <span class="nb">float</span><span class="p">(</span><span class="n">tv_l</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">X</span>
+</pre></div>
+</div>
+<!--
+Next, we start to train the model.
+First, we set the height and width of the content and style images to 150 by 225 pixels.
+We use the content image to initialize the composite image.
+--><p>Tiếp theo, ta bắt đầu huấn luyện mô hình. Đầu tiên, ta đặt chiều cao và
+chiều rộng của ảnh nội dung và ảnh phong cách bằng 150 nhân 225 pixel.
+Ta sử dụng chính ảnh nội dung để khởi tạo cho ảnh tổng hợp.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span><span class="p">,</span> <span class="n">image_shape</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="p">(</span><span class="mi">225</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">()</span><span class="o">.</span><span class="n">reset_ctx</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">content_X</span><span class="p">,</span> <span class="n">contents_Y</span> <span class="o">=</span> <span class="n">get_contents</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">styles_Y</span> <span class="o">=</span> <span class="n">get_styles</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">content_X</span><span class="p">,</span> <span class="n">contents_Y</span><span class="p">,</span> <span class="n">styles_Y</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_neural-style_vn_7639da_32_0.svg" src="../_images/output_neural-style_vn_7639da_32_0.svg" /></div>
+<!--
+As you can see, the composite image retains the scenery and objects of the content image, while introducing the color of the style image.
+Because the image is relatively small, the details are a bit fuzzy.
+--><p>Như bạn có thể thấy, ảnh tổng hợp giữ lại phong cảnh và vật thể trong
+ảnh nội dung, trong khi đưa vào màu sắc của ảnh phong cách. Do ảnh này
+khá nhỏ, các chi tiết có hơi mờ một chút.</p>
+<!--
+To obtain a clearer composite image, we train the model using a larger image size: $900 \times 600$.
+We increase the height and width of the image used before by a factor of four and initialize a larger composite image.
+--><p>Để thu được ảnh tổng hợp rõ ràng hơn, ta sử dụng ảnh có kích cỡ lớn hơn:
+<span class="math notranslate nohighlight">\(900 \times 600\)</span>, để huấn luyện mô hình. Ta tăng chiều cao và
+chiều rộng của ảnh vừa sử dụng lên bốn lần và khởi tạo ảnh tổng hợp lớn
+hơn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">content_Y</span> <span class="o">=</span> <span class="n">get_contents</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">style_Y</span> <span class="o">=</span> <span class="n">get_styles</span><span class="p">(</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">postprocess</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="n">image_shape</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">content_Y</span><span class="p">,</span> <span class="n">style_Y</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s1">&#39;../img/neural-style.jpg&#39;</span><span class="p">,</span> <span class="n">postprocess</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_neural-style_vn_7639da_34_0.svg" src="../_images/output_neural-style_vn_7639da_34_0.svg" /></div>
+<!--
+As you can see, each epoch takes more time due to the larger image size.
+As shown in :numref:`fig_style_transfer_large`, the composite image produced retains more detail due to its larger size.
+The composite image not only has large blocks of color like the style image, but these blocks even have the subtle texture of brush strokes.
+--><p>Như bạn có thể thấy, mỗi epoch cần nhiều thời gian hơn do kích thước ảnh
+lớn hơn. Có thể thấy trong <a class="reference internal" href="#fig-style-transfer-large"><span class="std std-numref">Fig. 13.12.3</span></a>, ảnh
+tổng hợp được sinh ra giữ lại nhiều chi tiết hơn nhờ có kích thước lớn
+hơn. Ảnh tổng hợp không những có các khối màu giống như ảnh phong cách,
+mà các khối này còn có hoa văn phảng phất nét vẽ bút lông.</p>
+<!--
+![$900 \times 600$ composite image.](../img/neural-style.jpg)
+--><div class="figure align-default" id="id4">
+<span id="fig-style-transfer-large"></span><a class="reference internal image-reference" href="../_images/neural-style.jpg"><img alt="../_images/neural-style.jpg" src="../_images/neural-style.jpg" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 13.12.3 </span><span class="caption-text">Ảnh tổng hợp kích thước <span class="math notranslate nohighlight">\(900 \times 600\)</span></span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">13.12.8. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* The loss functions used in style transfer generally have three parts:
+  1. Content loss is used to make the composite image approximate the content image as regards content features.
+  2. Style loss is used to make the composite image approximate the style image in terms of style features.
+  3. Total variation loss helps reduce the noise in the composite image.
+* We can use a pre-trained CNN to extract image features and minimize the loss function to continuously update the composite image.
+* We use a Gram matrix to represent the style output by the style layers.
+--><ul class="simple">
+<li>Các hàm mất mát được sử dụng trong truyền tải phong cách nhìn chung
+bao gồm ba phần:<ol class="arabic">
+<li>Mất mát nội dung được sử dụng để biến đổi ảnh tổng hợp gần giống
+ảnh nội dung dựa trên đặc trưng nội dung.</li>
+<li>Mất mát phong cách được sử dụng để biến đổi ảnh tổng hợp gần giống
+ảnh phong cách dựa trên đặc trưng phong cách.</li>
+<li>Mất mát biến thiên toàn phần giúp giảm nhiễu trong ảnh tổng hợp.</li>
+</ol>
+</li>
+<li>Ta có thể sử dụng CNN đã qua tiền huấn luyện để trích xuất đặc trưng
+ảnh và cực tiểu hoá hàm mất mát, nhờ đó liên tục cập nhật ảnh tổng
+hợp.</li>
+<li>Ta sử dụng ma trận Gram để biểu diễn phong cách đầu ra của các tầng
+phong cách.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">13.12.9. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. How does the output change when you select different content and style layers?
+2. Adjust the weight hyperparameters in the loss function. Does the output retain more content or have less noise?
+3. Use different content and style images. Can you create more interesting composite images?
+--><ol class="arabic simple">
+<li>Đầu ra thay đổi thế nào khi bạn chọn tầng nội dung và phong cách
+khác?</li>
+<li>Điều chỉnh các siêu tham số trọng số của hàm mất mát. Đầu ra khi đó
+liệu có giữ lại nhiều nội dung hơn hay có ít nhiễu hơn?</li>
+<li>Sử dụng ảnh nội dung và ảnh phong cách khác. Bạn hãy thử tạo ra các
+ảnh tổng hợp khác thú vị hơn.</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">13.12.10. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/378">Tiếng Anh - MXNet</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">13.12.11. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Minh Đức</li>
+<li>Nguyễn Văn Cường</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Nguyễn Văn Quang</li>
+<li>Đỗ Trường Giang</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Phạm Hồng Vinh</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">13.12. Truyền tải Phong cách Nơ-ron</a><ul>
+<li><a class="reference internal" href="#ky-thuat">13.12.1. Kỹ thuật</a></li>
+<li><a class="reference internal" href="#doc-anh-noi-dung-va-anh-phong-cach">13.12.2. Đọc ảnh Nội dung và Ảnh phong cách</a></li>
+<li><a class="reference internal" href="#tien-xu-ly-va-hau-xu-ly">13.12.3. Tiền xử lý và Hậu xử lý</a></li>
+<li><a class="reference internal" href="#trich-xuat-dac-trung">13.12.4. Trích xuất Đặc trưng</a></li>
+<li><a class="reference internal" href="#dinh-nghia-ham-mat-mat">13.12.5. Định nghĩa Hàm Mất mát</a><ul>
+<li><a class="reference internal" href="#mat-mat-noi-dung">13.12.5.1. Mất mát Nội dung</a></li>
+<li><a class="reference internal" href="#mat-mat-phong-cach">13.12.5.2. Mất mát Phong cách</a></li>
+<li><a class="reference internal" href="#mat-mat-bien-thien-toan-phan">13.12.5.3. Mất mát Biến thiên Toàn phần</a></li>
+<li><a class="reference internal" href="#ham-mat-mat">13.12.5.4. Hàm Mất mát</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#khai-bao-va-khoi-tao-anh-tong-hop">13.12.6. Khai báo và Khởi tạo Ảnh Tổng hợp</a></li>
+<li><a class="reference internal" href="#huan-luyen">13.12.7. Huấn luyện</a></li>
+<li><a class="reference internal" href="#tom-tat">13.12.8. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">13.12.9. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">13.12.10. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">13.12.11. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="fcn_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>13.11. Mạng Tích chập Đầy đủ</div>
+         </div>
+     </a>
+     <a id="button-next" href="kaggle-cifar10_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>18.2. Phân rã trị riêng &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="18.3. Giải tích một biến" href="single-variable-calculus_vn.html" />
+    <link rel="prev" title="18.1. Các phép toán Hình học và Đại số Tuyến tính" href="geometry-linear-algebraic-ops_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">18. </span>Phụ lục: Toán học cho Học Sâu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">18.2. </span>Phân rã trị riêng</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Eigendecompositions
+--><div class="section" id="phan-ra-tri-rieng">
+<span id="sec-eigendecompositions"></span><h1><span class="section-number">18.2. </span>Phân rã trị riêng<a class="headerlink" href="#phan-ra-tri-rieng" title="Permalink to this headline">¶</a></h1>
+<!--
+Eigenvalues are often one of the most useful notions we will encounter when studying linear algebra,
+however, as a beginner, it is easy to overlook their importance.
+Below, we introduce eigendecomposition and try to convey some sense of just why it is so important.
+--><p>Trị riêng là một trong những khái niệm hữu ích nhất trong đại số tuyến
+tính, tuy nhiên người mới học thường bỏ qua tầm quan trọng của chúng.
+Dưới đây, chúng tôi sẽ giới thiệu về phân rã trị riêng
+(<em>eigendecomposition</em>) và cố gắng truyền tải tầm quan trọng của chúng.</p>
+<!--
+Suppose that we have a matrix $A$ with the following entries:
+--><p>Giả sử ta có một ma trận <span class="math notranslate nohighlight">\(A\)</span> sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-0">
+<span class="eqno">(18.2.1)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-0" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+2 &amp; 0 \\
+0 &amp; -1
+\end{bmatrix}.\end{split}\]</div>
+<!--
+If we apply $A$ to any vector $\mathbf{v} = [x, y]^\top$, we obtain a vector $\mathbf{A}\mathbf{v} = [2x, -y]^\top$.
+This has an intuitive interpretation: stretch the vector to be twice as wide in the $x$-direction, and then flip it in the $y$-direction.
+--><p>Nếu ta áp dụng <span class="math notranslate nohighlight">\(A\)</span> lên bất kỳ vector
+<span class="math notranslate nohighlight">\(\mathbf{v} = [x, y]^\top\)</span> nào, ta nhận được vector
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{v} = [2x, -y]^\top\)</span>. Điều này có thể được diễn
+giải trực quan như sau: kéo giãn vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> dài gấp đôi
+theo phương <span class="math notranslate nohighlight">\(x\)</span>, rồi lấy đối xứng theo phương <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<!--
+However, there are *some* vectors for which something remains unchanged.
+Namely $[1, 0]^\top$ gets sent to $[2, 0]^\top$ and $[0, 1]^\top$ gets sent to $[0, -1]^\top$.
+These vectors are still in the same line, and the only modification is that the matrix stretches them by a factor of $2$ and $-1$ respectively.
+We call such vectors *eigenvectors* and the factor they are stretched by *eigenvalues*.
+--><p>Tuy nhiên, sẽ có <em>một vài</em> vector với một tính chất không thay đổi. Ví
+dụ như <span class="math notranslate nohighlight">\([1, 0]^\top\)</span> được biến đổi thành <span class="math notranslate nohighlight">\([2, 0]^\top\)</span> và
+<span class="math notranslate nohighlight">\([0, 1]^\top\)</span> được biến đổi thành <span class="math notranslate nohighlight">\([0, -1]^\top\)</span>. Những
+vector này không thay đổi phương, chỉ bị kéo giãn với hệ số <span class="math notranslate nohighlight">\(2\)</span> và
+<span class="math notranslate nohighlight">\(-1\)</span>. Ta gọi những vector ấy là <em>vector riêng</em> và các hệ số mà
+chúng giãn ra là <em>trị riêng</em>.</p>
+<!--
+In general, if we can find a number $\lambda$ and a vector $\mathbf{v}$ such that
+--><p>Tổng quát, nếu ta tìm được một số <span class="math notranslate nohighlight">\(\lambda\)</span> và một vector
+<span class="math notranslate nohighlight">\(\mathbf{v}\)</span> mà</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-1">
+<span class="eqno">(18.2.2)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-1" title="Permalink to this equation">¶</a></span>\[\mathbf{A}\mathbf{v} = \lambda \mathbf{v}.\]</div>
+<!--
+We say that $\mathbf{v}$ is an eigenvector for $A$ and $\lambda$ is an eigenvalue.
+--><p>Ta nói rằng <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> là một vector riêng và <span class="math notranslate nohighlight">\(\lambda\)</span> là
+một trị riêng của <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<!--
+## Finding Eigenvalues
+--><div class="section" id="tim-tri-rieng">
+<h2><span class="section-number">18.2.1. </span>Tìm trị riêng<a class="headerlink" href="#tim-tri-rieng" title="Permalink to this headline">¶</a></h2>
+<!--
+Let us figure out how to find them. By subtracting off the $\lambda \mathbf{v}$ from both sides, and then factoring out the vector, we see the above is equivalent to:
+--><p>Hãy cùng tìm hiểu cách tìm trị riêng. Bằng cách trừ đi
+<span class="math notranslate nohighlight">\(\lambda \mathbf{v}\)</span> ở cả hai vế của đẳng thức trên, rồi sau đó
+nhóm thừa số chung là vector, ta có:</p>
+<div class="math notranslate nohighlight" id="equation-eq-eigvalue-der">
+<span class="eqno">(18.2.3)<a class="headerlink" href="#equation-eq-eigvalue-der" title="Permalink to this equation">¶</a></span>\[(\mathbf{A} - \lambda \mathbf{I})\mathbf{v} = 0.\]</div>
+<!--
+For :eqref:`eq_eigvalue_der` to happen, we see that $(\mathbf{A} - \lambda \mathbf{I})$ must compress some direction down to zero, hence it is not invertible, and thus the determinant is zero.
+Thus, we can find the *eigenvalues* by finding for what $\lambda$ is $\det(\mathbf{A}-\lambda \mathbf{I}) = 0$.
+Once we find the eigenvalues, we can solve $\mathbf{A}\mathbf{v} = \lambda \mathbf{v}$ to find the associated *eigenvector(s)*.
+--><p>Để <a class="reference internal" href="#equation-eq-eigvalue-der">(18.2.3)</a> xảy ra,
+<span class="math notranslate nohighlight">\((\mathbf{A} - \lambda \mathbf{I})\)</span> phải nén một số chiều xuống
+không, vì thế nó không thể nghịch đảo được nên có định thức bằng không.
+Do đó, ta có thể tìm các <em>trị riêng</em> bằng cách tìm giá trị
+<span class="math notranslate nohighlight">\(\lambda\)</span> sao cho <span class="math notranslate nohighlight">\(\det(\mathbf{A}-\lambda \mathbf{I}) = 0\)</span>.
+Một khi tìm được các trị riêng, ta có thể giải phương trình
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{v} = \lambda \mathbf{v}\)</span> để tìm (các) <em>vector
+riêng</em> tương ứng.</p>
+<!--
+### An Example
+--><div class="section" id="vi-du">
+<h3><span class="section-number">18.2.1.1. </span>Ví dụ<a class="headerlink" href="#vi-du" title="Permalink to this headline">¶</a></h3>
+<!--
+Let us see this with a more challenging matrix
+--><p>Hãy xét một ma trận thách thức hơn</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-2">
+<span class="eqno">(18.2.4)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-2" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+2 &amp; 1\\
+2 &amp; 3
+\end{bmatrix}.\end{split}\]</div>
+<!--
+If we consider $\det(\mathbf{A}-\lambda \mathbf{I}) = 0$, we see this is equivalent to the polynomial equation $0 = (2-\lambda)(3-\lambda)-2 = (4-\lambda)(1-\lambda)$.
+Thus, two eigenvalues are $4$ and $1$.
+To find the associated vectors, we then need to solve
+--><p>Nếu để ý <span class="math notranslate nohighlight">\(\det(\mathbf{A}-\lambda \mathbf{I}) = 0\)</span>, ta thấy rằng
+phương trình này tương đương với phương trình đa thức
+<span class="math notranslate nohighlight">\(0 = (2-\lambda)(3-\lambda)-2 = (4-\lambda)(1-\lambda)\)</span>. Như vậy,
+hai trị riêng tìm được là <span class="math notranslate nohighlight">\(4\)</span> và <span class="math notranslate nohighlight">\(1\)</span>. Để tìm các vector
+tương ứng, ta cần giải hệ</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-3">
+<span class="eqno">(18.2.5)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-3" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{bmatrix}
+2 &amp; 1\\
+2 &amp; 3
+\end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix} = \begin{bmatrix}x \\ y\end{bmatrix}  \; \text{và} \;
+\begin{bmatrix}
+2 &amp; 1\\
+2 &amp; 3
+\end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}  = \begin{bmatrix}4x \\ 4y\end{bmatrix} .\end{split}\]</div>
+<!--
+We can solve this with the vectors $[1, -1]^\top$ and $[1, 2]^\top$ respectively.
+--><p>Ta thu được nghiệm tương ứng là hai vector <span class="math notranslate nohighlight">\([1, -1]^\top\)</span> và
+<span class="math notranslate nohighlight">\([1, 2]^\top\)</span>.</p>
+<!--
+We can check this in code using the built-in `numpy.linalg.eig` routine.
+--><p>Ta có thể kiểm tra lại bằng đoạn mã với hàm <code class="docutils literal notranslate"><span class="pre">numpy.linalg.eig</span></code> xây
+dựng sẵn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]),</span>
+ <span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.70710678</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4472136</span> <span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.70710678</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.89442719</span><span class="p">]]))</span>
+</pre></div>
+</div>
+<!--
+Note that `numpy` normalizes the eigenvectors to be of length one, whereas we took ours to be of arbitrary length.
+Additionally, the choice of sign is arbitrary.
+However, the vectors computed are parallel to the ones we found by hand with the same eigenvalues.
+--><p>Lưu ý rằng <code class="docutils literal notranslate"><span class="pre">numpy</span></code> chuẩn hóa các vector riêng để có độ dài bằng 1,
+trong khi các vector ta tìm được bằng cách giải phương trình có độ dài
+tùy ý. Thêm vào đó, việc chọn dấu cũng là tùy ý. Tuy nhiên, các vector
+được tính ra bởi thư viện sẽ song song với các vector có được bằng cách
+giải thủ công với cùng trị riêng.</p>
+<!--
+## Decomposing Matrices
+--></div>
+</div>
+<div class="section" id="phan-ra-ma-tran">
+<h2><span class="section-number">18.2.2. </span>Phân rã Ma trận<a class="headerlink" href="#phan-ra-ma-tran" title="Permalink to this headline">¶</a></h2>
+<!--
+Let us continue the previous example one step further.  Let
+--><p>Hãy tiếp tục với ví dụ trước đó. Gọi</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-4">
+<span class="eqno">(18.2.6)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{W} = \begin{bmatrix}
+1 &amp; 1 \\
+-1 &amp; 2
+\end{bmatrix},\end{split}\]</div>
+<!--
+be the matrix where the columns are the eigenvectors of the matrix $\mathbf{A}$. Let
+--><p>là ma trận có các cột là vector riêng của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.
+Gọi</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-5">
+<span class="eqno">(18.2.7)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-5" title="Permalink to this equation">¶</a></span>\[\begin{split}\boldsymbol{\Sigma} = \begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 4
+\end{bmatrix},\end{split}\]</div>
+<!--
+be the matrix with the associated eigenvalues on the diagonal.
+Then the definition of eigenvalues and eigenvectors tells us that
+--><p>là ma trận với các trị riêng tương ứng nằm trên đường chéo. Từ định
+nghĩa của trị riêng và vector riêng, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-6">
+<span class="eqno">(18.2.8)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-6" title="Permalink to this equation">¶</a></span>\[\mathbf{A}\mathbf{W} =\mathbf{W} \boldsymbol{\Sigma} .\]</div>
+<!--
+The matrix $W$ is invertible, so we may multiply both sides by $W^{-1}$ on the right, we see that we may write
+--><p>Ma trận <span class="math notranslate nohighlight">\(W\)</span> là khả nghịch, nên ta có thể nhân hai vế với
+<span class="math notranslate nohighlight">\(W^{-1}\)</span> về phía phải, để có</p>
+<div class="math notranslate nohighlight" id="equation-eq-eig-decomp">
+<span class="eqno">(18.2.9)<a class="headerlink" href="#equation-eq-eig-decomp" title="Permalink to this equation">¶</a></span>\[\mathbf{A} = \mathbf{W} \boldsymbol{\Sigma} \mathbf{W}^{-1}.\]</div>
+<!--
+In the next section we will see some nice consequences of this, but for now we need only know that such a decomposition
+will exist as long as we can find a full collection of linearly independent eigenvectors (so that $W$ is invertible).
+--><p>Trong phần tiếp theo ta sẽ thấy một số hệ quả thú vị từ diều này, nhưng
+hiện giờ bạn đọc chỉ cần biết rằng tồn tại phân rã như vậy nếu ta có thể
+tìm tất cả các vector riêng độc lập tuyến tính (để ma trận <span class="math notranslate nohighlight">\(W\)</span> khả
+nghịch).</p>
+<!--
+## Operations on Eigendecompositions
+--></div>
+<div class="section" id="cac-phep-toan-dung-phan-ra-tri-rieng">
+<h2><span class="section-number">18.2.3. </span>Các phép toán dùng Phân rã Trị riêng<a class="headerlink" href="#cac-phep-toan-dung-phan-ra-tri-rieng" title="Permalink to this headline">¶</a></h2>
+<!--
+One nice thing about eigendecompositions :eqref:`eq_eig_decomp` is that we can write many operations we usually encounter cleanly
+in terms of the eigendecomposition. As a first example, consider:
+--><p>Một điều thú vị về phân rã trị riêng <a class="reference internal" href="#equation-eq-eig-decomp">(18.2.9)</a> là ta có
+thể viết nhiều phép toán thường gặp một cách gọn gàng khi sử dụng phân
+rã trị riêng. Ví dụ đầu tiên, xét:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-7">
+<span class="eqno">(18.2.10)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-7" title="Permalink to this equation">¶</a></span>\[\mathbf{A}^n = \overbrace{\mathbf{A}\cdots \mathbf{A}}^{\text{$n$ times}} = \overbrace{(\mathbf{W}\boldsymbol{\Sigma} \mathbf{W}^{-1})\cdots(\mathbf{W}\boldsymbol{\Sigma} \mathbf{W}^{-1})}^{\text{$n$ times}} =  \mathbf{W}\overbrace{\boldsymbol{\Sigma}\cdots\boldsymbol{\Sigma}}^{\text{$n$ times}}\mathbf{W}^{-1} = \mathbf{W}\boldsymbol{\Sigma}^n \mathbf{W}^{-1}.\]</div>
+<!--
+This tells us that for any positive power of a matrix, the eigendecomposition is obtained by just raising the eigenvalues to the same power.
+The same can be shown for negative powers, so if we want to invert a matrix we need only consider
+--><p>Điều này cho thấy khi lũy thừa ma trận với bất kỳ số mũ dương nào, ta
+chỉ cần lũy thừa các trị riêng lên cùng số mũ nếu sử dụng phân rã trị
+riêng. Tương tự, cũng có thể áp dụng cho các số mũ âm, khi nghịch đảo ma
+trận ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-8">
+<span class="eqno">(18.2.11)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-8" title="Permalink to this equation">¶</a></span>\[\mathbf{A}^{-1} = \mathbf{W}\boldsymbol{\Sigma}^{-1} \mathbf{W}^{-1},\]</div>
+<!--
+or in other words, just invert each eigenvalue.
+This will work as long as each eigenvalue is non-zero, so we see that invertible is the same as having no zero eigenvalues.
+--><p>hay nói cách khác, chỉ cần nghịch đảo từng trị riêng, với điều kiện các
+trị riêng khác không. Do đó sự khả nghịch tương đương với việc không có
+trị riêng nào bằng không.</p>
+<!--
+Indeed, additional work can show that if $\lambda_1, \ldots, \lambda_n$ are the eigenvalues of a matrix, then the determinant of that matrix is
+--><p>Thật vậy, có thể chứng minh rằng nếu
+<span class="math notranslate nohighlight">\(\lambda_1, \ldots, \lambda_n\)</span> là các trị riêng của một ma trận,
+định thức của ma trận đó là tích của tất cả các trị riêng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-9">
+<span class="eqno">(18.2.12)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-9" title="Permalink to this equation">¶</a></span>\[\det(\mathbf{A}) = \lambda_1 \cdots \lambda_n,\]</div>
+<!--
+or the product of all the eigenvalues.
+This makes sense intuitively because whatever stretching $\mathbf{W}$ does, $W^{-1}$ undoes it, so in the end the only stretching that happens is
+by multiplication by the diagonal matrix $\boldsymbol{\Sigma}$, which stretches volumes by the product of the diagonal elements.
+--><p>Điều này hợp lý về trực giác vì dù ma trận <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> có kéo
+giãn như thế nào thì <span class="math notranslate nohighlight">\(W^{-1}\)</span> cũng sẽ hoàn tác hành động đó, vì
+thế cuối cùng phép kéo giãn duy nhất được áp dụng là nhân với ma trận
+đường chéo <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>. Phép nhân này sẽ kéo giãn thể
+tích không gian với hệ số bằng tích của các phần tử trên đường chéo.</p>
+<!--
+Finally, recall that the rank was the maximum number of linearly independent columns of your matrix.
+By examining the eigendecomposition closely, we can see that the rank is the same as the number of non-zero eigenvalues of $\mathbf{A}$.
+--><p>Cuối cùng, ta hãy nhớ lại rằng hạng của ma trận là số lượng tối đa các
+vector cột độc lập tuyến tính trong một ma trận. Bằng cách nghiên cứu kỹ
+phân rã trị riêng, ta có thể thấy rằng hạng của <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> bằng
+số lượng các trị riêng khác không của <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<!--
+The examples could continue, but hopefully the point is clear: eigendecomposition can simplify many linear-algebraic computations
+and is a fundamental operation underlying many numerical algorithms and much of the analysis that we do in linear algebra.
+--><p>Trước khi tiếp tục, hy vọng bạn đọc đã hiểu được ý tưởng: phân rã trị
+riêng có thể đơn giản hóa nhiều phép tính đại số tuyến tính và là một
+phép toán cơ bản phía sau nhiều thuật toán số và phân tích trong đại số
+tuyến tính.</p>
+<!--
+## Eigendecompositions of Symmetric Matrices
+--></div>
+<div class="section" id="phan-ra-tri-rieng-cua-ma-tran-doi-xung">
+<h2><span class="section-number">18.2.4. </span>Phân rã trị riêng của Ma trận Đối xứng<a class="headerlink" href="#phan-ra-tri-rieng-cua-ma-tran-doi-xung" title="Permalink to this headline">¶</a></h2>
+<!--
+It is not always possible to find enough linearly independent eigenvectors for the above process to work. For instance the matrix
+--><p>Không phải lúc nào ta cũng có thể tìm đủ các vector riêng độc lập tuyến
+tính để thuật toán phía trên hoạt động. Ví dụ ma trận sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-10">
+<span class="eqno">(18.2.13)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-10" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+1 &amp; 1 \\
+0 &amp; 1
+\end{bmatrix},\end{split}\]</div>
+<!--
+has only a single eigenvector, namely $(1, 0)^\top$.
+To handle such matrices, we require more advanced techniques than we can cover (such as the Jordan Normal Form, or Singular Value Decomposition).
+We will often need to restrict our attention to those matrices where we can guarantee the existence of a full set of eigenvectors.
+--><p>chỉ có duy nhất một vector riêng là <span class="math notranslate nohighlight">\((1, 0)^\top\)</span>. Để xử lý những
+ma trận như vậy, ta cần những kỹ thuật cao cấp hơn (ví dụ như dạng chuẩn
+Jordan - <em>Jordan Normal Form</em>, hay phân rã đơn trị - <em>Singular Value
+Decomposition</em>). Ta thường phải giới hạn mức độ và chỉ tập trung đến
+những ma trận mà ta có thể đảm bảo rằng có tồn tại một tập đầy đủ vector
+riêng.</p>
+<!--
+The most commonly encountered family are the *symmetric matrices*, which are those matrices where $\mathbf{A} = \mathbf{A}^\top$.
+In this case, we may take $W$ to be an *orthogonal matrix*—a matrix whose columns are all length one vectors that are at right angles to one another,
+where $\mathbf{W}^\top = \mathbf{W}^{-1}$—and all the eigenvalues will be real.
+Thus, in this special case, we can write :eqref:`eq_eig_decomp` as
+--><p>Họ vector thường gặp nhất là <em>ma trận đối xứng</em>, là những ma trận mà
+<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{A}^\top\)</span>. Trong trường hợp này, ta có thể
+lấy <span class="math notranslate nohighlight">\(W\)</span> là <em>ma trận trực giao</em> - ma trận có các cột là các vector
+có độ dài bằng một và vuông góc với nhau, đồng thời
+<span class="math notranslate nohighlight">\(\mathbf{W}^\top = \mathbf{W}^{-1}\)</span> - và tất cả các trị riêng là
+số thực. Trong trường hợp đặc biệt này, ta có thể viết
+<a class="reference internal" href="#equation-eq-eig-decomp">(18.2.9)</a> như sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-11">
+<span class="eqno">(18.2.14)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-11" title="Permalink to this equation">¶</a></span>\[\mathbf{A} = \mathbf{W}\boldsymbol{\Sigma}\mathbf{W}^\top .\]</div>
+<!--
+## Gershgorin Circle Theorem
+--></div>
+<div class="section" id="dinh-ly-vong-tron-gershgorin">
+<h2><span class="section-number">18.2.5. </span>Định lý Vòng tròn Gershgorin<a class="headerlink" href="#dinh-ly-vong-tron-gershgorin" title="Permalink to this headline">¶</a></h2>
+<!--
+Eigenvalues are often difficult to reason with intuitively.
+If presented an arbitrary matrix, there is little that can be said about what the eigenvalues are without computing them.
+There is, however, one theorem that can make it easy to approximate well if the largest values are on the diagonal.
+--><p>Các trị riêng thường rất khó để suy luận bằng trực giác. Nếu tồn tại một
+ma trận bất kỳ, ta khó có thể nói được gì nhiều về các trị riêng nếu
+không tính toán chúng ra. Tuy nhiên, tồn tại một định lý giúp dễ dàng
+xấp xỉ tốt trị riêng nếu các giá trị lớn nhất của ma trận nằm trên đường
+chéo.</p>
+<!--
+Let $\mathbf{A} = (a_{ij})$ be any square matrix ($n\times n$).
+We will define $r_i = \sum_{j \neq i} |a_{ij}|$.
+Let $\mathcal{D}_i$ represent the disc in the complex plane with center $a_{ii}$ radius $r_i$.
+Then, every eigenvalue of $\mathbf{A}$ is contained in one of the $\mathcal{D}_i$.
+--><p>Cho <span class="math notranslate nohighlight">\(\mathbf{A} = (a_{ij})\)</span> là ma trận vuông bất kỳ với kích thước
+<span class="math notranslate nohighlight">\(n\times n\)</span>. Đặt <span class="math notranslate nohighlight">\(r_i = \sum_{j \neq i} |a_{ij}|\)</span>. Cho
+<span class="math notranslate nohighlight">\(\mathcal{D}_i\)</span> biểu diễn hình tròn trong mặt phẳng phức với tâm
+<span class="math notranslate nohighlight">\(a_{ii}\)</span>, bán kính <span class="math notranslate nohighlight">\(r_i\)</span>. Khi đó, mỗi trị riêng của
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> được chứa trong một <span class="math notranslate nohighlight">\(\mathcal{D}_i\)</span>.</p>
+<!--
+This can be a bit to unpack, so let us look at an example.
+Consider the matrix:
+--><p>Điều này có thể hơi khó hiểu, nên hãy quan sát ví dụ sau. Xét ma trận:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-12">
+<span class="eqno">(18.2.15)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-12" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+1.0 &amp; 0.1 &amp; 0.1 &amp; 0.1 \\
+0.1 &amp; 3.0 &amp; 0.2 &amp; 0.3 \\
+0.1 &amp; 0.2 &amp; 5.0 &amp; 0.5 \\
+0.1 &amp; 0.3 &amp; 0.5 &amp; 9.0
+\end{bmatrix}.\end{split}\]</div>
+<!--
+We have $r_1 = 0.3$, $r_2 = 0.6$, $r_3 = 0.8$ and $r_4 = 0.9$.
+The matrix is symmetric, so all eigenvalues are real.
+This means that all of our eigenvalues will be in one of the ranges of
+--><p>Ta có <span class="math notranslate nohighlight">\(r_1 = 0.3\)</span>, <span class="math notranslate nohighlight">\(r_2 = 0.6\)</span>, <span class="math notranslate nohighlight">\(r_3 = 0.8\)</span> và
+<span class="math notranslate nohighlight">\(r_4 = 0.9\)</span>. Ma trận này là đối xứng nên tất cả các trị riêng đều
+là số thực. Điều này có nghĩa tất cả các trị riêng sẽ nằm trong một
+trong các khoảng sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-13">
+<span class="eqno">(18.2.16)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-13" title="Permalink to this equation">¶</a></span>\[[a_{11}-r_1, a_{11}+r_1] = [0.7, 1.3],\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-14">
+<span class="eqno">(18.2.17)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-14" title="Permalink to this equation">¶</a></span>\[[a_{22}-r_2, a_{22}+r_2] = [2.4, 3.6],\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-15">
+<span class="eqno">(18.2.18)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-15" title="Permalink to this equation">¶</a></span>\[[a_{33}-r_3, a_{33}+r_3] = [4.2, 5.8],\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-16">
+<span class="eqno">(18.2.19)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-16" title="Permalink to this equation">¶</a></span>\[[a_{44}-r_4, a_{44}+r_4] = [8.1, 9.9].\]</div>
+<!--
+Performing the numerical computation shows
+that the eigenvalues are approximately $0.99$, $2.97$, $4.95$, $9.08$,
+all comfortably inside the ranges provided.
+--><p>Thực hiện việc tính toán số ta có các trị riêng xấp xỉ là <span class="math notranslate nohighlight">\(0.99\)</span>,
+<span class="math notranslate nohighlight">\(2.97\)</span>, <span class="math notranslate nohighlight">\(4.95\)</span>, <span class="math notranslate nohighlight">\(9.08\)</span>, đều nằm hoàn toàn trong các
+khoảng trên.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]])</span>
+
+<span class="n">v</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">v</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">9.08033648</span><span class="p">,</span> <span class="mf">0.99228545</span><span class="p">,</span> <span class="mf">4.95394089</span><span class="p">,</span> <span class="mf">2.97343718</span><span class="p">])</span>
+</pre></div>
+</div>
+<!--
+In this way, eigenvalues can be approximated, and the approximations will be fairly accurate
+in the case that the diagonal is significantly larger than all the other elements.
+--><p>Bằng cách này, các trị riêng có thể được xấp xỉ khá chính xác trong
+trường hợp các phần tử trên đường chéo lớn hơn hẳn so với các phần tử
+còn lại.</p>
+<!--
+It is a small thing, but with a complex and subtle topic like eigendecomposition,
+it is good to get any intuitive grasp we can.
+--><p>Điều này tuy nhỏ nhưng với một chủ đề phức tạp và tinh vi như phân rã
+trị riêng, thật tốt nếu có thể hiểu bất kỳ điều gì theo cách trực quan.</p>
+<!--
+## A Useful Application: The Growth of Iterated Maps
+--></div>
+<div class="section" id="mot-ung-dung-huu-ich-muc-tang-truong-cua-cac-anh-xa-lap-lai">
+<h2><span class="section-number">18.2.6. </span>Một Ứng dụng hữu ích: Mức tăng trưởng của các Ánh xạ Lặp lại<a class="headerlink" href="#mot-ung-dung-huu-ich-muc-tang-truong-cua-cac-anh-xa-lap-lai" title="Permalink to this headline">¶</a></h2>
+<!--
+Now that we understand what eigenvectors are in principle, let us see how they can be used to provide a deep understanding
+of a problem central to neural network behavior: proper weight initialization.
+--><p>Giờ ta đã hiểu bản chất của vector riêng, hãy xem có thể sử dụng chúng
+như thế nào để hiểu sâu hơn một vấn đề quan trọng trong mạng nơ-ron:
+khởi tạo trọng số thích hợp.</p>
+<!--
+### Eigenvectors as Long Term Behavior
+--><div class="section" id="vector-rieng-bieu-thi-hanh-vi-dai-han">
+<h3><span class="section-number">18.2.6.1. </span>Vector riêng biểu thị Hành vi Dài hạn<a class="headerlink" href="#vector-rieng-bieu-thi-hanh-vi-dai-han" title="Permalink to this headline">¶</a></h3>
+<!--
+The full mathematical investigation of the initialization of deep neural networks is beyond the scope of the text,
+but we can see a toy version here to understand how eigenvalues can help us see how these models work.
+As we know, neural networks operate by interspersing layers of linear transformations with non-linear operations.
+For simplicity here, we will assume that there is no non-linearity,
+and that the transformation is a single repeated matrix operation $A$,so that the output of our model is
+--><p>Tìm hiểu đầy đủ về cách khởi tạo mạng nơ-ron dưới góc nhìn toán học nằm
+ngoài phạm vi phần này, tuy vậy ta có thể phân tích một ví dụ đơn giản
+dưới đây để xem các trị riêng giúp ta hiểu cách các mô hình hoạt động
+như thế nào. Như đã biết, mạng nơ-ron hoạt động bằng cách xen kẽ các
+phép biến đổi tuyến tính và phi tuyến. Để đơn giản, ở đây ta giả sử
+không có biến đổi phi tuyến và phép biến đổi chỉ là việc liên tục áp
+dụng ma trận <span class="math notranslate nohighlight">\(A\)</span>, do đó đầu ra của mô hình là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-17">
+<span class="eqno">(18.2.20)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-17" title="Permalink to this equation">¶</a></span>\[\mathbf{v}_{out} = \mathbf{A}\cdot \mathbf{A}\cdots \mathbf{A} \mathbf{v}_{in} = \mathbf{A}^N \mathbf{v}_{in}.\]</div>
+<!--
+When these models are initialized, $A$ is taken to be a random matrix with Gaussian entries, so let us make one of those.
+To be concrete, we start with a mean zero, variance one Gaussian distributed $5 \times 5$ matrix.
+--><p>Khi mô hình trên được khởi tạo, <span class="math notranslate nohighlight">\(A\)</span> nhận các giá trị ngẫu nhiên
+theo phân phối Gauss. Lấy ví dụ cụ thể, ta bắt đầu bằng một ma trận kích
+thước <span class="math notranslate nohighlight">\(5 \times 5\)</span> với giá trị trung bình bằng 0, phương sai bằng
+1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">8675309</span><span class="p">)</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.58902366</span><span class="p">,</span>  <span class="mf">0.73311856</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1621888</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.55681601</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.77248843</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">0.16822143</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.41650391</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.37843129</span><span class="p">,</span>  <span class="mf">0.74925588</span><span class="p">,</span>  <span class="mf">0.17888446</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">0.69401121</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.9780535</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.83381434</span><span class="p">,</span>  <span class="mf">0.56437344</span><span class="p">,</span>  <span class="mf">0.31201299</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">0.87334496</span><span class="p">,</span>  <span class="mf">0.15601291</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.38710108</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.23920821</span><span class="p">,</span>  <span class="mf">0.88850104</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">1.29385371</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.76774106</span><span class="p">,</span>  <span class="mf">0.20131613</span><span class="p">,</span>  <span class="mf">0.91800842</span><span class="p">,</span>  <span class="mf">0.38974115</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+### Behavior on Random Data
+--></div>
+<div class="section" id="hanh-vi-tren-du-lieu-ngau-nhien">
+<h3><span class="section-number">18.2.6.2. </span>Hành vi trên Dữ liệu Ngẫu nhiên<a class="headerlink" href="#hanh-vi-tren-du-lieu-ngau-nhien" title="Permalink to this headline">¶</a></h3>
+<!--
+For simplicity in our toy model, we will assume that the data vector we feed in $\mathbf{v}_{in}$ is a random five dimensional Gaussian vector.
+Let us think about what we want to have happen.
+For context, lets think of a generic ML problem, where we are trying to turn input data, like an image, into a prediction, like the probability the image is a picture of a cat.
+If repeated application of $\mathbf{A}$ stretches a random vector out to be very long,
+then small changes in input will be amplified into large changes in output---tiny modifications of the input image would lead to vastly different predictions.
+This does not seem right!
+--><p>Trong mô hình đơn giản, ta giả sử rằng vector dữ liệu ta đưa vào
+<span class="math notranslate nohighlight">\(\mathbf{v}_{in}\)</span> là một vector Gauss ngẫu nhiên năm chiều. Hãy
+thử nghĩ xem ta sẽ muốn điều gì xảy ra. Trong ngữ cảnh này, hãy liên
+tưởng tới một bài toán học máy nói chung, trong đó ta đang cố biến dữ
+liệu đầu vào, như một ảnh, thành một dự đoán, như xác suất ảnh đó là bức
+ảnh một con mèo. Nếu việc áp dụng liên tục <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> khiến một
+vector ngẫu nhiên bị kéo giãn lên quá dài thì chỉ với một thay đổi nhỏ
+trên đầu vào cũng có thể khuếch đại thành một thay đổi lớn trên đầu ra –
+các sự biến đổi nhỏ trên ảnh đầu vào cũng có thể dẫn tới các dự đoán
+khác hẳn nhau. Việc này dường như không hợp lý chút nào!</p>
+<!--
+On the flip side, if $\mathbf{A}$ shrinks random vectors to be shorter,
+then after running through many layers, the vector will essentially shrink to nothing,
+and the output will not depend on the input. This is also clearly not right either!
+--><p>Trái lại, nếu <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> khiến các vector ngẫu nhiên co ngắn
+lại, thì sau khi đi qua nhiều tầng, vector này về cơ bản sẽ co đến mức
+chẳng còn lại gì, và đầu ra sẽ không còn phụ thuộc vào đầu vào. Rõ ràng
+việc này cũng không hề hợp lý!</p>
+<!--
+We need to walk the narrow line between growth and decay
+to make sure that our output changes depending on our input, but not much!
+--><p>Ta cần tìm ra ranh giới giữa tăng trưởng và suy giảm để đảm bảo rằng
+thay đổi ở đầu ra phụ thuộc vào đầu vào, nhưng cũng không quá phụ thuộc!</p>
+<!--
+Let us see what happens when we repeatedly multiply our matrix $\mathbf{A}$
+against a random input vector, and keep track of the norm.
+--><p>Hãy xem chuyện gì sẽ xảy ra nếu ta liên tục nhân ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> với một vector đầu vào ngẫu nhiên, và theo dõi giá
+trị chuẩn (<em>norm</em>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the sequence of norms after repeatedly applying `A`</span>
+<span class="n">v_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">norm_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_in</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">v_in</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v_in</span><span class="p">)</span>
+    <span class="n">norm_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_in</span><span class="p">))</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">norm_list</span><span class="p">,</span> <span class="s1">&#39;Iteration&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_eigendecomposition_vn_fdbc53_7_0.svg" src="../_images/output_eigendecomposition_vn_fdbc53_7_0.svg" /></div>
+<!--
+The norm is growing uncontrollably!
+Indeed if we take the list of quotients, we will see a pattern.
+--><p>Giá trị chuẩn tăng một cách không thể kiểm soát được! Quả thật, nếu ta
+lấy ra danh sách các tỉ số, ta sẽ thấy một khuôn mẫu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the scaling factor of the norms</span>
+<span class="n">norm_ratio_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">norm_ratio_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">norm_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">norm_list</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">norm_ratio_list</span><span class="p">,</span> <span class="s1">&#39;Iteration&#39;</span><span class="p">,</span> <span class="s1">&#39;Ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_eigendecomposition_vn_fdbc53_9_0.svg" src="../_images/output_eigendecomposition_vn_fdbc53_9_0.svg" /></div>
+<!--
+If we look at the last portion of the above computation,
+we see that the random vector is stretched by a factor of `1.974459321485[...]`,
+where the portion at the end shifts a little,
+but the stretching factor is stable.
+--><p>Nếu ta quan sát phần cuối của phép tính trên, ta có thể thấy rằng vector
+ngẫu nhiên bị kéo giãn với hệ số là <code class="docutils literal notranslate"><span class="pre">1.974459321485[...]</span></code>, với phần số
+thập phân ở cuối có thay đổi một chút, nhưng hệ số kéo giãn thì ổn định.</p>
+<!--
+### Relating Back to Eigenvectors
+--></div>
+<div class="section" id="lien-he-nguoc-lai-toi-vector-rieng">
+<h3><span class="section-number">18.2.6.3. </span>Liên hệ Ngược lại tới Vector riêng<a class="headerlink" href="#lien-he-nguoc-lai-toi-vector-rieng" title="Permalink to this headline">¶</a></h3>
+<!--
+We have seen that eigenvectors and eigenvalues correspond to the amount something is stretched,
+but that was for specific vectors, and specific stretches.
+Let us take a look at what they are for $\mathbf{A}$.
+A bit of a caveat here: it turns out that to see them all, we will need to go to complex numbers.
+You can think of these as stretches and rotations.
+By taking the norm of the complex number (square root of the sums of squares of real and imaginary parts)
+we can measure that stretching factor. Let us also sort them.
+--><p>Ta đã thấy rằng vector riêng và trị riêng tương ứng với mức độ co giãn
+của thứ gì đó, nhưng chỉ đối với các vector cụ thể và các phép co giãn
+cụ thể. Hãy cùng xét xem chúng là gì đối với <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. Nói
+trước một chút: hóa ra là để có thể quan sát được mọi giá trị, ta cần
+xét tới số phức. Bạn có thể coi số phức như phép co giãn và phép quay.
+Bằng cách tính chuẩn của số phức (căn bậc hai của tổng bình phương phần
+thực và phần ảo), ta có thể đo hệ số co giãn. Hãy sắp xếp chúng theo thứ
+tự.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the eigenvalues</span>
+<span class="n">eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">norm_eigs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">eigs</span><span class="p">]</span>
+<span class="n">norm_eigs</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;norms of eigenvalues: </span><span class="si">{</span><span class="n">norm_eigs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">norms</span> <span class="n">of</span> <span class="n">eigenvalues</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.8786205280381857</span><span class="p">,</span> <span class="mf">1.2757952665062624</span><span class="p">,</span> <span class="mf">1.4983381517710659</span><span class="p">,</span> <span class="mf">1.4983381517710659</span><span class="p">,</span> <span class="mf">1.974459321485074</span><span class="p">]</span>
+</pre></div>
+</div>
+<!--
+### An Observation
+--></div>
+<div class="section" id="nhan-xet">
+<h3><span class="section-number">18.2.6.4. </span>Nhận xét<a class="headerlink" href="#nhan-xet" title="Permalink to this headline">¶</a></h3>
+<!--
+We see something a bit unexpected happening here: that number we identified before for the long term stretching of our matrix $\mathbf{A}$
+applied to a random vector is *exactly* (accurate to thirteen decimal places!) the largest eigenvalue of $\mathbf{A}$.
+This is clearly not a coincidence!
+--><p>Ta quan sát thấy một chút bất thường ở đây: hệ số mà ta đã xác định cho
+quá trình giãn về dài hạn khi áp dụng ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> lên một
+vector ngẫu nhiên lại <em>chính là</em> trị riêng lớn nhất của
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (chính xác đến 13 số thập phân). Điều này rõ ràng
+không phải một sự trùng hợp.</p>
+<!--
+But, if we now think about what is happening geometrically, this starts to make sense. Consider a random vector.
+This random vector points a little in every direction, so in particular, it points at least a little bit
+in the same direction as the eigenvector of $\mathbf{A}$ associated with the largest eigenvalue.
+This is so important that it is called the *principle eigenvalue* and *principle eigenvector*.
+After applying $\mathbf{A}$, our random vector gets stretched in every possible direction,
+as is associated with every possible eigenvector, but it is stretched most of all in the direction associated with this principle eigenvector.
+What this means is that after apply in $A$, our random vector is longer, and points in a direction closer to being aligned with the principle eigenvector.
+After applying the matrix many times, the alignment with the principle eigenvector becomes closer and closer until,
+for all practical purposes, our random vector has been transformed into the principle eigenvector!
+Indeed this algorithm is the basis for what is known as the *power iteration* for finding the largest eigenvalue and eigenvector of a matrix.
+For details see, for example, :cite:`Van-Loan.Golub.1983`.
+--><p>Tuy nhiên, nếu ta thực sự suy ngẫm chuyện gì đang xảy ra trên phương
+diện hình học, điều này bắt đầu trở nên hợp lý. Xét một vector ngẫu
+nhiên. Vector ngẫu nhiên này trỏ tới mỗi hướng một chút, nên cụ thể, nó
+chút ít cũng trỏ tới cùng hướng với vector riêng của <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>
+tương ứng với trị riêng lớn nhất. Trị riêng và vector riêng này quan
+trọng đến mức chúng được gọi là <em>trị riêng chính (principle eigenvalue)</em>
+và <em>vector riêng chính (principle eigenvector)</em>. Sau khi áp dụng
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, vector ngẫu nhiên trên bị giãn ra theo mọi hướng khả
+dĩ, do nó liên kết với mọi vector riêng khả dĩ, nhưng nó bị giãn nhiều
+nhất theo hướng liên kết với vector riêng chính. Điều này có nghĩa là
+sau khi áp dụng <span class="math notranslate nohighlight">\(A\)</span>, vector ngẫu nhiên trên dài ra, và ngày càng
+cùng hướng với vector riêng chính. Sau khi áp dụng ma trận nhiều lần,
+vector ngẫu nhiên ngày càng gần vector riêng chính cho tới khi vector
+này gần như trở thành vector riêng chính. Đây chính là cơ sở cho thuật
+toán <em>lặp lũy thừa - (power iteration)</em> để tìm trị riêng và vector riêng
+lớn nhất của một ma trận. Để biết chi tiết hơn, bạn đọc có thể tham khảo
+tại <a class="bibtex reference internal" href="../chapter_references/zreferences.html#van-loan-golub-1983" id="id1">[VanLoan &amp; Golub, 1983]</a>.</p>
+<!--
+### Fixing the Normalization
+--></div>
+<div class="section" id="khac-phuc-bang-chuan-hoa">
+<h3><span class="section-number">18.2.6.5. </span>Khắc phục bằng Chuẩn hóa<a class="headerlink" href="#khac-phuc-bang-chuan-hoa" title="Permalink to this headline">¶</a></h3>
+<!--
+Now, from above discussions, we concluded that we do not want a random vector to be stretched or squished at all,
+we would like random vectors to stay about the same size throughout the entire process.
+To do so, we now rescale our matrix by this principle eigenvalue so that the largest eigenvalue is instead now just one.
+Let us see what happens in this case.
+--><p>Từ phần thảo luận trên, lúc này ta kết luận rằng ta không hề muốn một
+vector ngẫu nhiên bị giãn hoặc co lại, mà ta muốn vector ngẫu nhiên giữ
+nguyên kích thước trong suốt toàn bộ quá trình tính toán. Để làm được
+điều đó, ta cần tái tỷ lệ ma trận bằng cách chia cho trị riêng chính,
+tức sao cho trị riêng lớn nhất giờ có giá trị 1. Hãy xem chuyện gì sẽ
+xảy ra trong trường hợp này.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rescale the matrix `A`</span>
+<span class="n">A</span> <span class="o">/=</span> <span class="n">norm_eigs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Do the same experiment again</span>
+<span class="n">v_in</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">norm_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_in</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">v_in</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v_in</span><span class="p">)</span>
+    <span class="n">norm_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_in</span><span class="p">))</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">norm_list</span><span class="p">,</span> <span class="s1">&#39;Iteration&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_eigendecomposition_vn_fdbc53_13_0.svg" src="../_images/output_eigendecomposition_vn_fdbc53_13_0.svg" /></div>
+<!--
+We can also plot the ratio between consecutive norms as before and see that indeed it stabilizes.
+--><p>Ta cũng có thể vẽ đồ thị tỷ lệ các chuẩn liên tiếp như trước và quan sát
+được rằng nó đã ổn định.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Also plot the ratio</span>
+<span class="n">norm_ratio_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">norm_ratio_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">norm_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">norm_list</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">norm_ratio_list</span><span class="p">,</span> <span class="s1">&#39;Iteration&#39;</span><span class="p">,</span> <span class="s1">&#39;Ratio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_eigendecomposition_vn_fdbc53_15_0.svg" src="../_images/output_eigendecomposition_vn_fdbc53_15_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="ket-luan">
+<h2><span class="section-number">18.2.7. </span>Kết luận<a class="headerlink" href="#ket-luan" title="Permalink to this headline">¶</a></h2>
+<!--
+We now see exactly what we hoped for!
+After normalizing the matrices by the principle eigenvalue, we see that the random data does not explode as before,
+but rather eventually equilibrates to a specific value.
+It would be nice to be able to do these things from first principles, and it turns out that if we look deeply at the mathematics of it,
+we can see that the largest eigenvalue of a large random matrix with independent mean zero,
+variance one Gaussian entries is on average about $\sqrt{n}$, or in our case $\sqrt{5} \approx 2.2$,
+due to a fascinating fact known as the *circular law* :cite:`Ginibre.1965`.
+The relationship between the eigenvalues (and a related object called singular values) of random matrices
+has been shown to have deep connections to proper initialization of neural networks as was discussed in :cite:`Pennington.Schoenholz.Ganguli.2017` and subsequent works.
+--><p>Giờ ta có thể thấy được điều mà ta mong muốn! Sau khi chuẩn hóa ma trận
+bằng trị riêng chính, ta thấy rằng dữ liệu ngẫu nhiên không còn bùng nổ
+như trước nữa, thay vào đó nó cân bằng quanh một giá trị nhất định. Sẽ
+thật tuyệt nếu ta có thể thực hiện việc này bằng các định đề cơ bản, và
+hóa ra là nếu ta tìm hiểu sâu về mặt toán học của nó, ta có thể thấy
+rằng trị riêng lớn nhất của một ma trận ngẫu nhiên lớn với các phần tử
+tuân theo phân phối Gauss một cách độc lập với kỳ vọng bằng 0, phương
+sai bằng 1, về trung bình sẽ xấp xỉ bằng <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>, hay trong
+trường hợp của ta là <span class="math notranslate nohighlight">\(\sqrt{5} \approx 2.2\)</span>, tuân theo một định
+luật thú vị là <em>luật vòng tròn (circular law)</em> <a class="bibtex reference internal" href="../chapter_references/zreferences.html#ginibre-1965" id="id2">[Ginibre, 1965]</a>.
+Mối quan hệ giữa các trị riêng (và một đại lượng liên quan được gọi là
+trị đơn (<em>singular value</em>)) của ma trận ngẫu nhiên đã được chứng minh là
+có liên hệ sâu sắc tới việc khởi tạo mạng nơ-ron một cách thích hợp như
+đã thảo luận trong <a class="bibtex reference internal" href="../chapter_references/zreferences.html#pennington-schoenholz-ganguli-2017" id="id3">[Pennington et al., 2017]</a> và các
+nghiên cứu liên quan sau đó.</p>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">18.2.8. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Eigenvectors are vectors which are stretched by a matrix without changing direction.
+* Eigenvalues are the amount that the eigenvectors are stretched by the application of the matrix.
+* The eigendecomposition of a matrix can allow for many operations to be reduced to operations on the eigenvalues.
+* The Gershgorin Circle Theorem can provide approximate values for the eigenvalues of a matrix.
+* The behavior of iterated matrix powers depends primarily on the size of the largest eigenvalue.  This understanding has many applications in the theory of neural network initialization.
+--><ul class="simple">
+<li>Vector riêng là các vector bị giãn bởi một ma trận mà không thay đổi
+hướng.</li>
+<li>Trị riêng là mức độ mà các vector riêng đó bị giãn bởi việc áp dụng
+ma trận.</li>
+<li>Phân rã trị riêng của ma trận cho phép nhiều phép toán trên ma trận
+có thể được rút gọn thành các phép toán trên trị riêng.</li>
+<li>Định lý Đường tròn Gershgorin (<em>Gershgorin Circle Theorem</em>) có thể
+cung cấp giá trị xấp xỉ cho các trị riêng của một ma trận.</li>
+<li>Hành vi của phép lặp lũy thừa cho ma trận chủ yếu phụ thuộc vào độ
+lớn của trị riêng lớn nhất. Điều này có rất nhiều ứng dụng trong lý
+thuyết khởi tạo mạng nơ-ron.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">18.2.9. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. What are the eigenvalues and eigenvectors of
+--><ol class="arabic simple">
+<li>Tìm các trị riêng và vector riêng của</li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-18">
+<span class="eqno">(18.2.21)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-18" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+2 &amp; 1 \\
+1 &amp; 2
+\end{bmatrix}?\end{split}\]</div>
+<!--
+2. What are the eigenvalues and eigenvectors of the following matrix, and what is strange about this example compared to the previous one?
+--><ol class="arabic simple" start="2">
+<li>Tìm các trị riêng và vector riêng của ma trận sau đây, và cho biết có
+điều gì lạ ở ví dụ này so với ví dụ trước?</li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-19">
+<span class="eqno">(18.2.22)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-19" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+2 &amp; 1 \\
+0 &amp; 2
+\end{bmatrix}.\end{split}\]</div>
+<!--
+3. Without computing the eigenvalues, is it possible that the smallest eigenvalue of the following matrix is less that $0.5$?
+*Note*: this problem can be done in your head.
+--><ol class="arabic simple" start="3">
+<li>Không tính các trị riêng, trị riêng nhỏ nhất của ma trận sau có nhỏ
+hơn <span class="math notranslate nohighlight">\(0.5\)</span> được không? <em>Ghi chú</em>: bài tập này có thể nhẩm được
+trong đầu.</li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-20">
+<span class="eqno">(18.2.23)<a class="headerlink" href="#equation-chapter-appendix-mathematics-for-deep-learning-eigendecomposition-vn-20" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} = \begin{bmatrix}
+3.0 &amp; 0.1 &amp; 0.3 &amp; 1.0 \\
+0.1 &amp; 1.0 &amp; 0.1 &amp; 0.2 \\
+0.3 &amp; 0.1 &amp; 5.0 &amp; 0.0 \\
+1.0 &amp; 0.2 &amp; 0.0 &amp; 1.8
+\end{bmatrix}.\end{split}\]</div>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">18.2.10. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tiếng Anh: <a class="reference external" href="https://discuss.d2l.ai/t/411">MXNet</a></li>
+<li>Tiếng Việt: <a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Diễn đàn Machine Learning Cơ
+Bản</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">18.2.11. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Trần Yến Thy</li>
+<li>Nguyễn Văn Cường</li>
+<li>Đỗ Trường Giang</li>
+<li>Phạm Minh Đức</li>
+<li>Lê Khắc Hồng Phúc</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">18.2. Phân rã trị riêng</a><ul>
+<li><a class="reference internal" href="#tim-tri-rieng">18.2.1. Tìm trị riêng</a><ul>
+<li><a class="reference internal" href="#vi-du">18.2.1.1. Ví dụ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#phan-ra-ma-tran">18.2.2. Phân rã Ma trận</a></li>
+<li><a class="reference internal" href="#cac-phep-toan-dung-phan-ra-tri-rieng">18.2.3. Các phép toán dùng Phân rã Trị riêng</a></li>
+<li><a class="reference internal" href="#phan-ra-tri-rieng-cua-ma-tran-doi-xung">18.2.4. Phân rã trị riêng của Ma trận Đối xứng</a></li>
+<li><a class="reference internal" href="#dinh-ly-vong-tron-gershgorin">18.2.5. Định lý Vòng tròn Gershgorin</a></li>
+<li><a class="reference internal" href="#mot-ung-dung-huu-ich-muc-tang-truong-cua-cac-anh-xa-lap-lai">18.2.6. Một Ứng dụng hữu ích: Mức tăng trưởng của các Ánh xạ Lặp lại</a><ul>
+<li><a class="reference internal" href="#vector-rieng-bieu-thi-hanh-vi-dai-han">18.2.6.1. Vector riêng biểu thị Hành vi Dài hạn</a></li>
+<li><a class="reference internal" href="#hanh-vi-tren-du-lieu-ngau-nhien">18.2.6.2. Hành vi trên Dữ liệu Ngẫu nhiên</a></li>
+<li><a class="reference internal" href="#lien-he-nguoc-lai-toi-vector-rieng">18.2.6.3. Liên hệ Ngược lại tới Vector riêng</a></li>
+<li><a class="reference internal" href="#nhan-xet">18.2.6.4. Nhận xét</a></li>
+<li><a class="reference internal" href="#khac-phuc-bang-chuan-hoa">18.2.6.5. Khắc phục bằng Chuẩn hóa</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ket-luan">18.2.7. Kết luận</a></li>
+<li><a class="reference internal" href="#tom-tat">18.2.8. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">18.2.9. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">18.2.10. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">18.2.11. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="geometry-linear-algebraic-ops_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>18.1. Các phép toán Hình học và Đại số Tuyến tính</div>
+         </div>
+     </a>
+     <a id="button-next" href="single-variable-calculus_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>18.3. Giải tích một biến</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

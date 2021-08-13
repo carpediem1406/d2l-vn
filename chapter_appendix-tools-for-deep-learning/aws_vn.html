@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>19.3. Sử dụng Máy ảo AWS EC2 &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="19.4. Sử dụng Google Colab" href="colab_vn.html" />
+    <link rel="prev" title="19.2. Sử dụng Amazon SageMaker" href="sagemaker_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">19. </span>Phụ lục: Công cụ cho Học Sâu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">19.3. </span>Sử dụng Máy ảo AWS EC2</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_appendix-tools-for-deep-learning/aws_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Using AWS EC2 Instances
+--><div class="section" id="su-dung-may-ao-aws-ec2">
+<span id="sec-aws"></span><h1><span class="section-number">19.3. </span>Sử dụng Máy ảo AWS EC2<a class="headerlink" href="#su-dung-may-ao-aws-ec2" title="Permalink to this headline">¶</a></h1>
+<!--
+In this section, we will show you how to install all libraries on a raw Linux machine.
+Remember that in :numref:`sec_sagemaker` we discussed how to use Amazon SageMaker,
+while building an instance by yourself costs less on AWS.
+The walkthrough includes a number of steps:
+--><p>Trong phần này, chúng tôi sẽ hướng dẫn bạn cách cài đặt tất cả các thư
+viện trên một máy Linux sơ khai. Ghi nhớ rằng trong
+<a class="reference internal" href="sagemaker_vn.html#sec-sagemaker"><span class="std std-numref">Section 19.2</span></a>, ta đã thảo luận về cách sử dụng Amazon
+SageMaker, trong khi việc bạn tự xây dựng một máy ảo sẽ tốn ít chi phí
+hơn với AWS. Hướng dẫn bao gồm một số bước:</p>
+<!--
+1. Request for a GPU Linux instance from AWS EC2.
+2. Optionally: install CUDA or use an AMI with CUDA preinstalled.
+3. Set up the corresponding MXNet GPU version.
+--><ol class="arabic simple">
+<li>Yêu cầu một máy ảo Linux GPU từ AWS EC2.</li>
+<li>Tùy chọn: cài đặt CUDA hoặc sử dụng AMI có cài đặt sẵn CUDA.</li>
+<li>Thiết lập phiên bản MXNet tương ứng cho GPU.</li>
+</ol>
+<!--
+This process applies to other instances (and other clouds), too, albeit with some minor modifications.
+Before going forward, you need to create an AWS account, see :numref:`sec_sagemaker` for more details.
+--><p>Quá trình này cũng áp dụng cho các máy ảo khác (và các dịch vụ đám mây
+khác ngoài AWS), với một số chỉnh sửa nhỏ. Trước khi tiếp tục, bạn cần
+tạo một tài khoản AWS, tham khảo <a class="reference internal" href="sagemaker_vn.html#sec-sagemaker"><span class="std std-numref">Section 19.2</span></a> để biết thêm
+chi tiết.</p>
+<!--
+## Creating and Running an EC2 Instance
+--><div class="section" id="khoi-tao-va-chay-mot-may-ao-ec2">
+<h2><span class="section-number">19.3.1. </span>Khởi tạo và Chạy Một Máy ảo EC2<a class="headerlink" href="#khoi-tao-va-chay-mot-may-ao-ec2" title="Permalink to this headline">¶</a></h2>
+<!--
+After logging into your AWS account, click "EC2" (marked by the red box in :numref:`fig_aws`) to go to the EC2 panel.
+--><p>Sau khi đăng nhập vào tài khoản AWS của bạn, hãy nhấp vào “EC2” (được
+đánh dấu bằng khung màu đỏ trong <a class="reference internal" href="#fig-aws"><span class="std std-numref">Fig. 19.3.1</span></a>) để chuyển đến bảng
+điều khiển EC2.</p>
+<!--
+![Open the EC2 console.](../img/aws.png)
+--><div class="figure align-default" id="id1">
+<span id="fig-aws"></span><a class="reference internal image-reference" href="../_images/aws.png"><img alt="../_images/aws.png" src="../_images/aws.png" style="width: 400px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.1 </span><span class="caption-text">Mở bảng điều khiển EC2.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+:numref:`fig_ec2` shows the EC2 panel with sensitive account information greyed out.
+--><p><a class="reference internal" href="#fig-ec2"><span class="std std-numref">Fig. 19.3.2</span></a> hiển thị bảng điều khiển EC2 với thông tin tài khoản
+nhạy cảm được che đi.</p>
+<!--
+![EC2 panel.](../img/ec2.png)
+--><div class="figure align-default" id="id2">
+<span id="fig-ec2"></span><a class="reference internal image-reference" href="../_images/ec2.png"><img alt="../_images/ec2.png" src="../_images/ec2.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.2 </span><span class="caption-text">Bảng điều khiển EC2.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+### Presetting Location
+--><div class="section" id="thiep-lap-truoc-vi-tri-dia-ly">
+<h3><span class="section-number">19.3.1.1. </span>Thiếp lập trước Vị trí Địa lý<a class="headerlink" href="#thiep-lap-truoc-vi-tri-dia-ly" title="Permalink to this headline">¶</a></h3>
+<!--
+Select a nearby data center to reduce latency, e.g., "Oregon" (marked by the red box in the top-right of :numref:`fig_ec2`).
+If you are located in China, you can select a nearby Asia Pacific region, such as Seoul or Tokyo.
+Please note that some data centers may not have GPU instances.
+--><p>Lựa chọn một trung tâm dữ liệu gần bạn để giảm độ trễ, ví dụ ở đây là
+“Oregon” (được đánh dấu bằng ô màu đỏ ở trên cùng bên phải trong
+<a class="reference internal" href="#fig-ec2"><span class="std std-numref">Fig. 19.3.2</span></a>). Nếu bạn ở Việt Nam, bạn có thể chọn một khu vực
+Châu Á Thái Bình Dương gần đó, chẳng hạn như Singapore, Seoul hoặc
+Tokyo. Xin lưu ý rằng một số trung tâm dữ liệu có thể không có máy ảo
+GPU.</p>
+<!--
+### Increasing Limits
+--></div>
+<div class="section" id="tang-gioi-han">
+<h3><span class="section-number">19.3.1.2. </span>Tăng Giới hạn<a class="headerlink" href="#tang-gioi-han" title="Permalink to this headline">¶</a></h3>
+<!--
+Before choosing an instance, check if there are quantity restrictions by clicking the "Limits" label in the bar on the left as shown in :numref:`fig_ec2`.
+:numref:`fig_limits` shows an example of such a limitation.
+The account currently cannot open "p2.xlarge" instance per region.
+If you need to open one or more instances, click on the "Request limit increase" link to apply for a higher instance quota.
+Generally, it takes one business day to process an application.
+--><p>Trước khi chọn một máy ảo, hãy kiểm tra xem liệu AWS có hạn chế số lượng
+máy ảo đó không bằng cách nhấp vào nhãn “Limits” trong thanh bên trái
+như trong <a class="reference internal" href="#fig-ec2"><span class="std std-numref">Fig. 19.3.2</span></a>. <a class="reference internal" href="#fig-limits"><span class="std std-numref">Fig. 19.3.3</span></a> minh họa ví dụ về
+giới hạn như vậy. Tài khoản hiện thời không thể mở máy ảo “p2.xlarge”
+trong khu vực đó. Nếu bạn cần mở một hoặc nhiều máy ảo, hãy nhấp vào
+“Request limit increase” để đăng ký số lượng máy ảo cao hơn. Nói chung,
+sẽ mất một ngày làm việc để xử lý đơn đăng ký.</p>
+<!--
+![Instance quantity restrictions.](../img/limits.png)
+--><div class="figure align-default" id="id3">
+<span id="fig-limits"></span><a class="reference internal image-reference" href="../_images/limits.png"><img alt="../_images/limits.png" src="../_images/limits.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.3 </span><span class="caption-text">Hạn chế số lượng máy ảo.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+### Launching Instance
+--></div>
+<div class="section" id="khoi-dong-may-ao">
+<h3><span class="section-number">19.3.1.3. </span>Khởi động Máy ảo<a class="headerlink" href="#khoi-dong-may-ao" title="Permalink to this headline">¶</a></h3>
+<!--
+Next, click the "Launch Instance" button marked by the red box in :numref:`fig_ec2` to launch your instance.
+--><p>Tiếp theo, nhấp vào nút “Launch Instance” được đánh dấu bởi khung đỏ
+trong <a class="reference internal" href="#fig-ec2"><span class="std std-numref">Fig. 19.3.2</span></a> để khởi động máy ảo của bạn.</p>
+<!--
+We begin by selecting a suitable AMI (AWS Machine Image).
+Enter "Ubuntu" in the search box (marked by the red box in :numref:`fig_ubuntu`).
+--><p>Ta bắt đầu bằng việc chọn một AMI (<em>AWS Machine Image</em>) phù hợp. Nhập
+“Ubuntu” vào ô tìm kiếm (đánh dấu bởi khung đỏ trong
+<a class="reference internal" href="#fig-ubuntu"><span class="std std-numref">Fig. 19.3.4</span></a>).</p>
+<!--
+![Choose an operating system.](../img/ubuntu-new.png)
+--><div class="figure align-default" id="id4">
+<span id="fig-ubuntu"></span><a class="reference internal image-reference" href="../_images/ubuntu-new.png"><img alt="../_images/ubuntu-new.png" src="../_images/ubuntu-new.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.4 </span><span class="caption-text">Chọn hệ điều hành.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+EC2 provides many different instance configurations to choose from.
+This can sometimes feel overwhelming to a beginner.
+Here's a table of suitable machines:
+--><p>EC2 cung cấp rất nhiều cấu hình máy ảo khác nhau để bạn có thể lựa chọn.
+Việc này đôi lúc khiến cho người mới bắt đầu cảm thấy chóang ngợp. Ở đây
+là bảng liệt kê các máy phù hợp:</p>
+<!--
+| Name | GPU         | Notes                         |
+|------|-------------|-------------------------------|
+| g2   | Grid K520   | ancient                       |
+| p2   | Kepler K80  | old but often cheap as spot   |
+| g3   | Maxwell M60 | good trade-off                |
+| p3   | Volta V100  | high performance for FP16     |
+| g4   | Turing T4   | inference optimized FP16/INT8 |
+--><table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="24%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Tên</th>
+<th class="head">GPU</th>
+<th class="head">Ghi chú</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>g2</td>
+<td>Grid K520</td>
+<td>cũ kỹ</td>
+</tr>
+<tr class="row-odd"><td>p2</td>
+<td>Kepler K80</td>
+<td>cũ nhưng thường rẻ như máy ảo spot</td>
+</tr>
+<tr class="row-even"><td>g3</td>
+<td>Maxwell M60</td>
+<td>cân bằng tốt</td>
+</tr>
+<tr class="row-odd"><td>p3</td>
+<td>Volta V100</td>
+<td>hiệu năng cao cho FP16</td>
+</tr>
+<tr class="row-even"><td>g4</td>
+<td>Turing T4</td>
+<td>tối ưu suy luận cho FP16/INT8</td>
+</tr>
+</tbody>
+</table>
+<!--
+All the above servers come in multiple flavors indicating the number of GPUs used.
+For example, a p2.xlarge has 1 GPU and a p2.16xlarge has 16 GPUs and more memory.
+For more details, see the [AWS EC2 documentation](https://aws.amazon.com/ec2/instance-types/) or a [summary page](https://www.ec2instances.info).
+For the purpose of illustration, a p2.xlarge will suffice (marked in red box of :numref:`fig_p2x`).
+--><p>Tất cả các máy chủ trên đều đa dạng về số lượng GPU được sử dụng. Ví dụ,
+một máy chủ p2.xlarge có 1 GPU và p2.16xlarge có 16 GPU và nhiều bộ nhớ
+hơn. Để biết thêm chi tiết, tham khảo <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/">tài liệu về AWS
+EC2</a> hoặc <a class="reference external" href="https://www.ec2instances.info">trang tổng
+hợp</a>. Nhằm mục đích minh họa, một máy
+chủ p2.xlarge là đủ (đánh dấu bởi khung đỏ trong <a class="reference internal" href="#fig-p2x"><span class="std std-numref">Fig. 19.3.5</span></a>).</p>
+<!--
+**Note:** you must use a GPU enabled instance with suitable drivers and a version of MXNet that is GPU enabled.
+Otherwise you will not see any benefit from using GPUs.
+--><p><strong>Lưu ý:</strong> bạn phải sử dụng một máy chủ có kích hoạt GPU với trình điều
+khiển (<em>driver</em>) phù hợp cùng với phiên bản MXNet có kích hoạt GPU. Nếu
+không, bạn sẽ không thấy được bất cứ khác biệt nào từ việc sử dụng GPU.</p>
+<!--
+![Choose an instance.](../img/p2x.png)
+--><div class="figure align-default" id="id5">
+<span id="fig-p2x"></span><a class="reference internal image-reference" href="../_images/p2x.png"><img alt="../_images/p2x.png" src="../_images/p2x.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.5 </span><span class="caption-text">Chọn một máy ảo.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+So far, we have finished the first two of seven steps for launching an EC2 instance, as shown on the top of :numref:`fig_disk`.
+In this example, we keep the default configurations for the steps "3. Configure Instance", "5.
+Add Tags", and "6. Configure Security Group".
+Tap on "4. Add Storage" and increase the default hard disk size to 64 GB (marked in red box of :numref:`fig_disk`).
+Note that CUDA by itself already takes up 4 GB.
+--><p>Đến đây, chúng ta đã hoàn thành hai trong bảy bước để khởi động một máy
+ảo EC2, như minh họa trong <a class="reference internal" href="#fig-disk"><span class="std std-numref">Fig. 19.3.6</span></a>. Trong ví dụ này, ta giữ
+nguyên cấu hình mặc định trong bước “3. Configure Instance”, “5. Add
+Tags”, và “6. Configure Security Group”.</p>
+<!--
+![Modify instance hard disk size.](../img/disk.png)
+--><div class="figure align-default" id="id6">
+<span id="fig-disk"></span><a class="reference internal image-reference" href="../_images/disk.png"><img alt="../_images/disk.png" src="../_images/disk.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.6 </span><span class="caption-text">Điều chỉnh kích thước ổ cứng của máy ảo.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Finally, go to "7. Review" and click "Launch" to launch the configured instance.
+The system will now prompt you to select the key pair used to access the instance.
+If you do not have a key pair, select "Create a new key pair" in the first drop-down menu in :numref:`fig_keypair` to generate a key pair.
+Subsequently, you can select "Choose an existing key pair" for this menu and then select the previously generated key pair.
+Click "Launch Instances" to launch the created instance.
+--><p>Cuối cùng, đi tới bước “7. Review” và nhấp “Launch” để khởi động một máy
+ảo đã được cấu hình. Lúc này hệ thống sẽ nhắc bạn lựa chọn một cặp khóa
+để truy cập vào máy ảo. Nếu bạn không có cặp khóa nào, chọn “Create a
+new key pair” ở đầu bảng chọn trong <a class="reference internal" href="#fig-keypair"><span class="std std-numref">Fig. 19.3.7</span></a> để tạo một
+cặp khóa mới. Tiếp theo, bạn có thể chọn “Choose an existing key pair”
+trong menu này và sau đó chọn cặp khóa vừa được tạo. Nhấp “Launch
+Instances” để khởi động máy ảo vừa tạo.</p>
+<!--
+![Select a key pair.](../img/keypair.png)
+--><div class="figure align-default" id="id7">
+<span id="fig-keypair"></span><a class="reference internal image-reference" href="../_images/keypair.png"><img alt="../_images/keypair.png" src="../_images/keypair.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.7 </span><span class="caption-text">Chọn một cặp khóa.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Make sure that you download the key pair and store it in a safe location if you generated a new one.
+This is your only way to SSH into the server.
+Click the instance ID shown in :numref:`fig_launching` to view the status of this instance.
+--><p>Đảm bảo rằng bạn sẽ tải cặp khóa về và lưu nó ở một thư mục an toàn nếu
+bạn tạo một cặp khóa mới. Đây là cách duy nhất để SSH vào máy chủ. Nhấp
+vào ID máy ảo như minh họa trong <a class="reference internal" href="#fig-launching"><span class="std std-numref">Fig. 19.3.8</span></a> để quan sát
+trạng thái của máy ảo này.</p>
+<!--
+![Click the instance ID.](../img/launching.png)
+--><div class="figure align-default" id="id8">
+<span id="fig-launching"></span><a class="reference internal image-reference" href="../_images/launching.png"><img alt="../_images/launching.png" src="../_images/launching.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.8 </span><span class="caption-text">Nhấp vào ID máy ảo.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+### Connecting to the Instance
+--></div>
+<div class="section" id="ket-noi-toi-may-ao">
+<h3><span class="section-number">19.3.1.4. </span>Kết nối tới Máy ảo<a class="headerlink" href="#ket-noi-toi-may-ao" title="Permalink to this headline">¶</a></h3>
+<!--
+As shown in :numref:`fig_connect`, after the instance state turns green,
+right-click the instance and select `Connect` to view the instance access method.
+--><p>Như minh họa trong <a class="reference internal" href="#fig-connect"><span class="std std-numref">Fig. 19.3.9</span></a>, sau khi trạng thái máy ảo
+chuyển sang màu xanh, hãy nhấp chuột phải vào máy ảo và chọn <code class="docutils literal notranslate"><span class="pre">Connect</span></code>
+để quan sát phương thức truy cập máy ảo.</p>
+<!--
+![View instance access and startup method.](../img/connect.png)
+--><div class="figure align-default" id="id9">
+<span id="fig-connect"></span><a class="reference internal image-reference" href="../_images/connect.png"><img alt="../_images/connect.png" src="../_images/connect.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.9 </span><span class="caption-text">Quan sát phương thức truy cập và khởi động máy ảo.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+If this is a new key, it must not be publicly viewable for SSH to work. Go to the folder where you store `D2L_key.pem`
+(e.g., the Downloads folder) and make sure that the key is not publicly viewable.
+--><p>Nếu đây là một khóa mới, nó không thể xem được một cách công khai để SSH
+có thể hoạt động. Đi đến thư mục mà bạn lưu khóa <code class="docutils literal notranslate"><span class="pre">D2L_key.pem</span></code> (ví dụ
+như thư mục Downloads) và đảm bảo rằng khóa này không thể xem được một
+cách công khai.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /Downloads  <span class="c1">## if D2L_key.pem is stored in Downloads folder</span>
+chmod <span class="m">400</span> D2L_key.pem
+</pre></div>
+</div>
+<!--
+![View instance access and startup method.](../img/chmod.png)
+--><div class="figure align-default" id="id10">
+<span id="fig-chmod"></span><a class="reference internal image-reference" href="../_images/chmod.png"><img alt="../_images/chmod.png" src="../_images/chmod.png" style="width: 400px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.10 </span><span class="caption-text">Quan sát phương thức truy cập và khởi động máy ảo.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Now, copy the ssh command in the lower red box of :numref:`fig_chmod` and paste onto the command line:
+--><p>Giờ hãy sao chép lệnh ssh trong khung đỏ phía dưới trong
+<a class="reference internal" href="#fig-chmod"><span class="std std-numref">Fig. 19.3.10</span></a> và dán vào cửa sổ dòng lệnh:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh -i <span class="s2">&quot;D2L_key.pem&quot;</span> ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com
+</pre></div>
+</div>
+<!--
+When the command line prompts "Are you sure you want to continue connecting (yes/no)", enter "yes" and press Enter to log into the instance.
+--><p>Khi cửa sổ dòng lệnh thông báo “Are you sure you want to continue
+connecting (yes/no)”, nhập “yes” và nhấp Enter để đăng nhập vào máy ảo.</p>
+<!--
+Your server is ready now.
+--><p>Lúc này máy chủ của bạn đã sẵn sàng.</p>
+<!--
+## Installing CUDA
+--></div>
+</div>
+<div class="section" id="cai-dat-cuda">
+<h2><span class="section-number">19.3.2. </span>Cài đặt CUDA<a class="headerlink" href="#cai-dat-cuda" title="Permalink to this headline">¶</a></h2>
+<!--
+Before installing CUDA, be sure to update the instance with the latest drivers.
+--><p>Trước khi cài đặt CUDA, đừng quên cập nhật máy ảo với các trình điều
+khiển (<em>driver</em>) mới nhất.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install -y build-essential git libgfortran3
+</pre></div>
+</div>
+<!--
+Here we download CUDA 10.1. Visit NVIDIA's [official repository](https://developer.nvidia.com/cuda-downloads)
+to find the download link of CUDA 10.1 as shown in :numref:`fig_cuda`.
+--><p>Ở đây ta tải về CUDA 10.1. Truy cập <a class="reference external" href="https://developer.nvidia.com/cuda-downloads">trang chứa chính
+thức</a> của NVIDIA để tìm
+đường dẫn tải về của CUDA 10.1 như minh họa trong <a class="reference internal" href="#fig-cuda"><span class="std std-numref">Fig. 19.3.11</span></a>.</p>
+<!--
+![Find the CUDA 10.1 download address.](../img/cuda101.png)
+--><div class="figure align-default" id="id11">
+<span id="fig-cuda"></span><a class="reference internal image-reference" href="../_images/cuda101.png"><img alt="../_images/cuda101.png" src="../_images/cuda101.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.11 </span><span class="caption-text">Tìm địa chỉ tải về của CUDA 10.1.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Copy the instructions and paste them into the terminal to install CUDA 10.1.
+--><p>Sao chép các lệnh và dán vào cửa sổ dòng lệnh để cài đặt CUDA 10.1.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">## Paste the copied link from CUDA website</span>
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda-repo-ubuntu1804-10-1-local-10.1.243-418.87.00_1.0-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804-10-1-local-10.1.243-418.87.00_1.0-1_amd64.deb
+sudo apt-key add /var/cuda-repo-10-1-local-10.1.243-418.87.00/7fa2af80.pub
+sudo apt-get update
+sudo apt-get -y install cuda
+</pre></div>
+</div>
+<!--
+After installing the program, run the following command to view the GPUs.
+--><p>Sau khi cài đặt chương trình xong, chạy lệnh sau để xem các GPU.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nvidia-smi
+</pre></div>
+</div>
+<!--
+Finally, add CUDA to the library path to help other libraries find it.
+--><p>Cuối cùng, thêm CUDA vào đường dẫn thư viện để giúp các thư viện khác
+tìm được nó.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH}:/usr/local/cuda/lib64&quot;</span> &gt;&gt; ~/.bashrc
+</pre></div>
+</div>
+<!--
+## Installing MXNet and Downloading the D2L Notebooks
+--></div>
+<div class="section" id="cai-dat-mxnet-va-tai-notebook-cua-d2l">
+<h2><span class="section-number">19.3.3. </span>Cài đặt MXNet và Tải Notebook của D2L<a class="headerlink" href="#cai-dat-mxnet-va-tai-notebook-cua-d2l" title="Permalink to this headline">¶</a></h2>
+<!--
+First, to simplify the installation, you need to install [Miniconda](https://conda.io/en/latest/miniconda.html) for Linux.
+The download link and file name are subject to changes, so please go the Miniconda website and click "Copy Link Address" as shown in :numref:`fig_miniconda`.
+--><p>Đầu tiên, để đơn giản hóa quá trình cài đặt, bạn cần cài đặt
+<a class="reference external" href="https://conda.io/en/latest/miniconda.html">Miniconda</a> cho Linux.
+Đường dẫn tải về và tên tệp có thể thay đổi, vậy nên vui lòng truy cập
+trang web Miniconda và chọn “Copy Link Address” như minh họa trong
+<a class="reference internal" href="#fig-miniconda"><span class="std std-numref">Fig. 19.3.12</span></a>.</p>
+<!--
+![Download Miniconda.](../img/miniconda.png)
+--><div class="figure align-default" id="id12">
+<span id="fig-miniconda"></span><a class="reference internal image-reference" href="../_images/miniconda.png"><img alt="../_images/miniconda.png" src="../_images/miniconda.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.12 </span><span class="caption-text">Tải Miniconda.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># The link and file name are subject to changes</span>
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b
+</pre></div>
+</div>
+<!--
+After the Miniconda installation, run the following command to activate CUDA and conda.
+--><p>Sau khi cài đặt Miniconda xong, chạy lệnh sau để kích hoạt CUDA và
+conda.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/miniconda3/bin/conda init
+<span class="nb">source</span> ~/.bashrc
+</pre></div>
+</div>
+<!--
+Next, download the code for this book.
+--><p>Tiếp theo, hãy tải về mã nguồn của cuốn sách này.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install unzip
+mkdir d2l-en <span class="o">&amp;&amp;</span> <span class="nb">cd</span> d2l-en
+curl https://d2l.ai/d2l-en.zip -o d2l-en.zip
+unzip d2l-en.zip <span class="o">&amp;&amp;</span> rm d2l-en.zip
+</pre></div>
+</div>
+<!--
+Then create the conda `d2l` environment and enter `y` to proceed with the installation.
+--><p>Sau đó tạo một môi trường conda <code class="docutils literal notranslate"><span class="pre">d2l</span></code> và nhập <code class="docutils literal notranslate"><span class="pre">y</span></code> để tiến hành cài
+đặt.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create --name d2l -y
+</pre></div>
+</div>
+<!--
+After creating the `d2l` environment, activate it and install `pip`.
+--><p>Sau khi tạo môi trường <code class="docutils literal notranslate"><span class="pre">d2l</span></code>, kích hoạt nó và cài đặt <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate d2l
+conda install <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 pip -y
+</pre></div>
+</div>
+<!--
+Finally, install MXNet and the `d2l` package.
+The postfix `cu101` means that this is the CUDA 10.1 variant.
+For different versions, say only CUDA 10.0, you would want to choose `cu100` instead.
+--><p>Cuối cùng, cài đặt MXNet và gói thư viện <code class="docutils literal notranslate"><span class="pre">d2l</span></code>. Hậu tố <code class="docutils literal notranslate"><span class="pre">cu101</span></code> nghĩa
+là đây là phiên bản sử dụng CUDA 10.1. Với các phiên bản khác, giả sử
+như CUDA 10.0, bạn sẽ thay bằng <code class="docutils literal notranslate"><span class="pre">cu100</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mxnet-cu101<span class="o">==</span><span class="m">1</span>.7.0
+pip install git+https://github.com/d2l-ai/d2l-en
+</pre></div>
+</div>
+<!--
+You can quickly test whether everything went well as follows:
+--><p>Bạn có thể nhanh chóng kiểm tra mọi thứ đã hoạt động bằng cách:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
+&gt;&gt;&gt; from mxnet import np, npx
+&gt;&gt;&gt; np.zeros((1024, 1024), ctx=npx.gpu())
+</pre></div>
+</div>
+<!--
+## Running Jupyter
+--></div>
+<div class="section" id="chay-jupyter">
+<h2><span class="section-number">19.3.4. </span>Chạy Jupyter<a class="headerlink" href="#chay-jupyter" title="Permalink to this headline">¶</a></h2>
+<!--
+To run Jupyter remotely you need to use SSH port forwarding.
+After all, the server in the cloud does not have a monitor or keyboard.
+For this, log into your server from your desktop (or laptop) as follows.
+--><p>Để chạy Jupyter từ xa bạn cần sử dụng phương thức chuyển tiếp cổng SSH.
+Suy cho cùng thì máy chủ trên đám mây không có màn hình hay bàn phím. Để
+thực hiện việc này, hãy truy cập vào máy chủ của bạn từ máy tính bàn
+(hay laptop) như sau.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This command must be run in the local command line</span>
+<span class="n">ssh</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;/path/to/key.pem&quot;</span> <span class="n">ubuntu</span><span class="nd">@ec2</span><span class="o">-</span><span class="n">xx</span><span class="o">-</span><span class="n">xxx</span><span class="o">-</span><span class="n">xxx</span><span class="o">-</span><span class="n">xxx</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span> <span class="o">-</span><span class="n">L</span> <span class="mi">8889</span><span class="p">:</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8888</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">d2l</span>
+<span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+<!--
+:numref:`fig_jupyter` shows the possible output after you run Jupyter Notebook.
+The last row is the URL for port 8888.
+--><p><a class="reference internal" href="#fig-jupyter"><span class="std std-numref">Fig. 19.3.13</span></a> cho ta thấy kết quả khả dĩ sau khi bạn chạy
+Jupyter Notebook. Dòng cuối cùng là URL của cổng 8888.</p>
+<!--
+![Output after running Jupyter Notebook. The last row is the URL for port 8888.](../img/jupyter.png)
+--><div class="figure align-default" id="id13">
+<span id="fig-jupyter"></span><a class="reference internal image-reference" href="../_images/jupyter.png"><img alt="../_images/jupyter.png" src="../_images/jupyter.png" style="width: 700px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 19.3.13 </span><span class="caption-text">Kết quả sau khi chạy Jupyter Notebook. Dòng cuối cùng là URL của cổng
+8888.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Since you used port forwarding to port 8889 you will need to replace the port number
+and use the secret as given by Jupyter when opening the URL in your local browser.
+--><p>Do sử dụng phương thức chuyển tiếp cổng cho cổng 8889, bạn cần phải đổi
+địa chỉ cổng 8888 thành 8889 và sử dụng token được sinh bởi Jupyter để
+mở URL trên trình duyệt web trong máy của bạn.</p>
+<!--
+## Closing Unused Instances
+--></div>
+<div class="section" id="dong-may-ao-khong-dung-den">
+<h2><span class="section-number">19.3.5. </span>Đóng Máy ảo Không Dùng đến<a class="headerlink" href="#dong-may-ao-khong-dung-den" title="Permalink to this headline">¶</a></h2>
+<!--
+As cloud services are billed by the time of use, you should close instances that are not being used.
+Note that there are alternatives: "stopping" an instance means that you will be able to start it again.
+This is akin to switching off the power for your regular server.
+However, stopped instances will still be billed a small amount for the hard disk space retained.
+"Terminate" deletes all data associated with it.
+This includes the disk, hence you cannot start it again.
+Only do this if you know that you will not need it in the future.
+--><p>Do dịch vụ đám mây tính phí theo thời gian sử dụng, bạn nên đóng những
+máy ảo hiện không sử dụng đến. Lưu ý rằng có các giải pháp thay thế
+khác: “Stop” một máy ảo nghĩa là bạn có thể khởi động nó lại được. Việc
+này khá giống với việc tắt nguồn máy chủ thông thường của bạn. Tuy
+nhiên, việc dừng một máy chủ vẫn sẽ tính một lượng nhỏ vào hóa đơn cho
+kích thước ổ cứng được giữ lại. Lựa chọn “Terminate” một máy ảo sẽ xoá
+toàn bộ dữ liệu liên quan đến nó. Dữ liệu này bao gồm cả ổ cứng, vậy nên
+bạn sẽ không thể khởi động nó lại được. Chỉ thực hiện thao tác này nếu
+bạn chắc rằng bạn sẽ không cần đến nó trong tương lai.</p>
+<!--
+If you want to use the instance as a template for many more instances,
+right-click on the example in :numref:`fig_connect` and select "Image" $\rightarrow$ "Create" to create an image of the instance.
+Once this is complete, select "Instance State" $\rightarrow$ "Terminate" to terminate the instance.
+The next time you want to use this instance, you can follow the steps for creating and
+running an EC2 instance described in this section to create an instance based on the saved image.
+The only difference is that, in "1. Choose AMI" shown in :numref:`fig_ubuntu`,
+you must use the "My AMIs" option on the left to select your saved image.
+The created instance will retain the information stored on the image hard disk.
+For example, you will not have to reinstall CUDA and other runtime environments.
+--><p>Nếu bạn muốn sử dụng máy ảo làm khuôn mẫu (<em>template</em>) cho nhiều máy ảo
+khác, hãy nhấp chuột phải vào ví dụ trong <a class="reference internal" href="#fig-connect"><span class="std std-numref">Fig. 19.3.9</span></a> và
+chọn “Image” <span class="math notranslate nohighlight">\(\rightarrow\)</span> “Create” để tạo một ảnh (<em>image</em>) của
+máy ảo này. Sau khi hoàn thành thao tác này, chọn “Instance State”
+<span class="math notranslate nohighlight">\(\rightarrow\)</span> “Terminate” để xóa máy ảo này. Lần tiếp theo bạn
+muốn sử dụng máy ảo này, bạn có thể thực hiện theo các bước khởi tạo và
+chạy một máy ảo EC2 như minh họa trong phần này để tạo một máy ảo dựa
+trên ảnh đã lưu. Điểm khác biệt duy nhất nằm ở bước “1. Choose AMI” như
+trong <a class="reference internal" href="#fig-ubuntu"><span class="std std-numref">Fig. 19.3.4</span></a>, bạn phải chọn mục “My AMIs” phía bên trái
+để lựa chọn ảnh bạn đã lưu. Máy ảo được tạo ra sẽ giữ lại thông tin được
+lưu trên ảnh đĩa cứng. Ví dụ, bạn sẽ không cần phải cài đặt lại CUDA và
+các môi trường thời gian chạy khác.</p>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">19.3.6. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* You can launch and stop instances on demand without having to buy and build your own computer.
+* You need to install suitable GPU drivers before you can use them.
+--><ul class="simple">
+<li>Bạn có thể khởi động và dừng các máy ảo tuỳ theo nhu cầu mà không cần
+phải mua và xây dựng máy tính riêng.</li>
+<li>Bạn cần phải cài đặt trình điều khiển GPU phù hợp trước khi sử dụng
+chúng.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">19.3.7. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. The cloud offers convenience, but it does not come cheap.
+Find out how to launch [spot instances](https://aws.amazon.com/ec2/spot/) to see how to reduce prices.
+2. Experiment with different GPU servers. How fast are they?
+3. Experiment with multi-GPU servers. How well can you scale things up?
+--><ol class="arabic simple">
+<li>Dịch vụ đám mây cung cấp sự thuận tiện, nhưng nó không hề rẻ. Tìm
+hiểu cách khởi động <a class="reference external" href="https://aws.amazon.com/ec2/spot/">máy ảo
+spot</a> để tìm hiểu cách giảm chi
+phí.</li>
+<li>Thử nghiệm với nhiều máy chủ GPU khác nhau. Chúng nhanh đến mức nào?</li>
+<li>Thử nghiệm với máy chủ đa GPU. Việc mở rộng giúp hoàn thành công việc
+tốt đến thế nào?</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">19.3.8. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Tiếng Anh: <a class="reference external" href="https://discuss.d2l.ai/t/423">Main Forum</a></li>
+<li>Tiếng Việt: <a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Diễn đàn Machine Learning Cơ
+Bản</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">19.3.9. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Quang</li>
+<li>Phạm Hồng Vinh</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Đỗ Trường Giang</li>
+<li>Nguyễn Văn Cường</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">19.3. Sử dụng Máy ảo AWS EC2</a><ul>
+<li><a class="reference internal" href="#khoi-tao-va-chay-mot-may-ao-ec2">19.3.1. Khởi tạo và Chạy Một Máy ảo EC2</a><ul>
+<li><a class="reference internal" href="#thiep-lap-truoc-vi-tri-dia-ly">19.3.1.1. Thiếp lập trước Vị trí Địa lý</a></li>
+<li><a class="reference internal" href="#tang-gioi-han">19.3.1.2. Tăng Giới hạn</a></li>
+<li><a class="reference internal" href="#khoi-dong-may-ao">19.3.1.3. Khởi động Máy ảo</a></li>
+<li><a class="reference internal" href="#ket-noi-toi-may-ao">19.3.1.4. Kết nối tới Máy ảo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cai-dat-cuda">19.3.2. Cài đặt CUDA</a></li>
+<li><a class="reference internal" href="#cai-dat-mxnet-va-tai-notebook-cua-d2l">19.3.3. Cài đặt MXNet và Tải Notebook của D2L</a></li>
+<li><a class="reference internal" href="#chay-jupyter">19.3.4. Chạy Jupyter</a></li>
+<li><a class="reference internal" href="#dong-may-ao-khong-dung-den">19.3.5. Đóng Máy ảo Không Dùng đến</a></li>
+<li><a class="reference internal" href="#tom-tat">19.3.6. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">19.3.7. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">19.3.8. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">19.3.9. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="sagemaker_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>19.2. Sử dụng Amazon SageMaker</div>
+         </div>
+     </a>
+     <a id="button-next" href="colab_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>19.4. Sử dụng Google Colab</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

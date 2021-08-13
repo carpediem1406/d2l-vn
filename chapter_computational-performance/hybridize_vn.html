@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>12.1. Trình biên dịch và Trình thông dịch &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="12.2. Tính toán Bất đồng bộ" href="async-computation_vn.html" />
+    <link rel="prev" title="12. Hiệu năng Tính toán" href="index_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">12. </span>Hiệu năng Tính toán</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">12.1. </span>Trình biên dịch và Trình thông dịch</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_computational-performance/hybridize_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">12. Hiệu năng Tính toán</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">12. Hiệu năng Tính toán</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Compilers and Interpreters
+--><div class="section" id="trinh-bien-dich-va-trinh-thong-dich">
+<span id="sec-hybridize"></span><h1><span class="section-number">12.1. </span>Trình biên dịch và Trình thông dịch<a class="headerlink" href="#trinh-bien-dich-va-trinh-thong-dich" title="Permalink to this headline">¶</a></h1>
+<!--
+So far, this book has focused on imperative programming, which makes use of statements such as `print`, `+` or `if` to change a program’s state.
+Consider the following example of a simple imperative program.
+--><p>Cho đến nay, ta mới chỉ tập trung vào lập trình mệnh lệnh, kiểu lập
+trình sử dụng các câu lệnh như <code class="docutils literal notranslate"><span class="pre">print</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code> hay <code class="docutils literal notranslate"><span class="pre">if</span></code> để thay đổi
+trạng thái của chương trình. Hãy cùng xét ví dụ đơn giản sau về lập
+trình mệnh lệnh.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">fancy_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fancy_func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
+</pre></div>
+</div>
+<!--
+Python is an interpreted language.
+When evaluating `fancy_func` it performs the operations making up the function's body *in sequence*.
+That is, it will evaluate `e = add(a, b)` and it will store the results as variable `e`, thereby changing the program's state.
+The next two statements `f = add(c, d)` and `g = add(e, f)` will be excecuted similarly, performing additions and storing the results as variables.
+:numref:`fig_compute_graph` illustrates the flow of data.
+--><p>Python là một ngôn ngữ thông dịch. Khi thực hiện hàm <code class="docutils literal notranslate"><span class="pre">fancy_func</span></code>, nó
+thực thi các lệnh trong thân hàm một cách <em>tuần tự</em>. Như vậy, nó sẽ chạy
+lệnh <code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">add(a,</span> <span class="pre">b)</span></code> rồi sau đó lưu kết quả vào biến <code class="docutils literal notranslate"><span class="pre">e</span></code>, làm cho
+trạng thái chương trình thay đổi. Hai câu lệnh tiếp theo
+<code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">add(c,</span> <span class="pre">d)</span></code> và <code class="docutils literal notranslate"><span class="pre">g</span> <span class="pre">=</span> <span class="pre">add(e,</span> <span class="pre">f)</span></code> sẽ được thực thi tương tự, thực
+hiện phép cộng và lưu kết quả vào các biến.
+<a class="reference internal" href="#fig-compute-graph"><span class="std std-numref">Fig. 12.1.1</span></a> sẽ minh họa luồng dữ liệu.</p>
+<!--
+![Data flow in an imperative program.](../img/computegraph.svg)
+--><div class="figure align-default" id="id1">
+<span id="fig-compute-graph"></span><img alt="../_images/computegraph.svg" src="../_images/computegraph.svg" /><p class="caption"><span class="caption-number">Fig. 12.1.1 </span><span class="caption-text">Luồng dữ liệu trong lập trình mệnh lệnh.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Although imperative programming is convenient, it may be inefficient.
+On one hand, even if the `add` function is repeatedly called throughout `fancy_func`, Python will execute the three function calls individually.
+If these are executed, say, on a GPU (or even on multiple GPUs), the overhead arising from the Python interpreter can become overwhelming.
+Moreover, it will need to save the variable values of `e` and `f` until all the statements in `fancy_func` have been executed.
+This is because we do not know whether the variables `e` and `f` will be used by other parts of the program after the statements `e = add(a, b)` and `f = add(c, d)` have been executed.
+--><p>Mặc dù lập trình mệnh lệnh rất thuận tiện, nhưng nó lại không quá hiệu
+quả. Ở đây nếu hàm <code class="docutils literal notranslate"><span class="pre">add</span></code> được gọi nhiều lần trong <code class="docutils literal notranslate"><span class="pre">fancy_func</span></code>,
+Python cũng sẽ thực thi ba lần gọi hàm độc lập. Nếu điều này xảy ra, giả
+sử trên một GPU (hay thậm chí nhiều GPU), chi phí phát sinh từ trình
+thông dịch Python có thể sẽ rất lớn. Hơn nữa, nó sẽ cần phải lưu giá trị
+các biến <code class="docutils literal notranslate"><span class="pre">e</span></code> và <code class="docutils literal notranslate"><span class="pre">f</span></code> cho tới khi tất cả các lệnh trong <code class="docutils literal notranslate"><span class="pre">fancy_func</span></code>
+thực thi xong. Điều này là do ta không biết liệu biến <code class="docutils literal notranslate"><span class="pre">e</span></code> và <code class="docutils literal notranslate"><span class="pre">f</span></code> có
+được sử dụng bởi các phần chương trình khác sau hai lệnh
+<code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">=</span> <span class="pre">add(a,</span> <span class="pre">b)</span></code> và <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">add(c,</span> <span class="pre">d)</span></code> nữa hay không.</p>
+<!--
+## Symbolic Programming
+--><div class="section" id="lap-trinh-ky-hieu">
+<h2><span class="section-number">12.1.1. </span>Lập trình Ký hiệu<a class="headerlink" href="#lap-trinh-ky-hieu" title="Permalink to this headline">¶</a></h2>
+<!--
+Consider the alternative, symbolic programming where computation is usually performed only once the process has been fully defined.
+This strategy is used by multiple deep learning frameworks, including Theano, Keras and TensorFlow (the latter two have since acquired imperative extensions).
+It usually involves the following steps:
+--><p>Lập trình ký hiệu là kiểu lập trình mà ở đó các tính toán thường chỉ
+được thực hiện một khi chương trình đã được định nghĩa đầy đủ. Cơ chế
+này được sử dụng trong nhiều framework, bao gồm: Theano, Keras và
+TensorFlow (hai framework sau đã hỗ trợ lập trình mệnh lệnh). Lập trình
+ký hiệu thường gồm những bước sau:</p>
+<!--
+1. Define the operations to be executed.
+2. Compile the operations into an executable program.
+3. Provide the required inputs and call the compiled program for execution.
+--><ol class="arabic simple">
+<li>Khai báo các thao tác sẽ được thực thi.</li>
+<li>Biên dịch các thao tác thành chương trình có thể chạy được.</li>
+<li>Thực thi bằng cách cung cấp đầu vào và gọi chương trình đã được biên
+dịch.</li>
+</ol>
+<!--
+This allows for a significant amount of optimization.
+First off, we can skip the Python interpreter in many cases, thus removing a performance bottleneck that can become significant on multiple fast GPUs paired with a single Python thread on a CPU.
+Secondly, a compiler might optimize and rewrite the above code into `print((1 + 2) + (3 + 4))` or even `print(10)`.
+This is possible since a compiler gets to see the full code before turning it into machine instructions.
+For instance, it can release memory (or never allocate it) whenever a variable is no longer needed.
+Or it can transform the code entirely into an equivalent piece.
+To get a better idea consider the following simulation of imperative programming (it is Python after all) below.
+--><p>Quy trình trên cho phép chúng ta tối ưu hóa chương trình một cách đáng
+kể. Đầu tiên, ta có thể bỏ qua trình thông dịch Python trong nhiều
+trường hợp, từ đó loại bỏ được vấn đề nghẽn cổ chai có thể ảnh hưởng
+nghiêm trọng tới tốc độ tính toán khi sử dụng nhiều GPU tốc độ cao với
+một luồng Python duy nhất trên CPU. Thứ hai, trình biên dịch có thể tối
+ưu và viết lại mã nguồn thành <code class="docutils literal notranslate"><span class="pre">print((1</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">+</span> <span class="pre">(3</span> <span class="pre">+</span> <span class="pre">4))</span></code> hoặc thậm chí
+<code class="docutils literal notranslate"><span class="pre">print(10)</span></code>. Điều này hoàn toàn khả thi bởi trình biên dịch có thể
+thấy toàn bộ mã nguồn rồi mới dịch sang mã máy. Ví dụ, nó có thể giải
+phóng bộ nhớ (hoặc không cấp phát) bất cứ khi nào một biến không còn
+được dùng đến. Hoặc nó có thể chuyển toàn bộ mã nguồn thành một đoạn
+tương đương. Để hiểu rõ hơn vấn đề, dưới đây ta sẽ thử mô phỏng quá
+trình lập trình mệnh lệnh (dựa trên Python).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">def add(a, b):</span>
+<span class="s1">    return a + b</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">fancy_func_</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">def fancy_func(a, b, c, d):</span>
+<span class="s1">    e = add(a, b)</span>
+<span class="s1">    f = add(c, d)</span>
+<span class="s1">    g = add(e, f)</span>
+<span class="s1">    return g</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">evoke_</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">add_</span><span class="p">()</span> <span class="o">+</span> <span class="n">fancy_func_</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;print(fancy_func(1, 2, 3, 4))&#39;</span>
+
+<span class="n">prog</span> <span class="o">=</span> <span class="n">evoke_</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prog</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">prog</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;exec&#39;</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">fancy_func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fancy_func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="mi">10</span>
+</pre></div>
+</div>
+<!--
+The differences between imperative (interpreted) programming and symbolic programming are as follows:
+--><p>Sự khác biệt giữa lập trình mệnh lệnh (thông dịch) và lập trình ký hiệu
+như sau:</p>
+<!--
+* Imperative programming is easier.
+When imperative programming is used in Python, the majority of the code is straightforward and easy to write.
+It is also easier to debug imperative programming code.
+This is because it is easier to obtain and print all relevant intermediate variable values, or use Python’s built-in debugging tools.
+* Symbolic programming is more efficient and easier to port.
+It makes it easier to optimize the code during compilation, while also having the ability to port the program into a format independent of Python.
+This allows the program to be run in a non-Python environment, thus avoiding any potential performance issues related to the Python interpreter.
+--><ul class="simple">
+<li>Lập trình mệnh lệnh dễ hơn. Khi lập trình mệnh lệnh được sử dụng
+trong Python, mã nguồn trông rất trực quan và dễ viết. Mã nguồn của
+lập trình mệnh lệnh cũng dễ gỡ lỗi hơn. Điều này là do ta có thể dễ
+dàng lấy và in ra giá trị của các biến trung gian liên quan, hoặc sử
+dụng công cụ gỡ lỗi có sẵn của Python.</li>
+<li>Lập trình ký hiệu lại hiệu quả hơn và dễ sử dụng trên nền tảng khác.
+Nó giúp việc tối ưu mã nguồn trong quá trình biên dịch trở nên dễ
+dàng hơn, đồng thời cho phép ta chuyển đổi chương trình sang một định
+dạng khác không phụ thuộc vào Python. Do đó chương trình có thể chạy
+trong các môi trường khác ngoài Python, từ đó tránh được mọi vấn đề
+tiềm ẩn về hiệu năng liên quan tới trình thông dịch Python.</li>
+</ul>
+<!--
+## Hybrid Programming
+--></div>
+<div class="section" id="lap-trinh-hybrid">
+<h2><span class="section-number">12.1.2. </span>Lập trình Hybrid<a class="headerlink" href="#lap-trinh-hybrid" title="Permalink to this headline">¶</a></h2>
+<!--
+Historically most deep learning frameworks choose between an imperative or a symbolic approach.
+For example, Theano, TensorFlow (inspired by the latter), Keras and CNTK formulate models symbolically.
+Conversely Chainer and PyTorch take an imperative approach.
+An imperative mode was added TensorFlow 2.0 (via Eiger) and Keras in later revisions.
+When designing Gluon, developers considered whether it would be possible to combine the benefits of both programming models.
+This led to a hybrid model that lets users develop and debug using pure imperative programming, while having the ability to convert most programs into symbolic programs to be run when product-level computing performance and deployment are required.
+--><p>Trong quá khứ, hầu hết các framework đều chọn một trong hai phương án
+tiếp cận: lập trình mệnh lệnh hoặc lập trình ký hiệu. Ví dụ như Theano,
+TensorFlow, Keras và CNTK đều xây dựng mô hình dạng ký hiệu. Ngược lại,
+Chainer và PyTorch tiếp cận theo hướng lập trình mệnh lệnh. Mô hình kiểu
+mệnh lệnh đã được bổ sung vào TensorFlow 2.0 (thông qua chế độ Eager) và
+Keras trong những bản cập nhật sau này. Khi thiết kế Gluon, các nhà phát
+triển đã cân nhắc liệu rằng có thể kết hợp ưu điểm của cả hai mô hình
+lập trình lại với nhau hay không. Điều này đã dẫn đến mô hình hybrid,
+giúp người dùng phát triển và gỡ lỗi bằng lập trình mệnh lệnh thuần,
+đồng thời mang lại khả năng chuyển đổi hầu như toàn bộ chương trình sang
+dạng ký hiệu khi cần triển khai thành sản phẩm với hiệu năng tính toán
+cao.</p>
+<!--
+In practice this means that we build models using either the `HybridBlock` or the `HybridSequential` and `HybridConcurrent` classes.
+By default, they are executed in the same way `Block` or `Sequential` and `Concurrent` classes are executed in imperative programming.
+`HybridSequential` is a subclass of `HybridBlock` (just like `Sequential` subclasses `Block`).
+When the `hybridize` function is called, Gluon compiles the model into the form used in symbolic programming.
+This allows one to optimize the compute-intensive components without sacrifices in the way a model is implemented.
+We will illustrate the benefits below, focusing on sequential models and blocks only (the concurrent composition works analogously).
+--><p>Trong thực tiễn, ta sẽ xây dựng mô hình bằng lớp <code class="docutils literal notranslate"><span class="pre">HybridBlock</span></code> hoặc
+<code class="docutils literal notranslate"><span class="pre">HybridSequential</span></code> và <code class="docutils literal notranslate"><span class="pre">HybridConcurrent</span></code>. Mặc định, chúng được thực
+thi giống hệt như cách lớp <code class="docutils literal notranslate"><span class="pre">Block</span></code> hoặc <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> và
+<code class="docutils literal notranslate"><span class="pre">Concurrent</span></code> được thực thi trong kiểu lập trình mệnh lệnh.
+<code class="docutils literal notranslate"><span class="pre">HybridSequential</span></code> là một lớp con của <code class="docutils literal notranslate"><span class="pre">HybridBlock</span></code> (cũng như
+<code class="docutils literal notranslate"><span class="pre">Sequential</span></code> là lớp con của <code class="docutils literal notranslate"><span class="pre">Block</span></code>). Khi hàm <code class="docutils literal notranslate"><span class="pre">hybridize</span></code> được
+gọi, Gluon biên dịch mô hình thành định dạng được dùng trong lập trình
+ký hiệu. Điều này cho phép ta tối ưu các thành phần nặng về mặt tính
+toán mà không cần có nhiều thay đổi trong cách lập trình mô hình. Chúng
+tôi sẽ minh hoạ lợi ích của việc này ở ví dụ bên dưới, tập trung vào các
+mô hình <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> và <code class="docutils literal notranslate"><span class="pre">Block</span></code> (mô hình <code class="docutils literal notranslate"><span class="pre">Concurrent</span></code> cũng sẽ hoạt
+động tương tự).</p>
+<!--
+## HybridSequential
+--></div>
+<div class="section" id="hybridsequential">
+<h2><span class="section-number">12.1.3. </span>HybridSequential<a class="headerlink" href="#hybridsequential" title="Permalink to this headline">¶</a></h2>
+<!--
+The easiest way to get a feel for how hybridization works is to consider deep networks with multiple layers.
+Conventionally the Python interpreter will need to execute the code for all layers to generate an instruction that can then be forwarded to a CPU or a GPU.
+For a single (fast) compute device this does not cause any major issues.
+On the other hand, if we use an advanced 8-GPU server such as an AWS P3dn.24xlarge instance Python will struggle to keep all GPUs busy.
+The single-threaded Python interpreter becomes the bottleneck here.
+Let's see how we can address this for significant parts of the code by replacing `Sequential` by `HybridSequential`. We begin by defining a simple MLP.
+--><p>Cách đơn giản nhất để hiểu cách hoạt động của phép hybrid hóa là xem xét
+các mạng sâu đa tầng. Thông thường, trình thông dịch Python sẽ thực thi
+mã nguồn cho tất cả các tầng để sinh một lệnh mà sau đó có thể được
+truyền tới CPU hoặc GPU. Đối với thiết bị tính toán đơn (và nhanh), quá
+trình trên không gây ra vấn đề lớn nào cả. Mặt khác, nếu ta sử dụng một
+máy chủ tiên tiến có 8 GPU, ví dụ như P3dn.24xlarge trên AWS, Python sẽ
+gặp khó khăn trong việc tận dụng tất cả các GPU cùng lúc. Lúc này trình
+thông dịch Python đơn luồng sẽ trở thành nút nghẽn cổ chai. Hãy xem làm
+thế nào để giải quyết vấn đề trên cho phần lớn đoạn mã nguồn bằng cách
+thay <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> bằng <code class="docutils literal notranslate"><span class="pre">HybridSequential</span></code>. Chúng ta bắt đầu với việc
+định nghĩa một mạng MLP đơn giản.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="c1"># factory for networks</span>
+<span class="k">def</span> <span class="nf">get_net</span><span class="p">():</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">HybridSequential</span><span class="p">()</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">net</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">))</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">get_net</span><span class="p">()</span>
+<span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.16526176</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14005631</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+By calling the `hybridize` function, we are able to compile and optimize the computation in the MLP.
+The model’s computation result remains unchanged.
+--><p>Bằng cách gọi hàm <code class="docutils literal notranslate"><span class="pre">hybridize</span></code>, ta có thể biên dịch và tối ưu hóa các
+tính toán trong MLP. Kết quả tính toán của mô hình vẫn không thay đổi.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+<span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.16526176</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14005631</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+This seems almost too good to be true: simply designate a block to be `HybridSequential`, write the same code as before and invoke `hybridize`.
+Once this happens the network is optimized (we will benchmark the performance below).
+Unfortunately this does not work magically for every layer.
+That said, the blocks provided by Gluon are by default subclasses of `HybridBlock` and thus hybridizable.
+A layer will not be optimized if it inherits from the `Block` instead.
+--><p>Điều này có vẻ tốt đến mức khó tin: chỉ cần ta chỉ định một khối trở
+thành <code class="docutils literal notranslate"><span class="pre">HybridSequential</span></code>, sử dụng đoạn mã y hệt như trước và gọi hàm
+<code class="docutils literal notranslate"><span class="pre">hybridize</span></code>. Một khi thực hiện xong những việc trên, mạng sẽ được tối
+ưu hóa (chúng ta sẽ đánh giá hiệu năng ở phía dưới). Tiếc là cách này
+không hoạt động với mọi tầng. Nhưng các khối được cung cấp sẵn bởi Gluon
+mặc định được kế thừa từ lớp <code class="docutils literal notranslate"><span class="pre">HybridBlock</span></code> và do đó có thể hybrid hóa
+được. Tầng kế thừa từ lớp <code class="docutils literal notranslate"><span class="pre">Block</span></code> sẽ không thể tối ưu hóa được.</p>
+<!--
+### Acceleration by Hybridization
+--><div class="section" id="tang-toc-bang-hybrid-hoa">
+<h3><span class="section-number">12.1.3.1. </span>Tăng tốc bằng Hybrid hóa<a class="headerlink" href="#tang-toc-bang-hybrid-hoa" title="Permalink to this headline">¶</a></h3>
+<!--
+To demonstrate the performance improvement gained by compilation we compare the time needed to evaluate `net(x)` before and after hybridization.
+Let's define a function to measure this time first.
+It will come handy throughout the chapter as we set out to measure (and improve) performance.
+--><p>Để minh hoạ những cải thiện đạt được từ quá trình biên dịch, ta hãy so
+sánh thời gian cần thiết để đánh giá <code class="docutils literal notranslate"><span class="pre">net(x)</span></code> trước và sau phép hybrid
+hóa. Đầu tiên hãy định nghĩa một hàm để đo thời gian trên. Hàm này sẽ
+hữu ích trong suốt chương này khi chúng ta đo (và cải thiện) hiệu năng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#@save</span>
+<span class="k">class</span> <span class="nc">Benchmark</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Done&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> sec&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Now we can invoke the network twice, once with and once without hybridization.
+--><p>Bây giờ ta có thể gọi mạng hai lần với có hybrid hóa và không hybrid
+hóa.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">get_net</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;Without hybridization&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">npx</span><span class="o">.</span><span class="n">waitall</span><span class="p">()</span>
+
+<span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;With hybridization&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span> <span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">npx</span><span class="o">.</span><span class="n">waitall</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Without</span> <span class="n">hybridization</span><span class="p">:</span> <span class="mf">0.6715</span> <span class="n">sec</span>
+<span class="n">With</span> <span class="n">hybridization</span><span class="p">:</span> <span class="mf">0.2874</span> <span class="n">sec</span>
+</pre></div>
+</div>
+<!--
+As is observed in the above results, after a HybridSequential instance calls the `hybridize` function, computing performance is improved through the use of symbolic programming.
+--><p>Như quan sát được trong các kết quả trên, sau khi thực thể
+HybridSequential gọi hàm <code class="docutils literal notranslate"><span class="pre">hybridize</span></code>, hiệu năng tính toán được cải
+thiện thông qua việc sử dụng lập trình ký hiệu.</p>
+<!--
+### Serialization
+--></div>
+<div class="section" id="chuoi-hoa">
+<h3><span class="section-number">12.1.3.2. </span>Chuỗi hóa<a class="headerlink" href="#chuoi-hoa" title="Permalink to this headline">¶</a></h3>
+<!--https://itviec.com/blog/wp-content/uploads/download-manager-files/OOP_2013.pdf--><!--
+One of the benefits of compiling the models is that we can serialize (save) the model and its parameters to disk.
+This allows us to store a model in a manner that is independent of the front-end language of choice.
+This allows us to deploy trained models to other devices and easily use other front-end programming languages.
+At the same time the code is often faster than what can be achieved in imperative programming.
+Let's see the `export` method in action.
+--><p>Một trong những lợi ích của việc biên dịch các mô hình là ta có thể
+chuỗi hóa (<em>serialize</em>) mô hình và các tham số mô hình để lưu trữ. Điều
+này cho phép ta lưu trữ mô hình mà không phụ thuộc vào ngôn ngữ
+front-end. Điều này cũng cho phép ta sử dụng các mô hình đã huấn luyện
+trên các thiết bị khác và dễ dàng sử dụng các ngôn ngữ lập trình
+front-end khác. Đồng thời, mã nguồn này thường thực thi nhanh hơn so với
+khi lập trình mệnh lệnh. Hãy xem xét phương thức <code class="docutils literal notranslate"><span class="pre">export</span></code> sau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>net.export(&#39;my_mlp&#39;)
+!ls -lh my_mlp*
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hnguyent</span> <span class="n">Imod</span> <span class="mi">643</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">13</span> <span class="mi">01</span><span class="p">:</span><span class="mi">47</span> <span class="n">my_mlp</span><span class="o">-</span><span class="mf">0000.</span><span class="n">params</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">hnguyent</span> <span class="n">Imod</span> <span class="mf">3.0</span><span class="n">K</span> <span class="n">Aug</span> <span class="mi">13</span> <span class="mi">01</span><span class="p">:</span><span class="mi">47</span> <span class="n">my_mlp</span><span class="o">-</span><span class="n">symbol</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<!--
+The model is decomposed into a (large binary) parameter file and a JSON description of the program required to execute to compute the model.
+The files can be read by other front-end languages supported by Python or MXNet, such as C++, R, Scala, and Perl. Let's have a look at the model description.
+--><p>Mô hình này được chia ra thành một tập tin (nhị phân) lớn chứa tham số
+và tập tin JSON mô tả cấu trúc mô hình. Các tập tin có thể được đọc bởi
+các ngôn ngữ front-end khác được hỗ trợ bởi Python hoặc MXNet, ví dụ như
+C++, R, Scala, và Perl. Tập tin JSON có dạng như sau</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!head my_mlp-symbol.json
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;nodes&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;op&quot;</span><span class="p">:</span> <span class="s2">&quot;null&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;op&quot;</span><span class="p">:</span> <span class="s2">&quot;null&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;dense3_weight&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+<!--
+Things are slightly more tricky when it comes to models that resemble code more closely.
+Basically hybridization needs to deal with control flow and Python overhead in a much more immediate manner. Moreover,
+--><p>Mọi thứ trở nên phức tạp hơn một chút khi làm việc với các mô hình gần
+với mã nguồn. Về cơ bản, việc hybrid hóa cần giải quyết trực tiếp luồng
+điều khiển và các chi phí tính toán của Python.</p>
+<!--
+Contrary to the Block instance, which needs to use the `forward` function, for a HybridBlock instance we need to use the `hybrid_forward` function.
+--><p>Hơn nữa, trong khi thực thể của lớp Block cần sử dụng hàm <code class="docutils literal notranslate"><span class="pre">forward</span></code>,
+thực thể của lớp HybridBlock lại sử dụng hàm <code class="docutils literal notranslate"><span class="pre">hybrid_forward</span></code>.</p>
+<!--
+Earlier, we demonstrated that, after calling the `hybridize` method, the model is able to achieve superior computing performance and portability.
+Note, though that hybridization can affect model flexibility, in particular in terms of control flow.
+We will illustrate how to design more general models and also how compilation will remove spurious Python elements.
+--><p>Trên đây chúng ta thấy rằng phương thức <code class="docutils literal notranslate"><span class="pre">hybridize</span></code> có thể giúp mô
+hình đạt được hiệu năng tính toán và tính cơ động vượt trội hơn. Dù vậy,
+sự hybrid hóa có thể ảnh hưởng tới tính linh hoạt của mô hình, đặc biệt
+là trong điều khiển luồng. Ta sẽ minh họa cách thiết kế các mô hình tổng
+quát hơn cũng như cách trình biên dịch loại bỏ các thành phần thừa trong
+Python.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HybridNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">HybridBlock</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HybridNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">hybrid_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;module F: &#39;</span><span class="p">,</span> <span class="n">F</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;value  x: &#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">npx</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;result  : &#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+The code above implements a simple network with 4 hidden units and 2 outputs.
+`hybrid_forward` takes an additional argument - the module `F`.
+This is needed since, depending on whether the code has been hybridized or not, it will use a slightly different library (`ndarray` or `symbol`) for processing.
+Both classes perform very similar functions and MXNet automatically determines the argument.
+To understand what is going on we print the arguments as part of the function invocation.
+--><p>Đoạn mã trên biểu diễn một mạng đơn giản với 4 nút ẩn và 2 đầu ra.
+Phương thức <code class="docutils literal notranslate"><span class="pre">hybrid_foward</span></code> lấy thêm một đối số - mô-đun <code class="docutils literal notranslate"><span class="pre">F</span></code>. Đối số
+này là cần thiết để chọn thư viện xử lý phù hợp (<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> hoặc
+<code class="docutils literal notranslate"><span class="pre">symbol</span></code>) tùy vào việc chương trình có được hybrid hóa hay không. Cả
+hai lớp này thực hiện các chức năng rất giống nhau và MXNet sẽ tự động
+xác định đối số đầu vào. Để hiểu chuyện gì đang diễn ra chúng ta sẽ in
+các đối số đầu vào khi gọi hàm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">HybridNet</span><span class="p">()</span>
+<span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">F</span><span class="p">:</span>  <span class="o">&lt;</span><span class="n">module</span> <span class="s1">&#39;mxnet.ndarray&#39;</span> <span class="kn">from</span> <span class="s1">&#39;/master/home/hnguyent/miniconda3/envs/d2lenv/lib/python3.7/site-packages/mxnet/ndarray/__init__.py&#39;</span><span class="o">&gt;</span>
+<span class="n">value</span>  <span class="n">x</span><span class="p">:</span>  <span class="p">[[</span><span class="o">-</span><span class="mf">0.6338663</span>   <span class="mf">0.40156594</span>  <span class="mf">0.46456942</span><span class="p">]]</span>
+<span class="n">result</span>  <span class="p">:</span>  <span class="p">[[</span><span class="mf">0.01641375</span> <span class="mf">0.</span>         <span class="mf">0.</span>         <span class="mf">0.</span>        <span class="p">]]</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.00097611</span><span class="p">,</span> <span class="mf">0.00019453</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+Repeating the forward computation will lead to the same output (we omit details).
+Now let's see what happens if we invoke the `hybridize` method.
+--><p>Lặp lại nhiều lần việc tính lượt truyền xuôi sẽ cho ra cùng kết quả (ta
+bỏ qua chi tiết). Bây giờ hãy xem chuyện gì xảy ra nếu ta kích hoạt
+phương thức <code class="docutils literal notranslate"><span class="pre">hybridize</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">()</span>
+<span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">F</span><span class="p">:</span>  <span class="o">&lt;</span><span class="n">module</span> <span class="s1">&#39;mxnet.symbol&#39;</span> <span class="kn">from</span> <span class="s1">&#39;/master/home/hnguyent/miniconda3/envs/d2lenv/lib/python3.7/site-packages/mxnet/symbol/__init__.py&#39;</span><span class="o">&gt;</span>
+<span class="n">value</span>  <span class="n">x</span><span class="p">:</span>  <span class="o">&lt;</span><span class="n">_Symbol</span> <span class="n">data</span><span class="o">&gt;</span>
+<span class="n">result</span>  <span class="p">:</span>  <span class="o">&lt;</span><span class="n">_Symbol</span> <span class="n">hybridnet0_relu0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.00097611</span><span class="p">,</span> <span class="mf">0.00019453</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+Instead of using `ndarray` we now use the `symbol` module for `F`.
+Moreover, even though the input is of `ndarray` type, the data flowing through the network is now converted to `symbol` type as part of the compilation process.
+Repeating the function call leads to a surprising outcome:
+--><p>Thay vì <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, lúc này ta sử dụng mô-đun <code class="docutils literal notranslate"><span class="pre">symbol</span></code> cho <code class="docutils literal notranslate"><span class="pre">F</span></code>.
+Thêm vào đó, mặc dù đầu vào thuộc kiểu <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, dữ liệu truyền qua
+mạng bây giờ được chuyển thành kiểu <code class="docutils literal notranslate"><span class="pre">symbol</span></code> như một phần của quá
+trình biên dịch. Việc gọi lại hàm <code class="docutils literal notranslate"><span class="pre">net</span></code> dẫn tới một kết quả đáng kinh
+ngạc:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.00097611</span><span class="p">,</span> <span class="mf">0.00019453</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+This is quite different from what we saw previously.
+All print statements, as defined in `hybrid_forward` are omitted.
+Indeed, after hybridization the execution of `net(x)` does not involve the Python interpreter any longer.
+This means that any spurious Python code is omitted (such as print statements) in favor of a much more streamlined execution and better performance.
+Instead, MXNet directly calls the C++ backend.
+Also note that some functions are not supported in the `symbol` module (like `asnumpy`) and operations in-place like `a += b` and `a[:] = a + b` must be rewritten as `a = a + b`.
+Nonetheless, compilation of models is worth the effort whenever speed matters.
+The benefit can range from small percentage points to more than twice the speed, depending on the complexity of the model, the speed of the CPU and the speed and number of GPUs.
+--><div class="line-block">
+<div class="line">Điều này khá khác biệt so vớinhững gì ta đã thấy trước đó. Tất cả các
+lệnh in được định nghĩa trong <code class="docutils literal notranslate"><span class="pre">hybrid_forward</span></code> đều bị bỏ qua. Thật
+vậy, sau khi hybrid hóa, việc thực thi lệnh <code class="docutils literal notranslate"><span class="pre">net(x)</span></code> không còn liên
+quan gì tới trình thông dịch của Python nữa. Nghĩa là bất cứ đoạn mã
+Python nào không cần thiết cho tính toán sẽ bị bỏ qua (chẳng hạn như
+các lệnh in) để việc thực thi trôi chảy hơn và hiệu năng tốt hơn. Và
+thay vì gọi Python, MXNet gọi trực tiếp back-end C++.</div>
+<div class="line">Cũng nên lưu ý rằng một số hàm không được hỗ trợ trong mô-đun
+<code class="docutils literal notranslate"><span class="pre">symbol</span></code> (như <code class="docutils literal notranslate"><span class="pre">asnumpy</span></code>) và các toán tử thực thi tại chỗ
+(<em>in-place</em>) như <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+=</span> <span class="pre">b</span></code> và <code class="docutils literal notranslate"><span class="pre">a[:]</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code> phải được viết lại là
+<code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code>. Tuy nhiên, việc biên dịch mô hình vẫn đáng để thực hiện
+bất cứ khi nào ta quan tâm đến tốc độ. Lợi ích về tốc độ này có thể
+tăng từ vài phần trăm tới hơn hai lần, tùy thuộc vào sự phức tạp của
+mô hình, tốc độ của CPU, tốc độ và số lượng GPU.</div>
+</div>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">12.1.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Imperative programming makes it easy to design new models since it is possible to write code with control flow and the ability to use a large amount of the Python software ecosystem.
+* Symbolic programming requires that we specify the program and compile it before executing it. The benefit is improved performance.
+* MXNet is able to combine the advantages of both approaches as needed.
+* Models constructed by the `HybridSequential` and `HybridBlock` classes are able to convert imperative programs into symbolic programs by calling the `hybridize` method.
+--><ul class="simple">
+<li>Lập trình mệnh lệnh khiến việc thiết kế mô hình mới dễ dàng hơn vì ta
+có thể viết mã với luồng điều khiển và được sử dụng hệ sinh thái phần
+mềm của Python.</li>
+<li>Lập trình ký hiệu đòi hỏi chúng ta định nghĩa và biên dịch chương
+trình trước khi thực thi nó. Lợi ích là hiệu năng được cải thiện.</li>
+<li>MXNet có thể kết hợp những ưu điểm của cả hai phương pháp khi cần
+thiết.</li>
+<li>Mô hình được xây dựng bởi các lớp <code class="docutils literal notranslate"><span class="pre">HybridSequential</span></code> và
+<code class="docutils literal notranslate"><span class="pre">HybridBlock</span></code> có thể chuyển đổi các chương trình mệnh lệnh thành
+các chương trình ký hiệu bằng cách gọi phương thức <code class="docutils literal notranslate"><span class="pre">hybridize</span></code>.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">12.1.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Design a network using the `HybridConcurrent` class. Alternatively look at :ref:`sec_googlenet` for a network to compose.
+2. Add `x.asnumpy()` to the first line of the `hybrid_forward` function of the HybridNet class in this section. Execute the code and observe the errors you encounter. Why do they happen?
+3. What happens if we add control flow, i.e., the Python statements `if` and `for` in the `hybrid_forward` function?
+4. Review the models that interest you in the previous chapters and use the HybridBlock class or HybridSequential class to implement them.
+--><ol class="arabic simple">
+<li>Hãy thiết kế một mạng bằng cách sử dụng lớp <code class="docutils literal notranslate"><span class="pre">HybridConcurrent</span></code>, có
+thể thử với GoogleNet trong :ref: <code class="docutils literal notranslate"><span class="pre">sec_googlenet</span></code>.</li>
+<li>Hãy thêm <code class="docutils literal notranslate"><span class="pre">x.asnumpy()</span></code> vào dòng đầu tiên của hàm <code class="docutils literal notranslate"><span class="pre">hybrid_forward</span></code>
+trong lớp HybridNet, rồi thực thi mã nguồn và quan sát các lỗi bạn
+gặp phải. Tại sao các lỗi này xảy ra?</li>
+<li>Điều gì sẽ xảy ra nếu ta thêm luồng điều khiển, cụ thể là các lệnh
+Python <code class="docutils literal notranslate"><span class="pre">if</span></code> và <code class="docutils literal notranslate"><span class="pre">for</span></code> trong hàm <code class="docutils literal notranslate"><span class="pre">hybrid_forward</span></code>?</li>
+<li>Hãy lập trình các mô hình bạn thích trong các chương trước bằng cách
+sử dụng lớp HybridBlock hoặc HybridSequential.</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">12.1.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/360">Tiếng Anh - MXNet</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h3><span class="section-number">12.1.6.1. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h3>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Tâm</li>
+<li>Phạm Hồng Vinh</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Văn Quang</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Phạm Minh Đức</li>
+<li>Nguyễn Văn Cường</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">12.1. Trình biên dịch và Trình thông dịch</a><ul>
+<li><a class="reference internal" href="#lap-trinh-ky-hieu">12.1.1. Lập trình Ký hiệu</a></li>
+<li><a class="reference internal" href="#lap-trinh-hybrid">12.1.2. Lập trình Hybrid</a></li>
+<li><a class="reference internal" href="#hybridsequential">12.1.3. HybridSequential</a><ul>
+<li><a class="reference internal" href="#tang-toc-bang-hybrid-hoa">12.1.3.1. Tăng tốc bằng Hybrid hóa</a></li>
+<li><a class="reference internal" href="#chuoi-hoa">12.1.3.2. Chuỗi hóa</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">12.1.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">12.1.5. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">12.1.6. Thảo luận</a><ul>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">12.1.6.1. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="index_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>12. Hiệu năng Tính toán</div>
+         </div>
+     </a>
+     <a id="button-next" href="async-computation_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>12.2. Tính toán Bất đồng bộ</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

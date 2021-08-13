@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>8.3. Mô hình Ngôn ngữ và Tập dữ liệu &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8.4. Mạng nơ-ron Hồi tiếp" href="rnn_vn.html" />
+    <link rel="prev" title="8.2. Tiền Xử lý Dữ liệu Văn bản" href="text-preprocessing_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">8. </span>Mạng Nơ-ron Hồi tiếp</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">8.3. </span>Mô hình Ngôn ngữ và Tập dữ liệu</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_recurrent-neural-networks/language-models-and-dataset_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ==================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Language Models and the Dataset
+--><div class="section" id="mo-hinh-ngon-ngu-va-tap-du-lieu">
+<span id="sec-language-model"></span><h1><span class="section-number">8.3. </span>Mô hình Ngôn ngữ và Tập dữ liệu<a class="headerlink" href="#mo-hinh-ngon-ngu-va-tap-du-lieu" title="Permalink to this headline">¶</a></h1>
+<!--
+In :numref:`sec_text_preprocessing`, we see how to map text data into tokens, and these tokens can be viewed as a time series of discrete observations.
+Assuming the tokens in a text of length $T$ are in turn $x_1, x_2, \ldots, x_T$,
+then, in the discrete time series, $x_t$($1 \leq t \leq T$) can be considered as the output or label of timestep $t$.
+Given such a sequence, the goal of a language model is to estimate the probability
+--><p><a class="reference internal" href="text-preprocessing_vn.html#sec-text-preprocessing"><span class="std std-numref">Section 8.2</span></a> đã trình bày cách ánh xạ dữ liệu văn
+bản sang token, những token này có thể được xem như một chuỗi thời gian
+của các quan sát rời rạc. Giả sử văn bản độ dài <span class="math notranslate nohighlight">\(T\)</span> có dãy token
+là <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_T\)</span>, thì
+<span class="math notranslate nohighlight">\(x_t\)</span>(<span class="math notranslate nohighlight">\(1 \leq t \leq T\)</span>) có thể coi là đầu ra (hoặc nhãn)
+tại bước thời gian <span class="math notranslate nohighlight">\(t\)</span>. Khi đã có chuỗi thời gian trên, mục tiêu
+của mô hình ngôn ngữ là ước tính xác suất của</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-0">
+<span class="eqno">(8.3.1)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-0" title="Permalink to this equation">¶</a></span>\[p(x_1, x_2, \ldots, x_T).\]</div>
+<!--
+Language models are incredibly useful.
+For instance, an ideal language model would be able to generate natural text just on its own, simply by drawing one word at a time $w_t \sim p(w_t \mid w_{t-1}, \ldots, w_1)$.
+Quite unlike the monkey using a typewriter, all text emerging from such a model would pass as natural language, e.g., English text.
+Furthermore, it would be sufficient for generating a meaningful dialog, simply by conditioning the text on previous dialog fragments.
+Clearly we are still very far from designing such a system, since it would need to *understand* the text rather than just generate grammatically sensible content.
+--><p>Mô hình ngôn ngữ vô cùng hữu dụng. Chẳng hạn, một mô hình lý tưởng có
+thể tự tạo ra văn bản tự nhiên, chỉ bằng cách chọn một từ <span class="math notranslate nohighlight">\(w_t\)</span>
+tại thời điểm <span class="math notranslate nohighlight">\(t\)</span> với
+<span class="math notranslate nohighlight">\(w_t \sim p(w_t \mid w_{t-1}, \ldots, w_1)\)</span>. Khác hoàn toàn với
+việc chỉ gõ phím ngẫu nhiên như trong định lý con khỉ vô hạn (<em>infinite
+monkey theorem</em>), văn bản được sinh ra từ mô hình này giống ngôn ngữ tự
+nhiên, giống tiếng Anh chẳng hạn. Hơn nữa, mô hình đủ khả năng tạo ra
+một đoạn hội thoại có ý nghĩa mà chỉ cần dựa vào đoạn hội thoại trước
+đó. Trên thực tế, còn rất xa để thiết kế được hệ thống như vậy, vì mô
+hình sẽ cần <em>hiểu</em> văn bản hơn là chỉ tạo ra nội dung đúng ngữ pháp.</p>
+<!--
+Nonetheless language models are of great service even in their limited form.
+For instance, the phrases "to recognize speech" and "to wreck a nice beach" sound very similar.
+This can cause ambiguity in speech recognition, ambiguity that is easily resolved through a language model which rejects the second translation as outlandish.
+Likewise, in a document summarization algorithm it is worth while knowing that "dog bites man" is much more frequent than "man bites dog",
+or that "I want to eat grandma" is a rather disturbing statement, whereas "I want to eat, grandma" is much more benign.
+--><p>Tuy nhiên, mô hình ngôn ngữ vẫn rất hữu dụng ngay cả khi còn hạn chế.
+Chẳng hạn, cụm từ “nhận dạng giọng nói” và “nhân gian rộng lối” có phát
+âm khá giống nhau. Điều này có thể gây ra sự mơ hồ trong việc nhận dạng
+giọng nói, nhưng có thể dễ dàng được giải quyết với một mô hình ngôn
+ngữ. Mô hình sẽ loại bỏ ngay phương án thứ hai do mang ý nghĩa kì lạ.
+Tương tự, một thuật toán tóm tắt tài liệu nên phân biệt được rằng câu
+“chó cắn người” xuất hiện thường xuyên hơn nhiều so với “người cắn chó”,
+hay như “Cháu muốn ăn bà ngoại” nghe khá kinh dị trong khi “Cháu muốn
+ăn, bà ngoại” lại là bình thường.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!--
+## Estimating a Language Model
+--><div class="section" id="uoc-tinh-mot-mo-hinh-ngon-ngu">
+<h2><span class="section-number">8.3.1. </span>Ước tính một Mô hình Ngôn ngữ<a class="headerlink" href="#uoc-tinh-mot-mo-hinh-ngon-ngu" title="Permalink to this headline">¶</a></h2>
+<!--
+The obvious question is how we should model a document, or even a sequence of words.
+We can take recourse to the analysis we applied to sequence models in the previous section.
+Let us start by applying basic probability rules:
+--><p>Làm thế nào để mô hình hóa một tài liệu hay thậm chí là một chuỗi các
+từ? Ta có thể sử dụng cách phân tích đã dùng trong mô hình chuỗi ở phần
+trước. Bắt đầu bằng việc áp dụng quy tắc xác suất cơ bản sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-1">
+<span class="eqno">(8.3.2)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-1" title="Permalink to this equation">¶</a></span>\[p(w_1, w_2, \ldots, w_T) = p(w_1) \prod_{t=2}^T p(w_t  \mid  w_1, \ldots, w_{t-1}).\]</div>
+<!--
+For example, the probability of a text sequence containing four tokens consisting of words and punctuation would be given as:
+--><p>Ví dụ, xác suất của chuỗi văn bản chứa bốn token bao gồm các từ và dấu
+chấm câu được tính như sau:</p>
+<!--
+$$p(\mathrm{Statistics}, \mathrm{is}, \mathrm{fun}, \mathrm{.}) =  p(\mathrm{Statistics}) p(\mathrm{is}  \mid  \mathrm{Statistics}) p(\mathrm{fun}  \mid  \mathrm{Statistics}, \mathrm{is}) p(\mathrm{.}  \mid  \mathrm{Statistics}, \mathrm{is}, \mathrm{fun}).$$
+--><div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-2">
+<span class="eqno">(8.3.3)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-2" title="Permalink to this equation">¶</a></span>\[p(\mathrm{Statistics}, \mathrm{is}, \mathrm{fun}, \mathrm{.}) =  p(\mathrm{Statistics}) p(\mathrm{is}  \mid  \mathrm{Statistics}) p(\mathrm{fun}  \mid  \mathrm{Statistics}, \mathrm{is}) p(\mathrm{.}  \mid  \mathrm{Statistics}, \mathrm{is}, \mathrm{fun}).\]</div>
+<!--
+In order to compute the language model, we need to calculate the probability of words and the conditional probability of a word given the previous few words, i.e., language model parameters.
+Here, we assume that the training dataset is a large text corpus, such as all Wikipedia entries, [Project Gutenberg](https://en.wikipedia.org/wiki/Project_Gutenberg), or all text posted online on the web.
+The probability of words can be calculated from the relative word frequency of a given word in the training dataset.
+--><p>Để tính toán mô hình ngôn ngữ, ta cần tính xác suất các từ và xác suất
+có điều kiện của một từ khi đã có vài từ trước đó. Đây chính là các tham
+số của mô hình ngôn ngữ. Ở đây chúng ta giả định rằng, tập dữ liệu huấn
+luyện là một kho ngữ liệu lớn, chẳng hạn như là tất cả các mục trong
+Wikipedia của <a class="reference external" href="https://en.wikipedia.org/wiki/Project_Gutenberg">Dự án
+Gutenberg</a>, hoặc tất
+cả văn bản được đăng trên mạng. Xác suất riêng lẻ của từng từ có thể
+tính bằng tần suất của từ đó trong tập dữ liệu huấn luyện.</p>
+<!--
+For example, $p(\mathrm{Statistics})$ can be calculated as the probability of any sentence starting with the word "statistics".
+A slightly less accurate approach would be to count all occurrences of the word "statistics" and divide it by the total number of words in the corpus.
+This works fairly well, particularly for frequent words.
+Moving on, we could attempt to estimate
+--><p>Ví dụ, <span class="math notranslate nohighlight">\(p(\mathrm{Statistics})\)</span> có thể được tính là xác suất của
+bất kỳ câu nào bắt đầu bằng “statistics”. Một cách thiếu chính xác hơn
+là đếm tất cả số lần xuất hiện của ”statistics” và chia số lần đó cho
+tổng số từ trong kho ngữ liệu văn bản. Cách làm này khá hiệu quả, đặc
+biệt là với các từ xuất hiện thường xuyên. Tiếp theo, ta tính</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-3">
+<span class="eqno">(8.3.4)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-3" title="Permalink to this equation">¶</a></span>\[\hat{p}(\mathrm{is} \mid \mathrm{Statistics}) = \frac{n(\mathrm{Statistics, is})}{n(\mathrm{Statistics})}.\]</div>
+<!--
+Here $n(w)$ and $n(w, w')$ are the number of occurrences of singletons and pairs of words respectively.
+Unfortunately, estimating the probability of a word pair is somewhat more difficult, since the occurrences of "Statistics is" are a lot less frequent.
+In particular, for some unusual word combinations it may be tricky to find enough occurrences to get accurate estimates.
+Things take a turn for the worse for 3-word combinations and beyond.
+There will be many plausible 3-word combinations that we likely will not see in our dataset.
+Unless we provide some solution to give such word combinations nonzero weight, we will not be able to use these as a language model.
+If the dataset is small or if the words are very rare, we might not find even a single one of them.
+--><p>Ở đây <span class="math notranslate nohighlight">\(n(w)\)</span> và <span class="math notranslate nohighlight">\(n(w, w')\)</span> lần lượt là số lần xuất hiện của
+các từ đơn và cặp từ ghép. Đáng tiếc là việc ước tính xác suất của một
+cặp từ thường khó khăn hơn, bởi vì sự xuất hiện của cặp từ “Statistics
+is” hiếm khi xảy ra hơn. Đặc biệt, với các cụm từ ít đi cùng nhau, rất
+khó tìm đủ số lần xuất hiện để ước tính chính xác. Mọi thứ thậm chí sẽ
+khó hơn đối với các cụm ba từ trở lên. Sẽ có nhiều cụm ba từ hợp lý mà
+hầu như không hề xuất hiện trong tập dữ liệu. Trừ khi có giải pháp để
+đánh trọng số khác không cho các tổ hợp từ đó, nếu không sẽ không thể sử
+dụng chúng trong một mô hình ngôn ngữ. Nếu kích thước tập dữ liệu nhỏ
+hoặc nếu các từ rất hiếm, chúng ta thậm chí có thể không tìm thấy nổi
+một lần xuất hiện của các tổ hợp từ đó.</p>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!--
+A common strategy is to perform some form of Laplace smoothing.
+We already encountered this in our discussion of naive Bayes in :numref:`sec_naive_bayes` where the solution was to add a small constant to all counts.
+This helps with singletons, e.g., via
+--><p>Một kỹ thuật phổ biến là làm mượt Laplace (<em>Laplace smoothing</em>). Chúng
+ta đã biết kỹ thuật này khi thảo luận về Naive Bayes trong
+<a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html#sec-naive-bayes"><span class="std std-numref">Section 18.9</span></a>, với giải pháp là cộng thêm một hằng số nhỏ
+vào tất cả các số đếm như sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-4">
+<span class="eqno">(8.3.5)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\hat{p}(w) &amp; = \frac{n(w) + \epsilon_1/m}{n + \epsilon_1}, \\
+\hat{p}(w' \mid w) &amp; = \frac{n(w, w') + \epsilon_2 \hat{p}(w')}{n(w) + \epsilon_2}, \\
+\hat{p}(w'' \mid w',w) &amp; = \frac{n(w, w',w'') + \epsilon_3 \hat{p}(w',w'')}{n(w, w') + \epsilon_3}.
+\end{aligned}\end{split}\]</div>
+<!--
+Here the coefficients $\epsilon_i > 0$ determine how much we use the estimate for a shorter sequence as a fill-in for longer ones.
+Moreover, $m$ is the total number of words we encounter.
+The above is a rather primitive variant of what is Kneser-Ney smoothing and Bayesian nonparametrics can accomplish.
+See e.g., :cite:`Wood.Gasthaus.Archambeau.ea.2011` for more detail of how to accomplish this.
+Unfortunately, models like this get unwieldy rather quickly for the following reasons. First, we need to store all counts.
+Second, this entirely ignores the meaning of the words.
+For instance, *"cat"* and *"feline"* should occur in related contexts.
+It is quite difficult to adjust such models to additional contexts, whereas, deep learning based language models are well suited to take this into account.
+Last, long word sequences are almost certain to be novel, hence a model that simply counts the frequency of previously seen word sequences is bound to perform poorly there.
+--><p>Ở đây các hệ số <span class="math notranslate nohighlight">\(\epsilon_i &gt; 0\)</span> xác định mức độ ảnh hưởng của
+chuỗi ngắn hơn khi ước tính chuỗi dài hơn, <span class="math notranslate nohighlight">\(m\)</span> là tổng số từ trong
+tập văn bản. Công thức trên là một biến thể khá nguyên thủy của kỹ thuật
+làm mượt Kneser-Ney và Bayesian phi tham số. Xem
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#wood-gasthaus-archambeau-ea-2011" id="id1">[Wood et al., 2011]</a> để biết thêm chi tiết. Thật
+không may, các mô hình như vậy là bất khả thi vì những lý do sau. Đầu
+tiên, chúng ta cần lưu trữ tất cả các số đếm. Thứ hai, các mô hình hoàn
+toàn bỏ qua ý nghĩa của các từ. Chẳng hạn, danh từ <em>“mèo”(“cat”)</em> và
+tính từ <em>“thuộc về mèo”(“feline”)</em> nên xuất hiện trong các ngữ cảnh có
+liên quan đến nhau. Rất khó để thêm các ngữ cảnh bổ trợ vào các mô hình
+đó, trong khi các mô hình ngôn ngữ dựa trên học sâu hoàn toàn có thể làm
+được. Cuối cùng, các chuỗi từ dài gần như hoàn toàn mới lạ, do đó một mô
+hình chỉ đơn giản đếm tần số của các chuỗi từ đã thấy trước đó sẽ hoạt
+động rất kém.</p>
+<!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+## Markov Models and $n$-grams
+--></div>
+<div class="section" id="mo-hinh-markov-va-n-grams">
+<h2><span class="section-number">8.3.2. </span>Mô hình Markov và <span class="math notranslate nohighlight">\(n\)</span>-grams<a class="headerlink" href="#mo-hinh-markov-va-n-grams" title="Permalink to this headline">¶</a></h2>
+<!--
+Before we discuss solutions involving deep learning, we need some more terminology and concepts.
+Recall our discussion of Markov Models in the previous section.
+Let us apply this to language modeling.
+A distribution over sequences satisfies the Markov property of first order if $p(w_{t+1} \mid w_t, \ldots, w_1) = p(w_{t+1} \mid w_t)$.
+Higher orders correspond to longer dependencies.
+This leads to a number of approximations that we could apply to model a sequence:
+--><p>Trước khi thảo luận các giải pháp sử dụng học sâu, chúng ta sẽ giải
+thích một số thuật ngữ và khái niệm. Hãy nhớ lại mô hình Markov đề cập ở
+phần trước, và áp dụng để mô hình hóa ngôn ngữ. Một phân phối trên các
+chuỗi thỏa mãn điều kiện Markov bậc nhất nếu
+<span class="math notranslate nohighlight">\(p(w_{t+1} \mid w_t, \ldots, w_1) = p(w_{t+1} \mid w_t)\)</span>. Những
+bậc cao hơn tương ứng với những chuỗi phụ thuộc dài hơn. Do đó chúng ta
+có thể áp dụng các phép xấp xỉ để mô hình hóa một chuỗi:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-5">
+<span class="eqno">(8.3.6)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-5" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+p(w_1, w_2, w_3, w_4) &amp;=  p(w_1) p(w_2) p(w_3) p(w_4),\\
+p(w_1, w_2, w_3, w_4) &amp;=  p(w_1) p(w_2  \mid  w_1) p(w_3  \mid  w_2) p(w_4  \mid  w_3),\\
+p(w_1, w_2, w_3, w_4) &amp;=  p(w_1) p(w_2  \mid  w_1) p(w_3  \mid  w_1, w_2) p(w_4  \mid  w_2, w_3).
+\end{aligned}\end{split}\]</div>
+<!--
+The probability formulae that involve one, two, and three variables are typically referred to as unigram, bigram, and trigram models respectively.
+In the following, we will learn how to design better models.
+--><p>Các công thức xác suất liên quan đến một, hai và ba biến được gọi là các
+mô hình unigram, bigram và trigram. Sau đây, chúng ta sẽ tìm hiểu cách
+thiết kế các mô hình tốt hơn.</p>
+<!-- ===================== Kết thúc dịch Phần 3 ===================== --><!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!--
+## Natural Language Statistics
+--></div>
+<div class="section" id="thong-ke-ngon-ngu-tu-nhien">
+<h2><span class="section-number">8.3.3. </span>Thống kê Ngôn ngữ Tự nhiên<a class="headerlink" href="#thong-ke-ngon-ngu-tu-nhien" title="Permalink to this headline">¶</a></h2>
+<!--
+Let us see how this works on real data.
+We construct a vocabulary based on the time machine data similar to :numref:`sec_text_preprocessing` and print the top $10$ most frequent words.
+--><p>Hãy cùng xem mô hình hoạt động thế nào trên dữ liệu thực tế. Chúng ta sẽ
+xây dựng bộ từ vựng dựa trên tập dữ liệu “cỗ máy thời gian” tương tự như
+ở <a class="reference internal" href="text-preprocessing_vn.html#sec-text-preprocessing"><span class="std std-numref">Section 8.2</span></a> và in ra <span class="math notranslate nohighlight">\(10\)</span> từ có tần suất
+xuất hiện cao nhất.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">read_time_machine</span><span class="p">())</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Vocab</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="mi">2261</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1282</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="mi">1267</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="mi">1245</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="mi">1155</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">816</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="mi">695</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="mi">552</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="mi">541</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;that&#39;</span><span class="p">,</span> <span class="mi">443</span><span class="p">)]</span>
+</pre></div>
+</div>
+<!--
+As we can see, the most popular words are actually quite boring to look at.
+They are often referred to as [stop words](https://en.wikipedia.org/wiki/Stop_words) and thus filtered out.
+That said, they still carry meaning and we will use them nonetheless.
+However, one thing that is quite clear is that the word frequency decays rather rapidly.
+The $10^{\mathrm{th}}$ most frequent word is less than $1/5$ as common as the most popular one.
+To get a better idea we plot the graph of the word frequency.
+--><p>Có thể thấy những từ xuất hiện nhiều nhất không có gì đáng chú ý. Các từ
+này được gọi là <a class="reference external" href="https://en.wikipedia.org/wiki/Stop_words">từ dừng (stop
+words)</a> và vì thế chúng
+thường được lọc ra. Dù vậy, những từ này vẫn có nghĩa và ta vẫn sẽ sử
+dụng chúng. Tuy nhiên, rõ ràng là tần số của từ suy giảm khá nhanh. Từ
+phổ biến thứ <span class="math notranslate nohighlight">\(10\)</span> xuất hiện ít hơn, chỉ bằng <span class="math notranslate nohighlight">\(1/5\)</span> lần so
+với từ phổ biến nhất. Để hiểu rõ hơn, chúng ta sẽ vẽ đồ thị tần số của
+từ.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">freqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">freq</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;token: x&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;frequency: n(x)&#39;</span><span class="p">,</span>
+         <span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_language-models-and-dataset_vn_c9ad2e_3_0.svg" src="../_images/output_language-models-and-dataset_vn_c9ad2e_3_0.svg" /></div>
+<!--
+We are on to something quite fundamental here: the word frequency decays rapidly in a well defined way.
+After dealing with the first four words as exceptions ('the', 'i', 'and', 'of'), all remaining words follow a straight line on a log-log plot.
+This means that words satisfy [Zipf's law](https://en.wikipedia.org/wiki/Zipf%27s_law) which states that the item frequency is given by
+--><p>Chúng ta đang tiến gần tới một đặc điểm cơ bản: tần số của từ suy giảm
+nhanh chóng theo một cách được xác định rõ. Ngoại trừ bốn từ đầu tiên
+(‘the’, ‘i’, ‘and’, ‘of’), tất cả các từ còn lại đi theo một đường thẳng
+trên biểu đồ thang log. Theo đó các từ tuân theo định luật
+<a class="reference external" href="https://en.wikipedia.org/wiki/Zipf's_law">Zipf</a>, tức là tần suất
+xuất hiện của từ được xác định bởi</p>
+<div class="math notranslate nohighlight" id="equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-6">
+<span class="eqno">(8.3.7)<a class="headerlink" href="#equation-chapter-recurrent-neural-networks-language-models-and-dataset-vn-6" title="Permalink to this equation">¶</a></span>\[n(x) \propto (x + c)^{-\alpha} \text{ và~do~đó }
+\log n(x) = -\alpha \log (x+c) + \mathrm{const.}\]</div>
+<!--
+This should already give us pause if we want to model words by count statistics and smoothing.
+After all, we will significantly overestimate the frequency of the tail, also known as the infrequent words.
+But what about the other word combinations (such as bigrams, trigrams, and beyond)?
+Let us see whether the bigram frequency behaves in the same manner as the unigram frequency.
+--><p>Điều này khiến chúng ta cần suy nghĩ kĩ khi mô hình hóa các từ bằng cách
+đếm và kỹ thuật làm mượt. Rốt cuộc, chúng ta sẽ ước tính quá cao những
+từ có tần suất xuất hiện thấp. Vậy còn các tổ hợp từ khác như 2-gram,
+3-gram và nhiều hơn thì sao? Hãy xem liệu tần số của bigram có tương tự
+như unigram hay không.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bigram_tokens</span> <span class="o">=</span> <span class="p">[[</span><span class="n">pair</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+<span class="n">bigram_vocab</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Vocab</span><span class="p">(</span><span class="n">bigram_tokens</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bigram_vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[((</span><span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="mi">297</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="mi">161</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;had&#39;</span><span class="p">),</span> <span class="mi">126</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="mi">104</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">),</span> <span class="mi">104</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">),</span> <span class="mi">97</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">),</span> <span class="mi">94</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="mi">81</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;as&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">),</span> <span class="mi">75</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="mi">69</span><span class="p">)]</span>
+</pre></div>
+</div>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!--
+Two things are notable.
+Out of the 10 most frequent word pairs, 9 are composed of stop words and only one is relevant to the actual book---"the time".
+Furthermore, let us see whether the trigram frequency behaves in the same manner.
+--><p>Có một điều đáng chú ý ở đây. 9 trong số 10 cặp từ thường xuyên xuất
+hiện là các từ dừng và chỉ có một là liên quan đến cuốn sách — cặp từ
+“the time”. Hãy xem tần số của trigram có tương tự hay không.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trigram_tokens</span> <span class="o">=</span> <span class="p">[[</span><span class="n">triple</span> <span class="k">for</span> <span class="n">triple</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">:])]</span>
+                  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+<span class="n">trigram_vocab</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Vocab</span><span class="p">(</span><span class="n">trigram_tokens</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trigram_vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[((</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;traveller&#39;</span><span class="p">),</span> <span class="mi">53</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;machine&#39;</span><span class="p">),</span> <span class="mi">24</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;medical&#39;</span><span class="p">,</span> <span class="s1">&#39;man&#39;</span><span class="p">),</span> <span class="mi">22</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;seemed&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">),</span> <span class="mi">14</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="mi">14</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;began&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">),</span> <span class="mi">13</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;did&#39;</span><span class="p">,</span> <span class="s1">&#39;not&#39;</span><span class="p">),</span> <span class="mi">13</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;saw&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">),</span> <span class="mi">13</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;here&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">),</span> <span class="mi">12</span><span class="p">),</span> <span class="p">((</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;could&#39;</span><span class="p">,</span> <span class="s1">&#39;see&#39;</span><span class="p">),</span> <span class="mi">12</span><span class="p">)]</span>
+</pre></div>
+</div>
+<!--
+Last, let us visualize the token frequency among these three gram models: unigrams, bigrams, and trigrams.
+--><p>Cuối cùng, hãy quan sát biểu đồ tần số token của các mô hình: unigram,
+bigram, và trigram.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bigram_freqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">freq</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">bigram_vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">]</span>
+<span class="n">trigram_freqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">freq</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">trigram_vocab</span><span class="o">.</span><span class="n">token_freqs</span><span class="p">]</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">freqs</span><span class="p">,</span> <span class="n">bigram_freqs</span><span class="p">,</span> <span class="n">trigram_freqs</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;token&#39;</span><span class="p">,</span>
+         <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+         <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;unigram&#39;</span><span class="p">,</span> <span class="s1">&#39;bigram&#39;</span><span class="p">,</span> <span class="s1">&#39;trigram&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_language-models-and-dataset_vn_c9ad2e_9_0.svg" src="../_images/output_language-models-and-dataset_vn_c9ad2e_9_0.svg" /></div>
+<!--
+The graph is quite exciting for a number of reasons.
+First, beyond unigram words, also sequences of words appear to be following Zipf's law, albeit with a lower exponent, depending on  sequence length.
+Second, the number of distinct n-grams is not that large.
+This gives us hope that there is quite a lot of structure in language.
+Third, many n-grams occur very rarely, which makes Laplace smoothing rather unsuitable for language modeling. Instead, we will use deep learning based models.
+--><p>Có vài điều khá thú vị ở biểu đồ này. Thứ nhất, ngoài unigram, các cụm
+từ cũng tuân theo định luật Zipf, với số mũ thấp hơn tùy vào chiều dài
+cụm từ. Thứ hai, số lượng các n-gram độc nhất là không nhiều. Điều này
+có thể liên quan đến số lượng lớn các cấu trúc trong ngôn ngữ. Thứ ba,
+rất nhiều n-gram hiếm khi xuất hiện, khiến phép làm mượt Laplace không
+thích hợp để xây dựng mô hình ngôn ngữ. Thay vào đó, chúng ta sẽ sử dụng
+các mô hình học sâu.</p>
+<!--
+## Training Data Preparation
+--></div>
+<div class="section" id="chuan-bi-du-lieu-huan-luyen">
+<h2><span class="section-number">8.3.4. </span>Chuẩn bị Dữ liệu Huấn luyện<a class="headerlink" href="#chuan-bi-du-lieu-huan-luyen" title="Permalink to this headline">¶</a></h2>
+<!--
+Before introducing the model, let us assume we will use a neural network to train a language model.
+Now the question is how to read minibatches of examples and labels at random.
+Since sequence data is by its very nature sequential, we need to address the issue of processing it.
+We did so in a rather ad-hoc manner when we introduced in :numref:`sec_sequence`.
+Let us formalize this a bit.
+--><p>Giả sử cần sử dụng mạng nơ-ron để huấn luyện mô hình ngôn ngữ. Với tính
+chất tuần tự của dữ liệu chuỗi, làm thế nào để đọc ngẫu nhiên các
+mini-batch gồm các mẫu và nhãn? Ví dụ đơn giản trong
+<a class="reference internal" href="sequence_vn.html#sec-sequence"><span class="std std-numref">Section 8.1</span></a> đã giới thiệu một cách thực hiện. Hãy tổng quát
+hóa cách làm này một chút.</p>
+<!--
+In :numref:`fig_timemachine_5gram`, we visualized several possible ways to obtain 5-grams in a sentence, here a token is a character.
+Note that we have quite some freedom since we could pick an arbitrary offset.
+--><p><a class="reference internal" href="#fig-timemachine-5gram"><span class="std std-numref">Fig. 8.3.1</span></a>, biểu diễn các cách để chia một câu
+thành các 5-gram, ở đây mỗi token là một ký tự. Ta có thể chọn tùy ý độ
+dời ở vị trí bắt đầu.</p>
+<!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><!--
+![Different offsets lead to different subsequences when splitting up text.](../img/timemachine-5gram.svg)
+--><div class="figure align-default" id="id2">
+<span id="fig-timemachine-5gram"></span><img alt="../_images/timemachine-5gram.svg" src="../_images/timemachine-5gram.svg" /><p class="caption"><span class="caption-number">Fig. 8.3.1 </span><span class="caption-text">Các độ dời khác nhau dẫn đến các chuỗi con khác nhau khi phân tách
+văn bản.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+In fact, any one of these offsets is fine.
+Hence, which one should we pick? In fact, all of them are equally good.
+But if we pick all offsets we end up with rather redundant data due to overlap, particularly if the sequences are long.
+Picking just a random set of initial positions is no good either since it does not guarantee uniform coverage of the array.
+For instance, if we pick $n​$ elements at random out of a set of $n​$ with random replacement, the probability for a particular element not being picked is $(1-1/n)^n \to e^{-1}​$.
+This means that we cannot expect uniform coverage this way.
+Even randomly permuting a set of all offsets does not offer good guarantees.
+Instead we can use a simple trick to get both *coverage* and *randomness*: use a random offset, after which one uses the terms sequentially.
+We describe how to accomplish this for both random sampling and sequential partitioning strategies below.
+--><p>Chúng ta nên chọn giá trị độ dời nào? Trong thực tế, tất cả các giá trị
+đó đều tốt như nhau. Nhưng nếu chọn tất cả các giá trị độ dời, dữ liệu
+sẽ khá dư thừa do trùng lặp lẫn nhau, đặc biệt trong trường hợp các
+chuỗi rất dài. Việc chỉ chọn một tập ngẫu nhiên các vị trí đầu cũng
+không tốt vì không đảm bảo sẽ bao quát đồng đều cả mảng. Ví dụ, nếu lấy
+ngẫu nhiên có hoàn lại <span class="math notranslate nohighlight">\(n\)</span> phần tử từ một tập có <span class="math notranslate nohighlight">\(n\)</span> phần
+tử, xác suất một phần tử cụ thể không được chọn là
+<span class="math notranslate nohighlight">\((1-1/n)^n \to e^{-1}​\)</span>. Nghĩa là ta không thể kỳ vọng vào sự bao
+quát đồng đều, ngay cả khi hoán vị ngẫu nhiên một tập giá trị độ dời.
+Thay vào đó, có thể sử dụng một cách đơn giản để có được cả tính <em>bao
+quát</em> và tính <em>ngẫu nhiên</em>, đó là: chọn một độ dời ngẫu nhiên, sau đó sử
+dụng tuần tự các giá trị tiếp theo. Điều này được mô tả trong phép lấy
+mẫu ngẫu nhiên và phép phân tách tuần tự dưới đây.</p>
+<!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Random Sampling
+--><div class="section" id="lay-mau-ngau-nhien">
+<h3><span class="section-number">8.3.4.1. </span>Lấy Mẫu Ngẫu nhiên<a class="headerlink" href="#lay-mau-ngau-nhien" title="Permalink to this headline">¶</a></h3>
+<!--
+The following code randomly generates a minibatch from the data each time.
+Here, the batch size `batch_size` indicates the number of examples in each minibatch and `num_steps` is the length of the sequence (or timesteps if we have a time series) included in each example.
+In random sampling, each example is a sequence arbitrarily captured on the original sequence.
+The positions of two adjacent random minibatches on the original sequence are not necessarily adjacent.
+The target is to predict the next character based on what we have seen so far, hence the labels are the original sequence, shifted by one character.
+--><p>Đoạn mã sau tạo ngẫu nhiên một minibatch dữ liệu. Ở đây, kích thước
+batch <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> biểu thị số mẫu trong mỗi minibatch, <code class="docutils literal notranslate"><span class="pre">num_steps</span></code>
+biểu thị chiều dài mỗi mẫu (là số bước thời gian trong trường hợp chuỗi
+thời gian). Trong phép lấy mẫu ngẫu nhiên, mỗi mẫu là một chuỗi tùy ý
+được lấy ra từ chuỗi gốc. Hai minibatch ngẫu nhiên liên tiếp không nhất
+thiết phải liền kề nhau trong chuỗi góc. Mục tiêu của ta là dự đoán phần
+tử tiếp theo dựa trên các phần tử đã thấy cho đến hiện tại, do đó nhãn
+của một mẫu chính là mẫu đó dịch chuyển sang phải một phần tử.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saved in the d2l package for later use</span>
+<span class="k">def</span> <span class="nf">seq_data_iter_random</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="c1"># Offset the iterator over the data for uniform starts</span>
+    <span class="n">corpus</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):]</span>
+    <span class="c1"># Subtract 1 extra since we need to account for label</span>
+    <span class="n">num_examples</span> <span class="o">=</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">num_steps</span><span class="p">)</span>
+    <span class="n">example_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_examples</span> <span class="o">*</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">))</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">example_indices</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+        <span class="c1"># This returns a sequence of the length num_steps starting from pos</span>
+        <span class="k">return</span> <span class="n">corpus</span><span class="p">[</span><span class="n">pos</span><span class="p">:</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">num_steps</span><span class="p">]</span>
+
+    <span class="c1"># Discard half empty batches</span>
+    <span class="n">num_batches</span> <span class="o">=</span> <span class="n">num_examples</span> <span class="o">//</span> <span class="n">batch_size</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_batches</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+        <span class="c1"># Batch_size indicates the random examples read each time</span>
+        <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">example_indices</span><span class="p">[</span><span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)]</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">batch_indices</span><span class="p">]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">batch_indices</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Let us generate an artificial sequence from 0 to 30.
+We assume that the batch size and numbers of timesteps are 2 and 6 respectively.
+This means that depending on the offset we can generate between 4 and 5 $(x, y)$ pairs.
+With a minibatch size of 2, we only get 2 minibatches.
+--><p>Hãy tạo ra một chuỗi từ 0 đến 29, rồi sinh các minibatch từ chuỗi đó với
+kích thước batch là 2 và số bước thời gian là 6. Nghĩa là tùy vào độ
+dời, ta có thể sinh tối đa 4 hoặc 5 cặp <span class="math notranslate nohighlight">\((x, y)\)</span>. Với kích thước
+batch bằng 2, ta thu được 2 minibatch.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_seq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="ow">in</span> <span class="n">seq_data_iter_random</span><span class="p">(</span><span class="n">my_seq</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X: &#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Y:&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">:</span>  <span class="p">[[</span> <span class="mf">0.</span>  <span class="mf">1.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">4.</span>  <span class="mf">5.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">18.</span> <span class="mf">19.</span> <span class="mf">20.</span> <span class="mf">21.</span> <span class="mf">22.</span> <span class="mf">23.</span><span class="p">]]</span>
+<span class="n">Y</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">1.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">4.</span>  <span class="mf">5.</span>  <span class="mf">6.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">19.</span> <span class="mf">20.</span> <span class="mf">21.</span> <span class="mf">22.</span> <span class="mf">23.</span> <span class="mf">24.</span><span class="p">]]</span>
+<span class="n">X</span><span class="p">:</span>  <span class="p">[[</span><span class="mf">12.</span> <span class="mf">13.</span> <span class="mf">14.</span> <span class="mf">15.</span> <span class="mf">16.</span> <span class="mf">17.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">6.</span>  <span class="mf">7.</span>  <span class="mf">8.</span>  <span class="mf">9.</span> <span class="mf">10.</span> <span class="mf">11.</span><span class="p">]]</span>
+<span class="n">Y</span><span class="p">:</span> <span class="p">[[</span><span class="mf">13.</span> <span class="mf">14.</span> <span class="mf">15.</span> <span class="mf">16.</span> <span class="mf">17.</span> <span class="mf">18.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">7.</span>  <span class="mf">8.</span>  <span class="mf">9.</span> <span class="mf">10.</span> <span class="mf">11.</span> <span class="mf">12.</span><span class="p">]]</span>
+</pre></div>
+</div>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ===================== Bắt đầu dịch Phần 7 ===================== --><!--
+### Sequential Partitioning
+--></div>
+<div class="section" id="phan-tach-tuan-tu">
+<h3><span class="section-number">8.3.4.2. </span>Phân tách Tuần tự<a class="headerlink" href="#phan-tach-tuan-tu" title="Permalink to this headline">¶</a></h3>
+<!--
+In addition to random sampling of the original sequence, we can also make the positions of two adjacent random minibatches adjacent in the original sequence.
+--><p>Ngoài phép lấy mẫu ngẫu nhiên từ chuỗi gốc, chúng ta cũng có thể làm hai
+minibatch ngẫu nhiên liên tiếp có vị trí liền kề nhau trong chuỗi gốc.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saved in the d2l package for later use</span>
+<span class="k">def</span> <span class="nf">seq_data_iter_consecutive</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+    <span class="c1"># Offset for the iterator over the data for uniform starts</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">)</span>
+    <span class="c1"># Slice out data - ignore num_steps and just wrap around</span>
+    <span class="n">num_indices</span> <span class="o">=</span> <span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">batch_size</span><span class="p">)</span> <span class="o">*</span> <span class="n">batch_size</span>
+    <span class="n">Xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="n">offset</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="n">num_indices</span><span class="p">])</span>
+    <span class="n">Ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">offset</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">num_indices</span><span class="p">])</span>
+    <span class="n">Xs</span><span class="p">,</span> <span class="n">Ys</span> <span class="o">=</span> <span class="n">Xs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">Ys</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">num_batches</span> <span class="o">=</span> <span class="n">Xs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">num_steps</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_batches</span> <span class="o">*</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">Xs</span><span class="p">[:,</span> <span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="n">num_steps</span><span class="p">)]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">Ys</span><span class="p">[:,</span> <span class="n">i</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="n">num_steps</span><span class="p">)]</span>
+        <span class="k">yield</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+</pre></div>
+</div>
+<!--
+Using the same settings, print input `X` and label `Y` for each minibatch of examples read by random sampling.
+The positions of two adjacent minibatches on the original sequence are adjacent.
+--><p>Sử dụng các đối số như ở trên, ta sẽ in đầu vào <code class="docutils literal notranslate"><span class="pre">X</span></code> và nhãn <code class="docutils literal notranslate"><span class="pre">Y</span></code> cho
+mỗi minibatch sau khi phân tách tuần tự. Hai minibatch liên tiếp sẽ có
+vị trí trên chuỗi ban đầu liền kề nhau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="ow">in</span> <span class="n">seq_data_iter_consecutive</span><span class="p">(</span><span class="n">my_seq</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X: &#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Y:&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">:</span>  <span class="p">[[</span> <span class="mf">1.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">4.</span>  <span class="mf">5.</span>  <span class="mf">6.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">15.</span> <span class="mf">16.</span> <span class="mf">17.</span> <span class="mf">18.</span> <span class="mf">19.</span> <span class="mf">20.</span><span class="p">]]</span>
+<span class="n">Y</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">4.</span>  <span class="mf">5.</span>  <span class="mf">6.</span>  <span class="mf">7.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">16.</span> <span class="mf">17.</span> <span class="mf">18.</span> <span class="mf">19.</span> <span class="mf">20.</span> <span class="mf">21.</span><span class="p">]]</span>
+<span class="n">X</span><span class="p">:</span>  <span class="p">[[</span> <span class="mf">7.</span>  <span class="mf">8.</span>  <span class="mf">9.</span> <span class="mf">10.</span> <span class="mf">11.</span> <span class="mf">12.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">21.</span> <span class="mf">22.</span> <span class="mf">23.</span> <span class="mf">24.</span> <span class="mf">25.</span> <span class="mf">26.</span><span class="p">]]</span>
+<span class="n">Y</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">8.</span>  <span class="mf">9.</span> <span class="mf">10.</span> <span class="mf">11.</span> <span class="mf">12.</span> <span class="mf">13.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">22.</span> <span class="mf">23.</span> <span class="mf">24.</span> <span class="mf">25.</span> <span class="mf">26.</span> <span class="mf">27.</span><span class="p">]]</span>
+</pre></div>
+</div>
+<!--
+Now we wrap the above two sampling functions to a class so that we can use it as a Gluon data iterator later.
+--><p>Hãy gộp hai hàm lấy mẫu theo hai cách trên vào một lớp để duyệt dữ liệu
+trong Gluon ở các phần sau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saved in the d2l package for later use</span>
+<span class="k">class</span> <span class="nc">SeqDataLoader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A iterator to load sequence data.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">use_random_iter</span><span class="p">,</span> <span class="n">max_tokens</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">use_random_iter</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_iter_fn</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">seq_data_iter_random</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_iter_fn</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">seq_data_iter_consecutive</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corpus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_corpus_time_machine</span><span class="p">(</span><span class="n">max_tokens</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_steps</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_iter_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">corpus</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_steps</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Last, we define a function `load_data_time_machine` that returns both the data iterator and the vocabulary, so we can use it similarly as other functions with `load_data` prefix.
+--><p>Cuối cùng, ta sẽ viết hàm <code class="docutils literal notranslate"><span class="pre">load_data_time_machine</span></code> trả về cả iterator
+dữ liệu và bộ từ vựng để sử dụng như các hàm <code class="docutils literal notranslate"><span class="pre">load_data</span></code> khác.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saved in the d2l package for later use</span>
+<span class="k">def</span> <span class="nf">load_data_time_machine</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">use_random_iter</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                           <span class="n">max_tokens</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">data_iter</span> <span class="o">=</span> <span class="n">SeqDataLoader</span><span class="p">(</span>
+        <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">use_random_iter</span><span class="p">,</span> <span class="n">max_tokens</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_iter</span><span class="p">,</span> <span class="n">data_iter</span><span class="o">.</span><span class="n">vocab</span>
+</pre></div>
+</div>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">8.3.5. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Language models are an important technology for natural language processing.
+* $n$-grams provide a convenient model for dealing with long sequences by truncating the dependence.
+* Long sequences suffer from the problem that they occur very rarely or never.
+* Zipf's law governs the word distribution for not only unigrams but also the other $n$-grams.
+* There is a lot of structure but not enough frequency to deal with infrequent word combinations efficiently via Laplace smoothing.
+* The main choices for sequence partitioning are picking between consecutive and random sequences.
+* Given the overall document length, it is usually acceptable to be slightly wasteful with the documents and discard half-empty minibatches.
+--><ul class="simple">
+<li>Mô hình ngôn ngữ là một kĩ thuật quan trọng trong xử lý ngôn ngữ tự
+nhiên.</li>
+<li><span class="math notranslate nohighlight">\(n\)</span>-gram là một mô hình khá tốt để xử lý các chuỗi dài bằng
+cách cắt giảm số phụ thuộc.</li>
+<li>Vấn đề của các chuỗi dài là chúng rất hiếm hoặc thậm chí không bao
+giờ xuất hiện.</li>
+<li>Định luật Zipf không chỉ mô tả phân phối từ 1-gram mà còn cả các
+<span class="math notranslate nohighlight">\(n\)</span>-gram khác.</li>
+<li>Có nhiều cấu trúc trong ngôn ngữ nhưng tần suất xuất hiện lại không
+đủ cao, để xử lý các tổ hợp từ hiếm ta sử dụng làm mượt Laplace.</li>
+<li>Hai giải pháp chủ yếu cho bài toán phân tách chuỗi là lấy mẫu ngẫu
+nhiên và phân tách tuần tự.</li>
+<li>Nếu tài liệu đủ dài, việc lãng phí một chút và loại bỏ các minibatch
+rỗng một nửa là điều chấp nhận được.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">8.3.6. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Suppose there are $100.000$ words in the training dataset. How much word frequency and multi-word adjacent frequency does a four-gram need to store?
+2. Review the smoothed probability estimates. Why are they not accurate? Hint: we are dealing with a contiguous sequence rather than singletons.
+3. How would you model a dialogue?
+4. Estimate the exponent of Zipf's law for unigrams, bigrams, and trigrams.
+5. What other minibatch data sampling methods can you think of?
+6. Why is it a good idea to have a random offset?
+    * Does it really lead to a perfectly uniform distribution over the sequences on the document?
+    * What would you have to do to make things even more uniform?
+7. If we want a sequence example to be a complete sentence, what kinds of problems does this introduce in minibatch sampling? Why would we want to do this anyway?
+--><ol class="arabic simple">
+<li>Giả sử có <span class="math notranslate nohighlight">\(100.000\)</span> từ trong tập dữ liệu huấn luyện. Mô hình
+4-gram cần phải lưu trữ bao nhiêu tần số của từ đơn và cụm từ liền
+kề?</li>
+<li>Hãy xem lại các ước lượng xác suất đã qua làm mượt. Tại sao chúng
+không chính xác? Gợi ý: chúng ta đang xử lý một chuỗi liền kề chứ
+không phải riêng lẻ.</li>
+<li>Bạn sẽ mô hình hóa một cuộc đối thoại như thế nào?</li>
+<li>Hãy ước tính luỹ thừa của định luật Zipf cho 1-gram, 2-gram, và
+3-gram.</li>
+<li>Hãy thử tìm các cách lấy mẫu minibatch khác.</li>
+<li>Tại sao việc lấy giá trị độ dời ngẫu nhiên lại là một ý tưởng hay?<ul>
+<li>Liệu việc đó có làm các chuỗi dữ liệu văn bản tuân theo phân phối
+đều một cách hoàn hảo không?</li>
+<li>Phải làm gì để có phân phối đều hơn?</li>
+</ul>
+</li>
+<li>Những vấn đề gì sẽ nảy sinh khi lấy mẫu minibatch từ một câu hoàn
+chỉnh? Có lợi ích gì khi lấy mẫu một câu hoàn chỉnh?</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 7 ===================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">8.3.7. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2361">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">8.3.8. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Cường</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Đinh Đắc</li>
+<li>Nguyễn Văn Quang</li>
+<li>Phạm Hồng Vinh</li>
+<li>Nguyễn Cảnh Thướng</li>
+<li>Phạm Minh Đức</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a><ul>
+<li><a class="reference internal" href="#uoc-tinh-mot-mo-hinh-ngon-ngu">8.3.1. Ước tính một Mô hình Ngôn ngữ</a></li>
+<li><a class="reference internal" href="#mo-hinh-markov-va-n-grams">8.3.2. Mô hình Markov và <span class="math notranslate nohighlight">\(n\)</span>-grams</a></li>
+<li><a class="reference internal" href="#thong-ke-ngon-ngu-tu-nhien">8.3.3. Thống kê Ngôn ngữ Tự nhiên</a></li>
+<li><a class="reference internal" href="#chuan-bi-du-lieu-huan-luyen">8.3.4. Chuẩn bị Dữ liệu Huấn luyện</a><ul>
+<li><a class="reference internal" href="#lay-mau-ngau-nhien">8.3.4.1. Lấy Mẫu Ngẫu nhiên</a></li>
+<li><a class="reference internal" href="#phan-tach-tuan-tu">8.3.4.2. Phân tách Tuần tự</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">8.3.5. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">8.3.6. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">8.3.7. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">8.3.8. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="text-preprocessing_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>8.2. Tiền Xử lý Dữ liệu Văn bản</div>
+         </div>
+     </a>
+     <a id="button-next" href="rnn_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>8.4. Mạng nơ-ron Hồi tiếp</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

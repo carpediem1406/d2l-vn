@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>2.3. Đại số tuyến tính &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.4. Giải tích" href="calculus_vn.html" />
+    <link rel="prev" title="2.2. Tiền xử lý dữ liệu" href="pandas_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">2. </span>Sơ bộ</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">2.3. </span>Đại số tuyến tính</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_preliminaries/linear-algebra_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">2. Sơ bộ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">2. Sơ bộ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ==================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Linear Algebra
+--><div class="section" id="dai-so-tuyen-tinh">
+<span id="sec-linear-algebra"></span><h1><span class="section-number">2.3. </span>Đại số tuyến tính<a class="headerlink" href="#dai-so-tuyen-tinh" title="Permalink to this headline">¶</a></h1>
+<!--
+Now that you can store and manipulate data, let's briefly review the subset of basic linear algebra that you will need to understand and implement most of models covered in this book.
+Below, we introduce the basic mathematical objects, arithmetic, and operations in linear algebra, expressing each both through mathematical notation and the corresponding implementation in code.
+--><p>Bây giờ bạn đã có thể lưu trữ và xử lý dữ liệu, hãy cùng ôn qua những
+kiến thức đại số tuyến tính cần thiết để hiểu và lập trình hầu hết các
+mô hình được nhắc tới trong quyển sách này. Dưới đây, chúng tôi giới
+thiệu các đối tượng toán học, số học và phép tính cơ bản trong đại số
+tuyến tính, biểu diễn chúng bằng cả ký hiệu toán học và cách triển khai
+lập trình tương ứng.</p>
+<!--
+## Scalars
+--><div class="section" id="so-vo-huong">
+<h2><span class="section-number">2.3.1. </span>Số vô hướng<a class="headerlink" href="#so-vo-huong" title="Permalink to this headline">¶</a></h2>
+<!--
+If you never studied linear algebra or machine learning, then your past experience with math probably consisted of thinking about one number at a time.
+And, if you ever balanced a checkbook or even paid for dinner at a restaurant then you already know how to do basic things like adding and multiplying pairs of numbers.
+For example, the temperature in Palo Alto is $52$ degrees Fahrenheit.
+Formally, we call values consisting of just one numerical quantity *scalars*.
+If you wanted to convert this value to Celsius (the metric system's more sensible temperature scale), you would evaluate the expression $c = \frac{5}{9}(f - 32)$, setting $f$ to $52$.
+In this equation, each of the terms---$5$, $9$, and $32$---are scalar values.
+The placeholders $c$ and $f$ are called *variables* and they represented unknown scalar values.
+--><p>Nếu bạn chưa từng học đại số tuyến tính hay học máy, có lẽ bạn mới chỉ
+có kinh nghiệm làm toán với từng con số riêng lẻ. Và nếu bạn đã từng
+phải cân bằng sổ thu chi hoặc đơn giản là trả tiền cho bữa ăn, thì hẳn
+bạn đã biết cách thực hiện các phép tính cơ bản như cộng trừ nhân chia
+các cặp số. Ví dụ, nhiệt độ tại Palo Alto là <span class="math notranslate nohighlight">\(52\)</span> độ Fahrenheit.
+Chúng ta gọi các giá trị mà chỉ bao gồm một số duy nhất là <em>số vô hướng</em>
+(<em>scalar</em>). Nếu bạn muốn chuyển giá trị nhiệt độ trên sang độ Celsius
+(thang đo nhiệt độ hợp lý hơn theo hệ mét), bạn sẽ phải tính biểu thức
+<span class="math notranslate nohighlight">\(c = \frac{5}{9}(f - 32)\)</span> với giá trị <span class="math notranslate nohighlight">\(f\)</span> bằng <span class="math notranslate nohighlight">\(52\)</span>.
+Trong phương trình trên, mỗi số hạng — <span class="math notranslate nohighlight">\(5\)</span>, <span class="math notranslate nohighlight">\(9\)</span> và
+<span class="math notranslate nohighlight">\(32\)</span> — là các số vô hướng. Các ký hiệu <span class="math notranslate nohighlight">\(c\)</span> và <span class="math notranslate nohighlight">\(f\)</span> được
+gọi là <em>biến</em> và chúng biễu diễn các giá trị số vô hướng chưa biết.</p>
+<!--
+In this book, we adopt the mathematical notation where scalar variables are denoted by ordinary lower-cased letters (e.g., $x$, $y$, and $z$).
+We denote the space of all (continuous) *real-valued* scalars by $\mathbb{R}$.
+For expedience, we will punt on rigorous definitions of what precisely *space* is, but just remember for now that the expression $x \in \mathbb{R}$ is a formal way to say that $x$ is a real-valued scalar.
+The symbol $\in$ can be pronounced "in" and simply denotes membership in a set.
+Analogously, we could write $x, y \in \{0, 1\}$ to state that $x$ and $y$ are numbers whose value can only be $0$ or $1$.
+--><p>Trong quyển sách này, chúng tôi sẽ tuân theo quy ước ký hiệu các biến vô
+hướng bằng các chữ cái viết thường (chẳng hạn <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> và
+<span class="math notranslate nohighlight">\(z\)</span>). Chúng tôi ký hiệu không gian (liên tục) của tất cả các <em>số
+thực</em> vô hướng là <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. Vì tính thiết thực, chúng tôi sẽ
+bỏ qua định nghĩa chính xác của <em>không gian</em>. Nhưng bạn cần nhớ
+<span class="math notranslate nohighlight">\(x \in \mathbb{R}\)</span> là cách toán học để thể hiện <span class="math notranslate nohighlight">\(x\)</span> là một
+số thực vô hướng. Ký hiệu <span class="math notranslate nohighlight">\(\in\)</span> đọc là “thuộc” và đơn thuần biểu
+diễn việc phần tử thuộc một tập hợp. Tương tự, ta có thể viết
+<span class="math notranslate nohighlight">\(x, y \in \{0, 1\}\)</span> để ký hiệu cho việc các số <span class="math notranslate nohighlight">\(x\)</span> và
+<span class="math notranslate nohighlight">\(y\)</span> chỉ có thể nhận giá trị <span class="math notranslate nohighlight">\(0\)</span> hoặc <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<!--
+In MXNet code, a scalar is represented by an `ndarray` with just one element.
+In the next snippet, we instantiate two scalars and perform some familiar arithmetic operations with them, namely addition, multiplication, division, and exponentiation.
+--><p>Trong mã nguồn MXNet, một số vô hướng được biễu diễn bằng một
+<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> với chỉ một phần tử. Trong đoạn mã dưới đây, chúng ta khởi
+tạo hai số vô hướng và thực hiện các phép tính quen thuộc như cộng, trừ,
+nhân, chia và lũy thừa với chúng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">**</span> <span class="n">y</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="mf">5.</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">6.</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">9.</span><span class="p">))</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 1 ==================== --><!-- =================== Bắt đầu dịch Phần 2 ==================== --><!--
+## Vectors
+--></div>
+<div class="section" id="vector">
+<h2><span class="section-number">2.3.2. </span>Vector<a class="headerlink" href="#vector" title="Permalink to this headline">¶</a></h2>
+<!--
+You can think of a vector as simply a list of scalar values.
+We call these values the *elements* (*entries* or *components*) of the vector.
+When our vectors represent examples from our dataset, their values hold some real-world significance.
+For example, if we were training a model to predict the risk that a loan defaults, we might associate each applicant with a vector whose components correspond to their income, length of employment, number of previous defaults, and other factors.
+If we were studying the risk of heart attacks hospital patients potentially face, we might represent each patient by a vector whose components capture their most recent vital signs, cholesterol levels, minutes of exercise per day, etc.
+In math notation, we will usually denote vectors as bold-faced, lower-cased letters (e.g., $\mathbf{x}$, $\mathbf{y}$, and $\mathbf{z})$.
+--><p>Bạn có thể xem vector đơn thuần như một dãy các số vô hướng. Chúng ta
+gọi các giá trị đó là <em>phần tử</em> (<em>thành phần</em>) của vector. Khi dùng
+vector để biễu diễn các mẫu trong tập dữ liệu, giá trị của chúng thường
+mang ý nghĩa liên quan tới đời thực. Ví dụ, nếu chúng ta huấn luyện một
+mô hình dự đoán rủi ro vỡ nợ, chúng ta có thể gán cho mỗi ứng viên một
+vector gồm các thành phần tương ứng với thu nhập, thời gian làm việc, số
+lần vỡ nợ trước đó của họ và các yếu tố khác. Nếu chúng ta đang tìm hiểu
+về rủi ro bị đau tim của bệnh nhân, ta có thể biểu diễn mỗi bệnh nhân
+bằng một vector gồm các phần tử mang thông tin về dấu hiệu sinh tồn gần
+nhất, nồng độ cholesterol, số phút tập thể dục mỗi ngày, v.v. Trong ký
+hiệu toán học, chúng ta thường biểu diễn vector bằng chữ cái in đậm viết
+thường (ví dụ <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, và
+<span class="math notranslate nohighlight">\(\mathbf{z})\)</span>.</p>
+<!--
+In MXNet, we work with vectors via $1$-dimensional `ndarray`s.
+In general `ndarray`s can have arbitrary lengths, subject to the memory limits of your machine.
+--><p>Trong MXNet, chúng ta làm việc với vector thông qua các <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>
+<span class="math notranslate nohighlight">\(1\)</span>-chiều. Thường thì <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> có thể có chiều dài bất kỳ, tùy
+thuộc vào giới hạn bộ nhớ máy tính.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+</pre></div>
+</div>
+<!--
+We can refer to any element of a vector by using a subscript.
+For example, we can refer to the $i^\mathrm{th}$ element of $\mathbf{x}$ by $x_i$.
+Note that the element $x_i$ is a scalar, so we do not bold-face the font when referring to it.
+Extensive literature considers column vectors to be the default orientation of vectors, so does this book.
+In math, a vector $\mathbf{x}$ can be written as
+--><p>Một phần tử bất kỳ trong vector có thể được ký hiệu sử dụng chỉ số dưới.
+Ví dụ ta có thể viết <span class="math notranslate nohighlight">\(x_i\)</span> để ám chỉ phần tử thứ <span class="math notranslate nohighlight">\(i\)</span> của
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. Lưu ý rằng phần tử <span class="math notranslate nohighlight">\(x_i\)</span> là một số vô hướng
+nên nó không được in đậm. Có rất nhiều tài liệu tham khảo xem vector cột
+là chiều mặc định của vector, và quyển sách này cũng vậy. Trong toán
+học, một vector có thể được viết như sau</p>
+<div class="math notranslate nohighlight" id="equation-eq-vec-def">
+<span class="eqno">(2.3.1)<a class="headerlink" href="#equation-eq-vec-def" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{x} =\begin{bmatrix}x_{1}  \\x_{2}  \\ \vdots  \\x_{n}\end{bmatrix},\end{split}\]</div>
+<!--
+where $x_1, \ldots, x_n$ are elements of the vector.
+In code, we access any element by indexing into the `ndarray`.
+--><p>trong đó <span class="math notranslate nohighlight">\(x_1, \ldots, x_n\)</span> là các phần tử của vector. Trong mã
+nguồn, chúng ta sử dụng chỉ số để truy cập các phần tử trong
+<code class="docutils literal notranslate"><span class="pre">ndarray</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 2 ==================== --><!-- =================== Bắt đầu dịch Phần 3 ==================== --><!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+### Length, Dimensionality, and Shape
+--><div class="section" id="do-dai-chieu-va-kich-thuoc">
+<h3><span class="section-number">2.3.2.1. </span>Độ dài, Chiều, và Kích thước<a class="headerlink" href="#do-dai-chieu-va-kich-thuoc" title="Permalink to this headline">¶</a></h3>
+<!--
+Let's revisit some concepts from :numref:`sec_ndarray`.
+A vector is just an array of numbers.
+And just as every array has a length, so does every vector.
+In math notation, if we want to say that a vector $\mathbf{x}$ consists of $n$ real-valued scalars, we can express this as $\mathbf{x} \in \mathbb{R}^n$.
+The length of a vector is commonly called the *dimension* of the vector.
+--><p>Hãy quay lại với những khái niệm từ <a class="reference internal" href="ndarray_vn.html#sec-ndarray"><span class="std std-numref">Section 2.1</span></a>. Một vector
+đơn thuần là một dãy các số. Mỗi vector, tương tự như dãy, đều có một độ
+dài. Trong ký hiệu toán học, nếu ta muốn nói rằng một vector
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> chứa <span class="math notranslate nohighlight">\(n\)</span> các số thực vô hướng, ta có thể biểu
+diễn nó bằng <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>. Độ dài của một vector
+còn được gọi là số <strong>chiều</strong> của vector.</p>
+<!--
+As with an ordinary Python array, we can access the length of an `ndarray` by calling Python's built-in `len()` function.
+--><p>Cũng giống như một dãy thông thường trong Python, chúng ta có thể xem độ
+dài của của một <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> bằng cách gọi hàm <code class="docutils literal notranslate"><span class="pre">len()</span></code> có sẵn của
+Python.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span>
+</pre></div>
+</div>
+<!--
+When an `ndarray` represents a vector (with precisely one axis), we can also access its length via the `.shape` attribute.
+The shape is a tuple that lists the length (dimensionality) along each axis of the `ndarray`.
+For `ndarray`s with just one axis, the shape has just one element.
+--><p>Khi một <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> biễu diễn một vector (với chính xác một trục), ta
+cũng có thể xem độ dài của nó qua thuộc tính <code class="docutils literal notranslate"><span class="pre">.shape</span></code> (kích thước).
+Kích thước là một <code class="docutils literal notranslate"><span class="pre">tuple</span></code> liệt kê độ dài (số chiều) dọc theo mỗi trục
+của <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>. Với các <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> có duy nhất một trục, kích thước
+của nó chỉ có một phần tử.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+</pre></div>
+</div>
+<!--
+Note that the word "dimension" tends to get overloaded in these contexts and this tends to confuse people.
+To clarify, we use the dimensionality of a *vector* or an *axis* to refer to its length, i.e., the number of elements of a vector or an axis.
+However, we use the dimensionality of an `ndarray` to refer to the number of axes that an `ndarray` has.
+In this sense, the dimensionality of an `ndarray`'s some axis will be the length of that axis.
+--><p>Ở đây cần lưu ý rằng, từ “chiều” là một từ đa nghĩa và khi đặt vào nhiều
+ngữ cảnh thường dễ làm ta bị nhầm lẫn. Để làm rõ, chúng ta dùng số chiều
+của một <em>vector</em> hoặc của một <em>trục</em> để chỉ độ dài của nó, tức là số
+phần tử trong một vector hay một trục. Tuy nhiên, chúng ta sử dụng số
+chiều của một <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> để chỉ số trục của <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> đó. Theo nghĩa
+này, chiều của một trục của một <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> là độ dài của trục đó.</p>
+<!-- =================== Kết thúc dịch Phần 3 ==================== --><!-- =================== Bắt đầu dịch Phần 4 ==================== --><!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+## Matrices
+--></div>
+</div>
+<div class="section" id="ma-tran">
+<h2><span class="section-number">2.3.3. </span>Ma trận<a class="headerlink" href="#ma-tran" title="Permalink to this headline">¶</a></h2>
+<!--
+Just as vectors generalize scalars from order $0$ to order $1$, matrices generalize vectors from order $1$ to order $2$.
+Matrices, which we will typically denote with bold-faced, capital letters (e.g., $\mathbf{X}$, $\mathbf{Y}$, and $\mathbf{Z}$), are represented in code as `ndarray`s with $2$ axes.
+--><p>Giống như vector khái quát số vô hướng từ bậc <span class="math notranslate nohighlight">\(0\)</span> sang bậc
+<span class="math notranslate nohighlight">\(1\)</span>, ma trận sẽ khái quát những vector từ bậc <span class="math notranslate nohighlight">\(1\)</span> sang bậc
+<span class="math notranslate nohighlight">\(2\)</span>. Ma trận thường được ký hiệu với ký tự hoa và được in đậm (ví
+dụ: <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span>, và <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span>); và
+được biểu diễn bằng các <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> với <span class="math notranslate nohighlight">\(2\)</span> trục khi lập trình.</p>
+<!--
+In math notation, we use $\mathbf{A} \in \mathbb{R}^{m \times n}$ to express that the matrix $\mathbf{A}$ consists of $m$ rows and $n$ columns of real-valued scalars.
+Visually, we can illustrate any matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$ as a table, where each element $a_{ij}$ belongs to the $i^{\mathrm{th}}$ row and $j^{\mathrm{th}}$ column:
+--><p>Trong ký hiệu toán học, ta dùng
+<span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> để biểu thị một ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> gồm <span class="math notranslate nohighlight">\(m\)</span> hàng và <span class="math notranslate nohighlight">\(n\)</span> cột các giá trị số
+thực. Về mặt hình ảnh, ta có thể minh họa bất kỳ ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> như một bảng biểu mà mỗi
+phần tử <span class="math notranslate nohighlight">\(a_{ij}\)</span> nằm ở dòng thứ <span class="math notranslate nohighlight">\(i\)</span> và cột thứ <span class="math notranslate nohighlight">\(j\)</span> của
+bảng:</p>
+<div class="math notranslate nohighlight" id="equation-eq-matrix-def">
+<span class="eqno">(2.3.2)<a class="headerlink" href="#equation-eq-matrix-def" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}=\begin{bmatrix} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \\ \end{bmatrix}.\end{split}\]</div>
+<!--
+For any $\mathbf{A} \in \mathbb{R}^{m \times n}$, the shape of $\mathbf{A}$ is ($m$, $n$) or $m \times n$.
+Specifically, when a matrix has the same number of rows and columns, its shape becomes a square; thus, it is called a *square matrix*.
+--><p>Với bất kỳ ma trận <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> nào,
+kích thước của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> là (<span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(n\)</span>) hay
+<span class="math notranslate nohighlight">\(m \times n\)</span>. Trong trường hợp đặc biệt, khi một ma trận có số
+dòng bằng số cột, dạng của nó là một hình vuông; như vậy, nó được gọi là
+một <em>ma trận vuông</em> (<em>square matrix</em>).</p>
+<!--
+We can create an $m \times n$ matrix in MXNet by specifying a shape with two components $m$ and $n$ when calling any of our favorite functions for instantiating an `ndarray`.
+--><p>Ta có thể tạo một ma trận <span class="math notranslate nohighlight">\(m \times n\)</span> trong MXNet bằng cách khai
+báo kích thước của nó với hai thành phần <span class="math notranslate nohighlight">\(m\)</span> và <span class="math notranslate nohighlight">\(n\)</span> khi sử
+dụng bất kỳ hàm khởi tạo <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> nào mà ta thích.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+We can access the scalar element $a_{ij}$ of a matrix $\mathbf{A}$ in :eqref:`eq_matrix_def` by specifying the indices for the row ($i$) and column ($j$), such as $[\mathbf{A}]_{ij}$.
+When the scalar elements of a matrix $\mathbf{A}$, such as in :eqref:`eq_matrix_def`, are not given, we may simply use the lower-case letter of the matrix $\mathbf{A}$ with the index subscript, $a_{ij}$, to refer to $[\mathbf{A}]_{ij}$.
+To keep notation simple, commas are inserted to separate indices only when necessary, such as $a_{2, 3j}$ and $[\mathbf{A}]_{2i-1, 3}$.
+--><p>Ta có thể truy cập phần tử vô hướng <span class="math notranslate nohighlight">\(a_{ij}\)</span> của ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> trong :eqref:<code class="docutils literal notranslate"><span class="pre">eq_matrix_def</span></code> bằng cách khai báo chỉ
+số dòng (<span class="math notranslate nohighlight">\(i\)</span>) và chỉ số cột (<span class="math notranslate nohighlight">\(j\)</span>), như là
+<span class="math notranslate nohighlight">\([\mathbf{A}]_{ij}\)</span>. Khi những thành phần vô hướng của ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, như trong :eqref:<code class="docutils literal notranslate"><span class="pre">eq_matrix_def</span></code>chưa được đưa
+ra, ta có thể sử dụng ký tự viết thường của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>
+với các chỉ số ghi dưới, <span class="math notranslate nohighlight">\(a_{ij}\)</span>, để chỉ thành phần
+<span class="math notranslate nohighlight">\([\mathbf{A}]_{ij}\)</span>. Nhằm giữ sự đơn giản cho các ký hiệu, dấu
+phẩy chỉ được thêm vào để phân tách các chỉ số khi cần thiết, như
+<span class="math notranslate nohighlight">\(a_{2, 3j}\)</span> và <span class="math notranslate nohighlight">\([\mathbf{A}]_{2i-1, 3}\)</span>.</p>
+<!--
+Sometimes, we want to flip the axes.
+When we exchange a matrix's rows and columns, the result is called the *transpose* of the matrix.
+Formally, we signify a matrix $\mathbf{A}$'s transpose by $\mathbf{A}^\top$ and if $\mathbf{B} = \mathbf{A}^\top$, then $b_{ij} = a_{ji}$ for any $i$ and $j$.
+Thus, the transpose of $\mathbf{A}$ in :eqref:`eq_matrix_def` is a $n \times m$ matrix:
+--><p>Đôi khi, ta muốn hoán đổi các trục. Khi ta hoán đổi các dòng với các cột
+của ma trận, kết quả có được là <em>chuyển vị</em> (<em>transpose</em>) của ma trận
+đó. Về lý thuyết, chuyển vị của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> được ký hiệu
+là <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> và nếu <span class="math notranslate nohighlight">\(\mathbf{B} = \mathbf{A}^\top\)</span>
+thì <span class="math notranslate nohighlight">\(b_{ij} = a_{ji}\)</span> với mọi <span class="math notranslate nohighlight">\(i\)</span> và <span class="math notranslate nohighlight">\(j\)</span>. Do đó,
+chuyển vị của <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> trong :eqref:<code class="docutils literal notranslate"><span class="pre">eq_matrix_def</span></code> là một
+ma trận <span class="math notranslate nohighlight">\(n \times m\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-0">
+<span class="eqno">(2.3.3)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-0" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}^\top =
+\begin{bmatrix}
+    a_{11} &amp; a_{21} &amp; \dots  &amp; a_{m1} \\
+    a_{12} &amp; a_{22} &amp; \dots  &amp; a_{m2} \\
+    \vdots &amp; \vdots &amp; \ddots  &amp; \vdots \\
+    a_{1n} &amp; a_{2n} &amp; \dots  &amp; a_{mn}
+\end{bmatrix}.\end{split}\]</div>
+<!--
+In code, we access a matrix's transpose via the `T` attribute.
+--><p>Trong mã nguồn, ta lấy chuyển vị của một ma trận thông qua thuộc tính
+<code class="docutils literal notranslate"><span class="pre">T</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">8.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">2.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">3.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+As a special type of the square matrix, a *symmetric matrix* $\mathbf{A}$ is equal to its transpose: $\mathbf{A} = \mathbf{A}^\top$.
+--><p>Là một biến thể đặc biệt của ma trận vuông, <em>ma trận đối xứng</em>
+(<em>symmetric matrix</em>) <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> có chuyển vị bằng chính nó:
+<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{A}^\top\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">B</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">==</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
+       <span class="p">[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">],</span>
+       <span class="p">[</span> <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">,</span>  <span class="kc">True</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+Matrices are useful data structures: they allow us to organize data that have different modalities of variation.
+For example, rows in our matrix might correspond to different houses (data points), while columns might correspond to different attributes.
+This should sound familiar if you have ever used spreadsheet software or have read :numref:`sec_pandas`.
+Thus, although the default orientation of a single vector is a column vector, in a matrix that represents a tabular dataset, it is more conventional to treat each data point as a row vector in the matrix.
+And, as we will see in later chapters, this convention will enable common deep learning practices.
+For example, along the outermost axis of an `ndarray`, we can access or enumerate minibatches of data points, or just data points if no minibatch exists.
+--><p>Ma trận là một cấu trúc dữ liệu hữu ích: chúng cho phép ta tổ chức dữ
+liệu có nhiều phương thức biến thể khác nhau. Ví dụ, các dòng trong ma
+trận của chúng ta có thể tượng trưng cho các căn nhà khác nhau (các điểm
+dữ liệu), còn các cột có thể tượng trưng cho những thuộc tính khác nhau
+của ngôi nhà. Bạn có thể thấy quen thuộc với điều này nếu đã từng sử
+dụng các phần mềm lập bảng tính hoặc đã đọc <a class="reference internal" href="pandas_vn.html#sec-pandas"><span class="std std-numref">Section 2.2</span></a>. Do
+đó, mặc dù một vector đơn lẻ có hướng mặc định là một vector cột, trong
+một ma trận biểu thị một tập dữ liệu bảng biểu, sẽ tốt hơn nếu ta xem
+mỗi điểm dữ liệu như một vector dòng trong ma trận. Chúng ta sẽ thấy ở
+những chương sau, quy ước này sẽ giúp dễ dàng áp dụng các kỹ thuật học
+sâu thông dụng. Ví dụ, với trục ngoài cùng của <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, ta có thể
+truy cập hay duyệt qua các batch nhỏ của những điểm dữ liệu hoặc chỉ đơn
+thuần là các điểm dữ liệu nếu không có batch nhỏ nào cả.</p>
+<!-- =================== Kết thúc dịch Phần 4 ==================== --><!-- =================== Bắt đầu dịch Phần 5 ==================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 4 - BẮT ĐẦU ===================================--><!--
+## Tensors
+--></div>
+<div class="section" id="tensor">
+<h2><span class="section-number">2.3.4. </span>Tensor<a class="headerlink" href="#tensor" title="Permalink to this headline">¶</a></h2>
+<!--
+Just as vectors generalize scalars, and matrices generalize vectors, we can build data structures with even more axes.
+Tensors give us a generic way of describing `ndarray`s with an arbitrary number of axes.
+Vectors, for example, are first-order tensors, and matrices are second-order tensors.
+Tensors are denoted with capital letters of a special font face (e.g., $\mathsf{X}$, $\mathsf{Y}$, and $\mathsf{Z}$) and their indexing mechanism (e.g., $x_{ijk}$ and $[\mathsf{X}]_{1, 2i-1, 3}$) is similar to that of matrices.
+--><p>Giống như vector khái quát hoá số vô hướng và ma trận khái quát hoá
+vector, ta có thể xây dựng những cấu trúc dữ liệu với thậm chí nhiều
+trục hơn. Tensor cho chúng ta một phương pháp tổng quát để miêu tả các
+<code class="docutils literal notranslate"><span class="pre">ndarray</span></code> với số trục bất kỳ. Ví dụ, vector là các tensor bậc một còn
+ma trận là các tensor bậc hai. Tensor được ký hiệu với ký tự viết hoa sử
+dụng một font chữ đặc biệt (ví dụ: <span class="math notranslate nohighlight">\(\mathsf{X}\)</span>,
+<span class="math notranslate nohighlight">\(\mathsf{Y}\)</span>, và <span class="math notranslate nohighlight">\(\mathsf{Z}\)</span>) và có cơ chế truy vấn (ví dụ:
+<span class="math notranslate nohighlight">\(x_{ijk}\)</span> and <span class="math notranslate nohighlight">\([\mathsf{X}]_{1, 2i-1, 3}\)</span>) giống như ma
+trận.</p>
+<!--
+Tensors will become more important when we start working with images, which arrive as `ndarray`s with 3 axes corresponding to the height, width, and a *channel* axis for stacking the color channels (red, green, and blue).
+For now, we will skip over higher order tensors and focus on the basics.
+--><p>Tensor sẽ trở nên quan trọng hơn khi ta bắt đầu làm việc với hình ảnh,
+thường được biểu diễn dưới dạng <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> với 3 trục tương ứng với
+chiều cao, chiều rộng và một trục <em>kênh</em> (<em>channel</em>) để xếp chồng các
+kênh màu (đỏ, xanh lá và xanh dương). Tạm thời, ta sẽ bỏ qua các tensor
+bậc cao hơn và tập trung vào những điểm cơ bản trước.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">]],</span>
+
+       <span class="p">[[</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">20.</span><span class="p">,</span> <span class="mf">21.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">]]])</span>
+</pre></div>
+</div>
+<!--
+## Basic Properties of Tensor Arithmetic
+--></div>
+<div class="section" id="cac-thuoc-tinh-co-ban-cua-phep-toan-tensor">
+<h2><span class="section-number">2.3.5. </span>Các thuộc tính Cơ bản của Phép toán Tensor<a class="headerlink" href="#cac-thuoc-tinh-co-ban-cua-phep-toan-tensor" title="Permalink to this headline">¶</a></h2>
+<!--
+Scalars, vectors, matrices, and tensors of an arbitrary number of axes have some nice properties that often come in handy.
+For example, you might have noticed from the definition of an elementwise operation that any elementwise unary operation does not change the shape of its operand.
+Similarly, given any two tensors with the same shape, the result of any binary elementwise operation will be a tensor of that same shape.
+For example, adding two matrices of the same shape performs elementwise addition over these two matrices.
+--><p>Số vô hướng, vector, ma trận và tensor với một số trục bất kỳ có một vài
+thuộc tính rất hữu dụng. Ví dụ, bạn có thể để ý từ định nghĩa của phép
+toán theo từng phần tử (<em>elementwise</em>), bất kỳ phép toán theo từng phần
+tử một ngôi nào cũng không làm thay đổi kích thước của toán hạng của nó.
+Tương tự, cho hai tensor bất kỳ có cùng kích thước, kết quả của bất kỳ
+phép toán theo từng phần tử hai ngôi sẽ là một tensor có cùng kích
+thước. Ví dụ, cộng hai ma trận có cùng kích thước sẽ thực hiện phép cộng
+theo từng phần tử giữa hai ma trận này.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Assign a copy of A to B by allocating new memory</span>
+<span class="n">A</span><span class="p">,</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">]]),</span>
+ <span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">8.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">16.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">24.</span><span class="p">,</span> <span class="mf">26.</span><span class="p">,</span> <span class="mf">28.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">32.</span><span class="p">,</span> <span class="mf">34.</span><span class="p">,</span> <span class="mf">36.</span><span class="p">,</span> <span class="mf">38.</span><span class="p">]]))</span>
+</pre></div>
+</div>
+<!--
+Specifically, elementwise multiplication of two matrices is called their *Hadamard product* (math notation $\odot$).
+Consider matrix $\mathbf{B} \in \mathbb{R}^{m \times n}$ whose element of row $i$ and column $j$ is $b_{ij}$.
+The Hadamard product of matrices $\mathbf{A}$ (defined in :eqref:`eq_matrix_def`) and $\mathbf{B}$
+--><p>Đặc biệt, phép nhân theo phần tử của hai ma trận được gọi là <em>phép nhân
+Hadamard</em> (<em>Hadamard product</em> – ký hiệu toán học là <span class="math notranslate nohighlight">\(\odot\)</span>). Xét
+ma trận <span class="math notranslate nohighlight">\(\mathbf{B} \in \mathbb{R}^{m \times n}\)</span> có phần tử dòng
+<span class="math notranslate nohighlight">\(i\)</span> và cột <span class="math notranslate nohighlight">\(j\)</span> là <span class="math notranslate nohighlight">\(b_{ij}\)</span>. Phép nhân Hadamard giữa ma
+trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (khai báo ở :eqref:<code class="docutils literal notranslate"><span class="pre">eq_matrix_def</span></code>) và
+<span class="math notranslate nohighlight">\(\mathbf{B}\)</span> là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-1">
+<span class="eqno">(2.3.4)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-1" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A} \odot \mathbf{B} =
+\begin{bmatrix}
+    a_{11}  b_{11} &amp; a_{12}  b_{12} &amp; \dots  &amp; a_{1n}  b_{1n} \\
+    a_{21}  b_{21} &amp; a_{22}  b_{22} &amp; \dots  &amp; a_{2n}  b_{2n} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{m1}  b_{m1} &amp; a_{m2}  b_{m2} &amp; \dots  &amp; a_{mn}  b_{mn}
+\end{bmatrix}.\end{split}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">*</span> <span class="n">B</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span>  <span class="mf">0.</span><span class="p">,</span>   <span class="mf">1.</span><span class="p">,</span>   <span class="mf">4.</span><span class="p">,</span>   <span class="mf">9.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">16.</span><span class="p">,</span>  <span class="mf">25.</span><span class="p">,</span>  <span class="mf">36.</span><span class="p">,</span>  <span class="mf">49.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">64.</span><span class="p">,</span>  <span class="mf">81.</span><span class="p">,</span> <span class="mf">100.</span><span class="p">,</span> <span class="mf">121.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">144.</span><span class="p">,</span> <span class="mf">169.</span><span class="p">,</span> <span class="mf">196.</span><span class="p">,</span> <span class="mf">225.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">256.</span><span class="p">,</span> <span class="mf">289.</span><span class="p">,</span> <span class="mf">324.</span><span class="p">,</span> <span class="mf">361.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+Multiplying or adding a tensor by a scalar also does not change the shape of the tensor, where each element of the operand tensor will be added or multiplied by the scalar.
+--><p>Nhân hoặc cộng một tensor với một số vô hướng cũng sẽ không thay đổi
+kích thước của tensor, mỗi phần tử của tensor sẽ được cộng hoặc nhân cho
+số vô hướng đó.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">+</span> <span class="n">X</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([[[</span> <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">],</span>
+         <span class="p">[</span> <span class="mf">6.</span><span class="p">,</span>  <span class="mf">7.</span><span class="p">,</span>  <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">]],</span>
+
+        <span class="p">[[</span><span class="mf">14.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">18.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">21.</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">22.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">,</span> <span class="mf">24.</span><span class="p">,</span> <span class="mf">25.</span><span class="p">]]]),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 5 ==================== --><!-- =================== Bắt đầu dịch Phần 6 ==================== --><!-- ========================================= REVISE PHẦN 4 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 5 - BẮT ĐẦU ===================================--><!--
+## Reduction
+--></div>
+<div class="section" id="rut-gon">
+<h2><span class="section-number">2.3.6. </span>Rút gọn<a class="headerlink" href="#rut-gon" title="Permalink to this headline">¶</a></h2>
+<!--
+One useful operation that we can perform with arbitrary tensors is to calculate the sum of their elements.
+In mathematical notation, we express sums using the $\sum$ symbol.
+To express the sum of the elements in a vector $\mathbf{x}$ of length $d$, we write $\sum_{i=1}^d x_i$. In code, we can just call the `sum` function.
+--><p>Một phép toán hữu ích mà ta có thể thực hiện trên bất kỳ tensor nào là
+phép tính tổng các phần tử của nó. Ký hiệu toán học của phép tính tổng
+là <span class="math notranslate nohighlight">\(\sum\)</span>. Ta biểu diễn phép tính tổng các phần tử của một vector
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> với độ dài <span class="math notranslate nohighlight">\(d\)</span> dưới dạng
+<span class="math notranslate nohighlight">\(\sum_{i=1}^d x_i\)</span>. Trong mã nguồn, ta chỉ cần gọi hàm <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]),</span> <span class="n">array</span><span class="p">(</span><span class="mf">6.</span><span class="p">))</span>
+</pre></div>
+</div>
+<!--
+We can express sums over the elements of tensors of arbitrary shape.
+For example, the sum of the elements of an $m \times n$ matrix $\mathbf{A}$ could be written $\sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij}$.
+--><p>Ta có thể biểu diễn phép tính tổng các phần tử của tensor có kích thước
+tùy ý. Ví dụ, tổng các phần tử của một ma trận <span class="math notranslate nohighlight">\(m \times n\)</span> có thể
+được viết là <span class="math notranslate nohighlight">\(\sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij}\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">190.</span><span class="p">))</span>
+</pre></div>
+</div>
+<!--
+By default, invoking the `sum` function *reduces* a tensor along all its axes to a scalar.
+We can also specify the axes along which the tensor is reduced via summation.
+Take matrices as an example.
+To reduce the row dimension (axis $0$) by summing up elements of all the rows, we specify `axis=0` when invoking `sum`.
+Since the input matrix reduces along axis $0$ to generate the output vector, the dimension of axis $0$ of the input is lost in the output shape.
+--><p>Theo mặc định, hàm <code class="docutils literal notranslate"><span class="pre">sum</span></code> sẽ <em>rút gọn</em> tensor dọc theo tất cả các trục
+của nó và trả về kết quả là một số vô hướng. Ta cũng có thể chỉ định các
+trục được rút gọn bằng phép tổng. Lấy ma trận làm ví dụ, để rút gọn theo
+chiều hàng (trục <span class="math notranslate nohighlight">\(0\)</span>) bằng việc tính tổng tất cả các hàng, ta đặt
+<code class="docutils literal notranslate"><span class="pre">axis=0</span></code> khi gọi hàm <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A_sum_axis0</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">A_sum_axis0</span><span class="p">,</span> <span class="n">A_sum_axis0</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mf">40.</span><span class="p">,</span> <span class="mf">45.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">55.</span><span class="p">]),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,))</span>
+</pre></div>
+</div>
+<!--
+Specifying `axis=1` will reduce the column dimension (axis $1$) by summing up elements of all the columns.
+Thus, the dimension of axis $1$ of the input is lost in the output shape.
+--><p>Việc đặt <code class="docutils literal notranslate"><span class="pre">axis=1</span></code> sẽ rút gọn theo cột (trục <span class="math notranslate nohighlight">\(1\)</span>) bằng việc tính
+tổng tất cả các cột. Do đó, kích thước trục <span class="math notranslate nohighlight">\(1\)</span> của đầu vào sẽ
+không còn trong kích thước của đầu ra.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A_sum_axis1</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">A_sum_axis1</span><span class="p">,</span> <span class="n">A_sum_axis1</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">38.</span><span class="p">,</span> <span class="mf">54.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">]),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,))</span>
+</pre></div>
+</div>
+<!--
+Reducing a matrix along both rows and columns via summation
+is equivalent to summing up all the elements of the matrix.
+--><p>Việc rút gọn ma trận dọc theo cả hàng và cột bằng phép tổng tương đương
+với việc cộng tất cả các phần tử trong ma trận đó lại.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Same as A.sum()</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">190.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+A related quantity is the *mean*, which is also called the *average*.
+We calculate the mean by dividing the sum by the total number of elements.
+In code, we could just call `mean` on tensors of arbitrary shape.
+--><p>Một đại lượng liên quan là <em>trung bình cộng</em>. Ta tính trung bình cộng
+bằng cách chia tổng các phần tử cho số lượng phần tử. Trong mã nguồn, ta
+chỉ cần gọi hàm <code class="docutils literal notranslate"><span class="pre">mean</span></code> với đầu vào là các tensor có kích thước tùy ý.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">A</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="mf">9.5</span><span class="p">),</span> <span class="n">array</span><span class="p">(</span><span class="mf">9.5</span><span class="p">))</span>
+</pre></div>
+</div>
+<!--
+Like `sum`, `mean` can also reduce a tensor along the specified axes.
+--><p>Giống như <code class="docutils literal notranslate"><span class="pre">sum</span></code>, hàm <code class="docutils literal notranslate"><span class="pre">mean</span></code> cũng có thể rút gọn tensor dọc theo các
+trục được chỉ định.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span> <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span> <span class="mf">8.</span><span class="p">,</span>  <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">]))</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 6 ==================== --><!-- =================== Bắt đầu dịch Phần 7 ==================== --><!-- ========================================= REVISE PHẦN 5 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 6 - BẮT ĐẦU ===================================--><!--
+### Non-Reduction Sum
+--><div class="section" id="tong-khong-rut-gon">
+<h3><span class="section-number">2.3.6.1. </span>Tổng không rút gọn<a class="headerlink" href="#tong-khong-rut-gon" title="Permalink to this headline">¶</a></h3>
+<!--
+However, sometimes it can be useful to keep the number of axes unchanged when invoking `sum` or `mean` by setting `keepdims=True`.
+--><p>Tuy nhiên, việc giữ lại số các trục đôi khi là cần thiết khi gọi hàm
+<code class="docutils literal notranslate"><span class="pre">sum</span></code> hoặc <code class="docutils literal notranslate"><span class="pre">mean</span></code>, bằng cách đặt <code class="docutils literal notranslate"><span class="pre">keepdims=True</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sum_A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sum_A</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">6.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">22.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">38.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">54.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">70.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+For instance, since `sum_A` still keeps its $2$ axes after summing each row, we can divide `A` by `sum_A` with broadcasting.
+--><p>Ví dụ, vì <code class="docutils literal notranslate"><span class="pre">sum_A</span></code> vẫn giữ lại <span class="math notranslate nohighlight">\(2\)</span> trục sau khi tính tổng của mỗi
+hàng, chúng ta có thể chia <code class="docutils literal notranslate"><span class="pre">A</span></code> cho <code class="docutils literal notranslate"><span class="pre">sum_A</span></code> thông qua cơ chế lan
+truyền.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">/</span> <span class="n">sum_A</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span>        <span class="p">,</span> <span class="mf">0.16666667</span><span class="p">,</span> <span class="mf">0.33333334</span><span class="p">,</span> <span class="mf">0.5</span>       <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.18181819</span><span class="p">,</span> <span class="mf">0.22727273</span><span class="p">,</span> <span class="mf">0.27272728</span><span class="p">,</span> <span class="mf">0.3181818</span> <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.21052632</span><span class="p">,</span> <span class="mf">0.23684211</span><span class="p">,</span> <span class="mf">0.2631579</span> <span class="p">,</span> <span class="mf">0.28947368</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.22222222</span><span class="p">,</span> <span class="mf">0.24074075</span><span class="p">,</span> <span class="mf">0.25925925</span><span class="p">,</span> <span class="mf">0.2777778</span> <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.22857143</span><span class="p">,</span> <span class="mf">0.24285714</span><span class="p">,</span> <span class="mf">0.25714287</span><span class="p">,</span> <span class="mf">0.27142859</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+If we want to calculate the cumulative sum of elements of `A` along some axis, say `axis=0` (row by row), we can call the `cumsum` function. This function will not reduce the input tensor along any axis.
+--><p>Nếu chúng ta muốn tính tổng tích lũy các phần tử của <code class="docutils literal notranslate"><span class="pre">A</span></code> dọc theo các
+trục, giả sử <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> (từng hàng một), ta có thể gọi hàm <code class="docutils literal notranslate"><span class="pre">cumsum</span></code>.
+Hàm này không rút gọn chiều của tensor đầu vào theo bất cứ trục nào.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span>  <span class="mf">2.</span><span class="p">,</span>  <span class="mf">3.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span>  <span class="mf">8.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">12.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">21.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">24.</span><span class="p">,</span> <span class="mf">28.</span><span class="p">,</span> <span class="mf">32.</span><span class="p">,</span> <span class="mf">36.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">40.</span><span class="p">,</span> <span class="mf">45.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">55.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+## Dot Products
+--></div>
+</div>
+<div class="section" id="tich-vo-huong">
+<h2><span class="section-number">2.3.7. </span>Tích vô hướng<a class="headerlink" href="#tich-vo-huong" title="Permalink to this headline">¶</a></h2>
+<!--
+So far, we have only performed elementwise operations, sums, and averages.
+And if this was all we could do, linear algebra probably would not deserve its own section.
+However, one of the most fundamental operations is the dot product.
+Given two vectors $\mathbf{x}, \mathbf{y} \in \mathbb{R}^d$, their *dot product* $\mathbf{x}^\top \mathbf{y}$ (or $\langle \mathbf{x}, \mathbf{y}  \rangle$) is a sum over the products of the elements at the same position: $\mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{d} x_i y_i$.
+--><p>Cho đến giờ, chúng ta mới chỉ thực hiện những phép tính từng phần tử
+tương ứng, như tổng và trung bình. Nếu đây là tất những gì chúng ta có
+thể làm, đại số tuyến tính có lẽ không xứng đáng để có nguyên một mục.
+Tuy nhiên, một trong nhưng phép tính căn bản nhất của đại số tuyến tính
+là tích vô hướng. Với hai vector
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^d\)</span> cho trước, <em>tích vô
+hướng</em> (<em>dot product</em>) <span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{y}\)</span> (hoặc
+<span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle\)</span>) là tổng các tích của
+những phần tử có cùng vị trí:
+<span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{d} x_i y_i\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]),</span> <span class="n">array</span><span class="p">(</span><span class="mf">6.</span><span class="p">))</span>
+</pre></div>
+</div>
+<!--
+Note that we can express the dot product of two vectors equivalently by performing an elementwise multiplication and then a sum:
+--><p>Lưu ý rằng chúng ta có thể thể hiện tích vô hướng của hai vector một
+cách tương tự bằng việc thực hiện tích từng phần tử tương ứng rồi lấy
+tổng:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">6.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Dot products are useful in a wide range of contexts.
+For example, given some set of values, denoted by a vector $\mathbf{x}  \in \mathbb{R}^d$ and a set of weights denoted by $\mathbf{w} \in \mathbb{R}^d$, the weighted sum of the values in $\mathbf{x}$ according to the weights $\mathbf{w}$ could be expressed as the dot product $\mathbf{x}^\top \mathbf{w}$.
+When the weights are non-negative and sum to one (i.e., $\left(\sum_{i=1}^{d} {w_i} = 1\right)$), the dot product expresses a *weighted average*.
+After normalizing two vectors to have the unit length, the dot products express the cosine of the angle between them.
+We will formally introduce this notion of *length* later in this section.
+--><p>Tích vô hướng sẽ hữu dụng trong rất nhiều trường hợp. Ví dụ, với một tập
+các giá trị cho trước, biểu thị bởi vector
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^d\)</span>, và một tập các trọng số được biểu
+thị bởi <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d\)</span>, tổng trọng số của các giá
+trị trong <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> theo các trọng số trong <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>
+có thể được thể hiện bởi tích vô hướng
+<span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{w}\)</span>. Khi các trọng số không âm và có tổng
+bằng một(<span class="math notranslate nohighlight">\(\left(\sum_{i=1}^{d} {w_i} = 1\right)\)</span>), tích vô hướng
+thể hiện phép tính <em>trung bình trọng số</em> (<em>weighted average</em>). Sau khi
+được chuẩn hoá thành hai vector đơn vị, tích vô hướng của hai vector đó
+là giá trị cos của góc giữa hai vector đó. Chúng tôi sẽ giới thiệu khái
+niệm về <em>độ dài</em> ở các phần sau trong mục này.</p>
+<!-- =================== Kết thúc dịch Phần 7 ==================== --><!-- =================== Bắt đầu dịch Phần 8 ==================== --><!-- ========================================= REVISE PHẦN 6 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 7 - BẮT ĐẦU ===================================--><!--
+## Matrix-Vector Products
+--></div>
+<div class="section" id="tich-giua-ma-tran-va-vector">
+<h2><span class="section-number">2.3.8. </span>Tích giữa Ma trận và Vector<a class="headerlink" href="#tich-giua-ma-tran-va-vector" title="Permalink to this headline">¶</a></h2>
+<!--
+Now that we know how to calculate dot products, we can begin to understand *matrix-vector products*.
+Recall the matrix $\mathbf{A} \in \mathbb{R}^{m \times n}$ and the vector $\mathbf{x} \in \mathbb{R}^n$ defined and visualized in :eqref:`eq_matrix_def` and :eqref:`eq_vec_def` respectively.
+Let's start off by visualizing the matrix $\mathbf{A}$ in terms of its row vectors
+--><p>Giờ đây, khi đã biết cách tính toán tích vô hướng, chúng ta có thể bắt
+đầu hiểu <em>tích giữa ma trận và vector</em>. Bạn có thể xem lại cách ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> và vector
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> được định nghĩa và biểu diễn trong
+<a class="reference internal" href="#equation-eq-matrix-def">(2.3.2)</a> và <a class="reference internal" href="#equation-eq-vec-def">(2.3.1)</a>. Ta sẽ bắt đầu bằng
+việc biểu diễn ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> qua các vector hàng của nó.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-2">
+<span class="eqno">(2.3.5)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-2" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}=
+\begin{bmatrix}
+\mathbf{a}^\top_{1} \\
+\mathbf{a}^\top_{2} \\
+\vdots \\
+\mathbf{a}^\top_m \\
+\end{bmatrix},\end{split}\]</div>
+<!--
+where each $\mathbf{a}^\top_{i} \in \mathbb{R}^n$ is a row vector representing the $i^\mathrm{th}$ row of the matrix $\mathbf{A}$.
+The matrix-vector product $\mathbf{A}\mathbf{x}$ is simply a column vector of length $m$, whose $i^\mathrm{th}$ element is the dot product $\mathbf{a}^\top_i \mathbf{x}$:
+--><p>Mỗi <span class="math notranslate nohighlight">\(\mathbf{a}^\top_{i} \in \mathbb{R}^n\)</span> là một vector hàng thể
+hiện hàng thứ <span class="math notranslate nohighlight">\(i\)</span> của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. Tích giữa ma
+trận và vector <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}\)</span> đơn giản chỉ là một vector
+cột với chiều dài <span class="math notranslate nohighlight">\(m\)</span>, với phần tử thứ <span class="math notranslate nohighlight">\(i\)</span> là kết quả của
+phép tích vô hướng <span class="math notranslate nohighlight">\(\mathbf{a}^\top_i \mathbf{x}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-3">
+<span class="eqno">(2.3.6)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-3" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}\mathbf{x}
+= \begin{bmatrix}
+\mathbf{a}^\top_{1} \\
+\mathbf{a}^\top_{2} \\
+\vdots \\
+\mathbf{a}^\top_m \\
+\end{bmatrix}\mathbf{x}
+= \begin{bmatrix}
+ \mathbf{a}^\top_{1} \mathbf{x}  \\
+ \mathbf{a}^\top_{2} \mathbf{x} \\
+\vdots\\
+ \mathbf{a}^\top_{m} \mathbf{x}\\
+\end{bmatrix}.\end{split}\]</div>
+<!--
+We can think of multiplication by a matrix $\mathbf{A}\in \mathbb{R}^{m \times n}$ as a transformation that projects vectors from $\mathbb{R}^{n}$ to $\mathbb{R}^{m}$.
+These transformations turn out to be remarkably useful.
+For example, we can represent rotations as multiplications by a square matrix.
+As we will see in subsequent chapters, we can also use matrix-vector products to describe the most intensive calculations required when computing each layer in a neural network given the values of the previous layer.
+--><p>Chúng ta có thể nghĩ đến việc nhân một ma trận
+<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m \times n}\)</span> với một vector như một
+phép biến hình, chiếu vector từ không gian <span class="math notranslate nohighlight">\(\mathbb{R}^{n}\)</span> thành
+<span class="math notranslate nohighlight">\(\mathbb{R}^{m}\)</span>. Những phép biến hình này hóa ra lại trở nên rất
+hữu dụng. Ví dụ, chúng ta có thể biểu diễn phép xoay là tích với một ma
+trận vuông. Bạn sẽ thấy ở những chương tiếp theo, chúng ta cũng có thể
+sử dụng tích giữa ma trận và vector để thực hiện hầu hết những tính toán
+cần thiết khi tính các tầng trong một mạng nơ-ron dựa theo kết quả của
+tầng trước đó.</p>
+<!--
+Expressing matrix-vector products in code with `ndarray`s, we use the same `dot` function as for dot products.
+When we call `np.dot(A, x)` with a matrix `A` and a vector `x`, the matrix-vector product is performed.
+Note that the column dimension of `A` (its length along axis $1$) must be the same as the dimension of `x` (its length).
+--><p>Khi lập trình, để thực hiện nhân ma trận với vector <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, chúng
+ta cũng sử dụng hàm <code class="docutils literal notranslate"><span class="pre">dot</span></code> giống như tích vô hướng. Việc gọi
+<code class="docutils literal notranslate"><span class="pre">np.dot(A,</span> <span class="pre">x)</span></code> với ma trận <code class="docutils literal notranslate"><span class="pre">A</span></code> và một vector <code class="docutils literal notranslate"><span class="pre">x</span></code> sẽ thực hiện phép
+nhân vô hướng giữa ma trận và vector. Lưu ý rằng chiều của cột <code class="docutils literal notranslate"><span class="pre">A</span></code>
+(chiều dài theo trục <span class="math notranslate nohighlight">\(1\)</span>) phải bằng với chiều của vector <code class="docutils literal notranslate"><span class="pre">x</span></code>
+(chiều dài của nó).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,),</span> <span class="n">array</span><span class="p">([</span> <span class="mf">14.</span><span class="p">,</span>  <span class="mf">38.</span><span class="p">,</span>  <span class="mf">62.</span><span class="p">,</span>  <span class="mf">86.</span><span class="p">,</span> <span class="mf">110.</span><span class="p">]))</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 8 ==================== --><!-- =================== Bắt đầu dịch Phần 9 ==================== --><!-- ========================================= REVISE PHẦN 7 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 8 - BẮT ĐẦU ===================================--><!--
+## Matrix-Matrix Multiplication
+--></div>
+<div class="section" id="phep-nhan-ma-tran">
+<h2><span class="section-number">2.3.9. </span>Phép nhân Ma trận<a class="headerlink" href="#phep-nhan-ma-tran" title="Permalink to this headline">¶</a></h2>
+<!--
+If you have gotten the hang of dot products and matrix-vector products, then *matrix-matrix multiplication* should be straightforward.
+--><p>Nếu bạn đã quen với tích vô hướng và tích ma trận-vector, tích <em>ma
+trận-ma trận</em> cũng tương tự như thế.</p>
+<!--
+Say that we have two matrices $\mathbf{A} \in \mathbb{R}^{n \times k}$ and $\mathbf{B} \in \mathbb{R}^{k \times m}$:
+--><p>Giả sử ta có hai ma trận <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times k}\)</span>
+và <span class="math notranslate nohighlight">\(\mathbf{B} \in \mathbb{R}^{k \times m}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-4">
+<span class="eqno">(2.3.7)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}=\begin{bmatrix}
+ a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1k} \\
+ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2k} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+ a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nk} \\
+\end{bmatrix},\quad
+\mathbf{B}=\begin{bmatrix}
+ b_{11} &amp; b_{12} &amp; \cdots &amp; b_{1m} \\
+ b_{21} &amp; b_{22} &amp; \cdots &amp; b_{2m} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+ b_{k1} &amp; b_{k2} &amp; \cdots &amp; b_{km} \\
+\end{bmatrix}.\end{split}\]</div>
+<!--
+Denote by $\mathbf{a}^\top_{i} \in \mathbb{R}^k$ the row vector representing the $i^\mathrm{th}$ row of the matrix $\mathbf{A}$, and let $\mathbf{b}_{j} \in \mathbb{R}^k$ be the column vector from the $j^\mathrm{th}$ column of the matrix $\mathbf{B}$.
+To produce the matrix product $\mathbf{C} = \mathbf{A}\mathbf{B}$, it is easiest to think of $\mathbf{A}$ in terms of its row vectors and $\mathbf{B}$ in terms of its column vectors:
+--><p>Đặt <span class="math notranslate nohighlight">\(\mathbf{a}^\top_{i} \in \mathbb{R}^k\)</span> là vector hàng biểu
+diễn hàng thứ <span class="math notranslate nohighlight">\(i\)</span> của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> và
+<span class="math notranslate nohighlight">\(\mathbf{b}_{j} \in \mathbb{R}^k\)</span> là vector cột thứ <span class="math notranslate nohighlight">\(j\)</span> của
+ma trận <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>. Để tính ma trận tích
+<span class="math notranslate nohighlight">\(\mathbf{C} = \mathbf{A}\mathbf{B}\)</span>, cách đơn giản nhất là viết
+các hàng của ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> và các cột của ma trận
+<span class="math notranslate nohighlight">\(\mathbf{B}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-5">
+<span class="eqno">(2.3.8)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-5" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{A}=
+\begin{bmatrix}
+\mathbf{a}^\top_{1} \\
+\mathbf{a}^\top_{2} \\
+\vdots \\
+\mathbf{a}^\top_n \\
+\end{bmatrix},
+\quad \mathbf{B}=\begin{bmatrix}
+ \mathbf{b}_{1} &amp; \mathbf{b}_{2} &amp; \cdots &amp; \mathbf{b}_{m} \\
+\end{bmatrix}.\end{split}\]</div>
+<!--
+Then the matrix product $\mathbf{C} \in \mathbb{R}^{n \times m}$ is produced as we simply compute each element $c_{ij}$ as the dot product $\mathbf{a}^\top_i \mathbf{b}_j$:
+--><p>Khi đó ma trận tích <span class="math notranslate nohighlight">\(\mathbf{C} \in \mathbb{R}^{n \times m}\)</span> được
+tạo với phần tử <span class="math notranslate nohighlight">\(c_{ij}\)</span> bằng tích vô hướng
+<span class="math notranslate nohighlight">\(\mathbf{a}^\top_i \mathbf{b}_j\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-6">
+<span class="eqno">(2.3.9)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-6" title="Permalink to this equation">¶</a></span>\[\begin{split}\mathbf{C} = \mathbf{AB} = \begin{bmatrix}
+\mathbf{a}^\top_{1} \\
+\mathbf{a}^\top_{2} \\
+\vdots \\
+\mathbf{a}^\top_n \\
+\end{bmatrix}
+\begin{bmatrix}
+ \mathbf{b}_{1} &amp; \mathbf{b}_{2} &amp; \cdots &amp; \mathbf{b}_{m} \\
+\end{bmatrix}
+= \begin{bmatrix}
+\mathbf{a}^\top_{1} \mathbf{b}_1 &amp; \mathbf{a}^\top_{1}\mathbf{b}_2&amp; \cdots &amp; \mathbf{a}^\top_{1} \mathbf{b}_m \\
+ \mathbf{a}^\top_{2}\mathbf{b}_1 &amp; \mathbf{a}^\top_{2} \mathbf{b}_2 &amp; \cdots &amp; \mathbf{a}^\top_{2} \mathbf{b}_m \\
+ \vdots &amp; \vdots &amp; \ddots &amp;\vdots\\
+\mathbf{a}^\top_{n} \mathbf{b}_1 &amp; \mathbf{a}^\top_{n}\mathbf{b}_2&amp; \cdots&amp; \mathbf{a}^\top_{n} \mathbf{b}_m
+\end{bmatrix}.\end{split}\]</div>
+<!--
+We can think of the matrix-matrix multiplication $\mathbf{AB}$ as simply performing $m$ matrix-vector products and stitching the results together to form an $n \times m$ matrix.
+Just as with ordinary dot products and matrix-vector products, we can compute matrix-matrix multiplication by using the `dot` function.
+In the following snippet, we perform matrix multiplication on `A` and `B`.
+Here, `A` is a matrix with $5$ rows and $4$ columns, and `B` is a matrix with $4$ rows and $3$ columns.
+After multiplication, we obtain a matrix with $5$ rows and $3$ columns.
+--><p>Ta có thể coi tích hai ma trận <span class="math notranslate nohighlight">\(\mathbf{AB}\)</span> như việc tính
+<span class="math notranslate nohighlight">\(m\)</span> phép nhân ma trận và vector, sau đó ghép các kết quả với nhau
+để tạo ra một ma trận <span class="math notranslate nohighlight">\(n \times m\)</span>. Giống như tích vô hướng và
+phép nhân ma trận-vector, ta có thể tính phép nhân hai ma trận bằng cách
+sử dụng hàm <code class="docutils literal notranslate"><span class="pre">dot</span></code>. Trong đoạn mã dưới đây, chúng ta tính phép nhân
+giữa <code class="docutils literal notranslate"><span class="pre">A</span></code> và <code class="docutils literal notranslate"><span class="pre">B</span></code>. Ở đây, <code class="docutils literal notranslate"><span class="pre">A</span></code> là một ma trận với <span class="math notranslate nohighlight">\(5\)</span> hàng
+<span class="math notranslate nohighlight">\(4\)</span> cột và <code class="docutils literal notranslate"><span class="pre">B</span></code> là một ma trận với <code class="docutils literal notranslate"><span class="pre">4</span></code> hàng <code class="docutils literal notranslate"><span class="pre">3</span></code> cột. Sau phép
+nhân này, ta thu được một ma trận với <span class="math notranslate nohighlight">\(5\)</span> hàng <span class="math notranslate nohighlight">\(3\)</span> cột.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">6.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">,</span>  <span class="mf">6.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">22.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">38.</span><span class="p">,</span> <span class="mf">38.</span><span class="p">,</span> <span class="mf">38.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">54.</span><span class="p">,</span> <span class="mf">54.</span><span class="p">,</span> <span class="mf">54.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">70.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">]])</span>
+</pre></div>
+</div>
+<!--
+Matrix-matrix multiplication can be simply called *matrix multiplication*, and should not be confused with the Hadamard product.
+--><p>Phép nhân hai ma trận có thể được gọi đơn giản là <em>phép nhân ma trận</em> và
+không nên nhầm lẫn với phép nhân Hadamard.</p>
+<!-- =================== Kết thúc dịch Phần 9 ==================== --><!-- =================== Bắt đầu dịch Phần 10 ==================== --><!-- ========================================= REVISE PHẦN 8 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 9 - BẮT ĐẦU ===================================--><!--
+## Norms
+--></div>
+<div class="section" id="chuan">
+<h2><span class="section-number">2.3.10. </span>Chuẩn<a class="headerlink" href="#chuan" title="Permalink to this headline">¶</a></h2>
+<!--
+Some of the most useful operators in linear algebra are *norms*.
+Informally, the norm of a vector tells us how *big* a vector is.
+The notion of *size* under consideration here concerns not dimensionality but rather the magnitude of the components.
+--><p>Một trong những toán tử hữu dụng nhất của đại số tuyến tính là <em>chuẩn</em>
+(<em>norm</em>). Nói dân dã thì, các chuẩn của một vector cho ta biết một
+vector <em>lớn</em> tầm nào. Thuật ngữ <em>kích thước</em> đang xét ở đây không nói
+tới số chiều không gian mà đúng hơn là về độ lớn của các thành phần.</p>
+<!--
+In linear algebra, a vector norm is a function $f$ that maps a vector to a scalar, satisfying a handful of properties.
+Given any vector $\mathbf{x}$, the first property says that if we scale all the elements of a vector by a constant factor $\alpha$, its norm also scales by the *absolute value* of the same constant factor:
+--><p>Trong đại số tuyến tính, chuẩn của một vector là hàm số <span class="math notranslate nohighlight">\(f\)</span> ánh xạ
+một vector đến một số vô hướng, thỏa mãn các tính chất sau. Cho vector
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> bất kỳ, tính chất đầu tiên phát biểu rằng nếu chúng
+ta co giãn toàn bộ các phần tử của một vector bằng một hằng số
+<span class="math notranslate nohighlight">\(\alpha\)</span>, chuẩn của vector đó cũng co giãn theo <em>giá trị tuyệt
+đối</em> của hằng số đó:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-7">
+<span class="eqno">(2.3.10)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-7" title="Permalink to this equation">¶</a></span>\[f(\alpha \mathbf{x}) = |\alpha| f(\mathbf{x}).\]</div>
+<!--
+The second property is the familiar triangle inequality:
+--><p>Tính chất thứ hai cũng giống như bất đẳng thức tam giác:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-8">
+<span class="eqno">(2.3.11)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-8" title="Permalink to this equation">¶</a></span>\[f(\mathbf{x} + \mathbf{y}) \leq f(\mathbf{x}) + f(\mathbf{y}).\]</div>
+<!--
+The third property simply says that the norm must be non-negative:
+--><p>Tính chất thứ ba phát biểu rằng chuẩn phải không âm:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-9">
+<span class="eqno">(2.3.12)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-9" title="Permalink to this equation">¶</a></span>\[f(\mathbf{x}) \geq 0.\]</div>
+<!--
+That makes sense, as in most contexts the smallest *size* for anything is 0.
+The final property requires that the smallest norm is achieved and only achieved by a vector consisting of all zeros.
+--><p>Điều này là hợp lý vì trong hầu hết các trường hợp thì <em>kích thước</em> nhỏ
+nhất cho các vật đều bằng 0. Tính chất cuối cùng yêu cầu chuẩn nhỏ nhất
+thu được khi và chỉ khi toàn bộ thành phần của vector đó bằng 0.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-10">
+<span class="eqno">(2.3.13)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-10" title="Permalink to this equation">¶</a></span>\[\forall i, [\mathbf{x}]_i = 0 \Leftrightarrow f(\mathbf{x})=0.\]</div>
+<!--
+You might notice that norms sound a lot like measures of distance.
+And if you remember Euclidean distances (think Pythagoras' theorem) from grade school, then the concepts of non-negativity and the triangle inequality might ring a bell.
+In fact, the Euclidean distance is a norm: specifically it is the $\ell_2$ norm.
+Suppose that the elements in the $n$-dimensional vector $\mathbf{x}$ are $x_1, \ldots, x_n$.
+The $\ell_2$ *norm* of $\mathbf{x}$ is the square root of the sum of the squares of the vector elements:
+--><p>Bạn chắc sẽ để ý là các chuẩn có vẻ giống như một phép đo khoảng cách.
+Và nếu còn nhớ khái niệm khoảng cách Euclid (định lý Pythagoras) được
+học ở phổ thông, thì khái niệm không âm và bất đẳng thức tam giác có thể
+gợi nhắc lại một chút. Thực tế là, khoảng cách Euclid cũng là một chuẩn:
+cụ thể là <span class="math notranslate nohighlight">\(\ell_2\)</span>. Giả sử rằng các thành phần trong vector
+<span class="math notranslate nohighlight">\(n\)</span> chiều <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> là <span class="math notranslate nohighlight">\(x_1, \ldots, x_n\)</span>. <em>Chuẩn</em>
+<span class="math notranslate nohighlight">\(\ell_2\)</span> của <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> là căn bậc hai của tổng các bình
+phương của các thành phần trong vector:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-11">
+<span class="eqno">(2.3.14)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-11" title="Permalink to this equation">¶</a></span>\[\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2},\]</div>
+<!--
+where the subscript $2$ is often omitted in $\ell_2$ norms, i.e., $\|\mathbf{x}\|$ is equivalent to $\|\mathbf{x}\|_2$.
+In code, we can calculate the $\ell_2$ norm of a vector by calling `linalg.norm`.
+--><p>Ở đó, chỉ số dưới <span class="math notranslate nohighlight">\(2\)</span> thường được lược đi khi viết chuẩn
+<span class="math notranslate nohighlight">\(\ell_2\)</span>, ví dụ, <span class="math notranslate nohighlight">\(\|\mathbf{x}\|\)</span> cũng tương đương với
+<span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2\)</span>. Khi lập trình, ta có thể tính chuẩn
+<span class="math notranslate nohighlight">\(\ell_2\)</span> của một vector bằng cách gọi hàm <code class="docutils literal notranslate"><span class="pre">linalg.norm</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">5.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+In deep learning, we work more often with the squared $\ell_2$ norm.
+You will also frequently encounter the $\ell_1$ *norm*, which is expressed as the sum of the absolute values of the vector elements:
+--><p>Trong học sâu, chúng ta thường gặp chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> bình phương hơn.
+Bạn cũng sẽ thường xuyên gặp <em>chuẩn</em> <span class="math notranslate nohighlight">\(\ell_1\)</span>, chuẩn được biểu
+diễn bằng tổng các giá trị tuyệt đối của các thành phần trong vector:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-12">
+<span class="eqno">(2.3.15)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-12" title="Permalink to this equation">¶</a></span>\[\|\mathbf{x}\|_1 = \sum_{i=1}^n \left|x_i \right|.\]</div>
+<!--
+As compared with the $\ell_2$ norm, it is less influenced by outliers.
+To calculate the $\ell_1$ norm, we compose the absolute value function with a sum over the elements.
+--><p>So với chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span>, nó ít bị ảnh ưởng bởi các giá trị ngoại
+biên hơn. Để tính chuẩn <span class="math notranslate nohighlight">\(\ell_1\)</span>, chúng ta dùng hàm giá trị tuyệt
+đối rồi lấy tổng các thành phần.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">7.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Both the $\ell_2$ norm and the $\ell_1$ norm
+are special cases of the more general $\ell_p$ *norm*:
+--><p>Cả hai chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> và <span class="math notranslate nohighlight">\(\ell_1\)</span> đều là trường hợp riêng
+của một chuẩn tổng quát hơn, <em>chuẩn</em> <span class="math notranslate nohighlight">\(\ell_p\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-13">
+<span class="eqno">(2.3.16)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-13" title="Permalink to this equation">¶</a></span>\[\|\mathbf{x}\|_p = \left(\sum_{i=1}^n \left|x_i \right|^p \right)^{1/p}.\]</div>
+<!--
+Analogous to $\ell_2$ norms of vectors, the *Frobenius norm* of a matrix $\mathbf{X} \in \mathbb{R}^{m \times n}$ is the square root of the sum of the squares of the matrix elements:
+--><p>Tương tự với chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> của vector, <em>chuẩn Frobenius</em> của một
+ma trận <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{m \times n}\)</span> là căn bậc hai
+của tổng các bình phương của các thành phần trong ma trận:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-linear-algebra-vn-14">
+<span class="eqno">(2.3.17)<a class="headerlink" href="#equation-chapter-preliminaries-linear-algebra-vn-14" title="Permalink to this equation">¶</a></span>\[\|\mathbf{X}\|_F = \sqrt{\sum_{i=1}^m \sum_{j=1}^n x_{ij}^2}.\]</div>
+<!--
+The Frobenius norm satisfies all the properties of vector norms.
+It behaves as if it were an $\ell_2$ norm of a matrix-shaped vector. Invoking `linalg.norm` will calculate the Frobenius norm of a matrix.
+--><p>Chuẩn Frobenius thỏa mãn tất cả các tính chất của một chuẩn vector. Nó
+giống chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> của một vector nhưng ở dạng của ma trận. Ta
+dùng hàm <code class="docutils literal notranslate"><span class="pre">linalg.norm</span></code> để tính toán chuẩn Frobenius của ma trận.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">(</span><span class="mf">6.</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- =================== Kết thúc dịch Phần 10 ==================== --><!-- =================== Bắt đầu dịch Phần 11 ==================== --><!-- ========================================= REVISE PHẦN 9 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 10 - BẮT ĐẦU ===================================--><!--
+### Norms and Objectives
+--><div class="section" id="chuan-va-muc-tieu">
+<span id="subsec-norms-and-objectives"></span><h3><span class="section-number">2.3.10.1. </span>Chuẩn và Mục tiêu<a class="headerlink" href="#chuan-va-muc-tieu" title="Permalink to this headline">¶</a></h3>
+<!--
+While we do not want to get too far ahead of ourselves, we can plant some intuition already about why these concepts are useful.
+In deep learning, we are often trying to solve optimization problems: *maximize* the probability assigned to observed data; *minimize* the distance between predictions and the ground-truth observations.
+Assign vector representations to items (like words, products, or news articles) such that the distance between similar items is minimized, and the distance between dissimilar items is maximized.
+Oftentimes, the objectives, perhaps the most important components of deep learning algorithms (besides the data), are expressed as norms.
+--><p>Tuy không muốn đi quá nhanh nhưng chúng ta có thể xây dựng phần nào trực
+giác để hiểu tại sao những khái niệm này lại hữu dụng. Trong học sâu, ta
+thường cố giải các bài toán tối ưu: <em>cực đại hóa</em> xác suất xảy ra của dữ
+liệu quan sát được; <em>cực tiểu hóa</em> khoảng cách giữa dự đoán và nhãn gốc.
+Gán các biểu diễn vector cho các đối tượng (như từ, sản phẩm hay các bài
+báo) để cực tiểu hóa khoảng cách giữa các đối tượng tương tự nhau và cực
+đại hóa khoảng cách giữa các đối tượng khác nhau. Mục tiêu, thành phần
+quan trọng nhất của một thuật toán học sâu (bên cạnh dữ liệu), thường
+được biễu diễn diễn theo <em>chuẩn</em> (<em>norm</em>).</p>
+<!--
+## More on Linear Algebra
+--></div>
+</div>
+<div class="section" id="ban-them-ve-dai-so-tuyen-tinh">
+<h2><span class="section-number">2.3.11. </span>Bàn thêm về Đại số Tuyến tính<a class="headerlink" href="#ban-them-ve-dai-so-tuyen-tinh" title="Permalink to this headline">¶</a></h2>
+<!--
+In just this section, we have taught you all the linear algebra that you will need to understand a remarkable chunk of modern deep learning.
+There is a lot more to linear algebra and a lot of that mathematics is useful for machine learning.
+For example, matrices can be decomposed into factors, and these decompositions can reveal low-dimensional structure in real-world datasets.
+There are entire subfields of machine learning that focus on using matrix decompositions and their generalizations to high-order tensors to discover structure in datasets and solve prediction problems.
+But this book focuses on deep learning.
+And we believe you will be much more inclined to learn more mathematics once you have gotten your hands dirty deploying useful machine learning models on real datasets.
+So while we reserve the right to introduce more mathematics much later on, we will wrap up this section here.
+--><p>Chỉ trong mục này, chúng tôi đã trang bị cho bạn tất cả những kiến thức
+đại số tuyến tính cần thiết để hiểu một lượng lớn các mô hình học máy
+hiện đại. Vẫn còn rất nhiều kiến thức đại số tuyến tính, phần lớn đều
+hữu dụng cho học máy. Một ví dụ là phép phân tích ma trận ra các thành
+phần, các phép phân tích này có thể tạo ra các cấu trúc thấp chiều trong
+các tập dữ liệu thực tế. Có cả một nhánh của học máy tập trung vào sử
+dụng các phép phân tích ma trận và tổng quát chúng lên cho các tensor
+bậc cao để khám phá cấu trúc trong các tập dữ liệu và giải quyết các bài
+toán dự đoán. Tuy nhiên, cuốn sách này chỉ tập trung vào học sâu. Và
+chúng tôi tin rằng bạn sẽ muốn học thêm nhiều về toán một khi đã có thể
+triển khai được các mô hình học máy hữu dụng cho các tập dữ liệu thực
+tế. Bởi vậy, trong khi vẫn còn nhiều kiến thức toán cần bàn thêm ở phần
+sau, chúng tôi sẽ kết thúc mục này ở đây.</p>
+<!--
+If you are eager to learn more about linear algebra,
+you may refer to either :numref:`sec_geometry-linear-algebric-ops`
+or other excellent resources :cite:`Strang.1993,Kolter.2008,Petersen.Pedersen.ea.2008`.
+--><p>Nếu bạn muốn học thêm về đại số tuyến tính, bạn có thể tham khảo
+<code class="xref std std-numref docutils literal notranslate"><span class="pre">sec_geometry-linear-algebric-ops</span></code> hoặc các nguồn tài liệu
+xuất sắc tại
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#strang-1993" id="id1">[Strang, 1993]</a><a class="bibtex reference internal" href="../chapter_references/zreferences.html#kolter-2008" id="id2">[Kolter, 2008]</a><a class="bibtex reference internal" href="../chapter_references/zreferences.html#petersen-pedersen-ea-2008" id="id3">[Petersen et al., 2008]</a>.</p>
+<!-- =================== Kết thúc dịch Phần 11 ==================== --><!-- =================== Bắt đầu dịch Phần 12 ==================== --><!--
+## Summary
+--></div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">2.3.12. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Scalars, vectors, matrices, and tensors are basic mathematical objects in linear algebra.
+* Vectors generalize scalars, and matrices generalize vectors.
+* In the `ndarray` representation, scalars, vectors, matrices, and tensors have 0, 1, 2, and an arbitrary number of axes, respectively.
+* A tensor can be reduced along the specified axes by `sum` and `mean`.
+* Elementwise multiplication of two matrices is called their Hadamard product. It is different from matrix multiplication.
+* In deep learning, we often work with norms such as the $\ell_1$ norm, the $\ell_2$ norm, and the Frobenius norm.
+* We can perform a variety of operations over scalars, vectors, matrices, and tensors with `ndarray` functions.
+--><ul class="simple">
+<li>Số vô hướng, vector, ma trận, và tensor là các đối tượng toán học cơ
+bản trong đại số tuyến tính.</li>
+<li>Vector là dạng tổng quát của số vô hướng và ma trận là dạng tổng quát
+của vector.</li>
+<li>Trong cách biểu diễn <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, các số vô hướng, vector, ma trận và
+tensor lần lượt có 0, 1, 2 và một số lượng tùy ý các trục.</li>
+<li>Một tensor có thể thu gọn theo một số trục bằng <code class="docutils literal notranslate"><span class="pre">sum</span></code> và <code class="docutils literal notranslate"><span class="pre">mean</span></code>.</li>
+<li>Phép nhân theo từng phần tử của hai ma trận được gọi là tích Hadamard
+của chúng. Phép toán này khác với phép nhân ma trận.</li>
+<li>Trong học sâu, chúng ta thường làm việc với các chuẩn như chuẩn
+<span class="math notranslate nohighlight">\(\ell_1\)</span>, chuẩn <span class="math notranslate nohighlight">\(\ell_2\)</span> và chuẩn Frobenius.</li>
+<li>Chúng ta có thể thực hiện một số lượng lớn các toán tử trên số vô
+hướng, vector, ma trận và tensor với các hàm của <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">2.3.13. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Prove that the transpose of a matrix $\mathbf{A}$'s transpose is $\mathbf{A}$: $(\mathbf{A}^\top)^\top = \mathbf{A}$.
+2. Given two matrices $\mathbf{A}$ and $\mathbf{B}$, show that the sum of transposes is equal to the transpose of a sum: $\mathbf{A}^\top + \mathbf{B}^\top = (\mathbf{A} + \mathbf{B})^\top$.
+3. Given any square matrix $\mathbf{A}$, is $\mathbf{A} + \mathbf{A}^\top$ always symmetric? Why?
+4. We defined the tensor `X` of shape ($2$, $3$, $4$) in this section. What is the output of `len(X)`?
+5. For a tensor `X` of arbitrary shape, does `len(X)` always correspond to the length of a certain axis of `X`? What is that axis?
+6. Run `A / A.sum(axis=1)` and see what happens. Can you analyze the reason?
+7. When traveling between two points in Manhattan, what is the distance that you need to cover in terms of the coordinates, i.e., in terms of avenues and streets? Can you travel diagonally?
+8. Consider a tensor with shape ($2$, $3$, $4$). What are the shapes of the summation outputs along axis $0$, $1$, and $2$?
+9. Feed a tensor with 3 or more axes to the `linalg.norm` function and observe its output. What does this function compute for `ndarray`s of arbitrary shape?
+--><ol class="arabic simple">
+<li>Chứng minh rằng chuyển vị của một ma trận chuyển vị là chính nó:
+<span class="math notranslate nohighlight">\((\mathbf{A}^\top)^\top = \mathbf{A}\)</span>.</li>
+<li>Cho hai ma trận <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> và <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>, chứng minh
+rằng tổng của chuyển vị bằng chuyển vị của tổng:
+<span class="math notranslate nohighlight">\(\mathbf{A}^\top + \mathbf{B}^\top = (\mathbf{A} + \mathbf{B})^\top\)</span>.</li>
+<li>Cho một ma trận vuông <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, liệu rằng
+<span class="math notranslate nohighlight">\(\mathbf{A} + \mathbf{A}^\top\)</span> có luôn đối xứng? Tại sao?</li>
+<li>Chúng ta đã định nghĩa tensor <code class="docutils literal notranslate"><span class="pre">X</span></code> với kích thước (<span class="math notranslate nohighlight">\(2\)</span>,
+<span class="math notranslate nohighlight">\(3\)</span>, <span class="math notranslate nohighlight">\(4\)</span>) trong mục này. Kết quả của <code class="docutils literal notranslate"><span class="pre">len(X)</span></code> là gì?</li>
+<li>Cho một tensor <code class="docutils literal notranslate"><span class="pre">X</span></code> với kích thước bất kỳ, liệu <code class="docutils literal notranslate"><span class="pre">len(X)</span></code> có luôn
+tương ứng với độ dài của một trục nhất định của <code class="docutils literal notranslate"><span class="pre">X</span></code> hay không? Đó
+là trục nào?</li>
+<li>Chạy <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">/</span> <span class="pre">A.sum(axis=1)</span></code> và xem điều gì xảy ra. Bạn có phân tích
+được nguyên nhân không?</li>
+<li>Khi di chuyển giữa hai điểm ở Manhattan (đường phố hình bàn cờ),
+khoảng cách tính bằng tọa độ (tức độ dài các đại lộ và phố) mà bạn
+cần di chuyển là bao nhiêu? Bạn có thể đi theo đường chéo không? (Xem
+thêm bản đồ Manhattan, New York để trả lời câu hỏi này)</li>
+<li>Xét một tensor với kích thước (<span class="math notranslate nohighlight">\(2\)</span>, <span class="math notranslate nohighlight">\(3\)</span>, <span class="math notranslate nohighlight">\(4\)</span>). Kích
+thước của kết quả sau khi tính tổng theo trục <span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(1\)</span> và
+<span class="math notranslate nohighlight">\(2\)</span> sẽ như thế nào?</li>
+<li>Đưa một tensor với 3 trục hoặc hơn vào hàm <code class="docutils literal notranslate"><span class="pre">linalg.norm</span></code> và quan
+sát kết quả. Hàm này thực hiện việc gì cho các <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> với kích
+thước bất kỳ?</li>
+</ol>
+<!-- ========================================= REVISE PHẦN 10 - KẾT THÚC ===================================--><!--
+## [Discussions](https://discuss.mxnet.io/t/2317)
+--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">2.3.14. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2317">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+<!--
+![](../img/qr_linear-algebra.svg)
+--><!-- ===================== Kết thúc dịch Phần 12 ==================== --></div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">2.3.15. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Minh Đức</li>
+<li>Ngô Thế Anh Khoa</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Mai Sơn Hải</li>
+<li>Phạm Hồng Vinh</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">2.3. Đại số tuyến tính</a><ul>
+<li><a class="reference internal" href="#so-vo-huong">2.3.1. Số vô hướng</a></li>
+<li><a class="reference internal" href="#vector">2.3.2. Vector</a><ul>
+<li><a class="reference internal" href="#do-dai-chieu-va-kich-thuoc">2.3.2.1. Độ dài, Chiều, và Kích thước</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ma-tran">2.3.3. Ma trận</a></li>
+<li><a class="reference internal" href="#tensor">2.3.4. Tensor</a></li>
+<li><a class="reference internal" href="#cac-thuoc-tinh-co-ban-cua-phep-toan-tensor">2.3.5. Các thuộc tính Cơ bản của Phép toán Tensor</a></li>
+<li><a class="reference internal" href="#rut-gon">2.3.6. Rút gọn</a><ul>
+<li><a class="reference internal" href="#tong-khong-rut-gon">2.3.6.1. Tổng không rút gọn</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tich-vo-huong">2.3.7. Tích vô hướng</a></li>
+<li><a class="reference internal" href="#tich-giua-ma-tran-va-vector">2.3.8. Tích giữa Ma trận và Vector</a></li>
+<li><a class="reference internal" href="#phep-nhan-ma-tran">2.3.9. Phép nhân Ma trận</a></li>
+<li><a class="reference internal" href="#chuan">2.3.10. Chuẩn</a><ul>
+<li><a class="reference internal" href="#chuan-va-muc-tieu">2.3.10.1. Chuẩn và Mục tiêu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ban-them-ve-dai-so-tuyen-tinh">2.3.11. Bàn thêm về Đại số Tuyến tính</a></li>
+<li><a class="reference internal" href="#tom-tat">2.3.12. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">2.3.13. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">2.3.14. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">2.3.15. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="pandas_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>2.2. Tiền xử lý dữ liệu</div>
+         </div>
+     </a>
+     <a id="button-next" href="calculus_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>2.4. Giải tích</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

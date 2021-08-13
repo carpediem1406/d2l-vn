@@ -1,0 +1,812 @@
+
+.. raw:: html
+
+   <!--
+   # Distributed Key-Value Store
+   -->
+
+.. _sec_key_value:
+
+.. _dịch-tiêu-đề-phía-trên-1:
+
+*dịch tiêu đề phía trên*
+========================
+
+
+.. raw:: html
+
+   <!--
+   KVStore is a place for data sharing. Think of it as a single object shared across different devices (GPUs and computers), where each device can push data in and pull data out.
+   -->
+
+*dịch đoạn phía trên*
+
+.. raw:: html
+
+   <!--
+   ## Initialization
+   -->
+
+
+*dịch tiêu đề phía trên*
+------------------------
+
+.. raw:: html
+
+   <!--
+   Let’s consider a simple example: initializing a (int, NDArray) pair into the store, and then pulling the value out:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    from d2l import mxnet as d2l
+    from mxnet import np, npx, kv
+    npx.set_np()
+
+.. code:: python
+
+    np.ones((2,3))
+
+
+
+
+.. parsed-literal::
+    :class: output
+
+    array([[1., 1., 1.],
+           [1., 1., 1.]])
+
+
+
+.. code:: python
+
+    help(kv)
+
+
+.. parsed-literal::
+    :class: output
+
+    Help on module mxnet.kvstore in mxnet:
+    
+    NAME
+        mxnet.kvstore - Key value store interface of MXNet for parameter synchronization.
+    
+    CLASSES
+        builtins.object
+            KVStore
+        
+        class KVStore(builtins.object)
+         |  KVStore(handle)
+         |  
+         |  A key-value store for synchronization of values, over multiple devices.
+         |  
+         |  Methods defined here:
+         |  
+         |  __del__(self)
+         |  
+         |  __init__(self, handle)
+         |      Initializes a new KVStore.
+         |      
+         |      Parameters
+         |      ----------
+         |      handle : KVStoreHandle
+         |          `KVStore` handle of C API.
+         |  
+         |  init(self, key, value)
+         |      Initializes a single or a sequence of key-value pairs into the store.
+         |      
+         |      For each key, one must `init` it before calling `push` or `pull`.
+         |      When multiple workers invoke `init` for the same key, only
+         |      the value supplied by worker with rank `0` is used. This function returns
+         |      after data has been initialized successfully.
+         |      
+         |      Parameters
+         |      ----------
+         |      key : str, int, or sequence of str or int
+         |          The keys.
+         |      value : NDArray, RowSparseNDArray or sequence of NDArray or RowSparseNDArray
+         |          Values corresponding to the keys.
+         |      
+         |      Examples
+         |      --------
+         |      >>> # init a single key-value pair
+         |      >>> shape = (2,3)
+         |      >>> kv = mx.kv.create('local')
+         |      >>> kv.init('3', mx.nd.ones(shape)*2)
+         |      >>> a = mx.nd.zeros(shape)
+         |      >>> kv.pull('3', out=a)
+         |      >>> print a.asnumpy()
+         |      [[ 2.  2.  2.]
+         |      [ 2.  2.  2.]]
+         |      
+         |      >>> # init a list of key-value pairs
+         |      >>> keys = ['5', '7', '9']
+         |      >>> kv.init(keys, [mx.nd.ones(shape)]*len(keys))
+         |      
+         |      >>> # init a row_sparse value
+         |      >>> kv.init('4', mx.nd.ones(shape).tostype('row_sparse'))
+         |      >>> b = mx.nd.sparse.zeros('row_sparse', shape)
+         |      >>> kv.row_sparse_pull('4', row_ids=mx.nd.array([0, 1]), out=b)
+         |      >>> print b
+         |      <RowSparseNDArray 2x3 @cpu(0)>
+         |  
+         |  load_optimizer_states(self, fname)
+         |      Loads the optimizer (updater) state from the file.
+         |      
+         |      Parameters
+         |      ----------
+         |      fname : str
+         |          Path to input states file.
+         |  
+         |  pull(self, key, out=None, priority=0, ignore_sparse=True)
+         |      Pulls a single value or a sequence of values from the store.
+         |      
+         |      This function returns immediately after adding an operator to the engine.
+         |      Subsequent attempts to read from the `out` variable will be blocked until the
+         |      pull operation completes.
+         |      
+         |      `pull` is executed asynchronously after all previous `pull` calls and only
+         |      the last `push` call for the same input key(s) are finished.
+         |      
+         |      The returned values are guaranteed to be the latest values in the store.
+         |      
+         |      pull with `RowSparseNDArray` is not supported for dist kvstore.
+         |      Please use ``row_sparse_pull`` instead.
+         |      
+         |      Parameters
+         |      ----------
+         |      key : str, int, or sequence of str or int
+         |          Keys.
+         |      
+         |      out: NDArray or list of NDArray or list of list of NDArray
+         |          Values corresponding to the keys.
+         |      
+         |      priority : int, optional
+         |          The priority of the pull operation.
+         |          Higher priority pull operations are likely to be executed before
+         |          other pull actions.
+         |      
+         |      ignore_sparse: bool, optional, default True
+         |          Whether to ignore sparse arrays in the request.
+         |      
+         |      Examples
+         |      --------
+         |      >>> # pull a single key-value pair
+         |      >>> a = mx.nd.zeros(shape)
+         |      >>> kv.pull('3', out=a)
+         |      >>> print a.asnumpy()
+         |      [[ 2.  2.  2.]
+         |      [ 2.  2.  2.]]
+         |      
+         |      >>> # pull into multiple devices
+         |      >>> b = [mx.nd.ones(shape, gpu) for gpu in gpus]
+         |      >>> kv.pull('3', out=b)
+         |      >>> print b[1].asnumpy()
+         |      [[ 2.  2.  2.]
+         |      [ 2.  2.  2.]]
+         |      
+         |      >>> # pull a list of key-value pairs.
+         |      >>> # On single device
+         |      >>> keys = ['5', '7', '9']
+         |      >>> b = [mx.nd.zeros(shape)]*len(keys)
+         |      >>> kv.pull(keys, out=b)
+         |      >>> print b[1].asnumpy()
+         |      [[ 2.  2.  2.]
+         |      [ 2.  2.  2.]]
+         |      >>> # On multiple devices
+         |      >>> keys = ['6', '8', '10']
+         |      >>> b = [[mx.nd.ones(shape, gpu) for gpu in gpus]] * len(keys)
+         |      >>> kv.pull(keys, out=b)
+         |      >>> print b[1][1].asnumpy()
+         |      [[ 2.  2.  2.]
+         |      [ 2.  2.  2.]]
+         |  
+         |  push(self, key, value, priority=0)
+         |      Pushes a single or a sequence of key-value pairs into the store.
+         |      
+         |      This function returns immediately after adding an operator to the engine.
+         |      The actual operation is executed asynchronously. If there are consecutive
+         |      pushes to the same key, there is no guarantee on the serialization of pushes.
+         |      The execution of a push does not guarantee that all previous pushes are
+         |      finished.
+         |      There is no synchronization between workers.
+         |      One can use ``_barrier()`` to sync all workers.
+         |      
+         |      Parameters
+         |      ----------
+         |      key : str, int, or sequence of str or int
+         |          Keys.
+         |      
+         |      value : NDArray, RowSparseNDArray, list of NDArray or RowSparseNDArray,
+         |              or list of list of NDArray or RowSparseNDArray
+         |          Values corresponding to the keys.
+         |      
+         |      priority : int, optional
+         |          The priority of the push operation.
+         |          Higher priority push operations are likely to be executed before
+         |          other push actions.
+         |      
+         |      Examples
+         |      --------
+         |      >>> # push a single key-value pair
+         |      >>> kv.push('3', mx.nd.ones(shape)*8)
+         |      >>> kv.pull('3', out=a) # pull out the value
+         |      >>> print a.asnumpy()
+         |      [[ 8.  8.  8.]
+         |      [ 8.  8.  8.]]
+         |      
+         |      >>> # aggregate the value and the push
+         |      >>> gpus = [mx.gpu(i) for i in range(4)]
+         |      >>> b = [mx.nd.ones(shape, gpu) for gpu in gpus]
+         |      >>> kv.push('3', b)
+         |      >>> kv.pull('3', out=a)
+         |      >>> print a.asnumpy()
+         |      [[ 4.  4.  4.]
+         |      [ 4.  4.  4.]]
+         |      
+         |      >>> # push a list of keys.
+         |      >>> # single device
+         |      >>> keys = ['4', '5', '6']
+         |      >>> kv.push(keys, [mx.nd.ones(shape)]*len(keys))
+         |      >>> b = [mx.nd.zeros(shape)]*len(keys)
+         |      >>> kv.pull(keys, out=b)
+         |      >>> print b[1].asnumpy()
+         |      [[ 1.  1.  1.]
+         |      [ 1.  1.  1.]]
+         |      
+         |      >>> # multiple devices:
+         |      >>> keys = ['7', '8', '9']
+         |      >>> b = [[mx.nd.ones(shape, gpu) for gpu in gpus]] * len(keys)
+         |      >>> kv.push(keys, b)
+         |      >>> kv.pull(keys, out=b)
+         |      >>> print b[1][1].asnumpy()
+         |      [[ 4.  4.  4.]
+         |      [ 4.  4.  4.]]
+         |      
+         |      >>> # push a row_sparse value
+         |      >>> b = mx.nd.sparse.zeros('row_sparse', shape)
+         |      >>> kv.init('10', mx.nd.sparse.zeros('row_sparse', shape))
+         |      >>> kv.push('10', mx.nd.ones(shape).tostype('row_sparse'))
+         |      >>> # pull out the value
+         |      >>> kv.row_sparse_pull('10', row_ids=mx.nd.array([0, 1]), out=b)
+         |      >>> print b
+         |      <RowSparseNDArray 2x3 @cpu(0)>
+         |  
+         |  pushpull(self, key, value, out=None, priority=0)
+         |      Performs push and pull a single value or a sequence of values from the store.
+         |      
+         |      This function is coalesced form of push and pull operations. This function returns
+         |      immediately after adding an operator to the engine. Subsequent attempts to read
+         |      from the `out` variable will be blocked until the pull operation completes.
+         |      
+         |      `value` is pushed to the kvstore server for the specified keys and the updated
+         |      values are pulled from the server to `out`. If `out` is not specified the pulled
+         |      values are written to `value`. The returned values are guaranteed to be the latest
+         |      values in the store.
+         |      
+         |      pushpull with `RowSparseNDArray` is not supported for dist kvstore.
+         |      
+         |      Parameters
+         |      ----------
+         |      key : str, int, or sequence of str or int
+         |          Keys.
+         |      
+         |      value : NDArray, RowSparseNDArray, list of NDArray or RowSparseNDArray,
+         |              or list of list of NDArray or RowSparseNDArray
+         |          Values corresponding to the keys.
+         |      
+         |      out: NDArray or list of NDArray or list of list of NDArray
+         |          Values corresponding to the keys.
+         |      
+         |      priority : int, optional
+         |          The priority of the pull operation.
+         |          Higher priority pull operations are likely to be executed before
+         |          other pull actions.
+         |      
+         |      Examples
+         |      --------
+         |      >>> # push a single key-value pair
+         |      >>> kv.pushpull('3', mx.nd.ones(shape)*8, out=a)
+         |      >>> print a.asnumpy()
+         |      [[ 8.  8.  8.]
+         |      [ 8.  8.  8.]]
+         |      
+         |      >>> # aggregate the value and the push
+         |      >>> gpus = [mx.gpu(i) for i in range(4)]
+         |      >>> b = [mx.nd.ones(shape, gpu) for gpu in gpus]
+         |      >>> kv.pushpull('3', b, out=a)
+         |      >>> print a.asnumpy()
+         |      [[ 4.  4.  4.]
+         |      [ 4.  4.  4.]]
+         |      
+         |      >>> # push a list of keys.
+         |      >>> # single device
+         |      >>> keys = ['4', '5', '6']
+         |      >>> b = [mx.nd.zeros(shape)]*len(keys)
+         |      >>> kv.push(keys, [mx.nd.ones(shape)]*len(keys), out=b)
+         |      >>> print b[1].asnumpy()
+         |      [[ 1.  1.  1.]
+         |      [ 1.  1.  1.]]
+         |      
+         |      >>> # multiple devices:
+         |      >>> keys = ['7', '8', '9']
+         |      >>> b = [[mx.nd.ones(shape, gpu) for gpu in gpus]] * len(keys)
+         |      >>> kv.pushpull(keys, b)
+         |      >>> print b[1][1].asnumpy()
+         |      [[ 4.  4.  4.]
+         |      [ 4.  4.  4.]]
+         |  
+         |  row_sparse_pull(self, key, out=None, priority=0, row_ids=None)
+         |      Pulls a single RowSparseNDArray value or a sequence of RowSparseNDArray values         from the store with specified row_ids. When there is only one row_id, KVStoreRowSparsePull         is invoked just once and the result is broadcast to all the rest of outputs.
+         |      
+         |      `row_sparse_pull` is executed asynchronously after all previous
+         |      `pull`/`row_sparse_pull` calls and the last `push` call for the
+         |      same input key(s) are finished.
+         |      
+         |      The returned values are guaranteed to be the latest values in the store.
+         |      
+         |      Parameters
+         |      ----------
+         |      key : str, int, or sequence of str or int
+         |          Keys.
+         |      
+         |      out: RowSparseNDArray or list of RowSparseNDArray or list of list of RowSparseNDArray
+         |          Values corresponding to the keys. The stype is expected to be row_sparse
+         |      
+         |      priority : int, optional
+         |          The priority of the pull operation.
+         |          Higher priority pull operations are likely to be executed before
+         |          other pull actions.
+         |      
+         |      row_ids : NDArray or list of NDArray
+         |          The row_ids for which to pull for each value. Each row_id is an 1-D NDArray             whose values don't have to be unique nor sorted.
+         |      
+         |      Examples
+         |      --------
+         |      >>> shape = (3, 3)
+         |      >>> kv.init('3', mx.nd.ones(shape).tostype('row_sparse'))
+         |      >>> a = mx.nd.sparse.zeros('row_sparse', shape)
+         |      >>> row_ids = mx.nd.array([0, 2], dtype='int64')
+         |      >>> kv.row_sparse_pull('3', out=a, row_ids=row_ids)
+         |      >>> print a.asnumpy()
+         |      [[ 1.  1.  1.]
+         |      [ 0.  0.  0.]
+         |      [ 1.  1.  1.]]
+         |      >>> duplicate_row_ids = mx.nd.array([2, 2], dtype='int64')
+         |      >>> kv.row_sparse_pull('3', out=a, row_ids=duplicate_row_ids)
+         |      >>> print a.asnumpy()
+         |      [[ 0.  0.  0.]
+         |      [ 0.  0.  0.]
+         |      [ 1.  1.  1.]]
+         |      >>> unsorted_row_ids = mx.nd.array([1, 0], dtype='int64')
+         |      >>> kv.row_sparse_pull('3', out=a, row_ids=unsorted_row_ids)
+         |      >>> print a.asnumpy()
+         |      [[ 1.  1.  1.]
+         |      [ 1.  1.  1.]
+         |      [ 0.  0.  0.]]
+         |  
+         |  save_optimizer_states(self, fname, dump_optimizer=False)
+         |      Saves the optimizer (updater) state to a file. This is often used when checkpointing
+         |      the model during training.
+         |      
+         |      Parameters
+         |      ----------
+         |      fname : str
+         |          Path to the output states file.
+         |      dump_optimizer : bool, default False
+         |          Whether to also save the optimizer itself. This would also save optimizer
+         |          information such as learning rate and weight decay schedules.
+         |  
+         |  set_gradient_compression(self, compression_params)
+         |      Specifies type of low-bit quantization for gradient compression          and additional arguments depending on the type of compression being used.
+         |      
+         |      2bit Gradient Compression takes a positive float `threshold`.
+         |      The technique works by thresholding values such that positive values in the
+         |      gradient above threshold will be set to threshold. Negative values whose absolute
+         |      values are higher than threshold, will be set to the negative of threshold.
+         |      Values whose absolute values are less than threshold will be set to 0.
+         |      By doing so, each value in the gradient is in one of three states. 2bits are
+         |      used to represent these states, and every 16 float values in the original
+         |      gradient can be represented using one float. This compressed representation
+         |      can reduce communication costs. The difference between these thresholded values and
+         |      original values is stored at the sender's end as residual and added to the
+         |      gradient in the next iteration.
+         |      
+         |      When kvstore is 'local', gradient compression is used to reduce communication
+         |      between multiple devices (gpus). Gradient is quantized on each GPU which
+         |      computed the gradients, then sent to the GPU which merges the gradients. This
+         |      receiving GPU dequantizes the gradients and merges them. Note that this
+         |      increases memory usage on each GPU because of the residual array stored.
+         |      
+         |      When kvstore is 'dist', gradient compression is used to reduce communication
+         |      from worker to sender. Gradient is quantized on each worker which
+         |      computed the gradients, then sent to the server which dequantizes
+         |      this data and merges the gradients from each worker. Note that this
+         |      increases CPU memory usage on each worker because of the residual array stored.
+         |      Only worker to server communication is compressed in this setting.
+         |      If each machine has multiple GPUs, currently this GPU to GPU or GPU to CPU communication
+         |      is not compressed. Server to worker communication (in the case of pull)
+         |      is also not compressed.
+         |      
+         |      To use 2bit compression, we need to specify `type` as `2bit`.
+         |      Only specifying `type` would use default value for the threshold.
+         |      To completely specify the arguments for 2bit compression, we would need to pass
+         |      a dictionary which includes `threshold` like:
+         |      {'type': '2bit', 'threshold': 0.5}
+         |      
+         |      Parameters
+         |      ----------
+         |      compression_params : dict
+         |          A dictionary specifying the type and parameters for gradient compression.
+         |          The key `type` in this dictionary is a
+         |          required string argument and specifies the type of gradient compression.
+         |          Currently `type` can be only `2bit`
+         |          Other keys in this dictionary are optional and specific to the type
+         |          of gradient compression.
+         |  
+         |  set_optimizer(self, optimizer)
+         |      Registers an optimizer with the kvstore.
+         |      
+         |      When using a single machine, this function updates the local optimizer.
+         |      If using multiple machines and this operation is invoked from a worker node,
+         |      it will serialized the optimizer with pickle and send it to all servers.
+         |      The function returns after all servers have been updated.
+         |      
+         |      Parameters
+         |      ----------
+         |      optimizer : Optimizer
+         |          The new optimizer for the store
+         |      
+         |      Examples
+         |      --------
+         |      
+         |      >>> kv = mx.kv.create()
+         |      >>> shape = (2, 2)
+         |      >>> weight = mx.nd.zeros(shape)
+         |      >>> kv.init(3, weight)
+         |      >>> # set the optimizer for kvstore as the default SGD optimizer
+         |      >>> kv.set_optimizer(mx.optimizer.SGD())
+         |      >>> grad = mx.nd.ones(shape)
+         |      >>> kv.push(3, grad)
+         |      >>> kv.pull(3, out = weight)
+         |      >>> # weight is updated via gradient descent
+         |      >>> weight.asnumpy()
+         |      array([[-0.01, -0.01],
+         |             [-0.01, -0.01]], dtype=float32)
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors defined here:
+         |  
+         |  __dict__
+         |      dictionary for instance variables (if defined)
+         |  
+         |  __weakref__
+         |      list of weak references to the object (if defined)
+         |  
+         |  num_workers
+         |      Returns the number of worker nodes.
+         |      
+         |      Returns
+         |      -------
+         |      size :int
+         |          The number of worker nodes.
+         |  
+         |  rank
+         |      Returns the rank of this worker node.
+         |      
+         |      Returns
+         |      -------
+         |      rank : int
+         |          The rank of this node, which is in range [0, num_workers())
+         |  
+         |  type
+         |      Returns the type of this kvstore.
+         |      
+         |      Returns
+         |      -------
+         |      type : str
+         |          the string type
+    
+    FUNCTIONS
+        create(name='local')
+            Creates a new KVStore.
+            
+            For single machine training, there are two commonly used types:
+            
+            ``local``: Copies all gradients to CPU memory and updates weights there.
+            
+            ``device``: Aggregates gradients and updates weights on GPUs. With this setting,
+            the KVStore also attempts to use GPU peer-to-peer communication,
+            potentially accelerating the communication.
+            
+            For distributed training, KVStore also supports a number of types:
+            
+            ``dist_sync``: Behaves similarly to ``local`` but with one major difference.
+            With ``dist_sync``, batch-size now means the batch size used on each machine.
+            So if there are ``n`` machines and we use batch size ``b``,
+            then ``dist_sync`` behaves like ``local`` with batch size ``n * b``.
+            
+            ``dist_device_sync``: Identical to ``dist_sync`` with the difference similar
+            to ``device`` vs ``local``.
+            
+            ``dist_async``: Performs asynchronous updates.
+            The weights are updated whenever gradients are received from any machine.
+            No two updates happen on the same weight at the same time. However, the order is not
+            guaranteed.
+            
+            Parameters
+            ----------
+            name : {'local', 'device', 'nccl', 'dist_sync', 'dist_device_sync', 'dist_async'}
+                The type of KVStore.
+            Returns
+            -------
+            kv : KVStore
+                The created KVStore.
+    
+    DATA
+        absolute_import = _Feature((2, 5, 0, 'alpha', 1), (3, 0, 0, 'alpha', 0...
+        string_types = (<class 'str'>,)
+    
+    FILE
+        /master/home/hnguyent/miniconda3/envs/d2lenv/lib/python3.7/site-packages/mxnet/kvstore.py
+    
+    
+
+
+.. code:: python
+
+    kv = kv.create('local')  # Create a local kv store.
+    shape = (2,3)
+    kv.init(3, np.ones(shape) * 2)
+    a = np.zeros(shape)
+    kv.pull(3, out = a)
+    print(a)
+
+
+.. parsed-literal::
+    :class: output
+
+    [[2. 2. 2.]
+     [2. 2. 2.]]
+
+
+.. raw:: html
+
+   <!--
+   ## Push, Aggregate, and Update
+   -->
+
+*dịch tiêu đề phía trên*
+------------------------
+
+.. raw:: html
+
+   <!--
+   For any key that has been initialized, you can push a new value with the same shape to the key:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    kv.push(3, np.ones(shape)*8)
+    kv.pull(3, out = a)  # Pull out the value
+    print(a.asnumpy())
+
+
+.. parsed-literal::
+    :class: output
+
+    [[8. 8. 8.]
+     [8. 8. 8.]]
+
+
+.. raw:: html
+
+   <!--
+   The data for pushing can be stored on any device.
+   Furthermore, you can push multiple values into the same key, where KVStore will first sum all of these values and then push the aggregated value.
+   Here we will just demonstrate pushing a list of values on CPU.
+   Please note summation only happens if the value list is longer than one
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    contexts = [npx.cpu(i) for i in range(4)]
+    b = [np.ones(shape, ctx=ctx) for ctx in contexts]
+    kv.push(3, b)
+    kv.pull(3, out = a)
+    print(a)
+
+
+.. parsed-literal::
+    :class: output
+
+    [[4. 4. 4.]
+     [4. 4. 4.]]
+
+
+.. raw:: html
+
+   <!--
+   For each push, KVStore combines the pushed value with the value stored using an updater.
+   The default updater is ASSIGN. You can replace the default to control how data is merged:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    def update(key, input, stored):
+        print(f'update on key: {key}')
+        stored += input * 2
+    kv._set_updater(update)
+    kv.pull(3, out=a)
+    print(a)
+
+
+.. parsed-literal::
+    :class: output
+
+    [[4. 4. 4.]
+     [4. 4. 4.]]
+
+
+.. code:: python
+
+    kv.push(3, np.ones(shape))
+    kv.pull(3, out=a)
+    print(a)
+
+
+.. parsed-literal::
+    :class: output
+
+    update on key: 3
+    [[6. 6. 6.]
+     [6. 6. 6.]]
+
+
+.. raw:: html
+
+   <!--
+   ## Pull
+   -->
+
+*dịch tiêu đề phía trên*
+------------------------
+
+.. raw:: html
+
+   <!--
+   You’ve already seen how to pull a single key-value pair. Similarly, to push, you can pull the value onto several devices with a single call:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    b = [np.ones(shape, ctx=ctx) for ctx in contexts]
+    kv.pull(3, out = b)
+    print(b[1])
+
+
+.. parsed-literal::
+    :class: output
+
+    [[6. 6. 6.]
+     [6. 6. 6.]]
+
+
+.. raw:: html
+
+   <!--
+   ## Handle a List of Key-Value Pairs
+   -->
+
+*dịch tiêu đề phía trên*
+------------------------
+
+.. raw:: html
+
+   <!--
+   All operations introduced so far involve a single key. KVStore also provides an interface for a list of key-value pairs.
+   -->
+
+*dịch đoạn phía trên*
+
+.. raw:: html
+
+   <!--
+   For a single device:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    keys = [5, 7, 9]
+    kv.init(keys, [np.ones(shape)]*len(keys))
+    kv.push(keys, [np.ones(shape)]*len(keys))
+    b = [np.zeros(shape)]*len(keys)
+    kv.pull(keys, out = b)
+    print(b[1])
+
+
+.. parsed-literal::
+    :class: output
+
+    update on key: 5
+    update on key: 7
+    update on key: 9
+    [[3. 3. 3.]
+     [3. 3. 3.]]
+
+
+.. raw:: html
+
+   <!--
+   For multiple devices:
+   -->
+
+*dịch đoạn phía trên*
+
+.. code:: python
+
+    b = [[np.ones(shape, ctx=ctx) for ctx in contexts]] * len(keys)
+    kv.push(keys, b)
+    kv.pull(keys, out = b)
+    print(b[1][1])
+
+
+.. parsed-literal::
+    :class: output
+
+    update on key: 5
+    update on key: 7
+    update on key: 9
+    [[11. 11. 11.]
+     [11. 11. 11.]]
+
+
+Những người thực hiện
+---------------------
+
+Bản dịch trong trang này được thực hiện bởi:
+
+-  Đoàn Võ Duy Thanh
+-  
+
+.. raw:: html
+
+   <!-- Phần 2 -->
+
+-  
+
+.. raw:: html
+
+   <!-- Phần 3 -->
+
+-  
+
+.. raw:: html
+
+   <!-- Phần 4 -->
+
+-  
+
+.. raw:: html
+
+   <!-- Phần 5 -->
+
+-  
+
+.. raw:: html
+
+   <!-- Phần 6 -->
+
+-  

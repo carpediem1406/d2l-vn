@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>2.6. Xác suất &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.7. Tài liệu" href="lookup-api_vn.html" />
+    <link rel="prev" title="2.5. Tính vi phân Tự động" href="autograd_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">2. </span>Sơ bộ</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">2.6. </span>Xác suất</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_preliminaries/probability_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">2. Sơ bộ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">2. Sơ bộ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ===================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Probability
+--><div class="section" id="xac-suat">
+<span id="sec-prob"></span><h1><span class="section-number">2.6. </span>Xác suất<a class="headerlink" href="#xac-suat" title="Permalink to this headline">¶</a></h1>
+<!--
+In some form or another, machine learning is all about making predictions.
+We might want to predict the *probability* of a patient suffering a heart attack in the next year, given their clinical history. In anomaly detection, we might want to assess how *likely* a set of readings from an airplane's jet engine would be, were it operating normally. In reinforcement learning, we want an agent to act intelligently in an environment. This means we need to think about the probability of getting a high reward under each of the available action. And when we build recommender systems we also need to think about probability. For example, say *hypothetically* that we worked for a large online bookseller. We might want to estimate the probability that a particular user would buy a particular book. For this we need to use the language of probability.
+Entire courses, majors, theses, careers, and even departments, are devoted to probability. So naturally, our goal in this section is not to teach the whole subject. Instead we hope to get you off the ground, to teach you just enough that you can start building your first deep learning models, and to give you enough of a flavor for the subject that you can begin to explore it on your own if you wish.
+--><p>Theo cách này hay cách khác, học máy đơn thuần là đưa ra các dự đoán.
+Chúng ta có thể muốn dự đoán <em>xác suất</em> của một bệnh nhân có thể bị đau
+tim vào năm sau, khi đã biết tiền sử lâm sàng của họ. Trong tác vụ phát
+hiện điều bất thường, chúng ta có thể muốn đánh giá <em>khả năng</em> các thông
+số động cơ máy bay ở mức nào, liệu có ở mức hoạt động bình thường không.
+Trong học tăng cường, chúng ta muốn có một tác nhân hoạt động thông minh
+trong một môi trường. Nghĩa là chúng ta cần tính tới xác suất đạt điểm
+thưởng cao nhất cho từng hành động có thể thực hiện. Và khi xây dựng một
+hệ thống gợi ý chúng ta cũng cần quan tâm tới xác suất. Ví dụ, <em>giả
+thiết</em> rằng chúng ta làm việc cho một hãng bán sách trực tuyến lớn.
+Chúng ta có thể muốn ước lượng xác suất một khách hàng cụ thể muốn mua
+một cuốn sách cụ thể nào đó. Để làm được điều này, chúng ta cần dùng tới
+ngôn ngữ xác suất. Có những khóa học, chuyên ngành, luận văn, sự nghiệp,
+và cả các ban ngành đều dành toàn bộ cho xác suất. Vì thế đương nhiên
+mục tiêu của chúng tôi trong chương này không phải để dạy toàn bộ môn
+xác suất. Thay vào đó, chúng tôi hy vọng đưa tới cho bạn đọc các kiến
+thức nền tảng, đủ để bạn đọc có thể bắt đầu xây dựng mô hình học sâu đầu
+tiên của chính mình, và truyền cảm hứng cho bạn thêm yêu thích xác suất
+để có thể bắt đầu tự khám phá nếu muốn.</p>
+<!--
+We have already invoked probabilities in previous sections without articulating what precisely they are or giving a concrete example. Let's get more serious now by considering the first case: distinguishing cats and dogs based on photographs. This might sound simple but it is actually a formidable challenge. To start with, the difficulty of the problem may depend on the resolution of the image.
+--><p>Chúng tôi đã nhắc tới xác suất trong các chương trước mà không nói rõ
+chính xác nó là gì hay là đưa ra một ví dụ cụ thể nào. Giờ hãy cùng bắt
+đầu nghiêm túc hơn bằng cách xem xét trường hợp đầu tiên: phân biệt mèo
+và chó dựa trên các bức ảnh. Điều này tưởng chừng đơn giản nhưng thực ra
+là một thách thức. Để bắt đầu, độ phức tạp của bài toán này có thể phụ
+thuộc vào độ phân giải của ảnh.</p>
+<!--
+![Images of varying resolutions ($10 \times 10$, $20 \times 20$, $40 \times 40$, $80 \times 80$, and $160 \times 160$ pixels).](../img/cat_dog_pixels.png)
+--><div class="figure align-default" id="id1">
+<span id="fig-cat-dog"></span><a class="reference internal image-reference" href="../_images/cat_dog_pixels.png"><img alt="../_images/cat_dog_pixels.png" src="../_images/cat_dog_pixels.png" style="width: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.6.1 </span><span class="caption-text">Ảnh ở các độ phân giải khác nhau (<span class="math notranslate nohighlight">\(10 \times 10\)</span>,
+<span class="math notranslate nohighlight">\(20 \times 20\)</span>, <span class="math notranslate nohighlight">\(40 \times 40\)</span>, <span class="math notranslate nohighlight">\(80 \times 80\)</span>, and
+<span class="math notranslate nohighlight">\(160 \times 160\)</span> điểm ảnh).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+As shown in :numref:`fig_cat_dog`,
+while it is easy for humans to recognize cats and dogs at the resolution of $160 \times 160$ pixels,
+it becomes challenging at $40 \times 40$ pixels and next to impossible at $10 \times 10$ pixels. In
+other words, our ability to tell cats and dogs apart at a large distance (and thus low resolution) might approach uninformed guessing. Probability gives us a
+formal way of reasoning about our level of certainty.
+If we are completely sure
+that the image depicts a cat, we say that the *probability* that the corresponding label $y$ is "cat", denoted $P(y=$ "cat"$)$ equals $1$.
+If we had no evidence to suggest that $y =$ "cat" or that $y =$ "dog", then we might say that the two possibilities were equally
+*likely* expressing this as $P(y=$ "cat"$) = P(y=$ "dog"$) = 0.5$. If we were reasonably
+confident, but not sure that the image depicted a cat, we might assign a
+probability $0.5  < P(y=$ "cat"$) < 1$.
+--><p>Như thể hiện trong <a class="reference internal" href="#fig-cat-dog"><span class="std std-numref">Fig. 2.6.1</span></a>, con người phân biệt mèo và
+chó dễ dàng ở độ phân giải <span class="math notranslate nohighlight">\(160 \times 160\)</span> điểm ảnh, có chút thử
+thách hơn ở <span class="math notranslate nohighlight">\(40 \times 40\)</span> điểm ảnh, và gần như không thể ở
+<span class="math notranslate nohighlight">\(10 \times 10\)</span> điểm ảnh. Nói cách khác, khả năng phân biệt mèo và
+chó của chúng ta ở khoảng cách càng xa (đồng nghĩa với độ phân giải
+thấp) càng giống đoán mò. Xác suất trang bị cho ta một cách suy luận
+hình thức về mức độ chắc chắn. Nếu chúng ta hoàn toàn chắc chắn rằng bức
+ảnh mô tả một con mèo, ta có thể nói rằng <em>xác suất</em> nhãn tương ứng
+<span class="math notranslate nohighlight">\(y\)</span> là “mèo”, ký hiệu là <span class="math notranslate nohighlight">\(P(y=\)</span> “mèo”<span class="math notranslate nohighlight">\()\)</span> equals
+<span class="math notranslate nohighlight">\(1\)</span>. Nếu chúng ta không có manh mối nào để đoán rằng <span class="math notranslate nohighlight">\(y =\)</span>
+“mèo” hoặc là <span class="math notranslate nohighlight">\(y =\)</span> “chó”, thì ta có thể nói rằng hai xác suất này
+có <em>khả năng</em> bằng nhau, biễu diễn bởi <span class="math notranslate nohighlight">\(P(y=\)</span>
+“mèo”<span class="math notranslate nohighlight">\() = P(y=\)</span> “chó”<span class="math notranslate nohighlight">\() = 0.5\)</span>. Nếu ta khá tự tin, nhưng
+không thực sự chắc chắn bức ảnh mô tả một con mèo, ta có thể gán cho nó
+một xác suất <span class="math notranslate nohighlight">\(0.5 &lt; P(y=\)</span> “mèo”<span class="math notranslate nohighlight">\() &lt; 1\)</span>.</p>
+<!--
+Now consider the second case: given some weather monitoring data, we want to predict the probability that it will rain in Taipei tomorrow. If it is summertime, the rain might come with probability $0.5$.
+--><p>Giờ hãy xem xét trường hợp thứ hai: cho dữ liệu theo dõi khí tượng,
+chúng ta muốn dự đoán xác suất ngày mai trời sẽ mưa ở Đài Bắc. Nếu vào
+mùa hè, xác suất trời mưa có thể là <span class="math notranslate nohighlight">\(0.5\)</span>.</p>
+<!--
+In both cases, we have some value of interest. And in both cases we are uncertain about the outcome.
+But there is a key difference between the two cases. In this first case, the image is in fact either a dog or a cat, and we just do not know which. In the second case, the outcome may actually be a random event, if you believe in such things (and most physicists do). So probability is a flexible language for reasoning about our level of certainty, and it can be applied effectively in a broad set of contexts.
+--><p>Trong cả hai trường hợp, chúng ta đều quan tâm tới một đại lượng nào đó
+và cùng không chắc chắn về giá trị đầu ra. Nhưng có một khác biệt quan
+trọng giữa hai trường hợp. Trong trường hợp đầu tiên, bức ảnh chỉ có thể
+là chó hoặc mèo, và chúng ta chỉ không biết là loài nào. Trong trường
+hợp thứ hai, đầu ra thực sự có thể là một sự kiện ngẫu nhiên, nếu bạn
+tin vào những thứ như vậy (và hầu hết các nhà vật lý tin vậy). Như vậy
+xác suất là một ngôn ngữ linh hoạt để suy đoán về mức độ chắc chắn của
+chúng ta, và nó có thể được áp dụng hiệu quả trong vô vàn ngữ cảnh khác
+nhau.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+## Basic Probability Theory
+--><div class="section" id="ly-thuyet-xac-suat-co-ban">
+<h2><span class="section-number">2.6.1. </span>Lý thuyết Xác suất cơ bản<a class="headerlink" href="#ly-thuyet-xac-suat-co-ban" title="Permalink to this headline">¶</a></h2>
+<!--
+Say that we cast a die and want to know what the chance is of seeing a $1$ rather than another digit. If the die is fair, all the $6$ outcomes $\{1, \ldots, 6\}$ are equally likely to occur, and thus we would see a $1$ in one out of six cases. Formally we state that $1$ occurs with probability $\frac{1}{6}$.
+--><p>Giả sử, ta tung xúc xắc và muốn biết cơ hội để thấy mặt số <span class="math notranslate nohighlight">\(1\)</span> so
+với các mặt khác là bao nhiêu? Nếu chiếc xúc xắc có chất liệu đồng nhất,
+thì cả <span class="math notranslate nohighlight">\(6\)</span> mặt <span class="math notranslate nohighlight">\(\{1, \ldots, 6\}\)</span> đều có khả năng xuất hiện
+như nhau, nên ta sẽ thấy mặt <span class="math notranslate nohighlight">\(1\)</span> xuất hiện một lần trong mỗi sáu
+lần tung xúc xắc như trên. Ta có thể nói rằng mặt <span class="math notranslate nohighlight">\(1\)</span> xuất hiện
+với xác suất là <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>.</p>
+<!--
+For a real die that we receive from a factory, we might not know those proportions and we would need to check whether it is tainted. The only way to investigate the die is by casting it many times and recording the outcomes. For each cast of the die, we will observe a value in $\{1, \ldots, 6\}$. Given these outcomes, we want to investigate the probability of observing each outcome.
+--><p>Với một chiếc xúc xắc thật, ta có thể không biết được tỷ lệ này và cần
+kiểm tra liệu xúc xắc có bị hư hỏng gì không. Cách duy nhất để kiểm tra
+là tung thật nhiều lần rồi ghi lại kết quả. Mỗi lần tung, ta quan sát
+thấy một số trong <span class="math notranslate nohighlight">\(\{1, \ldots, 6\}\)</span> xuất hiện. Với kết quả này,
+ta muốn kiểm chứng xác suất xuất hiện của từng mặt số.</p>
+<!--
+One natural approach for each value is to take the
+individual count for that value and to divide it by the total number of tosses.
+This gives us an *estimate* of the probability of a given *event*. The *law of
+large numbers* tell us that as the number of tosses grows this estimate will draw closer and closer to the true underlying probability. Before going into the details of what is going here, let's try it out.
+--><p>Cách tính trực quan nhất là lấy số lần xuất hiện của mỗi mặt số chia cho
+tổng số lần tung. Cách này cho ta một <em>ước lượng</em> của xác suất ứng với
+một <em>sự kiện</em> cho trước. <em>Luật số lớn</em> cho ta biết rằng số lần tung xúc
+xắc càng tăng thì ước lượng này càng gần hơn với xác xuất thực. Trước
+khi giải thích chi tiết hơn, hãy cùng lập trình thí nghiệm này.</p>
+<!--
+To start, let's import the necessary packages.
+--><p>Bắt đầu, ta nhập các gói lệnh cần thiết.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+</pre></div>
+</div>
+<!--
+Next, we will want to be able to cast the die. In statistics we call this process
+of drawing examples from probability distributions *sampling*.
+The distribution
+that assigns probabilities to a number of discrete choices is called the
+*multinomial distribution*. We will give a more formal definition of
+*distribution* later, but at a high level, think of it as just an assignment of
+probabilities to events. In MXNet, we can sample from the multinomial
+distribution via the aptly named `np.random.multinomial` function.
+The function
+can be called in many ways, but we will focus on the simplest.
+To draw a single sample, we simply pass in a vector of probabilities.
+The output of the `np.random.multinomial` function is another vector of the same length:
+its value at index $i$ is the number of times the sampling outcome corresponds to $i$.
+--><p>Tiếp theo, ta sẽ cần tung xúc xắc. Trong thống kê, ta gọi quá trình thu
+các mẫu từ phân phối xác suất là quá trình <em>lấy mẫu</em>. Phân phối mà gán
+các xác suất cho các lựa chọn rời rạc (<em>discrete choices</em>) được gọi là
+<em>phân phối đa thức</em> (<em>multinomial distribution</em>). Sau này, ta sẽ đưa ra
+định nghĩa chính quy <em>phân phối</em> là gì; nhưng để hình dung, hãy xem nó
+như phép gán xác suất xảy ra cho các sự kiện. Trong MXNet, ta có thể lấy
+mẫu từ phân phối đa thức với hàm <code class="docutils literal notranslate"><span class="pre">np.random.multinomial</span></code>. Có nhiều
+cách sử dụng hàm này, nhưng ta tập trung vào cách dùng đơn giản nhất.
+Muốn lấy một mẫu đơn, ta chỉ cần đưa vào hàm này một vector chứa các xác
+suất. Hàm <code class="docutils literal notranslate"><span class="pre">np.random.multinomial</span></code> sẽ cho kết quả là một vector có
+chiều dài tương tự: trong vector này, giá trị tại chỉ số <span class="math notranslate nohighlight">\(i\)</span> là số
+lần kết quả <span class="math notranslate nohighlight">\(i\)</span> xuất hiện.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fair_probs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int64</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!--
+If you run the sampler a bunch of times, you will find that you get out random
+values each time. As with estimating the fairness of a die, we often want to
+generate many samples from the same distribution. It would be unbearably slow to
+do this with a Python `for` loop, so `random.multinomial` supports drawing
+multiple samples at once, returning an array of independent samples in any shape
+we might desire.
+--><p>Nếu chạy hàm lấy mẫu vài lần, bạn sẽ thấy rằng mỗi lần các giá trị trả
+về đều là ngẫu nhiên. Giống với việc đánh giá một con xúc xắc có đều hay
+không, chúng ta thường muốn tạo nhiều mẫu từ cùng một phân phối. Tạo dữ
+liệu như trên với vòng lặp <code class="docutils literal notranslate"><span class="pre">for</span></code> trong Python là rất chậm, vì vậy hàm
+<code class="docutils literal notranslate"><span class="pre">random.multinomial</span></code> hỗ trợ sinh nhiều mẫu trong một lần gọi, trả về
+một mảng chứa các mẫu độc lập với kích thước bất kỳ.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int64</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+We can also conduct, say $3$, groups of experiments, where each group draws $10$ samples, all at once.
+--><p>Chúng ta cũng có thể giả sử làm <span class="math notranslate nohighlight">\(3\)</span> thí nghiệm, trong đó mỗi thí
+nghiệm cùng lúc lấy ra <span class="math notranslate nohighlight">\(10\)</span> mẫu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">counts</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int64</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Now that we know how to sample rolls of a die, we can simulate 1000 rolls. We
+can then go through and count, after each of the 1000 rolls, how many times each
+number was rolled.
+Specifically, we calculate the relative frequency as the estimate of the true probability.
+--><p>Giờ chúng ta đã biết cách lấy mẫu các lần tung của một con xúc xắc, ta
+có thể giả lập 1000 lần tung. Sau đó, chúng ta có thể đếm xem mỗi mặt
+xuất hiện bao nhiêu lần. Cụ thể, chúng ta tính toán tần suất tương đối
+như là một ước lượng của xác suất thực.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Store the results as 32-bit floats for division</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">counts</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># Reletive frequency as the estimate</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.164</span><span class="p">,</span> <span class="mf">0.153</span><span class="p">,</span> <span class="mf">0.181</span><span class="p">,</span> <span class="mf">0.163</span><span class="p">,</span> <span class="mf">0.163</span><span class="p">,</span> <span class="mf">0.176</span><span class="p">])</span>
+</pre></div>
+</div>
+<!--
+Because we generated the data from a fair die, we know that each outcome has true probability $\frac{1}{6}$, roughly $0.167$, so the above output estimates look good.
+--><p>Do dữ liệu được sinh bởi một con xúc xắc đều, ta biết mỗi đầu ra đều có
+xác suất thực bằng <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>, cỡ <span class="math notranslate nohighlight">\(0.167\)</span>, do đó kết quả
+ước lượng bên trên trông khá ổn.</p>
+<!--
+We can also visualize how these probabilities converge over time towards the true probability.
+Let's conduct $500$ groups of experiments where each group draws $10$ samples.
+--><p>Chúng ta cũng có thể minh họa những xác suất này hội tụ tới xác suất
+thực như thế nào. Hãy cũng làm <span class="math notranslate nohighlight">\(500\)</span> thí nghiệm trong đó mỗi thí
+nghiệm lấy ra <span class="math notranslate nohighlight">\(10\)</span> mẫu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">cum_counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">estimates</span> <span class="o">=</span> <span class="n">cum_counts</span> <span class="o">/</span> <span class="n">cum_counts</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span>
+                 <span class="n">label</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;P(die=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">))</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.167</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Groups of experiments&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated probability&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_probability_vn_145937_11_0.svg" src="../_images/output_probability_vn_145937_11_0.svg" /></div>
+<!--
+Each solid curve corresponds to one of the six values of the die and gives our estimated probability that the die turns up that value as assessed after each group of experiments.
+The dashed black line gives the true underlying probability.
+As we get more data by conducting more experiments,
+the $6$ solid curves converge towards the true probability.
+--><p>Mỗi đường cong liền tương ứng với một trong sáu giá trị của xúc xắc và
+chỉ ra xác suất ước lượng của sự kiện xúc xắc ra mặt tương ứng sau mỗi
+thí nghiệm. Đường đứt đoạn màu đen tương ứng với xác suất thực. Khi ta
+lấy thêm dữ liệu bằng cách thực hiện thêm các thí nghiệm, thì <span class="math notranslate nohighlight">\(6\)</span>
+đường cong liền sẽ hội tụ tiến tới xác suất thực.</p>
+<!-- ===================== Kết thúc dịch Phần 3 ===================== --><!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Axioms of Probability Theory
+--><div class="section" id="cac-tien-de-cua-ly-thuyet-xac-suat">
+<h3><span class="section-number">2.6.1.1. </span>Các Tiên đề của Lý thuyết Xác suất<a class="headerlink" href="#cac-tien-de-cua-ly-thuyet-xac-suat" title="Permalink to this headline">¶</a></h3>
+<!--
+When dealing with the rolls of a die,
+we call the set $\mathcal{S} = \{1, 2, 3, 4, 5, 6\}$ the *sample space* or *outcome space*, where each element is an *outcome*.
+An *event* is a set of outcomes from a given sample space.
+For instance, "seeing a $5$" ($\{5\}$) and "seeing an odd number" ($\{1, 3, 5\}$) are both valid events of rolling a die.
+Note that if the outcome of a random experiment is in event $\mathcal{A}$,
+then event $\mathcal{A}$ has occurred.
+That is to say, if $3$ dots faced up after rolling a die, since $3 \in \{1, 3, 5\}$,
+we can say that the event "seeing an odd number" has occurred.
+--><p>Khi thực hiện tung một con xúc xắc, chúng ta gọi tập hợp
+<span class="math notranslate nohighlight">\(\mathcal{S} = \{1, 2, 3, 4, 5, 6\}\)</span> là <em>không gian mẫu</em> hoặc
+<em>không gian kết quả</em>, trong đó mỗi phần tử là một <em>kết quả</em>. Một <em>sự
+kiện</em> là một tập hợp các kết quả của không gian mẫu. Ví dụ, “tung được
+một số <span class="math notranslate nohighlight">\(5\)</span>” (<span class="math notranslate nohighlight">\(\{5\}\)</span>) và “tung được một số lẻ”
+(<span class="math notranslate nohighlight">\(\{1, 3, 5\}\)</span>) đều là những sự kiện hợp lệ khi tung một con xúc
+xắc. Chú ý rằng nếu kết quả của một phép tung ngẫu nhiên nằm trong sự
+kiện <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, sự kiện <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> đã xảy ra. Như
+vậy, nếu mặt <span class="math notranslate nohighlight">\(3\)</span> chấm ngửa lên sau khi xúc xắc được tung, chúng ta
+nói sự kiện “tung được một số lẻ” đã xảy ra bởi vì
+<span class="math notranslate nohighlight">\(3 \in \{1, 3, 5\}\)</span>.</p>
+<!--
+Formally, *probability* can be thought of a function that maps a set to a real value.
+The probability of an event $\mathcal{A}$ in the given sample space $\mathcal{S}$,
+denoted as $P(\mathcal{A})$, satisfies the following properties:
+--><p>Một cách chính thống hơn, <em>xác suất</em> có thể được xem là một hàm số ánh
+xạ một tập hợp các sự kiện tới một số thực. Xác suất của sự kiện
+<span class="math notranslate nohighlight">\(\mathcal{A}\)</span> trong không gian mẫu <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>, được kí
+hiệu là <span class="math notranslate nohighlight">\(P(\mathcal{A})\)</span>, phải thoả mãn những tính chất sau:</p>
+<!--
+* For any event $\mathcal{A}$, its probability is never negative, i.e., $P(\mathcal{A}) \geq 0$;
+* Probability of the entire sample space is $1$, i.e., $P(\mathcal{S}) = 1$;
+* For any countable sequence of events $\mathcal{A}_1, \mathcal{A}_2, \ldots$ that are *mutually exclusive* ($\mathcal{A}_i \cap \mathcal{A}_j = \emptyset$ for all $i \neq j$), the probability that any happens is equal to the sum of their individual probabilities, i.e., $P(\bigcup_{i=1}^{\infty} \mathcal{A}_i) = \sum_{i=1}^{\infty} P(\mathcal{A}_i)$.
+--><ul class="simple">
+<li>Với mọi sự kiện <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, xác suất của nó là không âm, tức
+là: <span class="math notranslate nohighlight">\(P(\mathcal{A}) \geq 0\)</span>;</li>
+<li>Xác suất của toàn không gian mẫu luôn bằng <span class="math notranslate nohighlight">\(1\)</span>, tức:
+<span class="math notranslate nohighlight">\(P(\mathcal{S}) = 1\)</span>;</li>
+<li>Đối với mọi dãy sự kiện có thể đếm được
+<span class="math notranslate nohighlight">\(\mathcal{A}_1, \mathcal{A}_2, \ldots\)</span> <em>xung khắc lẫn nhau</em>
+(<span class="math notranslate nohighlight">\(\mathcal{A}_i \cap \mathcal{A}_j = \emptyset\)</span> với mọi
+<span class="math notranslate nohighlight">\(i \neq j\)</span>), xác suất có ít nhất một sự kiện xảy ra sẽ là tổng
+của những giá trị xác suất riêng lẻ, hay:
+<span class="math notranslate nohighlight">\(P(\bigcup_{i=1}^{\infty} \mathcal{A}_i) = \sum_{i=1}^{\infty} P(\mathcal{A}_i)\)</span>.</li>
+</ul>
+<!--
+These are also the axioms of probability theory, proposed by Kolmogorov in 1933.
+Thanks to this axiom system, we can avoid any philosophical dispute on randomness;
+instead, we can reason rigorously with a mathematical language.
+For instance, by letting event $\mathcal{A}_1$ be the entire sample space and $\mathcal{A}_i = \emptyset$ for all $i > 1$, we can prove that $P(\emptyset) = 0$, i.e., the probability of an impossible event is $0$.
+--><p>Đây cũng là những tiên đề của lý thuyết xác suất, được đề xuất bởi
+Kolmogorov năm 1933. Nhờ vào hệ thống tiên đề này, ta có thể tránh được
+những tranh luận chủ quan về sự ngẫu nhiên; và ta có thể có được những
+suy luận chặt chẽ sử dụng ngôn ngữ toán học. Ví dụ, cho sự kiện
+<span class="math notranslate nohighlight">\(\mathcal{A}_1\)</span> là toàn bộ không gian mẫu và
+<span class="math notranslate nohighlight">\(\mathcal{A}_i = \emptyset\)</span> với mọi <span class="math notranslate nohighlight">\(i &gt; 1\)</span>, chúng ta có thể
+chứng minh rằng <span class="math notranslate nohighlight">\(P(\emptyset) = 0\)</span>, nghĩa là xác suất của sự kiện
+không thể xảy ra bằng <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!--
+### Random Variables
+--></div>
+<div class="section" id="bien-ngau-nhien">
+<h3><span class="section-number">2.6.1.2. </span>Biến ngẫu nhiên<a class="headerlink" href="#bien-ngau-nhien" title="Permalink to this headline">¶</a></h3>
+<!--
+In our random experiment of casting a die, we introduced the notion of a *random variable*. A random variable can be pretty much any quantity and is not deterministic. It could take one value among a set of possibilities in a random experiment.
+Consider a random variable $X$ whose value is in the sample space $\mathcal{S} = \{1, 2, 3, 4, 5, 6\}$ of rolling a die. We can denote the event "seeing a $5$" as $\{X = 5\}$ or $X = 5$, and its probability as $P(\{X = 5\})$ or $P(X = 5)$.
+By $P(X = a)$, we make a distinction between the random variable $X$ and the values (e.g., $a$) that $X$ can take.
+However, such pedantry results in a cumbersome notation.
+For a compact notation,
+on one hand, we can just denote $P(X)$ as the *distribution* over the random variable $X$:
+the distribution tells us the probability that $X$ takes any value.
+On the other hand,
+we can simply write $P(a)$ to denote the probability that a random variable takes the value $a$.
+Since an event in probability theory is a set of outcomes from the sample space,
+we can specify a range of values for a random variable to take.
+For example, $P(1 \leq X \leq 3)$ denotes the probability of the event $\{1 \leq X \leq 3\}$,
+which means $\{X = 1, 2, \text{or}, 3\}$. Equivalently, $P(1 \leq X \leq 3)$ represents the probability that the random variable $X$ can take a value from $\{1, 2, 3\}$.
+--><p>Trong thí nghiệm tung xúc xắc ngẫu nhiên, chúng ta đã giới thiệu khái
+niệm của một <em>biến ngẫu nhiên</em>. Một biến ngẫu nhiên có thể dùng để biểu
+diễn cho hầu như bất kỳ đại lượng nào và giá trị của nó không cố định.
+Nó có thể nhận một giá trị trong tập các giá trị khả dĩ từ một thí
+nghiệm ngẫu nhiên. Hãy xét một biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> có thể nhận một
+trong những giá trị từ tập không gian mẫu
+<span class="math notranslate nohighlight">\(\mathcal{S} = \{1, 2, 3, 4, 5, 6\}\)</span> của thí nghiêm tung xúc xắc.
+Chúng ta có thể biểu diễn sự kiện “trông thấy mặt <span class="math notranslate nohighlight">\(5\)</span>” là
+<span class="math notranslate nohighlight">\(\{X = 5\}\)</span> hoặc <span class="math notranslate nohighlight">\(X = 5\)</span>, và xác suất của nó là
+<span class="math notranslate nohighlight">\(P(\{X = 5\})\)</span> hoặc <span class="math notranslate nohighlight">\(P(X = 5)\)</span>. Khi viết <span class="math notranslate nohighlight">\(P(X = a)\)</span>,
+chúng ta đã phân biệt giữa biến ngẫu nhiên <span class="math notranslate nohighlight">\(X\)</span> và các giá trị (ví
+dụ như <span class="math notranslate nohighlight">\(a\)</span>) mà <span class="math notranslate nohighlight">\(X\)</span> có thể nhận. Tuy nhiên, ký hiệu như vậy
+khá là rườm rà. Để đơn giản hóa ký hiệu, một mặt, chúng ta có thể chỉ
+cần dùng <span class="math notranslate nohighlight">\(P(X)\)</span> để biểu diễn <em>phân phối</em> của biến ngẫu nhiên
+<span class="math notranslate nohighlight">\(X\)</span>: phân phối này cho chúng ta biết xác xuất mà <span class="math notranslate nohighlight">\(X\)</span> có thể
+nhận cho bất kỳ giá trị nào. Mặt khác, chúng ta có thể đơn thuần viết
+<span class="math notranslate nohighlight">\(P(a)\)</span> để biểu diễn xác suất mà một biến ngẫu nhiên nhận giá trị
+<span class="math notranslate nohighlight">\(a\)</span>. Bởi vì một sự kiện trong lý thuyết xác suất là một tập các
+kết quả từ không gian mẫu, chúng ta có thể xác định rõ một khoảng các
+giá trị mà một biến ngẫu nhiên có thể nhận. Ví dụ,
+<span class="math notranslate nohighlight">\(P(1 \leq X \leq 3)\)</span> diễn tả xác suất của sự kiện
+<span class="math notranslate nohighlight">\(\{1 \leq X \leq 3\}\)</span>, nghĩa là
+<span class="math notranslate nohighlight">\(\{X = 1, 2, \text{hoặc}, 3\}\)</span>. Tương tự,
+<span class="math notranslate nohighlight">\(P(1 \leq X \leq 3)\)</span> biểu diễn xác suất mà biến ngẫu nhiên
+<span class="math notranslate nohighlight">\(X\)</span> có thể nhận giá trị trong tập <span class="math notranslate nohighlight">\(\{1, 2, 3\}\)</span>.</p>
+<!--
+Note that there is a subtle difference between *discrete* random variables, like the sides of a die, and *continuous* ones, like the weight and the height of a person. There is little point in asking whether two people have exactly the same height. If we take precise enough measurements you will find that no two people on the planet have the exact same height. In fact, if we take a fine enough measurement, you will not have the same height when you wake up and when you go to sleep. So there is no purpose in asking about the probability
+that someone is $1.80139278291028719210196740527486202$ meters tall. Given the world population of humans the probability is virtually $0$. It makes more sense in this case to ask whether someone's height falls into a given interval, say between $1.79$ and $1.81$ meters. In these cases we quantify the likelihood that we see a value as a *density*. The height of exactly $1.80$ meters has no probability, but nonzero density. In the interval between any two different heights we have nonzero probability.
+In the rest of this section, we consider probability in discrete space.
+For probability over continuous random variables, you may refer to :numref:`sec_random_variables`.
+--><p>Lưu ý rằng có một sự khác biệt tinh tế giữa các biến ngẫu nhiên <em>rời
+rạc</em>, ví dụ như các mặt của xúc xắc, và các biến ngẫu nhiên <em>liên tục</em>,
+ví dụ như cân nặng và chiều cao của một người. Việc hỏi rằng hai người
+có cùng chính xác chiều cao hay không khá là vô nghĩa. Nếu ta đo với đủ
+độ chính xác, ta sẽ thấy rằng không có hai người nào trên hành tinh này
+mà có cùng chính xác chiều cao cả. Thật vậy, nếu đo đủ chính xác, chiều
+cao của bạn lúc mới thức dậy và khi đi ngủ sẽ khác nhau. Cho nên không
+có lý do gì để tìm xác suất một người nào đó cao
+<span class="math notranslate nohighlight">\(1.80139278291028719210196740527486202\)</span> mét cả. Trong toàn bộ dân
+số trên thế giới, xác suất này gần như bằng <span class="math notranslate nohighlight">\(0\)</span>. Sẽ có lý hơn nếu
+ta hỏi chiều cao của một người nào đó có rơi vào một khoảng cho trước
+hay không, ví dụ như giữa <span class="math notranslate nohighlight">\(1.79\)</span> và <span class="math notranslate nohighlight">\(1.81\)</span> mét. Trong các
+trường hợp này, ta có thể định lượng khả năng mà ta thấy một giá trị nào
+đó theo một <em>mật độ xác suất</em>. Xác suất để có chiều cao chính xác
+<span class="math notranslate nohighlight">\(1.80\)</span> mét không tồn tại, nhưng mật độ của sự kiện này khác không.
+Trong bất kỳ khoảng nào giữa hai chiều cao khác nhau ta đều có xác suất
+khác không. Trong phần còn lại của mục này, ta sẽ xem xét xác suất trong
+không gian rời rạc. Về xác suất của biến ngẫu nhiên liên tục, bạn có thể
+xem ở <a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html#sec-random-variables"><span class="std std-numref">Section 18.6</span></a>.</p>
+<!-- Kết thúc revise phần 3 --><!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 4 - BẮT ĐẦU ===================================--><!--
+## Dealing with Multiple Random Variables
+--></div>
+</div>
+<div class="section" id="lam-viec-voi-nhieu-bien-ngau-nhien">
+<h2><span class="section-number">2.6.2. </span>Làm việc với Nhiều Biến Ngẫu nhiên<a class="headerlink" href="#lam-viec-voi-nhieu-bien-ngau-nhien" title="Permalink to this headline">¶</a></h2>
+<!--
+Very often, we will want to consider more than one random variable at a time.
+For instance, we may want to model the relationship between diseases and symptoms. Given a disease and a symptom, say "flu" and "cough", either may or may not occur in a patient with some probability. While we hope that the probability of both would be close to zero, we may want to estimate these probabilities and their relationships to each other so that we may apply our inferences to effect better medical care.
+--><p>Chúng ta sẽ thường xuyên phải làm việc với nhiều hơn một biến ngẫu nhiên
+cùng lúc. Ví dụ, chúng ta có thể muốn mô hình hóa mối quan hệ giữa các
+loại bệnh và các triệu chứng bệnh. Cho một loại bệnh và một triệu chứng
+bệnh, giả sử “cảm cúm” và “ho”, chúng có thể xuất hiện hoặc không trên
+một bệnh nhân với xác suất nào đó. Mặc dù chúng ta hy vọng xác suất cả
+hai xảy ra gần bằng không, ta có thể vẫn muốn ước lượng các xác suất này
+và mối quan hệ giữa chúng để có thể thực hiện các biện pháp chăm sóc y
+tế tốt hơn.</p>
+<!--
+As a more complicated example, images contain millions of pixels, thus millions of random variables. And in many cases images will come with a
+label, identifying objects in the image. We can also think of the label as a
+random variable. We can even think of all the metadata as random variables
+such as location, time, aperture, focal length, ISO, focus distance, and camera type.
+All of these are random variables that occur jointly. When we deal with multiple random variables, there are several quantities of interest.
+--><p>Xét một ví dụ phức tạp hơn: các bức ảnh chứa hàng triệu điểm ảnh, tương
+ứng với hàng triệu biến ngẫu nhiên. Và trong nhiều trường hợp các bức
+ảnh sẽ được gán một nhãn chứa tên các vật xuất hiện trong ảnh. Chúng ta
+cũng có thể xem nhãn này như một biến ngẫu nhiên. Thậm chí, ta còn có
+thể xem tất cả các siêu dữ liệu như địa điểm, thời gian, khẩu độ, tiêu
+cự, ISO, khoảng lấy nét và loại máy ảnh, là các biến ngẫu nhiên. Tất cả
+các những biến ngẫu nhiên này xảy ra đồng thời. Khi làm việc với nhiều
+biến ngẫu nhiên, có một số đại lượng đáng được quan tâm.</p>
+<!--
+### Joint Probability
+--><div class="section" id="xac-suat-dong-thoi">
+<h3><span class="section-number">2.6.2.1. </span>Xác suất Đồng thời<a class="headerlink" href="#xac-suat-dong-thoi" title="Permalink to this headline">¶</a></h3>
+<!--
+The first is called the *joint probability* $P(A = a, B=b)$. Given any values $a$ and $b$, the joint probability lets us answer, what is the probability that $A=a$ and $B=b$ simultaneously?
+Note that for any values $a$ and $b$, $P(A=a, B=b) \leq P(A=a)$.
+This has to be the case, since for $A=a$ and $B=b$ to happen, $A=a$ has to happen *and* $B=b$ also has to happen (and vice versa). Thus, $A=a$ and $B=b$ cannot be more likely than $A=a$ or $B=b$ individually.
+--><p>Đầu tiên là <em>xác suất đồng thời</em> <span class="math notranslate nohighlight">\(P(A = a, B=b)\)</span>. Cho hai biến
+<span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span> bất kỳ, xác suất đồng thời cho ta biết xác suất
+để cả <span class="math notranslate nohighlight">\(A=a\)</span> và <span class="math notranslate nohighlight">\(B=b\)</span> đều xảy ra. Ta có thể thấy rằng với mọi
+giá trị <span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(P(A=a, B=b) \leq P(A=a)\)</span>. Bởi để
+<span class="math notranslate nohighlight">\(A=a\)</span> và <span class="math notranslate nohighlight">\(B=b\)</span> xảy ra thì <span class="math notranslate nohighlight">\(A=a\)</span> phải xảy ra <em>và</em>
+<span class="math notranslate nohighlight">\(B=b\)</span> cũng phải xảy ra (và ngược lại). Do đó, khả năng <span class="math notranslate nohighlight">\(A=a\)</span>
+và <span class="math notranslate nohighlight">\(B=b\)</span> xảy ra đồng thời không thể lớn hơn khả năng <span class="math notranslate nohighlight">\(A=a\)</span>
+hoặc <span class="math notranslate nohighlight">\(B=b\)</span> xảy ra một cách độc lập được.</p>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ===================== Bắt đầu dịch Phần 7 ===================== --><!--
+### Conditional Probability
+--></div>
+<div class="section" id="xac-suat-co-dieu-kien">
+<h3><span class="section-number">2.6.2.2. </span>Xác suất có điều kiện<a class="headerlink" href="#xac-suat-co-dieu-kien" title="Permalink to this headline">¶</a></h3>
+<!--
+This brings us to an interesting ratio: $0 \leq \frac{P(A=a, B=b)}{P(A=a)} \leq 1$. We call this ratio a *conditional probability*
+and denote it by $P(B=b \mid A=a)$: it is the probability of $B=b$, provided that
+$A=a$ has occurred.
+--><p>Điều này giúp ta thu được một tỉ lệ thú vị:
+<span class="math notranslate nohighlight">\(0 \leq \frac{P(A=a, B=b)}{P(A=a)} \leq 1\)</span>. Chúng ta gọi tỉ lệ này
+là <em>xác suất có điều kiện</em> và ký hiệu là <span class="math notranslate nohighlight">\(P(B=b \mid A=a)\)</span>: xác
+suất để <span class="math notranslate nohighlight">\(B=b\)</span>, với điều kiện <span class="math notranslate nohighlight">\(A=a\)</span> đã xảy ra.</p>
+<!--
+### Bayes' theorem
+--></div>
+<div class="section" id="dinh-ly-bayes">
+<h3><span class="section-number">2.6.2.3. </span>Định lý Bayes<a class="headerlink" href="#dinh-ly-bayes" title="Permalink to this headline">¶</a></h3>
+<!--
+Using the definition of conditional probabilities, we can derive one of the most useful and celebrated equations in statistics: *Bayes' theorem*.
+It goes as follows.
+By construction, we have the *multiplication rule* that $P(A, B) = P(B \mid A) P(A)$. By symmetry, this also holds for $P(A, B) = P(A \mid B) P(B)$. Assume that $P(B) > 0$. Solving for one of the conditional variables we get
+--><p>Sử dụng định nghĩa của xác suất có điều kiện, chúng ta có thể thu được
+một trong những phương trình nổi tiếng và hữu dụng nhất trong thống kê:
+<em>định lý Bayes</em>. Cụ thể như sau: Theo định nghĩa chúng ta có <em>quy tắc
+nhân</em> <span class="math notranslate nohighlight">\(P(A, B) = P(B \mid A) P(A)\)</span>. Tương tự, ta cũng có
+<span class="math notranslate nohighlight">\(P(A, B) = P(A \mid B) P(B)\)</span>. Giả sử <span class="math notranslate nohighlight">\(P(B) &gt; 0\)</span>. Kết hợp các
+điều kiện trên ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-0">
+<span class="eqno">(2.6.1)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-0" title="Permalink to this equation">¶</a></span>\[P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}.\]</div>
+<!--
+Note that here we use the more compact notation where $P(A, B)$ is a *joint distribution* and $P(A \mid B)$ is a *conditional distribution*. Such distributions can be evaluated for particular values $A = a, B=b$.
+--><p>Lưu ý rằng ở đây chúng ta sử dụng ký hiệu ngắn gọn hơn, với
+<span class="math notranslate nohighlight">\(P(A, B)\)</span> là <em>xác suất đồng thời</em> và <span class="math notranslate nohighlight">\(P(A \mid B)\)</span> là <em>xác
+suất có điều kiện</em>. Các phân phối này có thể được tính tại các giá trị
+cụ thể <span class="math notranslate nohighlight">\(A = a, B=b\)</span>.</p>
+<!--
+### Marginalization
+--></div>
+<div class="section" id="phep-bien-hoa">
+<h3><span class="section-number">2.6.2.4. </span>Phép biên hóa<a class="headerlink" href="#phep-bien-hoa" title="Permalink to this headline">¶</a></h3>
+<!--
+Bayes' theorem is very useful if we want to infer one thing from the other, say cause and effect, but we only know the properties in the reverse direction, as we will see later in this section. One important operation that we need, to make this work, is *marginalization*.
+It is the operation of determining $P(B)$ from $P(A, B)$. We can see that the probability of $B$ amounts to accounting for all possible choices of $A$ and aggregating the joint probabilities over all of them:
+--><p>Định lý Bayes rất hữu ích nếu chúng ta muốn suy luận một điều gì đó từ
+một điều khác, như là nguyên nhân và kết quả, nhưng ta chỉ biết các đặc
+tính theo chiều ngược lại, như ta sẽ thấy trong phần sau của chương này.
+Chúng ta cần làm một thao tác quan trọng để đạt được điều này, đó là
+<em>phép biên hóa</em>. Có thể hiểu là việc xác định <span class="math notranslate nohighlight">\(P(B)\)</span> từ
+<span class="math notranslate nohighlight">\(P(A, B)\)</span>. Chúng ta có thể tính được xác suất của B bằng tổng xác
+suất kết hợp của A và B tại mọi giá trị có thể của A:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-1">
+<span class="eqno">(2.6.2)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-1" title="Permalink to this equation">¶</a></span>\[P(B) = \sum_{A} P(A, B),\]</div>
+<!--
+which is also known as the *sum rule*. The probability or distribution as a result of marginalization is called a *marginal probability* or a *marginal distribution*.
+--><p>Công thức này cũng được biết đến với tên gọi <em>quy tắc tổng</em>. Xác suất
+hay phân phối thu được từ thao tác biên hóa được gọi là <em>xác suất biên</em>
+hoặc <em>phân phối biên</em>.</p>
+<!-- ===================== Kết thúc dịch Phần 7 ===================== --><!-- ===================== Bắt đầu dịch Phần 8 ===================== --><!-- ========================================= REVISE PHẦN 4 - KẾT THÚC =================================== --><!-- ========================================= REVISE PHẦN 5 - BẮT ĐẦU ===================================--><!--
+### Independence
+--></div>
+<div class="section" id="tinh-doc-lap">
+<h3><span class="section-number">2.6.2.5. </span>Tính độc lập<a class="headerlink" href="#tinh-doc-lap" title="Permalink to this headline">¶</a></h3>
+<!--
+Another useful property to check for is *dependence* vs. *independence*.
+Two random variables $A$ and $B$ are independent
+means that the occurrence of one event of $A$
+does not reveal any information about the occurrence of an event of $B$.
+In this case $P(B \mid A) = P(B)$. Statisticians typically express this as $A \perp  B$. From Bayes' theorem, it follows immediately that also $P(A \mid B) = P(A)$.
+In all the other cases we call $A$ and $B$ dependent. For instance, two successive rolls of a die are independent. In contrast, the position of a light switch and the brightness in the room are not (they are not perfectly deterministic, though, since we could always have a broken light bulb, power failure, or a broken switch).
+--><p>Một tính chất hữu ích khác cần kiểm tra là <em>tính phụ thuộc</em> và <em>tính độc
+lập</em>. Hai biến ngẫu nhiên <span class="math notranslate nohighlight">\(A\)</span> và <span class="math notranslate nohighlight">\(B\)</span> độc lập nghĩa là việc
+một sự kiện của <span class="math notranslate nohighlight">\(A\)</span> xảy ra không tiết lộ bất kỳ thông tin nào về
+việc xảy ra một sự kiện của <span class="math notranslate nohighlight">\(B\)</span>. Trong trường hợp này
+<span class="math notranslate nohighlight">\(P(B \mid A) = P(B)\)</span>. Các nhà thống kê thường biểu diễn điều này
+bằng ký hiệu <span class="math notranslate nohighlight">\(A \perp B\)</span>. Từ định lý Bayes, ta có
+<span class="math notranslate nohighlight">\(P(A \mid B) = P(A)\)</span>. Trong tất cả các trường hợp khác, chúng ta
+gọi <span class="math notranslate nohighlight">\(A\)</span> và <span class="math notranslate nohighlight">\(B\)</span> là hai biến phụ thuộc. Ví dụ, hai lần đổ liên
+tiếp của một con xúc xắc là độc lập. Ngược lại, vị trí của công tắc đèn
+và độ sáng trong phòng là không độc lập (tuy nhiên chúng không hoàn toàn
+xác định, vì bóng đèn luôn có thể bị hỏng, mất điện hoặc công tắc bị
+hỏng).</p>
+<!--
+Since $P(A \mid B) = \frac{P(A, B)}{P(B)} = P(A)$ is equivalent to $P(A, B) = P(A)P(B)$, two random variables are independent if and only if their joint distribution is the product of their individual distributions.
+Likewise, two random variables $A$ and $B$ are *conditionally independent* given another random variable $C$
+if and only if $P(A, B \mid C) = P(A \mid C)P(B \mid C)$. This is expressed as $A \perp B \mid C$.
+--><p>Vì <span class="math notranslate nohighlight">\(P(A \mid B) = \frac{P(A, B)}{P(B)} = P(A)\)</span> tương đương với
+<span class="math notranslate nohighlight">\(P(A, B) = P(A)P(B)\)</span>, hai biến ngẫu nhiên là độc lập khi và chỉ
+khi phân phối đồng thời của chúng là tích các phân phối riêng lẻ của
+chúng. Tương tự, cho một biến ngẫu nhiên <span class="math notranslate nohighlight">\(C\)</span> khác, hai biến ngẫu
+nhiên <span class="math notranslate nohighlight">\(A\)</span> và <span class="math notranslate nohighlight">\(B\)</span> là <em>độc lập có điều kiện</em> khi và chỉ khi
+<span class="math notranslate nohighlight">\(P(A, B \mid C) = P(A \mid C)P(B \mid C)\)</span>. Điều này được ký hiệu
+là <span class="math notranslate nohighlight">\(A \perp B \mid C\)</span>.</p>
+<!--
+### Application
+--></div>
+<div class="section" id="ung-dung">
+<span id="subsec-probability-hiv-app"></span><h3><span class="section-number">2.6.2.6. </span>Ứng dụng<a class="headerlink" href="#ung-dung" title="Permalink to this headline">¶</a></h3>
+<!--
+Let's put our skills to the test. Assume that a doctor administers an AIDS test to a patient. This test is fairly accurate and it fails only with $1\%$ probability if the patient is healthy but reporting him as diseased. Moreover,
+it never fails to detect HIV if the patient actually has it. We use $D_1$ to indicate the diagnosis ($1$ if positive and $0$ if negative) and $H$ to denote the HIV status ($1$ if positive and $0$ if negative).
+:numref:`conditional_prob_D1` lists such conditional probability.
+--><p>Hãy thử nghiệm các kiến thức chúng ta vừa học. Giả sử rằng một bác sĩ
+phụ trách xét nghiệm AIDS cho một bệnh nhân. Việc xét nghiệm này khá
+chính xác và nó chỉ thất bại với xác suất <span class="math notranslate nohighlight">\(1\%\)</span>, khi nó cho kết
+quả dương tính dù bệnh nhân khỏe mạnh. Hơn nữa, nó không bao giờ thất
+bại trong việc phát hiện HIV nếu bệnh nhân thực sự bị nhiễm bệnh. Ta sử
+dụng <span class="math notranslate nohighlight">\(D_1\)</span> để biểu diễn kết quả chẩn đoán (<span class="math notranslate nohighlight">\(1\)</span> nếu dương
+tính và <span class="math notranslate nohighlight">\(0\)</span> nếu âm tính) và <span class="math notranslate nohighlight">\(H\)</span> để biểu thị tình trạng nhiễm
+HIV (<span class="math notranslate nohighlight">\(1\)</span> nếu dương tính và <span class="math notranslate nohighlight">\(0\)</span> nếu âm tính).
+<a class="reference internal" href="#conditional-prob-d1"><span class="std std-numref">Table 2.6.1</span></a> liệt kê xác suất có điều kiện đó.</p>
+<!--
+:Conditional probability of $P(D_1 \mid H)$.
+
+| Conditional probability | $H=1$ | $H=0$ |
+|---|---|---|
+|$P(D_1 = 1 \mid H)$|            1 |         0.01 |
+|$P(D_1 = 0 \mid H)$|            0 |         0.99 |
+
+:label:`conditional_prob_D1`
+
+--><table border="1" class="docutils" id="id2">
+<span id="conditional-prob-d1"></span><caption><span class="caption-number">Table 2.6.1 </span><span class="caption-text">Xác suất có điều kiện của <span class="math notranslate nohighlight">\(P(D_1 \mid H)\)</span>.</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="51%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Xác suất có điều kiện</th>
+<th class="head"><span class="math notranslate nohighlight">\(H=1\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(H=0\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><span class="math notranslate nohighlight">\(P(D_1 = 1 \mid H)\)</span></td>
+<td>1</td>
+<td>0.01</td>
+</tr>
+<tr class="row-odd"><td><span class="math notranslate nohighlight">\(P(D_1 = 0 \mid H)\)</span></td>
+<td>0</td>
+<td>0.99</td>
+</tr>
+</tbody>
+</table>
+<!--
+Note that the column sums are all $1$ (but the row sums are not), since the conditional probability needs to sum up to $1$, just like the probability. Let's work out the probability of the patient having AIDS if the test comes back positive, i.e., $P(H = 1 \mid D_1 = 1)$. Obviously this is going to depend on how common the disease is, since it affects the number of false alarms. Assume that the population is quite healthy, e.g., $P(H=1) = 0.0015$. To apply Bayes' Theorem, we need to apply marginalization and the multiplication rule to determine
+--><p>Lưu ý rằng tổng của từng cột đều bằng <span class="math notranslate nohighlight">\(1\)</span> (nhưng tổng từng hàng
+thì không), vì xác suất có điều kiện cần có tổng bằng <span class="math notranslate nohighlight">\(1\)</span>, giống
+như xác suất. Hãy cùng tìm xác suất bệnh nhân bị AIDS nếu xét nghiệm trả
+về kết quả dương tính, tức <span class="math notranslate nohighlight">\(P(H = 1 \mid D_1 = 1)\)</span>. Rõ ràng điều
+này sẽ phụ thuộc vào mức độ phổ biến của bệnh, bởi vì nó ảnh hưởng đến
+số lượng dương tính giả. Giả sử rằng dân số khá khỏe mạnh, ví dụ:
+<span class="math notranslate nohighlight">\(P(H=1) = 0.0015\)</span>. Để áp dụng Định lý Bayes, chúng ta cần áp dụng
+phép biên hóa và quy tắc nhân để xác định</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-2">
+<span class="eqno">(2.6.3)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-2" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(D_1 = 1) \\
+=&amp; P(D_1=1, H=0) + P(D_1=1, H=1)  \\
+=&amp; P(D_1=1 \mid H=0) P(H=0) + P(D_1=1 \mid H=1) P(H=1) \\
+=&amp; 0.011485.
+\end{aligned}\end{split}\]</div>
+<!-- ===================== Kết thúc dịch Phần 8 ===================== --><!-- ===================== Bắt đầu dịch Phần 9 ===================== --><!--
+Thus, we get
+--><p>Do đó, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-3">
+<span class="eqno">(2.6.4)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-3" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(H = 1 \mid D_1 = 1)\\ =&amp; \frac{P(D_1=1 \mid H=1) P(H=1)}{P(D_1=1)} \\ =&amp; 0.1306 \end{aligned}.\end{split}\]</div>
+<!--
+In other words, there is only a 13.06% chance that the patient actually has AIDS, despite using a very accurate test. As we can see, probability can be quite counterintuitive.
+--><p>Nói cách khác, chỉ có 13,06% khả năng bệnh nhân thực sự mắc bệnh AIDS,
+dù ta dùng một bài kiểm tra rất chính xác. Như ta có thể thấy, xác suất
+có thể trở nên khá phản trực giác.</p>
+<p>Một bệnh nhân phải làm gì nếu nhận được tin dữ như vậy? Nhiều khả năng
+họ sẽ yêu cầu bác sĩ thực hiện một xét nghiệm khác để làm rõ sự việc.
+Bài kiểm tra thứ hai có những đặc điểm khác và không tốt bằng bài thứ
+nhất, như ta có thể thấy trong <a class="reference internal" href="#conditional-prob-d2"><span class="std std-numref">Table 2.6.2</span></a>.</p>
+<!--
+:Conditional probability of $P(D_2 \mid H)$.
+--><!--
+| Conditional probability | $H=1$ | $H=0$ |
+|---|---|---|
+|$P(D_2 = 1 \mid H)$|            0.98 |         0.03 |
+|$P(D_2 = 0 \mid H)$|            0.02 |         0.97 |
+
+:label:`conditional_prob_D2`
+
+
+<!--
+Unfortunately, the second test comes back positive, too. Let's work out the requisite probabilities to invoke Bayes' Theorem by assuming the conditional independence:
+--><table border="1" class="docutils" id="id3">
+<span id="conditional-prob-d2"></span><caption><span class="caption-number">Table 2.6.2 </span><span class="caption-text">Xác suất có điều kiện của <span class="math notranslate nohighlight">\(P(D_2 \mid H)\)</span>.</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="51%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Xác xuất có điều kiện</th>
+<th class="head"><span class="math notranslate nohighlight">\(H=1\)</span></th>
+<th class="head"><span class="math notranslate nohighlight">\(H=0\)</span></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><span class="math notranslate nohighlight">\(P(D_2 = 1 \mid H)\)</span></td>
+<td>0.98</td>
+<td>0.03</td>
+</tr>
+<tr class="row-odd"><td><span class="math notranslate nohighlight">\(P(D_2 = 0 \mid H)\)</span></td>
+<td>0.02</td>
+<td>0.97</td>
+</tr>
+</tbody>
+</table>
+<p>Không may thay, bài kiểm tra thứ hai cũng có kết quả dương tính. Hãy
+cùng tính các xác suất cần thiết để sử dụng định lý Bayes bằng cách giả
+định tính độc lập có điều kiện:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-4">
+<span class="eqno">(2.6.5)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(D_1 = 1, D_2 = 1 \mid H = 0) \\
+=&amp; P(D_1 = 1 \mid H = 0) P(D_2 = 1 \mid H = 0)  \\
+=&amp; 0.0003,
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-5">
+<span class="eqno">(2.6.6)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-5" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(D_1 = 1, D_2 = 1 \mid H = 1) \\
+=&amp; P(D_1 = 1 \mid H = 1) P(D_2 = 1 \mid H = 1)  \\
+=&amp; 0.98.
+\end{aligned}\end{split}\]</div>
+<!--
+Now we can apply marginalization and the multiplication rule:
+--><p>Bây giờ chúng ta có thể áp dụng phép biên hóa và quy tắc nhân xác suất:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-6">
+<span class="eqno">(2.6.7)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-6" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(D_1 = 1, D_2 = 1) \\
+=&amp; P(D_1 = 1, D_2 = 1, H = 0) + P(D_1 = 1, D_2 = 1, H = 1)  \\
+=&amp; P(D_1 = 1, D_2 = 1 \mid H = 0)P(H=0) + P(D_1 = 1, D_2 = 1 \mid H = 1)P(H=1)\\
+=&amp; 0.00176955.
+\end{aligned}\end{split}\]</div>
+<!--
+In the end, the probability of the patient having AIDS given both positive tests is
+--><p>Cuối cùng xác suất bệnh nhân mắc bệnh AIDS qua hai lần dương tính là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-7">
+<span class="eqno">(2.6.8)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-7" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+&amp;P(H = 1 \mid D_1 = 1, D_2 = 1)\\
+=&amp; \frac{P(D_1 = 1, D_2 = 1 \mid H=1) P(H=1)}{P(D_1 = 1, D_2 = 1)} \\
+=&amp; 0.8307.
+\end{aligned}\end{split}\]</div>
+<!--
+That is, the second test allowed us to gain much higher confidence that not all is well. Despite the second test being considerably less accurate than the first one, it still significantly improved our estimate.
+--><p>Cụ thể hơn, thử nghiệm thứ hai mang lại độ tin cậy cao hơn rằng không
+phải mọi chuyện đều ổn. Mặc dù bài kiểm tra thứ hai kém chính xác hơn
+bài đầu, nó vẫn cải thiện đáng kể dự đoán.</p>
+<!-- ===================== Kết thúc dịch Phần 9 ===================== --><!-- ===================== Bắt đầu dịch Phần 10 ===================== --><!-- ========================================= REVISE PHẦN 5 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 6 - BẮT ĐẦU ===================================--><!--
+## Expectation and Variance
+--></div>
+</div>
+<div class="section" id="ky-vong-va-phuong-sai">
+<h2><span class="section-number">2.6.3. </span>Kỳ vọng và Phương sai<a class="headerlink" href="#ky-vong-va-phuong-sai" title="Permalink to this headline">¶</a></h2>
+<!--
+To summarize key characteristics of probability distributions,
+we need some measures.
+The *expectation* (or average) of the random variable $X$ is denoted as
+--><p>Để tóm tắt những đặc tính then chốt của các phân phối xác suất, chúng ta
+cần một vài phép đo. <em>Kỳ vọng</em> (hay trung bình) của một biến ngẫu nhiên
+<span class="math notranslate nohighlight">\(X\)</span>, được ký hiệu là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-8">
+<span class="eqno">(2.6.9)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-8" title="Permalink to this equation">¶</a></span>\[E[X] = \sum_{x} x P(X = x).\]</div>
+<!--
+When the input of a function $f(x)$ is a random variable drawn from the distribution $P$ with different values $x$,
+the expectation of $f(x)$ is computed as
+--><p>Khi giá trị đầu vào của phương trình <span class="math notranslate nohighlight">\(f(x)\)</span> là một biến ngẫu nhiên
+nhiên cho trước theo phân phối <span class="math notranslate nohighlight">\(P\)</span> với các giá trị <span class="math notranslate nohighlight">\(x\)</span> khác
+nhau, kỳ vọng của <span class="math notranslate nohighlight">\(f(x)\)</span> sẽ được tính theo phương trình:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-9">
+<span class="eqno">(2.6.10)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-9" title="Permalink to this equation">¶</a></span>\[E_{x \sim P}[f(x)] = \sum_x f(x) P(x).\]</div>
+<!--
+In many cases we want to measure by how much the random variable $X$ deviates from its expectation. This can be quantified by the variance
+--><p>Trong nhiều trường hợp, chúng ta muốn đo độ lệch của biến ngẫu nhiên
+<span class="math notranslate nohighlight">\(X\)</span> so với kỳ vọng của nó. Đại lượng này có thể được đo bằng
+phương sai</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-10">
+<span class="eqno">(2.6.11)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-10" title="Permalink to this equation">¶</a></span>\[\mathrm{Var}[X] = E\left[(X - E[X])^2\right] =
+E[X^2] - E[X]^2.\]</div>
+<!--
+Its square root is called the *standard deviation*.
+The variance of a function of a random variable measures
+by how much the function deviates from the expectation of the function,
+as different values $x$ of the random variable are sampled from its distribution:
+--><p>Nếu lấy căn bậc hai của kết quả ta sẽ được độ lệch chuẩn. Phương sai của
+một hàm của một biến ngẫu nhiên đo độ lệch của hàm số đó từ kỳ vọng của
+nó khi các giá trị <span class="math notranslate nohighlight">\(x\)</span> khác nhau được lấy mẫu từ phân phối của
+biến ngẫu nhiên đó:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-preliminaries-probability-vn-11">
+<span class="eqno">(2.6.12)<a class="headerlink" href="#equation-chapter-preliminaries-probability-vn-11" title="Permalink to this equation">¶</a></span>\[\mathrm{Var}[f(x)] = E\left[\left(f(x) - E[f(x)]\right)^2\right].\]</div>
+<!--
+## Summary
+--></div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">2.6.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* We can use MXNet to sample from probability distributions.
+* We can analyze multiple random variables using joint distribution, conditional distribution, Bayes' theorem, marginalization, and independence assumptions.
+* Expectation and variance offer useful measures to summarize key characteristics of probability distributions.
+--><ul class="simple">
+<li>Chúng ta có thể sử dụng MXNet để lấy mẫu từ phân phối xác suất.</li>
+<li>Các biến ngẫu nhiên có thể được phân tích bằng các phương pháp như
+phân phối đồng thời (<em>joint distribution</em>), phân phối có điều kiện
+(<em>conditional distribution</em>), định lý Bayes, phép biên hóa
+(<em>marginalization</em>) và giả định độc lập (<em>independence assumptions</em>).</li>
+<li>Kỳ vọng và phương sai là các phép đo hữu ích để tóm tắt các đặc điểm
+chính của phân phối xác suất.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">2.6.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. We conducted $m=500$ groups of experiments where each group draws $n=10$ samples. Vary $m$ and $n$. Observe and analyze the experimental results.
+1. Given two events with probability $P(\mathcal{A})$ and $P(\mathcal{B})$, compute upper and lower bounds on $P(\mathcal{A} \cup \mathcal{B})$ and $P(\mathcal{A} \cap \mathcal{B})$. (Hint: display the situation using a [Venn Diagram](https://en.wikipedia.org/wiki/Venn_diagram).)
+1. Assume that we have a sequence of random variables, say $A$, $B$, and $C$, where $B$ only depends on $A$, and $C$ only depends on $B$, can you simplify the joint probability $P(A, B, C)$? (Hint: this is a [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain).)
+1. In :numref:`subsec_probability_hiv_app`, the first test is more accurate. Why not just run the first test a second time?
+--><ol class="arabic simple">
+<li>Tiến hành <span class="math notranslate nohighlight">\(m=500\)</span> nhóm thí nghiệm với mỗi nhóm lấy ra
+<span class="math notranslate nohighlight">\(n=10\)</span> mẫu. Thay đổi <span class="math notranslate nohighlight">\(m\)</span> và <span class="math notranslate nohighlight">\(n\)</span>. Quan sát và phân
+tích kết quả của thí nghiệm.</li>
+<li>Cho hai sự kiện với xác suất <span class="math notranslate nohighlight">\(P(\mathcal{A})\)</span> và
+<span class="math notranslate nohighlight">\(P(\mathcal{B})\)</span>, tính giới hạn trên và dưới của
+<span class="math notranslate nohighlight">\(P(\mathcal{A} \cup \mathcal{B})\)</span> và
+<span class="math notranslate nohighlight">\(P(\mathcal{A} \cap \mathcal{B})\)</span>. (Gợi ý: sử dụng <a class="reference external" href="https://en.wikipedia.org/wiki/Venn_diagram">biểu đồ
+Venn</a>.)</li>
+<li>Giả sử chúng ta có các biến ngẫu nhiên <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span> và
+<span class="math notranslate nohighlight">\(C\)</span>, với <span class="math notranslate nohighlight">\(B\)</span> chỉ phụ thuộc <span class="math notranslate nohighlight">\(A\)</span>, và <span class="math notranslate nohighlight">\(C\)</span> chỉ
+phụ thuộc vào <span class="math notranslate nohighlight">\(B\)</span>. Làm thế nào để đơn giản hóa xác suất đồng
+thời của <span class="math notranslate nohighlight">\(P(A, B, C)\)</span>? (Gợi ý: đây là một <a class="reference external" href="https://en.wikipedia.org/wiki/Markov_chain">Chuỗi
+Markov</a>.)</li>
+<li>Trong <a class="reference internal" href="#subsec-probability-hiv-app"><span class="std std-numref">Section 2.6.2.6</span></a>, bài xét nghiệm đầu tiên
+có độ chính xác cao hơn. Vậy tại sao chúng ta không sử dụng bài xét
+nghiệm đầu tiên cho lần thử tiếp theo?</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 10 ===================== --><!-- ========================================= REVISE PHẦN 6 - KẾT THÚC ===================================--><!--
+## [Discussions](https://discuss.mxnet.io/t/2319)
+--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">2.6.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2319">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">2.6.7. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Tâm</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Nguyễn Cảnh Thướng</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Hồng Vinh</li>
+<li>Mai Sơn Hải</li>
+<li>Trần Kiến An</li>
+<li>Tạ H. Duy Nguyên</li>
+<li>Phạm Minh Đức</li>
+<li>Trần Thị Hồng Hạnh</li>
+<li>Lê Thành Vinh</li>
+<li>Nguyễn Minh Thư</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">2.6. Xác suất</a><ul>
+<li><a class="reference internal" href="#ly-thuyet-xac-suat-co-ban">2.6.1. Lý thuyết Xác suất cơ bản</a><ul>
+<li><a class="reference internal" href="#cac-tien-de-cua-ly-thuyet-xac-suat">2.6.1.1. Các Tiên đề của Lý thuyết Xác suất</a></li>
+<li><a class="reference internal" href="#bien-ngau-nhien">2.6.1.2. Biến ngẫu nhiên</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lam-viec-voi-nhieu-bien-ngau-nhien">2.6.2. Làm việc với Nhiều Biến Ngẫu nhiên</a><ul>
+<li><a class="reference internal" href="#xac-suat-dong-thoi">2.6.2.1. Xác suất Đồng thời</a></li>
+<li><a class="reference internal" href="#xac-suat-co-dieu-kien">2.6.2.2. Xác suất có điều kiện</a></li>
+<li><a class="reference internal" href="#dinh-ly-bayes">2.6.2.3. Định lý Bayes</a></li>
+<li><a class="reference internal" href="#phep-bien-hoa">2.6.2.4. Phép biên hóa</a></li>
+<li><a class="reference internal" href="#tinh-doc-lap">2.6.2.5. Tính độc lập</a></li>
+<li><a class="reference internal" href="#ung-dung">2.6.2.6. Ứng dụng</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ky-vong-va-phuong-sai">2.6.3. Kỳ vọng và Phương sai</a></li>
+<li><a class="reference internal" href="#tom-tat">2.6.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">2.6.5. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">2.6.6. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">2.6.7. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="autograd_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>2.5. Tính vi phân Tự động</div>
+         </div>
+     </a>
+     <a id="button-next" href="lookup-api_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>2.7. Tài liệu</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

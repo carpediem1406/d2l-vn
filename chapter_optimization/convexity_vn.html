@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>11.6. Tính lồi &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11.7. Hạ Gradient" href="gd_vn.html" />
+    <link rel="prev" title="11.1. Tối ưu và Học sâu" href="optimization-intro_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">11. </span>Thuật toán Tối ưu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">11.6. </span>Tính lồi</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_optimization/convexity_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">11. Thuật toán Tối ưu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">11. Thuật toán Tối ưu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ==================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Convexity
+--><div class="section" id="tinh-loi">
+<span id="sec-convexity"></span><h1><span class="section-number">11.6. </span>Tính lồi<a class="headerlink" href="#tinh-loi" title="Permalink to this headline">¶</a></h1>
+<!--
+Convexity plays a vital role in the design of optimization algorithms.
+This is largely due to the fact that it is much easier to analyze and test algorithms in this context.
+In other words, if the algorithm performs poorly even in the convex setting we should not hope to see great results otherwise.
+Furthermore, even though the optimization problems in deep learning are generally nonconvex, they often exhibit some properties of convex ones near local minima.
+This can lead to exciting new optimization variants such as :cite:`Izmailov.Podoprikhin.Garipov.ea.2018`.
+--><p>Tính lồi đóng vai trò then chốt trong việc thiết kế các thuật toán tối
+ưu. Điều này phần lớn là do tính lồi giúp việc phân tích và kiểm tra
+thuật toán trở nên dễ dàng hơn. Nói cách khác, nếu thuật toán hoạt động
+kém ngay cả khi có tính lồi thì ta không nên kì vọng rằng sẽ thu được
+kết quả tốt trong trường hợp khác. Hơn nữa, mặc dù các bài toán tối ưu
+hóa trong học sâu đa phần là không lồi, chúng lại thường thể hiện một số
+tính chất lồi gần các cực tiểu. Điều này dẫn đến các biến thể tối ưu hóa
+thú vị mới như <a class="bibtex reference internal" href="../chapter_references/zreferences.html#izmailov-podoprikhin-garipov-ea-2018" id="id1">[Izmailov et al., 2018]</a>.</p>
+<!--
+## Basics
+--><div class="section" id="kien-thuc-co-ban">
+<h2><span class="section-number">11.6.1. </span>Kiến thức Cơ bản<a class="headerlink" href="#kien-thuc-co-ban" title="Permalink to this headline">¶</a></h2>
+<!--
+Let us begin with the basics.
+--><p>Chúng ta hãy bắt đầu với các kiến thức cơ bản trước.</p>
+<!--
+### Sets
+--><div class="section" id="tap-hop">
+<h3><span class="section-number">11.6.1.1. </span>Tập hợp<a class="headerlink" href="#tap-hop" title="Permalink to this headline">¶</a></h3>
+<!--
+Sets are the basis of convexity.
+Simply put, a set $X$ in a vector space is convex if for any $a, b \in X$ the line segment connecting $a$ and $b$ is also in $X$.
+In mathematical terms this means that for all $\lambda \in [0, 1]$ we have
+--><p>Tập hợp là nền tảng của tính lồi. Nói một cách đơn giản, một tập hợp
+<span class="math notranslate nohighlight">\(X\)</span> trong không gian vector là lồi nếu với bất kì
+<span class="math notranslate nohighlight">\(a, b \in X\)</span>, đoạn thẳng nối <span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span> cũng thuộc
+<span class="math notranslate nohighlight">\(X\)</span>. Theo thuật ngữ toán học, điều này có nghĩa là với mọi
+<span class="math notranslate nohighlight">\(\lambda \in [0, 1]\)</span>, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-0">
+<span class="eqno">(11.6.1)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-0" title="Permalink to this equation">¶</a></span>\[\lambda \cdot a + (1-\lambda) \cdot b \in X \text{với mọi} a, b \in X.\]</div>
+<!--
+This sounds a bit abstract.
+Consider the picture :numref:`fig_pacman`.
+The first set is not convex since there are line segments that are not contained in it.
+The other two sets suffer no such problem.
+--><p>Điều này nghe có vẻ hơi trừu tượng. Hãy xem qua bức ảnh
+<a class="reference internal" href="#fig-pacman"><span class="std std-numref">Fig. 11.6.1</span></a>. Tập hợp đầu tiên là không lồi do tồn tại các
+đoạn thẳng không nằm trong tập hợp. Hai tập hợp còn lại thì không gặp
+vấn đề như vậy.</p>
+<!--
+![Three shapes, the left one is nonconvex, the others are convex](../img/pacman.svg)
+--><div class="figure align-default" id="id3">
+<span id="fig-pacman"></span><img alt="../_images/pacman.svg" src="../_images/pacman.svg" /><p class="caption"><span class="caption-number">Fig. 11.6.1 </span><span class="caption-text">Ba hình dạng, hình bên trái là không lồi, hai hình còn lại là lồi</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Definitions on their own are not particularly useful unless you can do something with them.
+In this case we can look at unions and intersections as shown in :numref:`fig_convex_intersect`.
+Assume that $X$ and $Y$ are convex sets.
+Then $X \cap Y$ is also convex.
+To see this, consider any $a, b \in X \cap Y$. Since $X$ and $Y$ are convex, the line segments connecting $a$ and $b$ are contained in both $X$ and $Y$.
+Given that, they also need to be contained in $X \cap Y$, thus proving our first theorem.
+--><p>Chỉ một mình định nghĩa thôi thì sẽ không có tác dụng gì trừ khi bạn có
+thể làm gì đó với chúng. Trong trường hợp này, ta có thể nhìn vào phép
+hợp và phép giao trong <a class="reference internal" href="#fig-convex-intersect"><span class="std std-numref">Fig. 11.6.2</span></a>. Giả sử
+<span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> là các tập hợp lồi, khi đó <span class="math notranslate nohighlight">\(X \cap Y\)</span> cũng
+sẽ lồi. Để thấy được điều này, hãy xét bất kì <span class="math notranslate nohighlight">\(a, b \in X \cap Y\)</span>.
+Vì <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span> lồi, khi đó đoạn thẳng nối <span class="math notranslate nohighlight">\(a\)</span> và
+<span class="math notranslate nohighlight">\(b\)</span> sẽ nằm trong cả <span class="math notranslate nohighlight">\(X\)</span> và <span class="math notranslate nohighlight">\(Y\)</span>. Do đó, chúng cũng cần
+phải thuộc <span class="math notranslate nohighlight">\(X \cap Y\)</span>, từ đó chứng minh được định lý đầu tiên của
+chúng ta.</p>
+<!--
+![The intersection between two convex sets is convex](../img/convex-intersect.svg)
+--><div class="figure align-default" id="id4">
+<span id="fig-convex-intersect"></span><img alt="../_images/convex-intersect.svg" src="../_images/convex-intersect.svg" /><p class="caption"><span class="caption-number">Fig. 11.6.2 </span><span class="caption-text">Giao của hai tập lồi là một tập lồi</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+We can strengthen this result with little effort: given convex sets $X_i$, their intersection $\cap_{i} X_i$ is convex.
+To see that the converse is not true, consider two disjoint sets $X \cap Y = \emptyset$.
+Now pick $a \in X$ and $b \in Y$.
+The line segment in :numref:`fig_nonconvex` connecting $a$ and $b$ needs to contain some part that is neither in $X$ nor $Y$, since we assumed that $X \cap Y = \emptyset$.
+Hence the line segment is not in $X \cup Y$ either, thus proving that in general unions of convex sets need not be convex.
+--><p>Ta sẽ củng cố kết quả này thêm một chút với mệnh đề: giao của các tập
+lồi <span class="math notranslate nohighlight">\(X_i\)</span> là một tập lồi <span class="math notranslate nohighlight">\(\cap_{i} X_i\)</span>. Để thấy rằng điều
+ngược lại là không đúng, hãy xem xét hai tập hợp không giao nhau
+<span class="math notranslate nohighlight">\(X \cap Y = \emptyset\)</span>. Giờ ta chọn ra <span class="math notranslate nohighlight">\(a \in X\)</span> và
+<span class="math notranslate nohighlight">\(b \in Y\)</span>. Đoạn thẳng nối <span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(b\)</span> trong
+<a class="reference internal" href="#fig-nonconvex"><span class="std std-numref">Fig. 11.6.3</span></a> chứa một vài phần không thuộc cả <span class="math notranslate nohighlight">\(X\)</span> và
+<span class="math notranslate nohighlight">\(Y\)</span>, vì chúng ta đã giả định rằng <span class="math notranslate nohighlight">\(X \cap Y = \emptyset\)</span>. Do
+đó đoạn thẳng này cũng không nằm trong <span class="math notranslate nohighlight">\(X \cup Y\)</span>, từ đó chứng
+minh rằng hợp của các tập lồi nói chung không nhất thiết phải là tập
+lồi.</p>
+<!--
+![The union of two convex sets need not be convex](../img/nonconvex.svg)
+--><div class="figure align-default" id="id5">
+<span id="fig-nonconvex"></span><img alt="../_images/nonconvex.svg" src="../_images/nonconvex.svg" /><p class="caption"><span class="caption-number">Fig. 11.6.3 </span><span class="caption-text">Hợp của hai tập lồi không nhất thiết phải là tập lồi</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Typically the problems in deep learning are defined on convex domains.
+For instance $\mathbb{R}^d$ is a convex set (after all, the line between any two points in $\mathbb{R}^d$ remains in $\mathbb{R}^d$).
+In some cases we work with variables of bounded length, such as balls of radius $r$ as defined by $\{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \text{ and } \|\mathbf{x}\|_2 \leq r\}$.
+--><p>Thông thường, các bài toán trong học sâu đều được định nghĩa trong các
+miền lồi. Ví dụ <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> là tập lồi (xét cho cùng, đoạn
+thẳng nối hai điểm bất kỳ thuộc <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> vẫn thuộc
+<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>). Trong một vài trường hợp, chúng ta sẽ làm việc
+với các biến có biên, ví dụ như khối cầu có bán kính <span class="math notranslate nohighlight">\(r\)</span> được định
+nghĩa bằng
+<span class="math notranslate nohighlight">\(\{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \text{ và } \|\mathbf{x}\|_2 \leq r\}\)</span>.</p>
+<!--
+### Functions
+--></div>
+<div class="section" id="ham-so">
+<h3><span class="section-number">11.6.1.2. </span>Hàm số<a class="headerlink" href="#ham-so" title="Permalink to this headline">¶</a></h3>
+<!--
+Now that we have convex sets we can introduce convex functions $f$.
+Given a convex set $X$ a function defined on it $f: X \to \mathbb{R}$ is convex if for all $x, x' \in X$ and for all $\lambda \in [0, 1]$ we have
+--><p>Giờ ta đã biết về tập hợp lồi, ta sẽ làm việc tiếp với các hàm số lồi
+<span class="math notranslate nohighlight">\(f\)</span>. Cho một tập hợp lồi <span class="math notranslate nohighlight">\(X\)</span>, một hàm số được định nghĩa
+trên tập đó <span class="math notranslate nohighlight">\(f: X \to \mathbb{R}\)</span> là hàm lồi nếu với mọi
+<span class="math notranslate nohighlight">\(x, x' \in X\)</span> và mọi <span class="math notranslate nohighlight">\(\lambda \in [0, 1]\)</span>, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-1">
+<span class="eqno">(11.6.2)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-1" title="Permalink to this equation">¶</a></span>\[\lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').\]</div>
+<!--
+To illustrate this let us plot a few functions and check which ones satisfy the requirement.
+We need to import a few  libraries.
+--><p>Để minh họa cho điều này, chúng ta sẽ vẽ đồ thị của một vài hàm số và
+kiểm tra xem hàm số nào thỏa mãn điều kiện trên. Ta sẽ cần phải nhập một
+vài gói thư viện.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>&lt;!–</p>
+<p>–&gt;</p>
+<!--
+Let us define a few functions, both convex and nonconvex.
+--><p>Hãy định nghĩa một vài hàm số, cả lồi lẫn không lồi.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># Convex</span>
+<span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># Nonconvex</span>
+<span class="n">h</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># Convex</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">use_svg_display</span><span class="p">()</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">]):</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">segment</span><span class="p">],</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">func</span><span class="p">(</span><span class="n">segment</span><span class="p">)],</span> <span class="n">axes</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_convexity_vn_449278_4_0.svg" src="../_images/output_convexity_vn_449278_4_0.svg" /></div>
+<!--
+As expected, the cosine function is nonconvex, whereas the parabola and the exponential function are.
+Note that the requirement that $X$ is a convex set is necessary for the condition to make sense.
+Otherwise the outcome of $f(\lambda x + (1-\lambda) x')$ might not be well defined.
+Convex functions have a number of desirable properties.
+--><p>Như dự đoán, hàm cô-sin là hàm không lồi, trong khi hàm parabol và hàm
+số mũ là hàm lồi. Lưu ý rằng để điều kiện trên có ý nghĩa thì <span class="math notranslate nohighlight">\(X\)</span>
+cần phải là tập hợp lồi. Nếu không, kết quả của
+<span class="math notranslate nohighlight">\(f(\lambda x + (1-\lambda) x')\)</span> sẽ không được định nghĩa rõ. Các
+hàm lồi có một số tính chất mong muốn sau.</p>
+<!--
+### Jensen's Inequality
+--></div>
+<div class="section" id="bat-dang-thuc-jensen">
+<h3><span class="section-number">11.6.1.3. </span>Bất đẳng thức Jensen<a class="headerlink" href="#bat-dang-thuc-jensen" title="Permalink to this headline">¶</a></h3>
+<!--
+One of the most useful tools is Jensen's inequality.
+It amounts to a generalization of the definition of convexity:
+--><p>Một trong những công cụ hữu dụng nhất là bất đẳng thức Jensen. Nó là sự
+tổng quát hóa của định nghĩa về tính lồi:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-2">
+<span class="eqno">(11.6.3)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-2" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
+    \sum_i \alpha_i f(x_i) &amp; \geq f\left(\sum_i \alpha_i x_i\right)
+    \text{ và }
+    E_x[f(x)] &amp; \geq f\left(E_x[x]\right),
+\end{aligned}\]</div>
+<!--
+where $\alpha_i$ are nonnegative real numbers such that $\sum_i \alpha_i = 1$.
+In other words, the expectation of a convex function is larger than the convex function of an expectation.
+To prove the first inequality we repeatedly apply the definition of convexity to one term in the sum at a time.
+The expectation can be proven by taking the limit over finite segments.
+--><p>với <span class="math notranslate nohighlight">\(\alpha_i\)</span> là các số thực không âm sao cho
+<span class="math notranslate nohighlight">\(\sum_i \alpha_i = 1\)</span>. Nói cách khác, kỳ vọng của hàm lồi lớn hơn
+hàm lồi của kỳ vọng. Để chứng minh bất đẳng thức đầu tiên này, chúng ta
+áp dụng định nghĩa của tính lồi cho từng số hạng của tổng. Kỳ vọng có
+thể được chứng minh bằng cách tính giới hạn trên các đoạn hữu hạn.</p>
+<!--
+One of the common applications of Jensen's inequality is with regard to the log-likelihood of partially observed random variables.
+That is, we use
+--><p>Một trong các ứng dụng phổ biến của bất đẳng thức Jensen liên quan đến
+log hợp lý của các biến ngẫu nhiên quan sát được một phần. Ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-3">
+<span class="eqno">(11.6.4)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-3" title="Permalink to this equation">¶</a></span>\[E_{y \sim P(y)}[-\log P(x \mid y)] \geq -\log P(x).\]</div>
+<!--
+This follows since $\int P(y) P(x \mid y) dy = P(x)$.
+This is used in variational methods.
+Here $y$ is typically the unobserved random variable, $P(y)$ is the best guess of how it might be distributed and $P(x)$ is the distribution with $y$ integrated out.
+For instance, in clustering $y$ might be the cluster labels and $P(x \mid y)$ is the generative model when applying cluster labels.
+--><p>Điều này xảy ra vì <span class="math notranslate nohighlight">\(\int P(y) P(x \mid y) dy = P(x)\)</span>. Nó được sử
+dụng trong những phương pháp biến phân. <span class="math notranslate nohighlight">\(y\)</span> ở đây thường là một
+biến ngẫu nhiên không quan sát được, <span class="math notranslate nohighlight">\(P(y)\)</span> là dự đoán tốt nhất về
+phân phối của nó và <span class="math notranslate nohighlight">\(P(x)\)</span> là phân phối đã được lấy tích phân theo
+<span class="math notranslate nohighlight">\(y\)</span>. Ví dụ như trong bài toán phân cụm, <span class="math notranslate nohighlight">\(y\)</span> có thể là nhãn
+cụm và <span class="math notranslate nohighlight">\(P(x \mid y)\)</span> là mô hình sinh khi áp dụng các nhãn cụm.</p>
+<!--
+## Properties
+--></div>
+</div>
+<div class="section" id="tinh-chat">
+<h2><span class="section-number">11.6.2. </span>Tính chất<a class="headerlink" href="#tinh-chat" title="Permalink to this headline">¶</a></h2>
+<!--
+Convex functions have a few useful properties.
+We describe them as follows.
+--><p>Các hàm lồi có một vài tính chất hữu ích dưới đây.</p>
+<!--
+### No Local Minima
+--><div class="section" id="khong-co-cuc-tieu-cuc-bo">
+<h3><span class="section-number">11.6.2.1. </span>Không có Cực tiểu Cục bộ<a class="headerlink" href="#khong-co-cuc-tieu-cuc-bo" title="Permalink to this headline">¶</a></h3>
+<!--
+In particular, convex functions do not have local minima.
+Let us assume the contrary and prove it wrong. If $x \in X$ is a local minimum there exists some neighborhood of $x$ for which $f(x)$ is the smallest value.
+Since $x$ is only a local minimum there has to be another $x' \in X$ for which $f(x') < f(x)$.
+However, by convexity the function values on the entire *line* $\lambda x + (1-\lambda) x'$ have to be less than $f(x')$ since for $\lambda \in [0, 1)$
+--><p>Cụ thể, các hàm lồi không có cực tiểu cục bộ. Hãy giả định điều ngược
+lại là đúng và chứng minh nó sai. Nếu <span class="math notranslate nohighlight">\(x \in X\)</span> là cực tiểu cục bộ
+thì sẽ tồn tại một vùng lân cận nào đó của <span class="math notranslate nohighlight">\(x\)</span> mà <span class="math notranslate nohighlight">\(f(x)\)</span> là
+giá trị nhỏ nhất. Vì <span class="math notranslate nohighlight">\(x\)</span> chỉ là cực tiểu cục bộ nên phải tồn tại
+một <span class="math notranslate nohighlight">\(x' \in X\)</span> nào khác mà <span class="math notranslate nohighlight">\(f(x') &lt; f(x)\)</span>. Tuy nhiên, theo
+tính lồi, các giá trị hàm số trên toàn bộ <em>đường thẳng</em>
+<span class="math notranslate nohighlight">\(\lambda x + (1-\lambda) x'\)</span> phải nhỏ hơn <span class="math notranslate nohighlight">\(f(x')\)</span> với
+<span class="math notranslate nohighlight">\(\lambda \in [0, 1)\)</span></p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-4">
+<span class="eqno">(11.6.5)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-4" title="Permalink to this equation">¶</a></span>\[f(x) &gt; \lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').\]</div>
+<!--
+This contradicts the assumption that $f(x)$ is a local minimum.
+For instance, the function $f(x) = (x+1) (x-1)^2$ has a local minimum for $x=1$.
+However, it is not a global minimum.
+--><p>Điều này mâu thuẫn với giả định rằng <span class="math notranslate nohighlight">\(f(x)\)</span> là cực tiểu cục bộ. Ví
+dụ, hàm <span class="math notranslate nohighlight">\(f(x) = (x+1) (x-1)^2\)</span> có cực tiểu cục bộ tại <span class="math notranslate nohighlight">\(x=1\)</span>.
+Tuy nhiên nó lại không phải là cực tiểu toàn cục.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">segment</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">segment</span><span class="p">)],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_convexity_vn_449278_6_0.svg" src="../_images/output_convexity_vn_449278_6_0.svg" /></div>
+<!--
+The fact that convex functions have no local minima is very convenient.
+It means that if we minimize functions we cannot "get stuck".
+Note, though, that this does not mean that there cannot be more than one global minimum or that there might even exist one.
+For instance, the function $f(x) = \mathrm{max}(|x|-1, 0)$ attains its minimum value over the interval $[-1, 1]$.
+Conversely, the function $f(x) = \exp(x)$ does not attain a minimum value on $\mathbb{R}$.
+For $x \to -\infty$ it asymptotes to $0$, however there is no $x$ for which $f(x) = 0$.
+--><p>Tính chất “các hàm lồi không có cực tiểu cục bộ” rất tiện lợi. Điều này
+có nghĩa là ta sẽ không bao giờ “mắc kẹt” khi cực tiểu hóa các hàm số.
+Dù vậy, hãy lưu ý rằng điều này không có nghĩa là hàm số không thể có
+nhiều hơn một cực tiểu toàn cục, hoặc liệu hàm số có tồn tại cực tiểu
+toàn cục hay không. Ví dụ, hàm <span class="math notranslate nohighlight">\(f(x) = \mathrm{max}(|x|-1, 0)\)</span> đạt
+giá trị nhỏ nhất trên khoảng <span class="math notranslate nohighlight">\([-1, 1]\)</span>. Ngược lại, hàm
+<span class="math notranslate nohighlight">\(f(x) = \exp(x)\)</span> không có giá trị nhỏ nhất trên
+<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. Với <span class="math notranslate nohighlight">\(x \to -\infty\)</span> nó sẽ tiệm cận tới
+<span class="math notranslate nohighlight">\(0\)</span>, tuy nhiên không tồn tại giá trị <span class="math notranslate nohighlight">\(x\)</span> mà tại đó
+<span class="math notranslate nohighlight">\(f(x) = 0\)</span>.</p>
+<!--
+### Convex Functions and Sets
+--></div>
+<div class="section" id="ham-so-va-tap-hop-loi">
+<h3><span class="section-number">11.6.2.2. </span>Hàm số và Tập hợp Lồi<a class="headerlink" href="#ham-so-va-tap-hop-loi" title="Permalink to this headline">¶</a></h3>
+<!--
+Convex functions define convex sets as *below-sets*.
+They are defined as
+--><p>Các hàm số lồi định nghĩa các tập hợp lồi là các <em>tập-dưới</em>
+(<em>below-sets</em>) như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-5">
+<span class="eqno">(11.6.6)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-5" title="Permalink to this equation">¶</a></span>\[S_b := \{x | x \in X \text{ and } f(x) \leq b\}.\]</div>
+<!--
+Such sets are convex.
+Let us prove this quickly.
+Remember that for any $x, x' \in S_b$ we need to show that $\lambda x + (1-\lambda) x' \in S_b$ as long as $\lambda \in [0, 1]$.
+But this follows directly from the definition of convexity since $f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq b$.
+--><p>Ta hãy chứng minh nó một cách vắn tắt. Hãy nhớ rằng với mọi
+<span class="math notranslate nohighlight">\(x, x' \in S_b\)</span>, ta cần chứng minh
+<span class="math notranslate nohighlight">\(\lambda x + (1-\lambda) x' \in S_b\)</span> với mọi
+<span class="math notranslate nohighlight">\(\lambda \in [0, 1]\)</span>. Nhưng điều này lại trực tiếp tuân theo định
+nghĩa về tính lồi vì
+<span class="math notranslate nohighlight">\(f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq b\)</span>.</p>
+<!--
+Have a look at the function $f(x, y) = 0.5 x^2 + \cos(2 \pi y)$ below.
+It is clearly nonconvex.
+The level sets are correspondingly nonconvex.
+In fact, they are typically composed of disjoint sets.
+--><p>Hãy nhìn vào đồ thị hàm <span class="math notranslate nohighlight">\(f(x, y) = 0.5 x^2 + \cos(2 \pi y)\)</span> bên
+dưới. Nó rõ ràng là không lồi. Các tập mức tương ứng cũng không lồi.
+Thực tế, chúng thường được cấu thành từ các tập hợp rời rạc.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Plot the 3D surface</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">offset</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+
+<span class="c1"># Adjust labels</span>
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="p">[</span><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">,</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">]:</span>
+    <span class="n">func</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_convexity_vn_449278_8_0.svg" src="../_images/output_convexity_vn_449278_8_0.svg" /></div>
+<!--
+### Derivatives and Convexity
+--></div>
+<div class="section" id="dao-ham-va-tinh-loi">
+<h3><span class="section-number">11.6.2.3. </span>Đạo hàm và tính Lồi<a class="headerlink" href="#dao-ham-va-tinh-loi" title="Permalink to this headline">¶</a></h3>
+<!--
+Whenever the second derivative of a function exists it is very easy to check for convexity.
+All we need to do is check whether $\partial_x^2 f(x) \succeq 0$, i.e., whether all of its eigenvalues are nonnegative.
+For instance, the function $f(\mathbf{x}) = \frac{1}{2} \|\mathbf{x}\|^2_2$ is convex since $\partial_{\mathbf{x}}^2 f = \mathbf{1}$, i.e., its derivative is the identity matrix.
+--><p>Bất cứ khi nào đạo hàm bậc hai của một hàm số tồn tại, việc kiểm tra
+tính lồi của hàm số là rất đơn giản. Tất cả những gì cần làm là kiểm tra
+liệu <span class="math notranslate nohighlight">\(\partial_x^2 f(x) \succeq 0\)</span>, tức là liệu toàn bộ trị riêng
+của nó đều không âm hay không. Chẳng hạn, hàm
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \frac{1}{2} \|\mathbf{x}\|^2_2\)</span> là lồi vì
+<span class="math notranslate nohighlight">\(\partial_{\mathbf{x}}^2 f = \mathbf{1}\)</span>, tức là đạo hàm của nó là
+ma trận đơn vị.</p>
+<!--
+The first thing to realize is that we only need to prove this property for one-dimensional functions.
+After all, in general we can always define some function $g(z) = f(\mathbf{x} + z \cdot \mathbf{v})$.
+This function has the first and second derivatives $g' = (\partial_{\mathbf{x}} f)^\top \mathbf{v}$ and $g'' = \mathbf{v}^\top (\partial^2_{\mathbf{x}} f) \mathbf{v}$ respectively.
+In particular, $g'' \geq 0$ for all $\mathbf{v}$ whenever the Hessian of $f$ is positive semidefinite, i.e., whenever all of its eigenvalues are greater equal than zero.
+Hence back to the scalar case.
+--><p>Có thể nhận ra rằng chúng ta chỉ cần chứng minh tính chất này cho các
+hàm số một chiều. Xét cho cùng, ta luôn có thể định nghĩa một hàm số
+<span class="math notranslate nohighlight">\(g(z) = f(\mathbf{x} + z \cdot \mathbf{v})\)</span>. Hàm số này có đạo hàm
+bậc một và bậc hai lần lượt là
+<span class="math notranslate nohighlight">\(g' = (\partial_{\mathbf{x}} f)^\top \mathbf{v}\)</span> và
+<span class="math notranslate nohighlight">\(g'' = \mathbf{v}^\top (\partial^2_{\mathbf{x}} f) \mathbf{v}\)</span>. Cụ
+thể, <span class="math notranslate nohighlight">\(g'' \geq 0\)</span> với mọi <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> mỗi khi ma trận
+Hessian của <span class="math notranslate nohighlight">\(f\)</span> là nửa xác định dương, tức là tất cả các trị riêng
+của ma trận đều lớn hơn hoặc bằng không. Do đó quay về lại trường hợp vô
+hướng.</p>
+<!--
+To see that $f''(x) \geq 0$ for convex functions we use the fact that
+--><p>Để thấy tại sao <span class="math notranslate nohighlight">\(f''(x) \geq 0\)</span> đối với các hàm lồi, ta dùng lập
+luận</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-6">
+<span class="eqno">(11.6.7)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-6" title="Permalink to this equation">¶</a></span>\[\frac{1}{2} f(x + \epsilon) + \frac{1}{2} f(x - \epsilon) \geq f\left(\frac{x + \epsilon}{2} + \frac{x - \epsilon}{2}\right) = f(x).\]</div>
+<!--
+Since the second derivative is given by the limit over finite differences it follows that
+--><p>Vì đạo hàm bậc hai được đưa ra bởi giới hạn trên sai phân hữu hạn, nó
+dẫn tới</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-7">
+<span class="eqno">(11.6.8)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-7" title="Permalink to this equation">¶</a></span>\[f''(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) + f(x - \epsilon) - 2f(x)}{\epsilon^2} \geq 0.\]</div>
+<!--
+To see that the converse is true we use the fact that $f'' \geq 0$ implies that $f'$ is a monotonically increasing function.
+Let $a < x < b$ be three points in $\mathbb{R}$.
+We use the mean value theorem to express
+--><p>Để chứng minh điều ngược lại, ta dùng lập luận rằng <span class="math notranslate nohighlight">\(f'' \geq 0\)</span>
+ngụ ý rằng <span class="math notranslate nohighlight">\(f'\)</span> là một hàm tăng đơn điệu. Cho <span class="math notranslate nohighlight">\(a &lt; x &lt; b\)</span> là
+ba điểm thuộc <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. Chúng ta sử dụng định lý giá trị trung
+bình để biểu diễn</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-8">
+<span class="eqno">(11.6.9)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-8" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+f(x) - f(a) &amp; = (x-a) f'(\alpha) \text{ với } \alpha \in [a, x] \text{ và } \\
+f(b) - f(x) &amp; = (b-x) f'(\beta) \text{ với } \beta \in [x, b].
+\end{aligned}\end{split}\]</div>
+<!--
+By monotonicity $f'(\beta) \geq f'(\alpha)$, hence
+--><p>Từ tính chất đơn điệu <span class="math notranslate nohighlight">\(f'(\beta) \geq f'(\alpha)\)</span>, ta có</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-9">
+<span class="eqno">(11.6.10)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-9" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+    f(b) - f(a) &amp; = f(b) - f(x) + f(x) - f(a) \\
+    &amp; = (b-x) f'(\beta) + (x-a) f'(\alpha) \\
+    &amp; \geq (b-a) f'(\alpha).
+\end{aligned}\end{split}\]</div>
+<!--
+By geometry it follows that $f(x)$ is below the line connecting $f(a)$ and $f(b)$, thus proving convexity.
+We omit a more formal derivation in favor of a graph below.
+--><p>Theo hình học, nó dẫn đến <span class="math notranslate nohighlight">\(f(x)\)</span> nằm dưới đường thẳng nối
+<span class="math notranslate nohighlight">\(f(a)\)</span> và <span class="math notranslate nohighlight">\(f(b)\)</span>, do đó chứng minh được tính lồi. Ta sẽ bỏ
+qua việc chứng minh một cách chính quy và thay bằng đồ thị bên dưới.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">axb</span><span class="p">,</span> <span class="n">ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">axb</span><span class="p">,</span> <span class="n">ab</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">axb</span><span class="p">,</span> <span class="n">ab</span><span class="p">]],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">)),</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)),</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_convexity_vn_449278_10_0.svg" src="../_images/output_convexity_vn_449278_10_0.svg" /></div>
+<!--
+## Constraints
+--></div>
+</div>
+<div class="section" id="rang-buoc">
+<h2><span class="section-number">11.6.3. </span>Ràng buộc<a class="headerlink" href="#rang-buoc" title="Permalink to this headline">¶</a></h2>
+<!--
+One of the nice properties of convex optimization is that it allows us to handle constraints efficiently.
+That is, it allows us to solve problems of the form:
+--><p>Một trong những tính chất hữu ích của tối ưu hóa lồi là nó cho phép
+chúng ta xử lý các ràng buộc một cách hiệu quả. Nó cho phép ta giải
+quyết các bài toán dưới dạng:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-10">
+<span class="eqno">(11.6.11)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-10" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned} \mathop{\mathrm{~cực~tiểu~hóa~}}_{\mathbf{x}} &amp; f(\mathbf{x}) \\
+    \text{~theo~} &amp; c_i(\mathbf{x}) \leq 0 \text{~với~mọi~} i \in \{1, \ldots, N\}.
+\end{aligned}\end{split}\]</div>
+<!--
+Here $f$ is the objective and the functions $c_i$ are constraint functions.
+To see what this does consider the case where $c_1(\mathbf{x}) = \|\mathbf{x}\|_2 - 1$.
+In this case the parameters $\mathbf{x}$ are constrained to the unit ball.
+If a second constraint is $c_2(\mathbf{x}) = \mathbf{v}^\top \mathbf{x} + b$, then this corresponds to all $\mathbf{x}$ lying on a halfspace.
+Satisfying both constraints simultaneously amounts to selecting a slice of a ball as the constraint set.
+--><p><span class="math notranslate nohighlight">\(f\)</span> ở đây là mục tiêu và các hàm <span class="math notranslate nohighlight">\(c_i\)</span> là các hàm số ràng
+buộc. Hãy xem nó xử lý thế nào trong trường hợp
+<span class="math notranslate nohighlight">\(c_1(\mathbf{x}) = \|\mathbf{x}\|_2 - 1\)</span>. Ở trường hợp này, các
+tham số <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> bị ràng buộc vào khối cầu đơn vị. Nếu ràng
+buộc thứ hai là <span class="math notranslate nohighlight">\(c_2(\mathbf{x}) = \mathbf{v}^\top \mathbf{x} + b\)</span>
+thì điều này ứng với mọi <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> nằm trên nửa khoảng. Đáp ứng
+đồng thời hai ràng buộc này nghĩa là chọn ra một lát cắt của khối cầu
+làm tập hợp ràng buộc.</p>
+<!--
+### Lagrange Function
+--><div class="section" id="ham-so-lagrange">
+<h3><span class="section-number">11.6.3.1. </span>Hàm số Lagrange<a class="headerlink" href="#ham-so-lagrange" title="Permalink to this headline">¶</a></h3>
+<!--
+In general, solving a constrained optimization problem is difficult.
+One way of addressing it stems from physics with a rather simple intuition.
+Imagine a ball inside a box.
+The ball will roll to the place that is lowest and the forces of gravity will be balanced out with the forces that the sides of the box can impose on the ball.
+In short, the gradient of the objective function (i.e., gravity) will be offset by the gradient of the constraint function (need to remain inside the box by virtue of the walls "pushing back")
+Note that any constraint that is not active (i.e., the ball does not touch the wall) will not be able to exert any force on the ball.
+--><p>Nhìn chung, giải quyết một bài toán tối ưu hóa bị ràng buộc là tương đối
+khó khăn. Có một cách giải quyết bắt nguồn từ vật lý dựa trên một trực
+giác khá đơn giản. Hãy tưởng tượng có một quả banh bên trong một chiếc
+hộp. Quả banh sẽ lăn đến nơi thấp nhất và trọng lực sẽ cân bằng với lực
+nâng của các cạnh hộp tác động lên quả banh. Tóm lại, gradient của hàm
+mục tiêu (ở đây là trọng lực) sẽ được bù lại bởi gradient của hàm ràng
+buộc (cần phải nằm trong chiếc hộp, bị các bức tưởng “đẩy lại”). Lưu ý
+rằng bất kỳ ràng buộc nào không kích hoạt (quả banh không đụng đến bức
+tường) thì sẽ không có bất kỳ một lực tác động nào lên quả banh.</p>
+<!--
+Skipping over the derivation of the Lagrange function $L$ (see e.g., the book by Boyd and Vandenberghe for details :cite:`Boyd.Vandenberghe.2004`)
+the above reasoning can be expressed via the following saddlepoint optimization problem:
+--><p>Ta hãy bỏ qua phần diễn giải chứng minh của hàm số Lagrange <span class="math notranslate nohighlight">\(L\)</span>
+(Xem sách của Boyd và Vandenberghe về vấn đề này
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#boyd-vandenberghe-2004" id="id2">[Boyd &amp; Vandenberghe, 2004]</a>). Lý luận bên trên có thể được mô tả
+thông qua bài toán tối ưu hóa điểm yên ngựa:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-11">
+<span class="eqno">(11.6.12)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-11" title="Permalink to this equation">¶</a></span>\[L(\mathbf{x},\alpha) = f(\mathbf{x}) + \sum_i \alpha_i c_i(\mathbf{x}) \text{ với } \alpha_i \geq 0.\]</div>
+<!--
+Here the variables $\alpha_i$ are the so-called *Lagrange Multipliers* that ensure that a constraint is properly enforced.
+They are chosen just large enough to ensure that $c_i(\mathbf{x}) \leq 0$ for all $i$.
+For instance, for any $\mathbf{x}$ for which $c_i(\mathbf{x}) < 0$ naturally, we'd end up picking $\alpha_i = 0$.
+Moreover, this is a *saddlepoint* optimization problem where one wants to *maximize* $L$ with respect to $\alpha$ and simultaneously *minimize* it with respect to $\mathbf{x}$.
+There is a rich body of literature explaining how to arrive at the function $L(\mathbf{x}, \alpha)$.
+For our purposes it is sufficient to know that the saddlepoint of $L$ is where the original constrained optimization problem is solved optimally.
+--><p>Các biến <span class="math notranslate nohighlight">\(\alpha_i\)</span> ở đây được gọi là <em>nhân tử Lagrange</em>
+(<em>Lagrange Multipliers</em>), chúng đảm bảo rằng các ràng buộc sẽ được tuân
+thủ đàng hoàng. Chúng được chọn vừa đủ lớn để đảm bảo rằng
+<span class="math notranslate nohighlight">\(c_i(\mathbf{x}) \leq 0\)</span> với mọi <span class="math notranslate nohighlight">\(i\)</span>. Ví dụ, với mọi
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> mà <span class="math notranslate nohighlight">\(c_i(\mathbf{x}) &lt; 0\)</span> một cách tự nhiên,
+chúng ta rốt cuộc sẽ chọn <span class="math notranslate nohighlight">\(\alpha_i = 0\)</span>. Hơn nữa, đây là bài toán
+tối ưu hóa <em>điểm yên ngựa</em>, nơi ta muốn <em>cực đại hóa</em> <span class="math notranslate nohighlight">\(L\)</span> theo
+<span class="math notranslate nohighlight">\(\alpha\)</span> và đồng thời <em>cực tiểu hóa</em> nó theo <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.
+Có rất nhiều tài liệu giải thích về cách đưa đến hàm
+<span class="math notranslate nohighlight">\(L(\mathbf{x}, \alpha)\)</span>. Đối với mục đích của chúng ta, sẽ là đủ
+khi biết rằng điểm yên ngựa của <span class="math notranslate nohighlight">\(L\)</span> là nơi bài toán tối ưu hóa bị
+ràng buộc ban đầu được giải quyết một cách tối ưu.</p>
+<!--
+### Penalties
+--></div>
+<div class="section" id="luong-phat">
+<h3><span class="section-number">11.6.3.2. </span>Lượng phạt<a class="headerlink" href="#luong-phat" title="Permalink to this headline">¶</a></h3>
+<!--
+One way of satisfying constrained optimization problems at least approximately is to adapt the Lagrange function $L$.
+Rather than satisfying $c_i(\mathbf{x}) \leq 0$ we simply add $\alpha_i c_i(\mathbf{x})$ to the objective function $f(x)$.
+This ensures that the constraints will not be violated too badly.
+--><p>Có một cách để thỏa mãn, ít nhất là theo xấp xỉ, các bài toán tối ưu hóa
+bị ràng buộc là phỏng theo hàm Lagrange <span class="math notranslate nohighlight">\(L\)</span>. Thay vì thỏa mãn
+<span class="math notranslate nohighlight">\(c_i(\mathbf{x}) \leq 0\)</span>, chúng ta chỉ cần thêm
+<span class="math notranslate nohighlight">\(\alpha_i c_i(\mathbf{x})\)</span> vào hàm mục tiêu <span class="math notranslate nohighlight">\(f(x)\)</span>. Điều này
+sẽ đảm bảo rằng các ràng buộc không bị vi phạm quá mức.</p>
+<!--
+In fact, we have been using this trick all along.
+Consider weight decay in :numref:`sec_weight_decay`.
+In it we add $\frac{\lambda}{2} \|\mathbf{w}\|^2$ to the objective function to ensure that $\mathbf{w}$ does not grow too large.
+Using the constrained optimization point of view we can see that this will ensure that $\|\mathbf{w}\|^2 - r^2 \leq 0$ for some radius $r$.
+Adjusting the value of $\lambda$ allows us to vary the size of $\mathbf{w}$.
+--><p>Thực tế, chúng ta đã dùng thủ thuật này khá thường xuyên. Hãy xét đến
+suy giảm trọng số trong <a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html#sec-weight-decay"><span class="std std-numref">Section 4.5</span></a>. Ở đó chúng ta thêm
+<span class="math notranslate nohighlight">\(\frac{\lambda}{2} \|\mathbf{w}\|^2\)</span> vào hàm mục tiêu để đảm bảo
+rằng giá trị <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> không trở nên quá lớn. Dưới góc nhìn tối
+ưu hóa có ràng buộc, ta có thể thấy nó sẽ đảm bảo
+<span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2 - r^2 \leq 0\)</span> với giá trị bán kính <span class="math notranslate nohighlight">\(r\)</span> nào
+đó. Điều chỉnh giá trị của <span class="math notranslate nohighlight">\(\lambda\)</span> cho phép chúng ta thay đổi độ
+lớn của <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>.</p>
+<!--
+In general, adding penalties is a good way of ensuring approximate constraint satisfaction.
+In practice this turns out to be much more robust than exact satisfaction.
+Furthermore, for nonconvex problems many of the properties that make the exact approach so appealing in the convex case (e.g., optimality) no longer hold.
+--><p>Nhìn chung, thêm các lượng phạt là một cách tốt để đảm bảo việc thỏa mãn
+ràng buộc xấp xỉ. Trong thực tế, hóa ra phương pháp này ổn định hơn rất
+nhiều so với trường hợp thỏa mãn chuẩn xác. Hơn nữa, với các bài toán
+không lồi, những tính chất khiến phương án tiếp cận chuẩn xác trở nên
+rất thu hút trong trường hợp lồi (ví dụ như tính tối ưu) không còn đảm
+bảo nữa.</p>
+<!--
+### Projections
+--></div>
+<div class="section" id="cac-phep-chieu">
+<h3><span class="section-number">11.6.3.3. </span>Các phép chiếu<a class="headerlink" href="#cac-phep-chieu" title="Permalink to this headline">¶</a></h3>
+<!--
+An alternative strategy for satisfying constraints are projections.
+Again, we encountered them before, e.g., when dealing with gradient clipping in :numref:`sec_rnn_scratch`.
+There we ensured that a gradient has length bounded by $c$ via
+--><p>Một chiến lược khác để thỏa mãn các ràng buộc là các phép chiếu. Chúng
+ta cũng đã gặp chúng trước đây, ví dụ như khi bàn về phương pháp gọt
+gradient ở <a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html#sec-rnn-scratch"><span class="std std-numref">Section 8.5</span></a>. Ở phần đó chúng ta đã đảm bảo
+rằng gradient có độ dài ràng buộc bởi <span class="math notranslate nohighlight">\(c\)</span> thông qua</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-12">
+<span class="eqno">(11.6.13)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-12" title="Permalink to this equation">¶</a></span>\[\mathbf{g} \leftarrow \mathbf{g} \cdot \mathrm{min}(1, c/\|\mathbf{g}\|).\]</div>
+<!--
+This turns out to be a *projection* of $g$ onto the ball of radius $c$. More generally, a projection on a (convex) set $X$ is defined as
+--><p>Hóa ra đây là một <em>phép chiếu</em> của <span class="math notranslate nohighlight">\(g\)</span> lên khối cầu có bán kính
+<span class="math notranslate nohighlight">\(c\)</span>. Tổng quát hơn, một phép chiếu lên một tập (lồi) <span class="math notranslate nohighlight">\(X\)</span>
+được định nghĩa là</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-convexity-vn-13">
+<span class="eqno">(11.6.14)<a class="headerlink" href="#equation-chapter-optimization-convexity-vn-13" title="Permalink to this equation">¶</a></span>\[\mathrm{Proj}_X(\mathbf{x}) = \mathop{\mathrm{argmin}}_{\mathbf{x}' \in X} \|\mathbf{x} - \mathbf{x}'\|_2.\]</div>
+<!--
+It is thus the closest point in $X$ to $\mathbf{x}$.
+This sounds a bit abstract.
+:numref:`fig_projections` explains it somewhat more clearly.
+In it we have two convex sets, a circle and a diamond.
+Points inside the set (yellow) remain unchanged.
+Points outside the set (black) are mapped to the closest point inside the set (red).
+While for $\ell_2$ balls this leaves the direction unchanged, this need not be the case in general, as can be seen in the case of the diamond.
+--><p>Do đó đây là điểm gần nhất trong <span class="math notranslate nohighlight">\(X\)</span> tới <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. Điều
+này nghe có vẻ hơi trừu tượng. <a class="reference internal" href="#fig-projections"><span class="std std-numref">Fig. 11.6.4</span></a> sẽ giải thích
+nó một cách rõ ràng hơn. Ở đó ta có hai tập lồi, một hình tròn và một
+hình thoi. Các điểm nằm bên trong tập (màu vàng) giữ nguyên không đổi.
+Các điểm nằm bên ngoài tập (màu đen) được ánh xạ tới điểm gần nhất bên
+trong tập (màu đỏ). Trong khi với các khối cầu <span class="math notranslate nohighlight">\(\ell_2\)</span> hướng của
+phép chiếu được giữ nguyên không đổi, điều này có thể không đúng trong
+trường hợp tổng quát, như có thể thấy trong trường hợp của hình thoi.</p>
+<!--
+![Convex Projections](../img/projections.svg)
+--><div class="figure align-default" id="id6">
+<span id="fig-projections"></span><img alt="../_images/projections.svg" src="../_images/projections.svg" /><p class="caption"><span class="caption-number">Fig. 11.6.4 </span><span class="caption-text">Các phép chiếu lồi</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+One of the uses for convex projections is to compute sparse weight vectors.
+In this case we project $\mathbf{w}$ onto an $\ell_1$ ball (the latter is a generalized version of the diamond in the picture above).
+--><p>Một trong những ứng dụng của các phép chiếu lồi là để tính toán các
+vector trọng số thưa. Trong trường hợp này chúng ta chiếu
+<span class="math notranslate nohighlight">\(\mathbf{w}\)</span> lên khối cầu <span class="math notranslate nohighlight">\(\ell_1\)</span> (phiên bản tổng quát của
+hình thoi ở hình minh họa phía trên).</p>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">11.6.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+In the context of deep learning the main purpose of convex functions is to motivate optimization algorithms and help us understand them in detail.
+In the following we will see how gradient descent and stochastic gradient descent can be derived accordingly.
+--><p>Trong bối cảnh học sâu, mục đích chính của các hàm lồi là để thúc đẩy sự
+phát triển các thuật toán tối ưu hóa và giúp ta hiểu chúng một cách chi
+tiết. Phần tiếp theo chúng ta sẽ thấy cách mà hạ gradient và hạ gradient
+ngẫu nhiên có thể được suy ra từ đó.</p>
+<!--
+* Intersections of convex sets are convex. Unions are not.
+* The expectation of a convex function is larger than the convex function of an expectation (Jensen's inequality).
+* A twice-differentiable function is convex if and only if its second derivative has only nonnegative eigenvalues throughout.
+* Convex constraints can be added via the Lagrange function. In practice simply add them with a penalty to the objective function.
+* Projections map to points in the (convex) set closest to the original point.
+--><ul class="simple">
+<li>Giao của các tập lồi là tập lồi. Hợp của các tập lồi không bắt buộc
+phải là tập lồi.</li>
+<li>Kỳ vọng của hàm lồi lớn hơn hàm lồi của kỳ vọng (Bất đẳng thức
+Jensen).</li>
+<li>Hàm khả vi hai lần là hàm lồi khi và chỉ khi đạo hàm bậc hai của nó
+chỉ có các trị riêng không âm ở mọi nơi.</li>
+<li>Các ràng buộc lồi có thể được thêm vào hàm Lagrange. Trong thực tế,
+ta chỉ việc thêm chúng cùng với một mức phạt vào hàm mục tiêu.</li>
+<li>Các phép chiếu ánh xạ đến các điểm trong tập (lồi) nằm gần nhất với
+điểm gốc.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">11.6.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Assume that we want to verify convexity of a set by drawing all lines between points within the set and checking whether the lines are contained.
+    * Prove that it is sufficient to check only the points on the boundary.
+    * Prove that it is sufficient to check only the vertices of the set.
+2. Denote by $B_p[r] := \{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \text{ and } \|\mathbf{x}\|_p \leq r\}$ the ball of radius $r$ using the $p$-norm. Prove that $B_p[r]$ is convex for all $p \geq 1$.
+3. Given convex functions $f$ and $g$ show that $\mathrm{max}(f, g)$ is convex, too. Prove that $\mathrm{min}(f, g)$ is not convex.
+4. Prove that the normalization of the softmax function is convex. More specifically prove the convexity of $f(x) = \log \sum_i \exp(x_i)$.
+5. Prove that linear subspaces are convex sets, i.e., $X = \{\mathbf{x} | \mathbf{W} \mathbf{x} = \mathbf{b}\}$.
+6. Prove that in the case of linear subspaces with $\mathbf{b} = 0$ the projection $\mathrm{Proj}_X$ can be written as $\mathbf{M} \mathbf{x}$ for some matrix $\mathbf{M}$.
+7. Show that for convex twice differentiable functions $f$ we can write $f(x + \epsilon) = f(x) + \epsilon f'(x) + \frac{1}{2} \epsilon^2 f''(x + \xi)$ for some $\xi \in [0, \epsilon]$.
+8. Given a vector $\mathbf{w} \in \mathbb{R}^d$ with $\|\mathbf{w}\|_1 > 1$ compute the projection on the $\ell_1$ unit ball.
+    * As intermediate step write out the penalized objective $\|\mathbf{w} - \mathbf{w}'\|_2^2 + \lambda \|\mathbf{w}'\|_1$ and compute the solution for a given $\lambda > 0$.
+    * Can you find the 'right' value of $\lambda$ without a lot of trial and error?
+9. Given a convex set $X$ and two vectors $\mathbf{x}$ and $\mathbf{y}$ prove that projections never increase distances, i.e., $\|\mathbf{x} - \mathbf{y}\| \geq \|\mathrm{Proj}_X(\mathbf{x}) - \mathrm{Proj}_X(\mathbf{y})\|$.
+--><ol class="arabic simple">
+<li>Giả sử chúng ta muốn xác minh tính lồi của tập hợp bằng cách vẽ mọi
+đoạn thẳng giữa các điểm bên trong tập hợp và kiểm tra liệu các đoạn
+thẳng có nằm trong tập hợp đó hay không.<ul>
+<li>Hãy chứng mình rằng ta chỉ cần kiểm tra các điểm ở biên là đủ.</li>
+<li>Hãy chứng minh rằng ta chỉ cần kiểm tra các đỉnh của tập hợp là
+đủ.</li>
+</ul>
+</li>
+<li>Ký hiệu khối cầu có bán kính <span class="math notranslate nohighlight">\(r\)</span> sử dụng chuẩn <span class="math notranslate nohighlight">\(p\)</span> là
+<span class="math notranslate nohighlight">\(B_p[r] := \{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \text{ và } \|\mathbf{x}\|_p \leq r\}\)</span>.
+Hãy chứng minh rằng <span class="math notranslate nohighlight">\(B_p[r]\)</span> là lồi với mọi <span class="math notranslate nohighlight">\(p \geq 1\)</span>.</li>
+<li>Cho các hàm lồi <span class="math notranslate nohighlight">\(f\)</span> và <span class="math notranslate nohighlight">\(g\)</span> sao cho
+<span class="math notranslate nohighlight">\(\mathrm{max}(f, g)\)</span> cũng là hàm lồi. Hãy chứng minh rằng
+<span class="math notranslate nohighlight">\(\mathrm{min}(f, g)\)</span> không lồi.</li>
+<li>Hãy chứng minh rằng hàm softmax được chuẩn hóa là hàm lồi. Cụ thể
+hơn, chứng minh tính lồi của <span class="math notranslate nohighlight">\(f(x) = \log \sum_i \exp(x_i)\)</span>.</li>
+<li>Hãy chứng minh rằng các không gian con tuyến tính là các tập lồi. Ví
+dụ, <span class="math notranslate nohighlight">\(X = \{\mathbf{x} | \mathbf{W} \mathbf{x} = \mathbf{b}\}\)</span>.</li>
+<li>Hãy chứng minh rằng trong trường hợp của các không gian con tuyến
+tính với <span class="math notranslate nohighlight">\(\mathbf{b} = 0\)</span>, phép chiếu <span class="math notranslate nohighlight">\(\mathrm{Proj}_X\)</span>
+có thể được viết dưới dạng <span class="math notranslate nohighlight">\(\mathbf{M} \mathbf{x}\)</span> với một ma
+trận <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> nào đó.</li>
+<li>Hãy chỉ ra rằng với các hàm số khả vi hai lần <span class="math notranslate nohighlight">\(f\)</span>, ta có thể
+viết
+<span class="math notranslate nohighlight">\(f(x + \epsilon) = f(x) + \epsilon f'(x) + \frac{1}{2} \epsilon^2 f''(x + \xi)\)</span>
+với một giá trị <span class="math notranslate nohighlight">\(\xi \in [0, \epsilon]\)</span> nào đó.</li>
+<li>Cho vector <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d\)</span> với
+<span class="math notranslate nohighlight">\(\|\mathbf{w}\|_1 &gt; 1\)</span>, hãy tính phép chiếu lên khối cầu đơn vị
+<span class="math notranslate nohighlight">\(\ell_1\)</span>.<ul>
+<li>Như một bước trung gian, hãy viết ra mục tiêu có lượng phạt
+<span class="math notranslate nohighlight">\(\|\mathbf{w} - \mathbf{w}'\|_2^2 + \lambda \|\mathbf{w}'\|_1\)</span>
+và tính ra đáp án với <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>.</li>
+<li>Bạn có thể tìm ra giá trị ‘chính xác’ của <span class="math notranslate nohighlight">\(\lambda\)</span> mà không
+phải đoán mò quá nhiều lần không?</li>
+</ul>
+</li>
+<li>Cho tập lồi <span class="math notranslate nohighlight">\(X\)</span> và hai vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, hãy chứng minh rằng các phép chiếu không bao giờ
+làm tăng khoảng cách, ví dụ,
+<span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{y}\| \geq \|\mathrm{Proj}_X(\mathbf{x}) - \mathrm{Proj}_X(\mathbf{y})\|\)</span>.</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">11.6.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/350">Tiếng Anh - MXNet</a></li>
+<li><a class="reference external" href="https://discuss.d2l.ai/t/488">Tiếng Anh - Pytorch</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">11.6.7. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Phạm Hồng Vinh</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Văn Quang</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Phạm Minh Đức</li>
+<li>Võ Tấn Phát</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">11.6. Tính lồi</a><ul>
+<li><a class="reference internal" href="#kien-thuc-co-ban">11.6.1. Kiến thức Cơ bản</a><ul>
+<li><a class="reference internal" href="#tap-hop">11.6.1.1. Tập hợp</a></li>
+<li><a class="reference internal" href="#ham-so">11.6.1.2. Hàm số</a></li>
+<li><a class="reference internal" href="#bat-dang-thuc-jensen">11.6.1.3. Bất đẳng thức Jensen</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tinh-chat">11.6.2. Tính chất</a><ul>
+<li><a class="reference internal" href="#khong-co-cuc-tieu-cuc-bo">11.6.2.1. Không có Cực tiểu Cục bộ</a></li>
+<li><a class="reference internal" href="#ham-so-va-tap-hop-loi">11.6.2.2. Hàm số và Tập hợp Lồi</a></li>
+<li><a class="reference internal" href="#dao-ham-va-tinh-loi">11.6.2.3. Đạo hàm và tính Lồi</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rang-buoc">11.6.3. Ràng buộc</a><ul>
+<li><a class="reference internal" href="#ham-so-lagrange">11.6.3.1. Hàm số Lagrange</a></li>
+<li><a class="reference internal" href="#luong-phat">11.6.3.2. Lượng phạt</a></li>
+<li><a class="reference internal" href="#cac-phep-chieu">11.6.3.3. Các phép chiếu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">11.6.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">11.6.5. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">11.6.6. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">11.6.7. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="optimization-intro_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>11.1. Tối ưu và Học sâu</div>
+         </div>
+     </a>
+     <a id="button-next" href="gd_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>11.7. Hạ Gradient</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

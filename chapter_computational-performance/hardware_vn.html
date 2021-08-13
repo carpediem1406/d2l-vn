@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>12.4. Phần cứng &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="12.5. Huấn luyện đa GPU" href="multiple-gpus_vn.html" />
+    <link rel="prev" title="12.3. Song song hóa Tự động" href="auto-parallelism_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">12. </span>Hiệu năng Tính toán</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">12.4. </span>Phần cứng</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_computational-performance/hardware_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">12. Hiệu năng Tính toán</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">12. Hiệu năng Tính toán</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Hardware
+--><div class="section" id="phan-cung">
+<span id="sec-hardware"></span><h1><span class="section-number">12.4. </span>Phần cứng<a class="headerlink" href="#phan-cung" title="Permalink to this headline">¶</a></h1>
+<!--
+Building systems with great performance requires a good understanding of the algorithms and models to capture the statistical aspects of the problem.
+At the same time it is also indispensable to have at least a modicum of knowledge of the underlying hardware.
+The current section is no substitute for a proper course on hardware and systems design.
+Instead, it might serve as a starting point for understanding why some algorithms are more efficient than others and how to achieve good throughput.
+Good design can easily make a difference of an order of magnitude and, in turn, this can make the difference between being able to train a network (e.g., in a week)
+or not at all (in 3 months, thus missing the deadline).
+We will start by looking at computers.
+Then we will zoom in to look more carefully at CPUs and GPUs.
+Lastly we zoom out to review how multiple computers are connected in a server center or in the cloud.
+This is not a GPU purchase guide.
+For this review :numref:`sec_buy_gpu`.
+An introduction to cloud computing with AWS can be found in :numref:`sec_aws`.
+--><p>Để xây dựng các hệ thống có hiệu năng cao, ta cần nắm chắc kiến thức về
+các thuật toán và mô hình để có thể biểu diễn được những khía cạnh thống
+kê của bài toán. Đồng thời, ta cũng cần có một chút kiến thức cơ bản về
+phần cứng thực thi ở bên dưới. Nội dung trong phần này không thể thay
+thế một khóa học đầy đủ về phần cứng và thiết kế hệ thống, mà sẽ chỉ
+đóng vai trò như điểm bắt đầu để giúp người đọc hiểu tại sao một số
+thuật toán lại hiệu quả hơn các thuật toán khác và làm thế nào để đạt
+được thông lượng cao. Thiết kế tốt có thể dễ dàng tạo ra sự khác biệt
+rất lớn, giữa việc có thể huấn luyện một mô hình (ví dụ trong khoảng một
+tuần) và không thể huấn luyện (ví dụ mất 3 tháng để huấn luyện xong, từ
+đó không kịp tiến độ). Ta sẽ bắt đầu bằng việc quan sát tổng thể một hệ
+thống máy tính. Tiếp theo, ta sẽ đi sâu hơn và xem xét chi tiết về CPU
+và GPU. Cuối cùng, ta sẽ tìm hiểu cách các máy tính được kết nối với
+nhau trong trạm máy chủ hay trên đám mây. Cần lưu ý, phần này sẽ không
+hướng dẫn cách lựa chọn card GPU. Nếu bạn cần gợi ý, hãy xem
+<a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html#sec-buy-gpu"><span class="std std-numref">Section 19.5</span></a>. Phần giới thiệu về điện toán đám mây trên AWS
+có thể tìm thấy tại <a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html#sec-aws"><span class="std std-numref">Section 19.3</span></a>.</p>
+<!--
+Impatient readers may be able to get by with :numref:`fig_latencynumbers`.
+It is taken from Colin Scott's [interactive post](https://people.eecs.berkeley.edu/~rcs/research/interactive_latency.html) which gives a good overview of the progress over the past decade.
+The original numbers are due to Jeff Dean's [Stanford talk from 2010](https://static.googleusercontent.com/media/research.google.com/en//people/jeff/Stanford-DL-Nov-2010.pdf).
+The discussion below explains some of the rationale for these numbers and how they can guide us in designing algorithms.
+The discussion below is very high level and cursory.
+It is clearly *no substitute* for a proper course but rather just meant to provide enough information for a statistical modeler to make suitable design decisions.
+For an in-depth overview of computer architecture we refer the reader to :cite:`Hennessy.Patterson.2011` or a recent course on the subject,
+such as the one by [Arste Asanovic](http://inst.eecs.berkeley.edu/~cs152/sp19/).
+--><p>Bạn đọc có thể tham khảo nhanh thông tin tóm tắt trong
+<a class="reference internal" href="#fig-latencynumbers"><span class="std std-numref">Fig. 12.4.1</span></a>. Nội dung này được trích dẫn từ bài viết
+của <a class="reference external" href="https://people.eecs.berkeley.edu/~rcs/research/interactive_latency.html">Colin
+Scott</a>
+trình bày tổng quan về những tiến bộ trong thập kỉ qua. Số liệu gốc được
+trích dẫn từ buổi thảo luận của Jeff Dean tại <a class="reference external" href="https://static.googleusercontent.com/media/research.google.com/en//people/jeff/Stanford-DL-Nov-2010.pdf">trường Stanford năm
+2010</a>.
+Phần thảo luận dưới đây sẽ giải thích cơ sở cho những con số trên và
+cách mà chúng dẫn dắt ta trong quá trình thiết kế thuật toán. Nội dung
+khái quát và ngắn gọn nên nó không thể thay thế một khóa học đầy đủ,
+nhưng sẽ cung cấp đủ thông tin cho những người làm mô hình thống kê để
+có thể đưa ra lựa chọn thiết kế phù hợp. Để có cái nhìn tổng quan chuyên
+sâu về kiến trúc máy tính, bạn đọc có thể tham khảo
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#hennessy-patterson-2011" id="id1">[Hennessy &amp; Patterson, 2011]</a> hay một khóa học gần đây của <a class="reference external" href="http://inst.eecs.berkeley.edu/~cs152/sp19/">Arste
+Asanovic</a>.</p>
+<!--
+![Latency Numbers every Programmer should know.](../img/latencynumbers.png)
+--><div class="figure align-default" id="id5">
+<span id="fig-latencynumbers"></span><img alt="../_images/latencynumbers.png" src="../_images/latencynumbers.png" />
+<p class="caption"><span class="caption-number">Fig. 12.4.1 </span><span class="caption-text">Số liệu về độ trễ mà mọi lập trình viên nên biết.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+## Computers
+--><div class="section" id="may-tinh">
+<h2><span class="section-number">12.4.1. </span>Máy tính<a class="headerlink" href="#may-tinh" title="Permalink to this headline">¶</a></h2>
+<!--
+Most deep learning researchers have access to a computer with a fair amount of memory, compute, some form of an accelerator such as a GPU, or multiples thereof. It consists of several key components:
+--><p>Hầu hết những nhà nghiên cứu học sâu đều được trang bị hệ thống máy tính
+có bộ nhớ và khả năng tính toán khá lớn với một hay nhiều GPU. Những máy
+tính này thường có những thành phần chính sau:</p>
+<!--
+* A processor, also referred to as CPU which is able to execute the programs we give it (in addition to running an operating system and many other things), typically consisting of 8 or more cores.
+* Memory (RAM) to store and retrieve the results from computation, such as weight vectors, activations, often training data.
+* An Ethernet network connection (sometimes multiple) with speeds ranging from 1Gbit/s to 100Gbit/s (on high end servers more advanced interconnects can be found).
+* A high speed expansion bus (PCIe) to connect the system to one or more GPUs. Severs have up to 8 accelerators,
+often connected in an advanced topology, desktop systems have 1-2, depending on the budget of the user and the size of the power supply.
+* Durable storage, such as a magnetic harddrive (HDD), solid state (SSD), in many cases connected using the PCIe bus,
+provides efficient transfer of training data to the system and storage of intermediate checkpoints as needed.
+--><ul class="simple">
+<li>Bộ xử lý, thường được gọi là CPU, có khả năng thực thi các chương
+trình được nhập bởi người dùng (bên cạnh chức năng chạy hệ điều hành
+và các tác vụ khác), thường có 8 lõi (<em>core</em>) hoặc nhiều hơn.</li>
+<li>Bộ nhớ (RAM) được sử dụng để lưu trữ và truy xuất các kết quả tính
+toán như vector trọng số, giá trị kích hoạt và dữ liệu huấn luyện.</li>
+<li>Một hay nhiều kết nối Ethernet với tốc độ đường truyền từ 1 Gbit/s
+tới 100 Gbit/s (các máy chủ tân tiến còn có các phương thức kết nối
+cao cấp hơn nữa).</li>
+<li>Cổng giao tiếp bus mở rộng tốc độ cao (PCIe) kết nối hệ thống với một
+hay nhiều GPU. Các hệ thống máy chủ thường có tới 8 GPU được kết nối
+với nhau theo cấu trúc liên kết phức tạp. Còn các hệ thống máy tính
+thông thường thì có 1-2 GPU, phụ thuộc vào túi tiền của người dùng và
+công suất nguồn điện.</li>
+<li>Bộ lưu trữ tốt, thường là ổ cứng từ (HDD) hay ổ cứng thể rắn (SSD),
+được kết nối bằng bus PCIe giúp truyền dữ liệu huấn luyện tới hệ
+thống và sao lưu các checkpoint trung gian một cách hiệu quả.</li>
+</ul>
+<!--
+![Connectivity of components](../img/mobo-symbol.svg)
+--><div class="figure align-default" id="id6">
+<span id="fig-mobo-symbol"></span><img alt="../_images/mobo-symbol.svg" src="../_images/mobo-symbol.svg" /><p class="caption"><span class="caption-number">Fig. 12.4.2 </span><span class="caption-text">Kết nối các thành phần máy tính</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+As :numref:`fig_mobo-symbol` indicates, most components (network, GPU, storage) are connected to the CPU across the PCI Express bus.
+It consists of multiple lanes that are directly attached to the CPU.
+For instance AMD's Threadripper 3 has 64 PCIe 4.0 lanes, each of which is capable 16 Gbit/s data transfer in both directions.
+The memory is directly attached to the CPU with a total bandwidth of up to 100 GB/s.
+--><p>Hình <a class="reference internal" href="#fig-mobo-symbol"><span class="std std-numref">Fig. 12.4.2</span></a> cho thấy, hầu hết các thành phần (mạng,
+GPU, ổ lưu trữ) được kết nối tới GPU thông qua đường bus PCI mở rộng.
+Đường truyền này gồm nhiều làn kết nối trực tiếp tới CPU. Ví dụ,
+Threadripper 3 của AMD có 64 làn PCIe 4.0, mỗi làn có khả năng truyền
+dẫn 16 Gbit/s dữ liệu theo cả hai chiều. Bộ nhớ được kết nối trực tiếp
+tới CPU với tổng băng thông lên đến 100 GB/s.</p>
+<!--
+When we run code on a computer we need to shuffle data to the processors (CPU or GPU), perform computation and then move the results off the processor back to RAM and durable storage.
+Hence, in order to get good performance we need to make sure that this works seamlessly without any one of the systems becoming a major bottleneck.
+For instance, if we cannot load images quickly enough the processor will not have any work to do.
+Likewise, if we cannot move matrices quickly enough to the CPU (or GPU), its processing elements will starve.
+Finally, if we want to synchronize multiple computers across the network, the latter should not slow down computation. One option is to interleave communication and computation.
+Let us have a look at the various components in more detail.
+--><p>Khi ta chạy chương trình trên máy tính, ta cần trộn dữ liệu ở các bộ xử
+lý (CPU hay GPU), thực hiện tính toán và sau đó truyền kết quả tới RAM
+hay ổ lưu trữ. Do đó, để có hiệu năng tốt, ta cần đảm bảo rằng chương
+trình chạy mượt mà và hệ thống không có nút nghẽn cổ chai. Ví dụ, nếu ta
+không thể tải ảnh đủ nhanh, bộ xử lý sẽ không có có dữ liệu để chạy.
+Tương tự, nếu ta không thể truyền các ma trận tới CPU (hay GPU) đủ
+nhanh, bộ xử lý sẽ thiếu dữ liệu để hoạt động. Cuối cùng, nếu ta muốn
+đồng bộ nhiều máy tính trong một mạng, kết nối mạng không nên làm chậm
+việc tính toán. Xen kẽ việc giao tiếp và tính toán giữa các máy tính là
+một phương án cho vấn đề này. Giờ hãy xem xét các thành phần trên một
+cách chi tiết hơn.</p>
+<!--
+## Memory
+--></div>
+<div class="section" id="bo-nho">
+<h2><span class="section-number">12.4.2. </span>Bộ nhớ<a class="headerlink" href="#bo-nho" title="Permalink to this headline">¶</a></h2>
+<!--
+At its most basic memory is used to store data that needs to be readily accessible.
+At present CPU RAM is typically of the [DDR4](https://en.wikipedia.org/wiki/DDR4_SDRAM) variety, offering 20-25GB/s bandwidth per module.
+Each module has a 64 bit wide bus.
+Typically pairs of memory modules are used to allow for multiple channels.
+CPUs have between 2 and 4 memory channels, i.e., they have between 40GB/s and 100GB/s peak memory bandwidth.
+Often there are two banks per channel. For instance AMD's Zen 3 Threadripper has 8 slots.
+--><p>Về cơ bản, bộ nhớ được sử dụng để lưu trữ dữ liệu khi cần sẵn sàng truy
+cập. Hiện tại bộ nhớ RAM của CPU thường thuộc loại
+<a class="reference external" href="https://en.wikipedia.org/wiki/DDR4_SDRAM">DDR4</a>, trong đó mỗi mô-đun
+có băng thông 20-25GB/s và độ rộng bus 64 bit. Thông thường, các cặp
+mô-đun bộ nhớ cho phép sử dụng đa kênh. CPU có từ 2 đến 4 kênh bộ nhớ,
+nghĩa là chúng có băng thông bộ nhớ tối đa từ 40 GB/s đến 100 GB/s.
+Thường thì mỗi kênh có hai dải (<em>bank</em>). Ví dụ, Zen 3 Threadripper của
+AMD có 8 khe cắm.</p>
+<!--
+While these numbers are impressive, indeed, they only tell part of the story.
+When we want to read a portion from memory we first need to tell the memory module where the information can be found.
+That is, we first need to send the *address* to RAM.
+Once this accomplished we can choose to read just a single 64bit record or a long sequence of records.
+The latter is called *burst read*.
+In a nutshell, sending an address to memory and setting up the transfer takes approximately 100ns (details depend on the specific timing coefficients of the memory chips used),
+every subsequent transfer takes only 0.2ns.
+In short, the first read is 500 times as expensive as subsequent ones!
+We could perform up to $10,000,000$ random reads per second.
+This suggests that we avoid random memory access as far as possible and use burst reads (and writes) instead.
+--><p>Dù những con số trên trông khá ấn tượng, trên thực tế chúng chỉ nói lên
+một phần nào đó. Khi muốn đọc một phần nào đó từ bộ nhớ, trước tiên ta
+cần chỉ cho mô-đun bộ nhớ vị trí chứa thông tin, tức cần gửi <em>địa chỉ</em>
+đến RAM. Khi thực hiện xong việc này, ta có thể chọn chỉ đọc một bản ghi
+64 bit hoặc một chuỗi dài các bản ghi. Lựa chọn thứ hai được gọi là <em>đọc
+nhanh</em> (<em>burst read</em>). Nói ngắn gọn, việc gửi một địa chỉ vào bộ nhớ và
+thiết lập chuyển tiếp sẽ mất khoảng 100ns (thời gian cụ thể phụ thuộc
+vào hệ số thời gian của từng chip bộ nhớ được sử dụng), mỗi lần chuyển
+tiếp sau đó chỉ mất 0.2ns. Có thể thấy lần đọc đầu tiên tốn thời gian
+gấp 500 lần những lần sau! Ta có thể đọc ngẫu nhiên tối đa
+<span class="math notranslate nohighlight">\(10,000,000\)</span> lần mỗi giây. Điều này cho thấy rằng ta nên hạn chế
+tối đa việc truy cập bộ nhớ ngẫu nhiên và thay vào đó nên sử dụng cách
+đọc (và ghi) nhanh (<em>burst read</em>, và <em>burst write</em>).</p>
+<!--
+Matters are a bit more complex when we take into account that we have multiple banks.
+Each bank can read memory largely independently.
+This means two things: the effective number of random reads is up to 4x higher, provided that they are spread evenly across memory.
+It also means that it is still a bad idea to perform random reads since burst reads are 4x faster, too.
+Secondly, due to memory alignment to 64 bit boundaries it is a good idea to align any datastructures with the same boundaries.
+Compilers do this pretty much [automatically](https://en.wikipedia.org/wiki/Data_structure_alignment) when the appropriate flags are set.
+Curious readers are encouraged to review a lecture on DRAMs such as the one by [Zeshan Chishti](http://web.cecs.pdx.edu/~zeshan/ece585_lec5.pdf).
+--><p>Mọi thứ trở nên phức tạp hơn một chút khi ta tính đến việc có nhiều dải
+bộ nhớ. Mỗi dải có thể đọc bộ nhớ gần như là độc lập với nhau. Điều này
+có hai ý sau. Thứ nhất, số lần đọc ngẫu nhiên thực sự cao hơn tới 4 lần,
+miễn là chúng được trải đều trên bộ nhớ. Điều đó cũng có nghĩa là việc
+thực hiện các lệnh đọc ngẫu nhiên vẫn không phải là một ý hay vì các
+lệnh đọc nhanh (<em>burst read</em>) cũng nhanh hơn gấp 4 lần. Thứ hai, do việc
+căn chỉnh bộ nhớ theo biên 64 bit, ta nên căn chỉnh mọi cấu trúc dữ liệu
+theo cùng biên đó. Trình biên dịch thực hiện việc này một cách <a class="reference external" href="https://en.wikipedia.org/wiki/Data_structure_alocation">tự
+động</a> khi các
+cờ thích hợp được đặt. Độc giả có thể tham khảo thêm bài giảng về DRAM
+ví dụ như <a class="reference external" href="http://web.cecs.pdx.edu/~zeshan/ece585_lec5.pdf">Zeshan
+Chishti</a>.</p>
+<!--
+GPU memory is subject to even higher bandwidth requirements since they have many more processing elements than CPUs.
+By and large there are two options to address them.
+One is to make the memory bus significantly wider.
+For instance NVIDIA's RTX 2080 Ti has a 352 bit wide bus.
+This allows for much more information to be transferred at the same time.
+Secondly, GPUs use specific high-performance memory.
+Consumer grade devices, such as NVIDIA's RTX and Titan series typically use [GDDR6](https://en.wikipedia.org/wiki/GDDR6_SDRAM) chips with over 500 GB/s aggregate bandwidth.
+An alternative is to use HBM (high bandwidth memory) modules.
+They use a very different interface and connect directly with GPUs on a dedicated silicon wafer.
+This makes them very expensive and their use is typically limited to high end server chips, such as the NVIDIA Volta V100 series of accelerators.
+Quite unsurprisingly GPU memory is *much* smaller than CPU memory due to its higher cost.
+For our purposes, by and large their performance characteristics are similar, just a lot faster.
+We can safely ignore the details for the purpose of this book.
+They only matter when tuning GPU kernels for high throughput.
+--><p>Bộ nhớ GPU còn yêu cầu băng thông cao hơn nữa vì chúng có nhiều phần tử
+xử lý hơn CPU. Nhìn chung có hai phương án tiếp cận đối với vấn đề này.
+Một cách là mở rộng bus bộ nhớ. Chẳng hạn NVIDIA’s RTX 2080 Ti dùng bus
+có kích thước 352 bit. Điều này cho phép truyền đi lượng thông tin lớn
+hơn cùng lúc. Một cách khác là sử dụng loại bộ nhớ chuyên biệt có hiệu
+năng cao cho GPU. Các thiết bị hạng phổ thông, điển hình như dòng RTX và
+Titan của NVIDIA, dùng các chip
+<a class="reference external" href="https://en.wikipedia.org/wiki/GDDR6_SDRAM">GDDR6</a> với băng thông
+tổng hợp hơn 500 GB/s. Một loại bộ nhớ chuyên biệt khác là mô-đun HBM
+(bộ nhớ băng thông rộng). Chúng dùng phương thức giao tiếp rất khác và
+kết nối trực tiếp với GPU trên một tấm bán dẫn silic chuyên biệt. Điều
+này dẫn đến giá thành rất cao và chúng chỉ được sử dụng chủ yếu cho các
+chip máy chủ cao cấp, ví dụ như dòng GPU NVIDIA Volta V100. Không quá
+ngạc nhiên, kích thước bộ nhớ GPU nhỏ hơn nhiều so với bộ nhớ CPU do giá
+thành cao của nó. Nhìn chung các đặc tính hiệu năng của bộ nhớ GPU khá
+giống bộ nhớ CPU, nhưng nhanh hơn nhiều. Ta có thể bỏ qua các chi tiết
+sâu hơn trong cuốn sách này, do chúng chỉ quan trọng khi cần điều chỉnh
+các hạt nhân GPU để đạt thông lượng xử lý cao hơn.</p>
+<!--
+## Storage
+--></div>
+<div class="section" id="luu-tru">
+<h2><span class="section-number">12.4.3. </span>Lưu trữ<a class="headerlink" href="#luu-tru" title="Permalink to this headline">¶</a></h2>
+<!--
+We saw that some of the key characteristics of RAM were *bandwidth* and *latency*.
+The same is true for storage devices, just that the differences can be even more extreme.
+--><p>Chúng ta đã thấy đặc tính then chốt của RAM chính là <em>băng thông</em> và <em>độ
+trễ</em>. Điều này cũng đúng đối với các thiết bị lưu trữ, sự khác biệt chỉ
+có thể là các đặc tính trên lớn hơn nhiều lần.</p>
+<!--
+**Hard Disks** have been in use for over half a century.
+In a nutshell they contain a number of spinning platters with heads that can be positioned to read / write at any given track.
+High end end disks hold up to 16TB on 9 platters.
+One of the key benefits of HDDs is that they are relatively inexpensive.
+One of their many downsides are their typically catastrophic failure modes and their relatively high read latency.
+--><p><strong>Các ổ cứng</strong> đã được sử dụng hơn nửa thế kỷ. Một cách ngắn gọn, chúng
+chứa một số đĩa quay với những đầu kim có thể di chuyển để đọc/ghi ở bất
+cứ rãnh nào. Các ổ đĩa cao cấp có thể lưu trữ lên tới 16 TB trên 9 đĩa.
+Một trong những lợi ích chính của ổ đĩa cứng là chúng tương đối rẻ.
+Nhược điểm của chúng là độ trễ tương đối cao khi đọc dữ liệu và hay bị
+hư hỏng nặng dẫn đến không thể đọc dữ liệu, thậm chí là mất dữ liệu.</p>
+<!--
+To understand the latter, consider the fact that HDDs spin at around 7,200 RPM.
+If they were much faster they would shatter due to the centrifugal force exerted on the platters.
+This has a major downside when it comes to accessing a specific sector on the disk: we need to wait until the platter has rotated in position (we can move the heads but not accelerate the actual disks).
+Hence it can take over 8ms until the requested data is available.
+A common way this is expressed is to say that HDDs can operate at approximately 100 IOPs.
+This number has essentially remained unchanged for the past two decades.
+Worse still, it is equally difficult to increase bandwidth (it is in the order of 100-200 MB/s).
+After all, each head reads a track of bits, hence the bit rate only scales with the square root of the information density.
+As a result HDDs are quickly becoming relegated to archival storage and low-grade storage for very large datasets.
+--><p>Để hiểu về nhược điểm thứ hai, hãy xem xét thực tế rằng ổ cứng quay với
+tốc độ khoảng 7,200 vòng/phút. Nếu tốc độ này cao hơn, các đĩa sẽ vỡ tan
+do tác dụng của lực ly tâm. Điều này dẫn đến một nhược điểm lớn khi truy
+cập vào một khu vực cụ thể trên đĩa: chúng ta cần đợi cho đến khi đĩa
+quay đúng vị trí (chúng ta có thể di chuyển đầu kim nhưng không được
+tăng tốc các đĩa). Do đó, có thể mất hơn 8ms cho đến khi truy cập được
+dữ liệu yêu cầu. Vì thế mà ta hay nói ổ cứng có thể hoạt động ở mức xấp
+xỉ 100 IOP. Con số này về cơ bản vẫn không thay đổi trong hai thập kỷ
+qua. Tệ hơn nữa, việc tăng băng thông cũng khó khăn không kém (ở mức độ
+100-200 MB/s). Rốt cuộc, mỗi đầu đọc một rãnh bit, do đó tốc độ bit chỉ
+tăng theo tỷ lệ căn bậc hai của mật độ thông tin. Kết quả là các ổ cứng
+đang nhanh chóng biến thành nơi lưu trữ cấp thấp cho các bộ dữ liệu rất
+lớn.</p>
+<!--
+**Solid State Drives** use Flash memory to store information persistently.
+This allows for *much faster* access to stored records.
+Modern SSDs can operate at 100,000 to 500,000 IOPs, i.e., up to 3 orders of magnitude faster than HDDs.
+Furthermore, their bandwidth can reach 1-3GB/s, i.e., one order of magnitude faster than HDDs.
+These improvements sound almost too good to be true.
+Indeed, they come with a number of caveats, due to the way SSDs are designed.
+--><p><strong>Ổ cứng thể rắn (SSD)</strong> sử dụng bộ nhớ Flash để liên tục lưu trữ thông
+tin. Điều này cho phép truy cập <em>nhanh hơn nhiều</em> vào các bản ghi đã
+được lưu trữ. SSD hiện đại có thể hoạt động ở mức 100,000 đến 500,000
+IOP, tức là nhanh hơn gấp 1000 lần so với ổ cứng HDD. Hơn nữa, băng
+thông của chúng có thể đạt tới 1-3GB/s nghĩa là nhanh hơn 10 lần so với
+ổ cứng. Những cải tiến này nghe có vẻ tốt đến mức khó tin. Thật vậy, và
+SSD cũng đi kèm với một số hạn chế do cách mà chúng được thiết kế.</p>
+<!--
+* SSDs store information in blocks (256 KB or larger).
+They can only be written as a whole, which takes significant time.
+Consequently bit-wise random writes on SSD have very poor performance.
+Likewise, writing data in general takes significant time since the block has to be read, erased and then rewritten with new information.
+By now SSD controllers and firmware have developed algorithms to mitigate this.
+Nonetheless writes can be much slower, in particular for QLC (quad level cell) SSDs.
+The key for improved performance is to maintain a *queue* of operations, to prefer reads and to write in large blocks if possible.
+* The memory cells in SSDs wear out relatively quickly (often already after a few thousand writes).
+Wear-level protection algorithms are able to spread the degradation over many cells.
+That said, it is not recommended to use SSDs for swap files or for large aggregations of log-files.
+* Lastly, the massive increase in bandwidth has forced computer designers to attach SSDs directly to the PCIe bus.
+The drives capable of handling this, referred to as NVMe (Non Volatile Memory enhanced), can use up to 4 PCIe lanes.
+This amounts to up to 8GB/s on PCIe 4.0.
+--><ul class="simple">
+<li>Các ổ SSD lưu trữ thông tin theo khối (256 KB trở lên). Ta sẽ phải
+ghi cả khối cùng một lúc, mất thêm thời gian đáng kể. Do đó việc ghi
+ngẫu nhiên theo bit trên SSD có hiệu suất rất tệ. Tương tự như vậy,
+việc ghi dữ liệu nói chung mất thời gian đáng kể vì khối phải được
+đọc, xóa và sau đó viết lại với thông tin mới. Cho đến nay, bộ điều
+khiển và firmware của SSD đã phát triển các thuật toán để giảm thiểu
+vấn đề này. Tuy nhiên tốc độ ghi vẫn có thể chậm hơn nhiều, đặc biệt
+là đối với SSD QLC (ô bốn cấp). Chìa khóa để cải thiện hiệu suất là
+đưa các thao tác vào một <em>hàng đợi</em> để ưu tiên việc đọc trước và chỉ
+ghi theo các khối lớn nếu có thể.</li>
+<li>Các ô nhớ trong SSD bị hao mòn tương đối nhanh (thường sau vài nghìn
+lần ghi). Các thuật toán bảo vệ mức hao mòn có thể phân bổ đều sự
+xuống cấp trên nhiều ô. Dù vậy, vẫn không nên sử dụng SSD cho các tệp
+hoán đổi (<em>swap file</em>) hoặc cho tập hợp lớn các tệp nhật ký (<em>log
+file</em>).</li>
+<li>Cuối cùng, sự gia tăng lớn về băng thông đã buộc các nhà thiết kế máy
+tính phải gắn SSD trực tiếp vào bus PCIe. Các ổ đĩa có khả năng xử lý
+việc này, được gọi là NVMe (Bộ nhớ không biến động tăng cường - <em>Non
+Volatile Memory enhanced</em>), có thể sử dụng lên tới 4 làn PCIe. Băng
+thông có thể lên tới 8GB/s trên PCIe 4.0.</li>
+</ul>
+<!--
+**Cloud Storage** provides a configurable range of performance.
+That is, the assignment of storage to virtual machines is dynamic, both in terms of quantity and in terms speed, as chosen by the user.
+We recommend that the user increase the provisioned number of IOPs whenever latency is too high, e.g., during training with many small records.
+--><p><strong>Lưu trữ đám mây</strong> cung cấp nhiều lựa chọn hiệu suất có thể tùy chỉnh.
+Nghĩa là, việc chỉ định bộ lưu trữ cho các máy ảo là tùy chỉnh, cả về số
+lượng và tốc độ, do người dùng quyết định. Chúng tôi khuyên người dùng
+nên tăng số lượng IOP được cung cấp bất cứ khi nào độ trễ quá cao, ví dụ
+như trong quá trình huấn luyện với dữ liệu gồm nhiều bản ghi nhỏ.</p>
+<!--
+## CPUs
+--></div>
+<div class="section" id="cpu">
+<h2><span class="section-number">12.4.4. </span>CPU<a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
+<!--
+Central Processing Units (CPUs) are the centerpiece of any computer (as before we give a very high level description focusing primarily on what matters for efficient deep learning models).
+They consist of a number of key components: processor cores which are able to execute machine code,
+a bus connecting them (the specific topology differs significantly between processor models, generations and vendors),
+and caches to allow for higher bandwidth and lower latency memory access than what is possible by reads from main memory.
+Lastly, almost all modern CPUs contain vector processing units to aid with high performance linear algebra and convolutions, as they are common in media processing and machine learning.
+--><div class="line-block">
+<div class="line">Bộ xử lý trung tâm (Central Processing Units - CPU) là trung tâm của
+mọi máy tính (như ở phần trước, chúng tôi đã mô tả tổng quan về những
+phần cứng quan trọng cho các mô hình học sâu hiệu quả). CPU gồm một số
+thành tố quan trọng: lõi xử lý (<em>core</em>) với khả năng thực thi mã máy,</div>
+<div class="line">bus kết nối các lõi (cấu trúc kết nối cụ thể có sự khác biệt lớn giữa
+các mô hình xử lý, đời chip và nhà sản xuất) và bộ nhớ đệm (<em>cache</em>)
+cho phép truy cập với băng thông cao hơn và độ trễ thấp hơn so với
+việc đọc từ bộ nhớ chính. Cuối cùng, hầu hết CPU hiện đại chứa những
+đơn vị xử lý vector để hỗ trợ tính toán đại số tuyến tính và tích chập
+với tốc độ cao vì chúng khá phổ biến trong xử lý phương tiện và học
+máy.</div>
+</div>
+<!--
+![Intel Skylake consumer quad-core CPU](../img/skylake.svg)
+--><div class="figure align-default" id="id7">
+<span id="fig-skylake"></span><img alt="../_images/skylake.svg" src="../_images/skylake.svg" /><p class="caption"><span class="caption-number">Fig. 12.4.3 </span><span class="caption-text">CPU lõi tứ của bộ xử lý Intel Skylake</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+:numref:`fig_skylake` depicts an Intel Skylake consumer grade quad-core CPU.
+It has an integrated GPU, caches, and a ringbus connecting the four cores.
+Peripherals (Ethernet, WiFi, Bluetooth, SSD controller, USB, etc.) are either part of the chipset or directly attached (PCIe) to the CPU.
+--><p><a class="reference internal" href="#fig-skylake"><span class="std std-numref">Fig. 12.4.3</span></a> minh hoạ bộ xử lý Intel Skylake với CPU lõi tứ.
+Nó có một GPU tích hợp, bộ nhớ cache và phương tiện kết nối bốn lõi.
+Thiết bị ngoại vi (Ethernet, WiFi, Bluetooth, bộ điều khiển SSD, USB,
+v.v.) là một phần của chipset hoặc được đính kèm trực tiếp (PCIe) với
+CPU.</p>
+<!--
+### Microarchitecture
+--></div>
+<div class="section" id="vi-kien-truc-micro-architecture">
+<h2><span class="section-number">12.4.5. </span>Vi kiến trúc (Micro-architecture)<a class="headerlink" href="#vi-kien-truc-micro-architecture" title="Permalink to this headline">¶</a></h2>
+<!--
+Each of the processor cores consists of a rather sophisticated set of components.
+While details differ between generations and vendors, the basic functionality is pretty much standard.
+The front end loads instructions and tries to predict which path will be taken (e.g., for control flow).
+Instructions are then decoded from assembly code to microinstructions.
+Assembly code is often not the lowest level code that a processor executes.
+Instead, complex instructions may be decoded into a set of more lower level operations.
+These are then processed by the actual execution core.
+Often the latter is capable of performing many operations simultaneously.
+For instance, the ARM Cortex A77 core of :numref:`fig_cortexa77` is able to perform up to 8 operations simultaneously.
+--><p>Mỗi nhân xử lý bao gồm các thành phần rất tinh vi. Mặc dù chi tiết khác
+nhau giữa đời chip và nhà sản xuất, chức năng cơ bản của chúng đã được
+chuẩn hóa tương đối. Front-end tải các lệnh và dự đoán nhánh nào sẽ được
+thực hiện (ví dụ: cho luồng điều khiển). Sau đó các lệnh được giải mã từ
+mã nguồn hợp ngữ (<em>assembly code</em>) thành vi lệnh. Mã nguồn hợp ngữ
+thường chưa phải là mã nguồn cấp thấp nhất mà bộ xử lý thực thi. Thay
+vào đó, các lệnh phức tạp có thể được giải mã thành một tập hợp các phép
+tính cấp thấp hơn. Tiếp đó chúng được xử lý bằng một lõi thực thi. Các
+bộ xử lý đời mới thường có khả năng thực hiện đồng thời nhiều câu lệnh.
+Ví dụ, lõi ARM Cortex A77 trong <a class="reference internal" href="#fig-cortexa77"><span class="std std-numref">Fig. 12.4.4</span></a> có thể thực
+hiện lên đến 8 phép tính cùng một lúc.</p>
+<!--
+![ARM Cortex A77 Microarchitecture Overview](../img/a77.svg)
+--><div class="figure align-default" id="id8">
+<span id="fig-cortexa77"></span><img alt="../_images/a77.svg" src="../_images/a77.svg" /><p class="caption"><span class="caption-number">Fig. 12.4.4 </span><span class="caption-text">Tổng quan về vi kiến trúc ARM Cortex A77</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+This means that efficient programs might be able to perform more than one instruction per clock cycle, *provided that* they can be carried out independently.
+Not all units are created equal.
+Some specialize in integer instructions whereas others are optimized for floating point performance.
+To increase throughput the processor might also follow  multiple codepaths simultaneously in a branching instruction and then discard the results of the branch not taken.
+This is why branch prediction units matter (on the frontend) such that only the most promising paths are pursued.
+--><p>Điều này có nghĩa là các chương trình hiệu quả có thể thực hiện nhiều
+hơn một lệnh trên một chu kỳ xung nhịp, <em>giả sử</em> rằng chúng có thể được
+thực hiện một cách độc lập. Không phải tất cả các bộ xử lý đều được tạo
+ra như nhau. Một số được thiết kế chuyên biệt cho các lệnh về số nguyên,
+trong khi một số khác được tối ưu hóa cho việc tính toán số thực dấu
+phẩy động. Để tăng thông lượng, bộ xử lý cũng có thể theo đồng thời
+nhiều nhánh trong một lệnh rẽ nhánh và sau đó loại bỏ các kết quả của
+nhánh không được thực hiện. Đây là lý do vì sao đơn vị dự đoán nhánh có
+vai trò quan trọng (trên front-end), bởi chúng chỉ chọn những nhánh có
+khả năng cao được rẽ.</p>
+<!--
+### Vectorization
+--></div>
+<div class="section" id="vector-hoa-vectorization">
+<h2><span class="section-number">12.4.6. </span>Vector hóa (Vectorization)<a class="headerlink" href="#vector-hoa-vectorization" title="Permalink to this headline">¶</a></h2>
+<!--
+Deep learning is extremely compute hungry.
+Hence, to make CPUs suitable for machine learning one needs to perform many operations in one clock cycle.
+This is achieved via vector units.
+They have different names: on ARM they are called NEON, on x86 the latest generation is referred to as [AVX2](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) units.
+A common aspect is that they are able to perform SIMD (single instruction multiple data) operations.
+:numref:`fig_neon128` shows how 8 short integers can be added in one clock cycle on ARM.
+--><p>Học sâu đòi hỏi sức mạnh tính toán cực kỳ lớn. Vì vậy, CPU phù hợp với
+học máy cần phải thực hiện được nhiều thao tác trong một chu kỳ xung
+nhịp. Ta có thể đạt được điều này thông qua các đơn vị vector. Trên chip
+ARM chúng được gọi là NEON, trên x86 thế hệ đơn vị vector mới nhất được
+gọi là
+<a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX2</a>. Một
+khía cạnh chung là chúng có thể thực hiện SIMD (đơn lệnh đa dữ liệu -
+<em>single instruction multiple data</em>). <a class="reference internal" href="#fig-neon128"><span class="std std-numref">Fig. 12.4.5</span></a> cho thấy
+cách cộng 8 số nguyên ngắn trong một chu kỳ xung nhịp trên ARM.</p>
+<!--
+![128 bit NEON vectorization](../img/neon128.svg)
+--><div class="figure align-default" id="id9">
+<span id="fig-neon128"></span><img alt="../_images/neon128.svg" src="../_images/neon128.svg" /><p class="caption"><span class="caption-number">Fig. 12.4.5 </span><span class="caption-text">Vector hóa NEON 128 bit</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Depending on architecture choices such registers are up to 512 bit long, allowing for the combination of up to 64 pairs of numbers.
+For instance, we might be multiplying two numbers and adding them to a third, which is also known as a fused multiply-add.
+Intel's [OpenVino](https://01.org/openvinotoolkit) uses these to achieve respectable throughput for deep learning on server grade CPUs.
+Note, though, that this number is entirely dwarved by what GPUs are capable of achieving.
+For instance, NVIDIA's RTX 2080 Ti has 4,352 CUDA cores, each of which is capable of processing such an operation at any time.
+--><p>Phụ thuộc vào các lựa chọn kiến trúc, các thanh ghi như vậy có thể dài
+tới 512 bit, cho phép tổ hợp tối đa 64 cặp số. Chẳng hạn, ta có thể nhân
+hai số và cộng chúng với số thứ ba, cách này còn được biết đến như phép
+nhân-cộng hợp nhất (<em>fused multiply-add</em>).
+<a class="reference external" href="https://01.org/openvinotoolkit">OpenVino</a> của Intel sử dụng thao tác
+này để đạt được thông lượng đáng nể cho học sâu trên CPU máy chủ. Tuy
+nhiên, xin lưu ý rằng tốc độ này hoàn toàn không đáng kể so với khả năng
+của GPU. Ví dụ, RTX 2080 Ti của NVIDIA có 4,352 nhân CUDA, mỗi nhân có
+khả năng xử lý một phép tính như vậy tại bất cứ thời điểm nào.</p>
+<!--
+### Cache
+--></div>
+<div class="section" id="bo-nho-dem">
+<h2><span class="section-number">12.4.7. </span>Bộ nhớ đệm<a class="headerlink" href="#bo-nho-dem" title="Permalink to this headline">¶</a></h2>
+<!--
+Consider the following situation: we have a modest CPU core with 4 cores as depicted in :numref:`fig_skylake` above, running at 2GHz frequency.
+Moreover, let us assume that we have an IPC (instructions per clock) count of 1 and that the units have AVX2 with 256bit width enabled.
+Let us furthermore assume that at least one of the registers used for AVX2 operations needs to be retrieved from memory.
+This means that the CPU consumes 4x256bit = 1kbit of data per clock cycle.
+Unless we are able to transfer $2 \cdot 10^9 \cdot 128 = 256 \cdot 10^9$ bytes to the processor per second the processing elements are going to starve.
+Unfortunately the memory interface of such a chip only supports 20-40 GB/s data transfer, i.e., one order of magnitude less.
+The fix is to avoid loading *new* data from memory as far as possible and rather to cache it locally on the CPU.
+This is where caches come in handy (see this [Wikipedia article](https://en.wikipedia.org/wiki/Cache_hierarchy) for a primer).
+Commonly the following names / concepts are used:
+--><p>Xét tình huống sau: ta có một CPU bình thường với 4 nhân như trong
+<a class="reference internal" href="#fig-skylake"><span class="std std-numref">Fig. 12.4.3</span></a> trên, hoạt động ở tần số 2 GHz. Thêm nữa, hãy
+giả sử IPC (<em>instruction per clock</em> - số lệnh mỗi xung nhịp) là 1 và mỗi
+nhân đều đã kích hoạt AVX2 rộng 256 bit. Ngoài ra, giả sử bộ nhớ cần
+truy cập ít nhất một thanh ghi được sử dụng trong các lệnh AVX2. Điều
+này có nghĩa CPU xử lý 4 x 256 bit = 1 kbit dữ liệu mỗi chu kỳ xung
+nhịp. Trừ khi ta có thể truyền
+<span class="math notranslate nohighlight">\(2 \cdot 10^9 \cdot 128 = 256 \cdot 10^9\)</span> byte đến vi xử lý mỗi
+giây, các nhân sẽ thiếu dữ liệu để xử lý. Tiếc thay giao diện bộ nhớ của
+bộ vi xử lý như trên chỉ hỗ trợ tốc độ truyền dữ liệu khoảng 20-40 GB/s,
+nghĩa là thấp hơn 10 lần. Để khắc phục vấn đề này, ta cần tránh nạp dữ
+liệu <em>mới</em> từ bộ nhớ ngoài, và tốt hơn hết là lưu trong bộ nhớ cục bộ
+trên CPU. Đây chính là lúc bộ nhớ đệm trở nên hữu ích (xem <a class="reference external" href="https://en.wikipedia.org/wiki/Cache_hierarchy">bài viết
+trên Wikipedia</a> này để
+bắt đầu). Một số tên gọi/khái niệm thường gặp:</p>
+<!--
+* **Registers** are strictly speaking not part of the cache. They help stage instructions.
+That said, CPU registers are memory locations that a CPU can access at clock speed without any delay penalty.
+CPUs have tens of registers. It is up to the compiler (or programmer) to use registers efficiently.
+For instance the C programming language has a `register` keyword.
+* **L1** caches are the first line of defense against high memory bandwidth requirements.
+L1 caches are tiny (typical sizes might be 32-64kB) and often split into data and instructions caches.
+When data is found in the L1 cache access is very fast. If it cannot be found there, the search progresses down the cache hierarchy.
+* **L2** caches are the next stop. Depending on architecture design and processor size they might be exclusive.
+They might be accessible only by a given core or shared between multiple cores.
+L2 caches are larger (typically 256-512kB per core) and slower than L1.
+Furthermore, to access something in L2 we first need to check to realize that the data is not in L1, which adds a small amount of extra latency.
+* **L3** caches are shared between multiple cores and can be quite large.
+AMD's Epyc 3 server CPUs have a whopping 256MB of cache spread across multiple chiplets.
+More typical numbers are in the 4-8MB range.
+--><ul class="simple">
+<li><strong>Thanh ghi</strong> không phải là một bộ phận của bộ nhớ đệm. Chúng hỗ trợ
+sắp xếp các câu lệnh cho CPU. Nhưng dù sao thanh ghi cũng là một vùng
+nhớ mà CPU có thể truy cập với tốc độ xung nhịp mà không có độ trễ.
+Các CPU thường có hàng chục thanh ghi. Việc sử dụng các thanh ghi sao
+cho hiệu quả hoàn toàn phụ thuộc vào trình biên dịch (hoặc lập trình
+viên). Ví dụ như trong ngôn ngữ C, ta có thể sử dụng từ khóa
+<code class="docutils literal notranslate"><span class="pre">register</span></code> để lưu các biến vào thanh ghi thay vì bộ nhớ.</li>
+<li>Bộ nhớ đệm <strong>L1</strong> là lớp bảo vệ đầu tiên khi nhu cầu băng thông bộ
+nhớ quá cao. Bộ nhớ đệm L1 rất nhỏ (kích thước điển hình khoảng 32-64
+kB) và thường được chia thành bộ nhớ đệm dữ liệu và câu lệnh. Nếu dữ
+liệu được tìm thấy trong bộ nhớ đệm L1, việc truy cập diễn ra rất
+nhanh chóng. Nếu không, việc tìm kiếm sẽ tiếp tục theo hệ thống phân
+cấp bộ nhớ đệm (<em>cache hierarchy</em>).</li>
+<li>Bộ nhớ đệm <strong>L2</strong> là điểm dừng tiếp theo. Vùng nhớ này có thể chuyên
+biệt tuỳ theo kiến trúc thiết kế và kích thước vi xử lý. Nó có thể
+chỉ được truy cập từ một lõi nhất định hoặc được chia sẻ với nhiều
+lõi khác nhau. Bộ nhớ đệm L2 có kích thước lớn hơn (thường là 256-512
+kB mỗi lõi) và chậm hơn L1. Hơn nữa, để truy cập vào dữ liệu trong
+L2, đầu tiên ta cần kiểm tra để chắc rằng dữ liệu đó không nằm trong
+L1, việc này làm tăng độ trễ lên một chút.</li>
+<li>Bộ nhớ đệm <strong>L3</strong> được sử dụng chung cho nhiều lõi khác nhau và có
+thể khá lớn. CPU máy chủ Epyc 3 của AMD có bộ nhớ đệm 256MB cực lớn
+được phân bổ trên nhiều vi xử lý con (<em>chiplet</em>). Thường thì kích
+thước của L3 nằm trong khoảng 4-8MB.</li>
+</ul>
+<!--
+Predicting which memory elements will be needed next is one of the key optimization parameters in chip design.
+For instance, it is advisable to traverse memory in a *forward* direction since most caching algorithms will try to *read ahead* rather than backwards.
+Likewise, keeping memory access patterns local is agood way of improving performance.
+Adding caches is a double-edge sword.
+On one hand they ensure that the processor cores do not starve of data.
+At the same time they increase chip size, using up area that otherwise could have been spent on increasing processing power.
+Moreover, *cache misses* can be expensive.
+Consider the worst case scenario, depicted in :numref:`fig_falsesharing`.
+A memory location is cached on processor 0 when a thread on processor 1 requests the data.
+To obtain it, processor 0 needs to stop what it is doing, write the information back to main memory and then let processor 1 read it from memory.
+During this operation both processors wait.
+Quite potentially such code runs *more slowly* on multiple processors when compared to an efficient single-processor implementation.
+This is one more reason for why there is a practical limit to cache sizes (besides their physical size).
+--><p>Việc dự đoán phần tử bộ nhớ nào sẽ cần tiếp theo là một trong những tham
+số tối ưu chính trong thiết kế vi xử lý. Ví dụ, việc duyệt <em>xuôi</em> bộ nhớ
+được coi là thích hợp do đa số các thuật toán ghi đệm (<em>caching
+algorithms</em>) sẽ cố gắng <em>đọc về trước</em> hơn là về sau. Tương tự, việc giữ
+hành vi truy cập bộ nhớ ở mức cục bộ là một cách tốt để cải thiện hiệu
+năng. Tăng số lượng bộ nhớ đệm là một con dao hai lưỡi. Một mặt việc này
+đảm bảo các nhân vi xử lý không bị thiếu dữ liệu. Mặt khác nó tăng kích
+thước vi xử lý, lấn chiếm phần diện tích mà đáng ra có thể được sử dụng
+vào việc tăng khả năng xử lý. Xét trường hợp tệ nhất như mô tả trong
+<a class="reference internal" href="#fig-falsesharing"><span class="std std-numref">Fig. 12.4.6</span></a>. Một địa chỉ bộ nhớ được lưu trữ tại vi xử
+lý 0 trong khi một luồng của vi xử lý 1 yêu cầu dữ liệu đó. Để có thể
+lấy dữ liệu, vi xử lý 0 phải dừng công việc đang thực hiện, ghi lại
+thông tin vào bộ nhớ chính để vi xử lý 1 đọc dữ liệu từ đó. Trong suốt
+quá trình này, cả hai vi xử lý đều ở trong trạng thái chờ. Một đoạn mã
+như vậy khả năng cao là sẽ chạy <em>chậm hơn</em> trên một hệ đa vi xử lý so
+với một vi xử lý đơn được lập trình hiệu quả. Đây là một lý do nữa cho
+việc tại sao thực tế phải giới hạn kích thước bộ nhớ đệm (ngoài việc
+chiếm diện tích vật lý).</p>
+<!--
+![False sharing (image courtesy of Intel)](../img/falsesharing.svg)
+--><div class="figure align-default" id="id10">
+<span id="fig-falsesharing"></span><img alt="../_images/falsesharing.svg" src="../_images/falsesharing.svg" /><p class="caption"><span class="caption-number">Fig. 12.4.6 </span><span class="caption-text">Chia sẻ dữ liệu lỗi (hình ảnh được sự cho phép của Intel)</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+## GPUs and other Accelerators
+--></div>
+<div class="section" id="gpu-va-cac-thiet-bi-tang-toc-khac">
+<h2><span class="section-number">12.4.8. </span>GPU và các Thiết bị Tăng tốc khác<a class="headerlink" href="#gpu-va-cac-thiet-bi-tang-toc-khac" title="Permalink to this headline">¶</a></h2>
+<!--
+It is not an exaggeration to claim that deep learning would not have been successful without GPUs.
+By the same token, it is quite reasonable to argue that GPU manufacturers' fortunes have been increased significantly due to deep learning.
+This co-evolution of hardware and algorithms has led to a situation where for better or worse deep learning is the preferable statistical modeling paradigm.
+Hence it pays to understand the specific benefits that GPUs and related accelerators such as the TPU :cite:`Jouppi.Young.Patil.ea.2017` offer.
+--><p>Không hề phóng đại khi nói rằng học sâu có lẽ sẽ không thành công nếu
+không có GPU. Và cũng nhờ có học sâu mà tài sản của các công ty sản suất
+GPU tăng trưởng đáng kể. Sự đồng tiến hóa giữa phần cứng và các thuật
+toán dẫn tới tình huống mà học sâu trở thành mẫu mô hình thống kê được
+ưa thích bất kể có hiệu quả hay không. Do đó, ta cần phải hiểu rõ ràng
+lợi ích mà GPU và các thiết bị tăng tốc khác như TPU
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#jouppi-young-patil-ea-2017" id="id2">[Jouppi et al., 2017]</a> mang lại.</p>
+<!--
+Of note is a distinction that is often made in practice: accelerators are optimized either for training or inference.
+For the latter we only need to compute the forward pass in a network.
+No storage of intermediate data is needed for backpropagation.
+Moreover, we may not need very precise computation (FP16 or INT8 typically suffice).
+On the other hand, during training all intermediate results need storing to compute gradients.
+Moreover, accumulating gradients requires higher precision to avoid numerical underflow (or overflow).
+This means that FP16 (or mixed precision with FP32) is the minimum required.
+All of this necessitates faster and larger memory (HBM2 vs. GDDR6) and more processing power.
+For instance, NVIDIA's [Turing](https://devblogs.nvidia.com/nvidia-turing-architecture-in-depth/) T4 GPUs are optimized for inference whereas the V100 GPUs are preferable for training.
+--><p>Ta cần chú ý đến đặc thù thường được sử dụng trong thực tế: thiết bị
+tăng tốc được tối ưu hoặc cho bước huấn luyện hoặc cho bước suy luận.
+Đối với bước suy luận, ta chỉ cần tính toán lượt truyền xuôi qua mạng,
+không cần sử dụng bộ nhớ để lưu dữ liệu trung gian ở bước lan truyền
+ngược. Hơn nữa, ta có thể không cần đến phép tính quá chính xác (thường
+thì FP16 hoặc INT8 là đủ) Mặt khác trong quá trình huấn luyện, tất cả
+kết quả trung gian đều cần phải lưu lại để tính gradient. Hơn nữa, việc
+tích luỹ gradient yêu cầu độ chính xác cao hơn nhằm tránh lỗi tràn số
+trên hoặc dưới, do đó bước huấn luyện yêu cầu tối thiểu độ chính xác
+FP16 (hoặc độ chính xác hỗn hợp khi kết hợp với FP32). Tất cả các yếu tố
+trên đòi hỏi bộ nhớ nhanh hơn và lớn hơn (HBM2 hoặc GDDR6) và nhiều khả
+năng xử lý hơn. Ví dụ, GPU
+<a class="reference external" href="https://devblogs.nvidia.com/nvidia-turing-architecture-in-depth/">Turing</a>
+T4 của NVIDIA được tối ưu cho bước suy luận trong khi GPU V100 phù hợp
+cho quá trình huấn luyện.</p>
+<!--
+Recall :numref:`fig_neon128`. Adding vector units to a processor core allowed us to increase throughput significantly (in the example in the figure we were able to perform 16 operations simultaneously).
+What if we added operations that optimized not just operations between vectors but also between matrices?
+This strategy led to Tensor Cores (more on this shortly).
+Secondly, what if we added many more cores?
+In a nutshell, these two strategies summarize the design decisions in GPUs.
+:numref:`fig_turing_processing_block` gives an overview over a basic processing block.
+It contains 16 integer and 16 floating point units.
+In addition to that, two Tensor Cores accelerate a narrow subset of additional operations relevant for deep learning.
+Each Streaming Multiprocessor (SM) consists of four such blocks.
+--><p>Xem lại <a class="reference internal" href="#fig-neon128"><span class="std std-numref">Fig. 12.4.5</span></a>. Việc thêm các đơn vị vector vào lõi vi
+xử lý cho phép ta tăng đáng kể thông lượng xử lý (ở ví dụ trong hình ta
+có thể thực hiện 16 thao tác cùng lúc). Chuyện gì sẽ xảy ra nếu ta không
+chỉ tối ưu cho phép tính giữa các vector mà còn tối ưu cho các ma trận?
+Chiến lược này dẫn tới sự ra đời của Lõi Tensor (chi tiết sẽ được thảo
+luận sau đây). Thứ hai, nếu tăng số lượng lõi thì sao? Nói tóm lại, hai
+chiến lược trên tóm tắt việc quyết định thiết kế của GPU.
+<a class="reference internal" href="#fig-turing-processing-block"><span class="std std-numref">Fig. 12.4.7</span></a> mô tả tổng quan một khối xử lý
+đơn giản, bao gồm 16 đơn vị số nguyên và 16 đơn vị dấu phẩy động. Thêm
+vào đó, hai Lõi Tensor xử lý một tập nhỏ các thao thác liên quan đến học
+sâu được thêm vào. Mỗi Hệ vi xử lý Luồng (<em>Streaming Multiprocessor</em> -
+SM) bao gồm bốn khối như vậy.</p>
+<!--
+![NVIDIA Turing Processing Block (image courtesy of NVIDIA)](../img/turing_processing_block.png)
+--><div class="figure align-default" id="id11">
+<span id="fig-turing-processing-block"></span><a class="reference internal image-reference" href="../_images/turing_processing_block.png"><img alt="../_images/turing_processing_block.png" src="../_images/turing_processing_block.png" style="width: 150px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 12.4.7 </span><span class="caption-text">Khối Xử lý Turing của NVIDIA</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+12 streaming multiprocessors are then grouped into graphics processing clusters which make up the high-end TU102 processors.
+Ample memory channels and an L2 cache complement the setup.
+:numref:`fig_turing` has the relevant details.
+One of the reasons for designing such a device is that individual blocks can be added or removed as needed to allow for more compact chips and to deal with yield issues (faulty modules might not be activated).
+Fortunately programming such devices is well hidden from the casual deep learning researcher beneath layers of CUDA and framework code.
+In particular, more than one of the programs might well be executed simultaneously on the GPU, provided that there are available resources.
+Nonetheless it pays to be aware of the limitations of the devices to avoid picking models that do not fit into device memory.
+--><p>12 hệ vi xử lý luồng sau đó được nhóm vào một cụm xử lý đồ hoạ tạo nên
+vi xử lý cao cấp TU102. Số lượng kênh bộ nhớ phong phú và bộ nhớ đệm L2
+được bổ sung vào cấu trúc. Thông tin chi tiết được mô tả trong
+<a class="reference internal" href="#fig-turing"><span class="std std-numref">Fig. 12.4.8</span></a>. Một trong những lý do để thiết kế một thiết bị
+như vậy là từng khối riêng biệt có thể được thêm vào hoặc bỏ đi tuỳ theo
+nhu cầu để có thể tạo thành một vi xử lý nhỏ gọn và giải quyết một số
+vấn đề phát sinh (các mô-đun lỗi có thể không được kích hoạt). May mắn
+thay, các nhà nghiên cứu học sâu bình thường không cần lập trình cho các
+thiết bị này do đã có các lớp mã nguồn framework CUDA ở tầng thấp. Cụ
+thể, có thể có nhiều hơn một chương trình được thực thi đồng thời trên
+GPU, với điều kiện là còn đủ tài nguyên. Tuy nhiên ta cũng cần để ý đến
+giới hạn của các thiết bị nhằm tránh việc lựa chọn mô hình quá lớn so
+với bộ nhớ của thiết bị.</p>
+<!--
+![NVIDIA Turing Architecture (image courtesy of NVIDIA)](../img/turing.png)
+--><div class="figure align-default" id="id12">
+<span id="fig-turing"></span><a class="reference internal image-reference" href="../_images/turing.png"><img alt="../_images/turing.png" src="../_images/turing.png" style="width: 350px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 12.4.8 </span><span class="caption-text">Kiến trúc Turing của NVIDIA (hình ảnh được sự cho phép của NVIDIA)</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+A last aspect that is worth mentioning in more detail are TensorCores.
+They are an example of a recent trend of adding more optimized circuits that are specifically effective for deep learning.
+For instance, the TPU added a systolic array :cite:`Kung.1988` for fast matrix multiplication.
+There the design was to support a very small number (one for the first generation of TPUs) of large operations.
+TensorCores are at the other end.
+They are optimized for small operations involving between 4x4 and 16x16 matrices, depending on their numerical precision.
+:numref:`fig_tensorcore` gives an overview of the optimizations.
+--><p>Khía cạnh cuối cùng đáng để bàn luận chi tiết là Lõi Tensor
+(<em>TensorCore</em>). Đây là một ví dụ của xu hướng gần đây là sử dụng thêm
+nhiều mạch đã được tối ưu để tăng hiệu năng cho học sâu. Ví dụ, TPU có
+thêm một mảng tâm thu (<em>systolic array</em>) <a class="bibtex reference internal" href="../chapter_references/zreferences.html#kung-1988" id="id3">[Kung, 1988]</a> để tăng tốc
+độ nhân ma trận. Thiết kế của TPU chỉ hỗ trợ một số lượng rất ít các
+phép tính kích thước lớn (thế hệ TPU đầu tiên hỗ trợ một phép tính). Lõi
+Tensor thì ngược lại, được tối ưu cho các phép tính kích thước nhỏ cho
+các ma trận kích thước 4x4 đến 16x16, tuỳ vào độ chính xác số học.
+<a class="reference internal" href="#fig-tensorcore"><span class="std std-numref">Fig. 12.4.9</span></a> mô tả tổng quan quá trình tối ưu.</p>
+<!--
+![NVIDIA TensorCores in Turing (image courtesy of NVIDIA)](../img/turing.png)
+--><div class="figure align-default" id="id13">
+<span id="fig-tensorcore"></span><a class="reference internal image-reference" href="../_images/turing.png"><img alt="../_images/turing.png" src="../_images/turing.png" style="width: 400px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 12.4.9 </span><span class="caption-text">Lõi Tensor của NVIDIA trong Turing (hình ảnh được sự cho phép của
+NVIDIA)</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Obviously when optimizing for computation we end up making certain compromises.
+One of them is that GPUs are not very good at handling interrupts and sparse data.
+While there are notable exceptions, such as [Gunrock](https://github.com/gunrock/gunrock) :cite:`Wang.Davidson.Pan.ea.2016`,
+the access pattern of sparse matrices and vectors do not go well with the high bandwidth burst read operations where GPUs excel.
+Matching both goals is an area of active research.
+See e.g., [DGL](http://dgl.ai), a library tuned for deep learning on graphs.
+--><p>Đương nhiên khi tối ưu cho quá trình tính toán, ta buộc phải có một số
+đánh đổi nhất định. Một trong số đó là GPU không xử lý tốt dữ liệu ngắt
+quãng hoặc thưa. Trừ một số ngoại lệ đáng chú ý, ví dụ như
+<a class="reference external" href="https://github.com/gunrock/gunrock">Gunrock</a>
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#wang-davidson-pan-ea-2016" id="id4">[Wang et al., 2016]</a>, việc truy cập vector và ma trận
+thưa không phù hợp với các thao tác đọc theo cụm (<em>burst read</em>) với băng
+thông cao của GPU. Đạt được cả hai mục tiêu là một lĩnh vực đang được
+đẩy mạnh nghiên cứu. Ví dụ, tham khảo <a class="reference external" href="http://dgl.ai">DGL</a>, một thư
+viện được điều chỉnh cho phù hợp với học sâu trên đồ thị.</p>
+<!--
+## Networks and Buses
+--></div>
+<div class="section" id="mang-may-tinh-va-bus">
+<h2><span class="section-number">12.4.9. </span>Mạng máy tính và Bus<a class="headerlink" href="#mang-may-tinh-va-bus" title="Permalink to this headline">¶</a></h2>
+<!--
+Whenever a single device is insufficient for optimization we need to transfer data to and from it to synchronize processing.
+This is where networks and buses come in handy.
+We have a number of design parameters: bandwidth, cost, distance and flexibility.
+On one end we have WiFi which has a pretty good range, is very easy to use (no wires, after all), cheap but it offers comparatively mediocre bandwidth and latency.
+No machine learning researcher within their right mind would use it to build a cluster of servers.
+In what follows we focus on interconnects that are suitable for deep learning.
+--><p>Mỗi khi một thiết bị đơn không đủ cho quá trình tối ưu, ta cần chuyển dữ
+liệu đến và đi khỏi nó để đồng bộ hóa quá trình xử lý. Đây chính là lúc
+mà mạng máy tính và bus trở nên hữu dụng. Ta có một vài tham số thiết kế
+gồm: băng thông, chi phí, khoảng cách và tính linh hoạt. Tuy ta cũng có
+Wifi với phạm vi hoạt động tốt, dễ dàng để sử dụng (dù sao cũng là không
+dây), rẻ nhưng lại có băng thông không quá tốt và độ trễ lớn. Sẽ không
+có bất cứ nhà nghiên cứu học máy tỉnh táo nào lại nghĩ đến việc sử dụng
+Wifi để xây dựng một cụm máy chủ. Sau đây, ta sẽ chỉ tập trung vào các
+cách kết nối phù hợp cho học sâu.</p>
+<!--
+* **PCIe** is a dedicated bus for very high bandwidth point to point connections (up to 16 Gbs on PCIe 4.0) per lane.
+Latency is in the order of single-digit microseconds (5 μs).
+PCIe links are precious.
+Processors only have a limited number of them: AMD's EPYC 3 has 128 lanes, Intel's Xeon has up to 48 lanes per chip; on desktop grade CPUs the numbers are 20 (Ryzen 9) and 16 (Core i9) respectively.
+Since GPUs have typically 16 lanes this limits the number of GPUs that can connect to the CPU at full bandwidth.
+After all, they need to share the links with other high bandwidth peripherals such as storage and Ethernet.
+Just like with RAM access, large bulk transfers are preferable due to reduced packet overhead.
+* **Ethernet** is the most commonly used way of connecting computers.
+While it is significantly slower than PCIe, it is very cheap and resilient to install and covers much longer distances.
+Typical bandwidth for low-grade servers is 1 GBit/s.
+Higher end devices (e.g., [C5 instances](https://aws.amazon.com/ec2/instance-types/c5/) in the cloud) offer between 10 and 100 GBit/s bandwidth.
+As in all previous cases data transmission has significant overheads.
+Note that we almost never use raw Ethernet directly but rather a protocol that is executed on top of the physical interconnect (such as UDP or TCP/IP).
+This adds further overhead.
+Like PCIe, Ethernet is designed to connect two devices, e.g., a computer and a switch.
+* **Switches** allow us to connect multiple devices in a manner where any pair of them can carry out a (typically full bandwidth) point to point connection simultaneously.
+For instance, Ethernet switches might connect 40 servers at high cross-sectional bandwidth.
+Note that switches are not unique to traditional computer networks.
+Even PCIe lanes can be [switched](https://www.broadcom.com/products/pcie-switches-bridges/pcie-switches).
+This occurs e.g., to connect a large number of GPUs to a host processor, as is the case for the [P2 instances](https://aws.amazon.com/ec2/instance-types/p2/).
+* **NVLink** is an alternative to PCIe when it comes to very high bandwidth interconnects.
+It offers up to 300 Gbit/s data transfer rate per link.
+Server GPUs (Volta V100) have 6 links whereas consumer grade GPUs (RTX 2080 Ti) have only one link, operating at a reduced 100 Gbit/s rate.
+We recommend to use [NCCL](https://github.com/NVIDIA/nccl) to achieve high data transfer between GPUs.
+--><ul class="simple">
+<li><strong>PCIe</strong> là một bus riêng chỉ phục vụ cho kết nối điểm – điểm với
+băng thông trên mỗi làn rất lớn (lên đến 16 GB/s trên PCIe 4.0). Độ
+trễ thường có giá trị cỡ vài micro giây (5 μs). Kết nối PCIe khá quan
+trọng. Vi xử lý chỉ có một số lượng làn PCIe nhất định: EPYC 3 của
+AMD có 128 làn, Xeon của Intel lên đến 48 làn cho mỗi chip; trên CPU
+dùng cho máy tính để bàn, số lượng này lần lượt là 20 (với Ryzen 9)
+và 16 (với Core i9). Do GPU thường có 16 luồng nên số lượng GPU có
+thể kết nối với CPU bị giới hạn tại băng thông tối đa. Xét cho cùng,
+chúng cần chia sẻ liên kết với các thiết bị ngoại vi khác như bộ nhớ
+và cổng Ethernet. Giống như việc truy cập RAM, việc truyền lượng lớn
+dữ liệu thường được ưa chuộng hơn nhằm giảm tổng chi phí theo gói
+tin.</li>
+<li><strong>Ethernet</strong> là cách phổ biến nhất để kết nối máy tính với nhau. Dù
+nó chậm hơn đáng kể so với PCIe, nó rất rẻ và dễ cài đặt, bao phủ
+khoảng cách lớn hơn nhiều. Băng thông đặc trưng đối với máy chủ cấp
+thấp là 1 GBit/s. Các thiết bị cao cấp hơn (ví dụ như <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/c5/">máy chủ loại
+C5</a> trên AWS) cung
+cấp băng thông từ 10 đến 100 GBit/s. Cũng như các trường hợp trên,
+việc truyền dữ liệu có tổng chi phí đáng kể. Chú ý rằng ta hầu như
+không bao giờ sử dụng trực tiếp Ethernet thuần mà sử dụng một giao
+thức được thực thi ở tầng trên của kết nối vật lý (ví dụ như UDP hay
+TCP/IP). Việc này làm tăng tổng chi phí. Giống như PCIe, Ethernet
+được thiết kế để kết nối hai thiết bị, ví dụ như máy tính với một bộ
+chuyển mạch (<em>switch</em>).</li>
+<li><strong>Bộ chuyển mạch</strong> cho phép ta kết nối nhiều thiết bị theo cách mà
+bất cứ cặp thiết bị nào cũng có thể (thường là với băng thông tối đa)
+thực hiện kết nối điểm – điểm cùng lúc. Ví dụ, bộ chuyển mạch
+Ethernet có thể kết nối 40 máy chủ với băng thông xuyên vùng
+(<em>cross-sectional bandwidth</em>) cao. Chú ý rằng bộ chuyển mạch không
+phải chỉ có trong mạng máy tính truyền thống. Ngay cả làn PCIe cũng
+có thể <a class="reference external" href="https://www.broadcom.com/products/pcie-switches-bridges/pcie-switches">chuyển
+mạch</a>.
+Điều này xảy ra khi kết nối một lượng lớn GPU tới vi xử lý chính, như
+với trường hợp <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/p2/">máy chủ loại
+P2</a>.</li>
+<li><strong>NVLink</strong> là một phương pháp thay thế PCIe khi ta cần kết nối với
+băng thông rất lớn. NVLink cung cấp tốc độ truyền dữ liệu lên đến 300
+Gbit/s mỗi đường dẫn (<em>link</em>). GPU máy chủ (Volta V100) có 6 đường
+dẫn, trong khi GPU thông dụng (RTX 2080 Ti) chỉ có một đường dẫn,
+hoạt động ở tốc độ thấp 100 Gbit/s. Vì vậy, chúng tôi gợi ý sử dụng
+<a class="reference external" href="https://github.com/NVIDIA/nccl">NCCL</a> để có thể đạt được tốc độ
+truyền dữ liệu cao giữa các GPU.</li>
+</ul>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">12.4.10. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Devices have overheads for operations. Hence it is important to aim for a small number of large transfers rather than many small ones. This applies to RAM, SSDs, Networks and GPUs.
+* Vectorization is key for performance. Make sure you are aware of the specific abilities of your accelerator.
+E.g., some Intel Xeon CPUs are particularly good for INT8 operations, NVIDIA Volta GPUs excel at FP16 matrix-matrix operations and NVIDIA Turing shines at FP16, INT8 and INT4 operations.
+* Numerical overflow due to small datatypes can be a problem during training (and to a lesser extent during inference).
+* Aliasing can significantly degrade performance. For instance, memory alignment on 64 bit CPUs should be done with respect to 64 bit boundaries.
+On GPUs it is a good idea to keep convolution sizes aligned e.g., to TensorCores.
+* Match your algorithms to the hardware (memory footprint, bandwidth, etc.). Great speedup (orders of magnitude) can be achieved when fitting the parameters into caches.
+* We recommend that you sketch out the performance of a novel algorithm on paper before verifying the experimental results. Discrepancies of an order-of-magnitude or more are reasons for concern.
+* Use profilers to debug performance bottlenecks.
+* Training and inference hardware have different sweet spots in terms of price / performance.
+--><ul class="simple">
+<li>Các thiết bị đều có chi phí phụ trợ trên mỗi hành động. Do đó ta nên
+nhắm tới việc di chuyển ít lần các lượng dữ liệu lớn thay vì di
+chuyển nhiều lần các lượng dữ liệu nhỏ. Điều này đúng với RAM, SSD,
+các thiết bị mạng và GPU.</li>
+<li>Vector hóa rất quan trọng để tăng hiệu năng. Hãy đảm bảo bạn hiểu các
+điểm mạnh đặc thù của thiết bị tăng tốc mình đang có. Ví dụ, một vài
+CPU Intel Xeon thực hiện cực kỳ hiệu quả phép toán với dữ liệu kiểu
+INT8, GPU NVIDIA Volta rất phù hợp với các phép toán với ma trận dữ
+liệu kiểu FP16; còn NVIDIA Turing chạy tốt cho cả các phép toán với
+dữ liệu kiểu FP16, INT8, INT4.</li>
+<li>Hiện tượng tràn số trên do kiểu dữ liệu không đủ số bit để biểu diễn
+giá trị có thể là một vấn đề khi huấn luyện (và cả khi suy luận, dù
+ít nghiêm trọng hơn).</li>
+<li>Việc cùng dữ liệu nhưng có nhiều địa chỉ (<em>aliasing</em>) có thể làm giảm
+đáng kể hiệu năng. Ví dụ, việc sắp xếp dữ liệu trong bộ nhớ (<em>memory
+alignment</em>) trên CPU 64 bit nên được thực hiện theo từng khối 64 bit.
+Trên GPU, tốt hơn là nên giữ kích thước tích chập đồng bộ, với
+TensorCores chẳng hạn.</li>
+<li>Sử dụng thuật toán phù hợp với phần cứng (về mức chiếm dụng bộ nhớ,
+băng thông, v.v). Thời gian thực thi có thể giảm hàng trăm ngàn lần
+khi tất cả tham số đều được chứa trong bộ đệm.</li>
+<li>Chúng tôi khuyến khích bạn đọc tính toán trước hiệu năng của một
+thuật toán mới trước khi kiểm tra bằng thực nghiệm. Sự khác biệt lên
+tới hàng chục lần hoặc hơn là dấu hiệu cần quan tâm.</li>
+<li>Sử dụng các công cụ phân tích hiệu năng (<em>profiler</em>) để tìm điểm
+nghẽn cổ chai của hệ thống.</li>
+<li>Phần cứng sử dụng cho huấn luyện và suy luận có các cấu hình hiệu quả
+khác nhau để cân đối giá tiền và hiệu năng.</li>
+</ul>
+<!--
+## More Latency Numbers
+--></div>
+<div class="section" id="do-tre">
+<h2><span class="section-number">12.4.11. </span>Độ trễ<a class="headerlink" href="#do-tre" title="Permalink to this headline">¶</a></h2>
+<!--
+The summary in :numref:`table_latency_numbers` and :numref:`table_latency_numbers_tesla` are due to [Eliot Eshelman](https://gist.github.com/eshelman)
+who maintains an updated version of the numbers as a [GitHub Gist](https://gist.github.com/eshelman/343a1c46cb3fba142c1afdcdeec17646).
+--><p>Các thông tin trong <code class="xref std std-numref docutils literal notranslate"><span class="pre">table_latency_numbers</span></code> và
+<code class="xref std std-numref docutils literal notranslate"><span class="pre">table_latency_numbers_tesla</span></code> được <a class="reference external" href="https://gist.github.com/eshelman">Eliot
+Eshelman</a> duy trì cập nhật trên
+<a class="reference external" href="https://gist.github.com/eshelman/343a1c46cb3fba142c1afdcdeec17646">GitHub
+Gist</a>.</p>
+<!--
+:Common Latency Numbers.
+--><p>:Các độ trễ thường gặp.</p>
+<!--
+| Action                                     | Time   | Notes                                           |
+| :----------------------------------------- | -----: | :---------------------------------------------- |
+| L1 cache reference/hit                     | 1.5 ns | 4 cycles                                        |
+| Floating-point add/mult/FMA                | 1.5 ns | 4 cycles                                        |
+| L2 cache reference/hit                     |   5 ns | 12 ~ 17 cycles                                  |
+| Branch mispredict                          |   6 ns | 15 ~ 20 cycles                                  |
+| L3 cache hit (unshared cache)              |  16 ns | 42 cycles                                       |
+| L3 cache hit (shared in another core)      |  25 ns | 65 cycles                                       |
+| Mutex lock/unlock                          |  25 ns |                                                 |
+| L3 cache hit (modified in another core)    |  29 ns | 75 cycles                                       |
+| L3 cache hit (on a remote CPU socket)      |  40 ns | 100 ~ 300 cycles (40 ~ 116 ns)                  |
+| QPI hop to a another CPU (per hop)         |  40 ns |                                                 |
+| 64MB memory ref. (local CPU)               |  46 ns | TinyMemBench on Broadwell E5-2690v4             |
+| 64MB memory ref. (remote CPU)              |  70 ns | TinyMemBench on Broadwell E5-2690v4             |
+| 256MB memory ref. (local CPU)              |  75 ns | TinyMemBench on Broadwell E5-2690v4             |
+| Intel Optane random write                  |  94 ns | UCSD Non-Volatile Systems Lab                   |
+| 256MB memory ref. (remote CPU)             | 120 ns | TinyMemBench on Broadwell E5-2690v4             |
+| Intel Optane random read                   | 305 ns | UCSD Non-Volatile Systems Lab                   |
+| Send 4KB over 100 Gbps HPC fabric          |   1 μs | MVAPICH2 over Intel Omni-Path                   |
+| Compress 1KB with Google Snappy            |   3 μs |                                                 |
+| Send 4KB over 10 Gbps ethernet             |  10 μs |                                                 |
+| Write 4KB randomly to NVMe SSD             |  30 μs | DC P3608 NVMe SSD (QOS 99% is 500μs)            |
+| Transfer 1MB to/from NVLink GPU            |  30 μs | ~33GB/s on NVIDIA 40GB NVLink                   |
+| Transfer 1MB to/from PCI-E GPU             |  80 μs | ~12GB/s on PCIe 3.0 x16 link                    |
+| Read 4KB randomly from NVMe SSD            | 120 μs | DC P3608 NVMe SSD (QOS 99%)                     |
+| Read 1MB sequentially from NVMe SSD        | 208 μs | ~4.8GB/s DC P3608 NVMe SSD                      |
+| Write 4KB randomly to SATA SSD             | 500 μs | DC S3510 SATA SSD (QOS 99.9%)                   |
+| Read 4KB randomly from SATA SSD            | 500 μs | DC S3510 SATA SSD (QOS 99.9%)                   |
+| Round trip within same datacenter          | 500 μs | One-way ping is ~250μs                          |
+| Read 1MB sequentially from SATA SSD        |   2 ms | ~550MB/s DC S3510 SATA SSD                      |
+| Read 1MB sequentially from disk            |   5 ms | ~200MB/s server HDD                             |
+| Random Disk Access (seek+rotation)         |  10 ms |                                                 |
+| Send packet CA->Netherlands->CA            | 150 ms |                                                 |
+--><table border="1" class="docutils" id="id14">
+<caption><span class="caption-number">Table 12.4.1 </span><span class="caption-text">label:<code class="docutils literal notranslate"><span class="pre">table_latency_numbers</span></code></span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="52%" />
+<col width="6%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Hoạt động</th>
+<th class="head">Th
+ời
+gi
+an</th>
+<th class="head">Chú thích</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Truy xuất bộ đệm L1</td>
+<td>1.
+5
+ns</td>
+<td>4 chu kỳ</td>
+</tr>
+<tr class="row-odd"><td>Cộng, nhân, cộng kết hợp nhân
+(<em>FMA</em>) số thực dấu phẩy động</td>
+<td>1.
+5
+ns</td>
+<td>4 chu kỳ</td>
+</tr>
+<tr class="row-even"><td>Truy xuất bộ đệm L2</td>
+<td>5
+ns</td>
+<td>12 ~ 17 chu kỳ</td>
+</tr>
+<tr class="row-odd"><td>Rẽ nhánh sai</td>
+<td>6
+ns</td>
+<td>15 ~ 20 chu kỳ</td>
+</tr>
+<tr class="row-even"><td>Truy xuất bộ đệm L3 (không chia
+sẻ)</td>
+<td>16
+ns</td>
+<td>42 chu kỳ</td>
+</tr>
+<tr class="row-odd"><td>Truy xuất bộ đệm L3 (chia sẻ với
+nhân khác)</td>
+<td>25
+ns</td>
+<td>65 chu kỳ</td>
+</tr>
+<tr class="row-even"><td>Khóa/mở đèn báo lập trình
+(<em>mutex</em>)</td>
+<td>25
+ns</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Truy xuất bộ đệm L3 (được nhân
+khác thay đổi)</td>
+<td>29
+ns</td>
+<td>75 chu kỳ</td>
+</tr>
+<tr class="row-even"><td>Truy xuất bộ đệm L3 (tại CPU
+socket từ xa)</td>
+<td>40
+ns</td>
+<td>100 ~ 300 chu kỳ (40 ~ 116
+ns)</td>
+</tr>
+<tr class="row-odd"><td>QPI hop đến CPU khác (cho mỗi
+hop)</td>
+<td>40
+ns</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Truy xuất 64MB (CPU cục bộ)</td>
+<td>46
+ns</td>
+<td>TinyMemBench trên
+Broadwell E5-2690v4</td>
+</tr>
+<tr class="row-odd"><td>Truy xuất 64MB (CPU từ xa)</td>
+<td>70
+ns</td>
+<td>TinyMemBench trên
+Broadwell E5-2690v4</td>
+</tr>
+<tr class="row-even"><td>Truy xuất 256MB (CPU cục bộ)</td>
+<td>75
+ns</td>
+<td>TinyMemBench trên
+Broadwell E5-2690v4</td>
+</tr>
+<tr class="row-odd"><td>Ghi ngẫu nhiên vào Intel Optane</td>
+<td>94
+ns</td>
+<td>UCSD Non-Volatile Systems
+Lab</td>
+</tr>
+<tr class="row-even"><td>Truy xuất 256MB (CPU từ xa)</td>
+<td>12
+0
+ns</td>
+<td>TinyMemBench trên
+Broadwell E5-2690v4</td>
+</tr>
+<tr class="row-odd"><td>Đọc ngẫu nhiên từ Intel Optane</td>
+<td>30
+5
+ns</td>
+<td>UCSD Non-Volatile Systems
+Lab</td>
+</tr>
+<tr class="row-even"><td>Truyền 4KB trên sợi HPC 100 Gbps</td>
+<td>1
+μs</td>
+<td>MVAPICH2 trên Intel
+Omni-Path</td>
+</tr>
+<tr class="row-odd"><td>Nén 1KB với Google Snappy</td>
+<td>3
+μs</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Truyền 4KB trên cáp mạng 10 Gbps</td>
+<td>10
+μs</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Ghi ngẫu nhiên 4KB vào SSD NVMe</td>
+<td>30
+μs</td>
+<td>DC P3608 SSD NVMe (QOS 99%
+khoảng 500μs)</td>
+</tr>
+<tr class="row-even"><td>Truyền 1MB từ/đến NVLink GPU</td>
+<td>30
+μs</td>
+<td>~33GB/s trên NVIDIA 40GB
+NVLink</td>
+</tr>
+<tr class="row-odd"><td>Truyền 1MB từ/đến PCI-E GPU</td>
+<td>80
+μs</td>
+<td>~12GB/s trên PCIe 3.0 x16
+link</td>
+</tr>
+<tr class="row-even"><td>Đọc ngẫu nhiên 4KB từ SSD NVMe</td>
+<td>12
+0
+μs</td>
+<td>DC P3608 SSD NVMe (QOS
+99%)</td>
+</tr>
+<tr class="row-odd"><td>Đọc tuần tự 1MB từ SSD NVMe</td>
+<td>20
+8
+μs</td>
+<td>~4.8GB/s DC P3608 SSD NVMe</td>
+</tr>
+<tr class="row-even"><td>Ghi ngẫu nhiên 4KB vào SSD SATA</td>
+<td>50
+0
+μs</td>
+<td>DC S3510 SSD SATA (QOS
+99.9%)</td>
+</tr>
+<tr class="row-odd"><td>Đọc ngẫu nhiên 4KB từ SSD SATA</td>
+<td>50
+0
+μs</td>
+<td>DC S3510 SSD SATA (QOS
+99.9%)</td>
+</tr>
+<tr class="row-even"><td>Truyền 2 chiều trong cùng trung
+tâm dữ liệu</td>
+<td>50
+0
+μs</td>
+<td>Ping một chiều ~250μs</td>
+</tr>
+<tr class="row-odd"><td>Đọc tuần tự 1MB từ SSD SATA</td>
+<td>2
+ms</td>
+<td>~550MB/s DC S3510 SSD SATA</td>
+</tr>
+<tr class="row-even"><td>Đọc tuần tự 1MB từ ổ đĩa</td>
+<td>5
+ms</td>
+<td>~200MB/s server HDD</td>
+</tr>
+<tr class="row-odd"><td>Truy cập ngẫu nhiên ổ đĩa (tìm +
+xoay)</td>
+<td>10
+ms</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Gửi gói dữ liệu từ California -&gt;
+Hà Lan -&gt; California</td>
+<td>15
+0
+ms</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<!-- ===================== Kết thúc dịch Phần 12 ===================== --><!-- ===================== Bắt đầu dịch Phần 13 ===================== --><!--
+:Latency Numbers for NVIDIA Tesla GPUs.
+--><p>:Độ trễ của GPU NVIDIA Tesla.</p>
+<!--
+| Action                          | Time   | Notes                                     |
+| :------------------------------ | -----: | :---------------------------------------- |
+| GPU Shared Memory access        |  30 ns | 30~90 cycles (bank conflicts add latency) |
+| GPU Global Memory access        | 200 ns | 200~800 cycles                            |
+| Launch CUDA kernel on GPU       |  10 μs | Host CPU instructs GPU to start kernel    |
+| Transfer 1MB to/from NVLink GPU |  30 μs | ~33GB/s on NVIDIA 40GB NVLink             |
+| Transfer 1MB to/from PCI-E GPU  |  80 μs | ~12GB/s on PCI-Express x16 link           |
+--><table border="1" class="docutils" id="id15">
+<caption><span class="caption-number">Table 12.4.2 </span><span class="caption-text">label:<code class="docutils literal notranslate"><span class="pre">table_latency_numbers_tesla</span></code></span><a class="headerlink" href="#id15" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="37%" />
+<col width="10%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Hoạt động</th>
+<th class="head">Thời
+gian</th>
+<th class="head">Chú thích</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Truy cập bộ nhớ chung
+của GPU</td>
+<td>30 ns</td>
+<td>30~90 chu kỳ (tính cả xung đột
+của các bank)</td>
+</tr>
+<tr class="row-odd"><td>Truy cập bộ nhớ toàn
+cục của GPU</td>
+<td>200
+ns</td>
+<td>200~800 chu kỳ</td>
+</tr>
+<tr class="row-even"><td>Khởi chạy nhân CUDA
+trên GPU</td>
+<td>10 μs</td>
+<td>CPU host ra lệnh cho GPU khởi
+chạy nhân</td>
+</tr>
+<tr class="row-odd"><td>Truyền 1MB từ/đến GPU
+NVLink</td>
+<td>30 μs</td>
+<td>~33GB/s trên NVIDIA NVLink 40GB</td>
+</tr>
+<tr class="row-even"><td>Truyền 1MB từ/đến GPU
+PCI-E</td>
+<td>80 μs</td>
+<td>~12GB/s trên PCI-Express link x16</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">12.4.12. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Write C code to test whether there is any difference in speed between accessing memory aligned or misaligned relative to the external memory interface. Hint: be careful of caching effects.
+2. Test the difference in speed between accessing memory in sequence or with a given stride.
+3. How could you measure the cache sizes on a CPU?
+4. How would you lay out data across multiple memory channels for maximum bandwidth? How would you lay it out if you had many small threads?
+5. An enterprise class HDD is spinning at 10,000 rpm. What is the absolutely minimum time an HDD needs to spend worst case before it can read data (you can assume that heads move almost instantaneously)?
+Why are 2.5" HDDs becoming popular for commercial servers (relative to 3.5" and 5.25" drives)?
+6. Assume that an HDD manufacturer increases the storage density from 1 Tbit per square inch to 5 Tbit per square inch.
+How much information can you store on a ring on a 2.5" HDD?
+Is there a difference between the inner and outer tracks?
+7. The AWS P2 instances have 16 K80 Kepler GPUs. Use `lspci` on a p2.16xlarge and a p2.8xlarge instance to understand how the GPUs are connected to the CPUs. Hint: keep your eye out for PCI PLX bridges.
+8. Going from 8 bit to 16 bit datatypes increases the amount of silicon approximately by 4x. Why? Why might NVIDIA have added INT4 operations to their Turing GPUs.
+9. Given 6 high speed links between GPUs (such as for the Volta V100 GPUs), how would you connect 8 of them? Look up the connectivity used in the P3.16xlarge servers.
+10. How much faster is it to read forward through memory vs. reading backwards? Does this number differ between different computers and CPU vendors? Why? Write C code and experiment with it.
+11. Can you measure the cache size of your disk? What is it for a typical HDD? Do SSDs need a cache?
+12. Measure the packet overhead when sending messages across the Ethernet. Look up the difference between UDP and TCP/IP connections.
+13. Direct Memory Access allows devices other than the CPU to write (and read) directly to (from) memory. Why is this a good idea?
+14. Look at the performance numbers for the Turing T4 GPU. Why does the performance 'only' double as you go from FP16 to INT8 and INT4?
+15. What is the shortest time it should take for a packet on a roundtrip between San Francisco and Amsterdam? Hint: you can assume that the distance is 10,000km.
+--><ol class="arabic simple">
+<li>Viết đoạn mã C để so sánh tốc độ khi truy cập bộ nhớ được sắp xếp
+theo khối (<em>aligned memory</em>) với khi truy cập bộ nhớ không được sắp
+xếp như vậy (một cách tương đối so với bộ nhớ ngoài). <strong>Gợi ý:</strong> hãy
+loại bỏ hiệu ứng của bộ nhớ đệm.</li>
+<li>So sánh tốc độ khi truy cập bộ nhớ tuần tự với khi truy cập theo sải
+bước cho trước.</li>
+<li>Làm thế nào để đo kích thước bộ nhớ đệm trên CPU?</li>
+<li>Bạn sẽ sắp xếp dữ liệu trên nhiều bộ nhớ như thế nào để có băng
+thông tối đa? Sắp xếp như thế nào nếu bạn có nhiều luồng nhỏ?</li>
+<li>Tốc độ quay của một ổ cứng HDD dùng cho công nghiệp là 10,000 rpm.
+Thời gian tối thiểu mà HDD đó cần (trong trường hợp tệ nhất) trước
+khi có thể đọc dữ liệu là bao nhiêu (có thể giả sử các đầu đọc ổ đĩa
+di chuyển tức thời)?</li>
+<li>Giả sử nhà sản xuất HDD tăng sức chứa bộ nhớ từ 1 Tbit mỗi inch
+vuông lên 5 Tbit mỗi inch vuông. Có thể lưu bao nhiêu dữ liệu trên
+một đĩa từ của một HDD 2.5”? Có sự khác biệt nào giữa track trong và
+track ngoài không?</li>
+<li>Một máy chủ loại P2 trên AWS có 16 GPU K80 Kepler. Sử dụng lệnh
+<code class="docutils literal notranslate"><span class="pre">lspci</span></code> trên một máy p2.16xlarge và một máy p2.8xlarge để hiểu
+cách các GPU được kết nối với các CPU. <strong>Gợi ý:</strong> để ý đến chip cầu
+nối PLX cho chuẩn kết nối PCI.</li>
+<li>Chuyển từ kiểu dữ liệu 8 bit sang 16 bit cần lượng silicon gấp 4
+lần. Tại sao? Tại sao NVIDIA thêm các phép toán cho kiểu dữ liệu
+INT4 vào GPU Turing?</li>
+<li>Có 6 đường truyền tốc độ cao giữa các GPU (như GPU Volta V100 chẳng
+hạn), bạn sẽ kết nối 8 GPU đó như thế nào? Tham khảo cách kết nối
+cho máy chủ p3.16xlarge trên AWS.</li>
+<li>Đọc xuôi bộ nhớ nhanh gấp bao nhiêu lần đọc ngược? Sự chênh lệch này
+có khác nhau giữa các nhà sản xuất máy tính và CPU không? Tại sao?
+Thí nghiệm với mã nguồn C.</li>
+<li>Bạn có thể đo kích thước bộ nhớ đệm trên ổ đĩa của mình không? Bộ
+nhớ đệm trên HDD là gì? SSD có cần bộ nhớ đệm không?</li>
+<li>Chi phí bộ nhớ phụ trợ khi gửi một gói dữ liệu qua cáp mạng
+(<em>Ethernet</em>) là bao nhiêu. So sánh các giao thức UDP và TCP/IP.</li>
+<li>Truy cập Bộ nhớ Trực tiếp (<em>Direct Memory Access</em>) cho phép các
+thiết bị khác ngoài CPU ghi (và đọc) trực tiếp vào (từ) bộ nhớ. Tại
+sao đây là một ý tưởng hay?</li>
+<li>Nhìn vào thông số hiệu năng của GPU Turing T4. Tại sao hiệu năng
+<em>chỉ</em> tăng gấp đôi khi chuyển từ phép toán với kiểu dữ liệu FP16
+sang INT8 và INT4?</li>
+<li>Thời gian truyền một gói dữ liệu hai chiều giữa San Francisco và
+Amsterdam là bao nhiêu? <strong>Gợi ý:</strong> giả sử khoảng cách giữa 2 thành
+phố là 10,000km.</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">12.4.13. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/363">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">12.4.14. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Văn Quang</li>
+<li>Phạm Minh Đức</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Văn Cường</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Trần Yến Thy</li>
+<li>Nguyễn Thanh Hòa</li>
+<li>Đỗ Trường Giang</li>
+<li>Phạm Hồng Vinh</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">12.4. Phần cứng</a><ul>
+<li><a class="reference internal" href="#may-tinh">12.4.1. Máy tính</a></li>
+<li><a class="reference internal" href="#bo-nho">12.4.2. Bộ nhớ</a></li>
+<li><a class="reference internal" href="#luu-tru">12.4.3. Lưu trữ</a></li>
+<li><a class="reference internal" href="#cpu">12.4.4. CPU</a></li>
+<li><a class="reference internal" href="#vi-kien-truc-micro-architecture">12.4.5. Vi kiến trúc (Micro-architecture)</a></li>
+<li><a class="reference internal" href="#vector-hoa-vectorization">12.4.6. Vector hóa (Vectorization)</a></li>
+<li><a class="reference internal" href="#bo-nho-dem">12.4.7. Bộ nhớ đệm</a></li>
+<li><a class="reference internal" href="#gpu-va-cac-thiet-bi-tang-toc-khac">12.4.8. GPU và các Thiết bị Tăng tốc khác</a></li>
+<li><a class="reference internal" href="#mang-may-tinh-va-bus">12.4.9. Mạng máy tính và Bus</a></li>
+<li><a class="reference internal" href="#tom-tat">12.4.10. Tóm tắt</a></li>
+<li><a class="reference internal" href="#do-tre">12.4.11. Độ trễ</a></li>
+<li><a class="reference internal" href="#bai-tap">12.4.12. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">12.4.13. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">12.4.14. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="auto-parallelism_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>12.3. Song song hóa Tự động</div>
+         </div>
+     </a>
+     <a id="button-next" href="multiple-gpus_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>12.5. Huấn luyện đa GPU</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

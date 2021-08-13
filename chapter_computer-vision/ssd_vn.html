@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>13.7. Phát hiện Nhiều khung Một lượt (SSD) &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="13.8. CNN theo Vùng (R-CNN)" href="rcnn_vn.html" />
+    <link rel="prev" title="13.6. Tập dữ liệu Phát hiện Đối tượng" href="object-detection-dataset_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">13. </span>Thị giác Máy tính</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">13.7. </span>Phát hiện Nhiều khung Một lượt (SSD)</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_computer-vision/ssd_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">13. Thị giác Máy tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">13. Thị giác Máy tính</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Single Shot Multibox Detection (SSD)
+--><div class="section" id="phat-hien-nhieu-khung-mot-luot-ssd">
+<h1><span class="section-number">13.7. </span>Phát hiện Nhiều khung Một lượt (SSD)<a class="headerlink" href="#phat-hien-nhieu-khung-mot-luot-ssd" title="Permalink to this headline">¶</a></h1>
+<!--
+In the previous few sections, we have introduced bounding boxes, anchor boxes, multiscale object detection, and datasets.
+Now, we will use this background knowledge to construct an object detection model: single shot multibox detection (SSD) :cite:`Liu.Anguelov.Erhan.ea.2016`.
+This quick and easy model is already widely used.
+Some of the design concepts and implementation details of this model are also applicable to other object detection models.
+--><p>Ở một số phần trước, chúng tôi đã giới thiệu về khung chứa, khung neo,
+phát hiện vật thể đa tỷ lệ và tập dữ liệu. Giờ ta sẽ sử dụng phần kiến
+thức nền tảng này để xây dựng một mô hình phát hiện vật thể: phát hiện
+nhiều khung trong một lần thực hiện (<em>Single Shot Multibox Detection</em> -
+SSD) <a class="bibtex reference internal" href="../chapter_references/zreferences.html#liu-anguelov-erhan-ea-2016" id="id1">[Liu et al., 2016]</a>. Mô hình này đang được sử dụng
+rộng rãi nhờ tốc độ và tính đơn giản của nó. Một số khái niệm thiết kế
+và chi tiết lập trình của mô hình này cũng có thể được áp dụng cho các
+mô hình phát hiện vật thể khác.</p>
+<!--
+## Model
+--><div class="section" id="mo-hinh">
+<h2><span class="section-number">13.7.1. </span>Mô hình<a class="headerlink" href="#mo-hinh" title="Permalink to this headline">¶</a></h2>
+<!--
+:numref:`fig_ssd` shows the design of an SSD model.
+The model's main components are a base network block and several multiscale feature blocks connected in a series.
+Here, the base network block is used to extract features of original images, and it generally takes the form of a deep convolutional neural network.
+The paper on SSDs chooses to place a truncated VGG before the classification layer :cite:`Liu.Anguelov.Erhan.ea.2016`, but this is now commonly replaced by ResNet.
+We can design the base network so that it outputs larger heights and widths.
+In this way, more anchor boxes are generated based on
+this feature map, allowing us to detect smaller objects.
+Next, each multiscale feature block reduces the height and width of the feature map provided by the previous layer (for example, it may reduce the sizes by half).
+The blocks then use each element in the feature map to expand the receptive field on the input image.
+In this way, the closer a multiscale feature block is to the top of :numref:`fig_ssd` the smaller its output feature map, and the fewer the anchor boxes that are generated based on the feature map.
+In addition, the closer a feature block is to the top, the larger the receptive field of each element in the feature map and the better suited it is to detect larger objects.
+As the SSD generates different numbers of anchor boxes of different sizes based on the base network block a
+nd each multiscale feature block and then predicts the categories and offsets (i.e., predicted bounding boxes)
+of the anchor boxes in order to detect objects of different sizes, SSD is a multiscale object detection model.
+--><p><a class="reference internal" href="#fig-ssd"><span class="std std-numref">Fig. 13.7.1</span></a> mô tả thiết kế của một mô hình SSD. Các thành phần
+chính của mô hình gồm có một khối mạng cơ sở và vài khối đặc trưng đa tỷ
+lệ được liên kết thành chuỗi. Trong đó khối mạng cơ sở được sử dụng để
+trích xuất đặc trưng từ ảnh gốc, thường có dạng một mạng nơ-ron tích
+chập sâu. Bài báo về SSD dùng mạng VGG-16 cụt đặt trước tầng phân loại
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#liu-anguelov-erhan-ea-2016" id="id2">[Liu et al., 2016]</a>, tuy nhiên bây giờ nó thường được
+thay bằng ResNet. Ta có thể thiết kế mạng cơ sở để đầu ra có chiều cao
+và chiều rộng lớn hơn. Bằng cách này, ánh xạ đặc trưng này sẽ sinh ra
+nhiều khung neo hơn, cho phép ta phát hiện các vật thể nhỏ hơn. Tiếp
+theo, mỗi khối đặc trưng đa tỷ lệ sẽ giảm chiều cao và chiều rộng của
+ánh xạ đặc trưng ở tầng trước (giảm kích thước đi còn một nửa chẳng
+hạn). Các khối này sau đó sử dụng từng phần tử trong ánh xạ đặc trưng để
+mở rộng vùng tiếp nhận trên ảnh đầu vào. Bằng cách này, khối đặc trưng
+đa tỷ lệ càng gần đỉnh mô hình trong <a class="reference internal" href="#fig-ssd"><span class="std std-numref">Fig. 13.7.1</span></a> thì trả về ánh
+xạ đặc trưng càng nhỏ, và số khung neo được sinh ra bởi ánh xạ đặc trưng
+đó càng ít. Hơn nữa, khối đặc trưng càng gần đỉnh mô hình thì vùng tiếp
+nhận của mỗi phần tử trong ánh xạ đặc trưng càng lớn và càng phù hợp để
+phát hiện những vật thể lớn. Vì SSD sinh ra các tập khung neo với số
+lượng và kích thước khác nhau dựa trên khối mạng cơ sở và từng khối đặc
+trưng đa tỷ lệ, rồi sau đó dự đoán hạng mục và độ dời (tức là dự đoán
+khung chứa) cho các khung neo để phát hiện các vật thể với kích cỡ khác
+nhau, có thể nói SSD là một mô hình phát hiện vật thể đa tỷ lệ.</p>
+<!--
+![The SSD is composed of a base network block and several multiscale feature blocks connected in a series.](../img/ssd.svg)
+--><div class="figure align-default" id="id5">
+<span id="fig-ssd"></span><img alt="../_images/ssd.svg" src="../_images/ssd.svg" /><p class="caption"><span class="caption-number">Fig. 13.7.1 </span><span class="caption-text">SSD được cấu thành bởi một khối mạng cơ sở và nhiều khối đặc trưng đa
+tỷ lệ được liên kết thành một chuỗi.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<!--
+Next, we will describe the implementation of the modules in :numref:`fig_ssd`.
+First, we need to discuss the implementation of category prediction and bounding box prediction.
+--><p>Tiếp theo, ta sẽ mô tả chi tiết lập trình cho các mô-đun trong
+<a class="reference internal" href="#fig-ssd"><span class="std std-numref">Fig. 13.7.1</span></a>. Đầu tiên, ta cần phải thảo luận về cách lập trình
+chức năng dự đoán hạng mục và khung chứa.</p>
+<!--
+### Category Prediction Layer
+--><div class="section" id="tang-du-doan-hang-muc">
+<h3><span class="section-number">13.7.1.1. </span>Tầng Dự đoán Hạng mục<a class="headerlink" href="#tang-du-doan-hang-muc" title="Permalink to this headline">¶</a></h3>
+<!--
+Set the number of object categories to $q$. In this case, the number of anchor box categories is $q+1$, with 0 indicating an anchor box that only contains background.
+For a certain scale, set the height and width of the feature map to $h$ and $w$, respectively.
+If we use each element as the center to generate $a$ anchor boxes, we need to classify a total of $hwa$ anchor boxes.
+If we use a fully connected layer (FCN) for the output, this will likely result in an excessive number of model parameters.
+Recall how we used convolutional layer channels to output category predictions in :numref:`sec_nin`.
+SSD uses the same method to reduce the model complexity.
+--><p>Đặt số hạng mục của vật thể là <span class="math notranslate nohighlight">\(q\)</span>. Trong trường hợp này, số hạng
+mục của khung neo là <span class="math notranslate nohighlight">\(q+1\)</span>, với 0 kí hiệu khung neo chỉ là nền hậu
+cảnh. Ở một tỷ lệ nhất định, đặt chiều cao và chiều rộng của ánh xạ đặc
+trưng lần lượt là <span class="math notranslate nohighlight">\(h\)</span> và <span class="math notranslate nohighlight">\(w\)</span>. Nếu ta sử dụng từng phần tử
+làm tâm để sinh <span class="math notranslate nohighlight">\(a\)</span> khung neo, ta cần phân loại tổng cộng
+<span class="math notranslate nohighlight">\(hwa\)</span> khung neo. Nếu ta sử dụng một tầng kết nối đầy đủ (FCN) tại
+đầu ra thì khả năng cao là số lượng tham số mô hình sẽ quá lớn. Hãy nhớ
+lại cách ta sử dụng các kênh trong tầng tích chập để đưa ra dự đoán hạng
+mục trong <a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html#sec-nin"><span class="std std-numref">Section 7.3</span></a>. SSD sử dụng phương pháp tương tự để giảm
+độ phức tạp của mô hình.</p>
+<!--
+Specifically, the category prediction layer uses a convolutional layer that maintains the input height and width.
+Thus, the output and input have a one-to-one correspondence to the spatial coordinates along the width and height of the feature map.
+Assuming that the output and input have the same spatial coordinates $(x, y)$, the channel for the coordinates $(x, y)$ on the output
+feature map contains the category predictions for all anchor boxes generated using the input feature map coordinates $(x, y)$ as the center.
+Therefore, there are $a(q+1)$ output channels, with the output channels indexed as $i(q+1) + j$
+($0 \leq j \leq q$) representing the predictions of the category index $j$ for the anchor box index $i$.
+--><p>Cụ thể, tầng dự đoán hạng mục sử dụng một tầng tích chập giữ nguyên
+chiều cao và chiều rộng của đầu vào. Do đó, tọa độ trong không gian của
+đầu ra và đầu vào tương quan một-một với nhau dọc theo cả chiều cao và
+chiều rộng của ánh xạ đặc trưng. Giả sử rằng đầu ra và đầu vào này có
+cùng tọa độ không gian <span class="math notranslate nohighlight">\((x, y)\)</span>, các kênh của ánh xạ đặc trưng đầu
+ra tại tọa độ <span class="math notranslate nohighlight">\((x, y)\)</span> đại diện cho các dự đoán hạng mục của tất
+cả các khung neo được sinh ra khi sử dụng tọa độ <span class="math notranslate nohighlight">\((x, y)\)</span> của ánh
+xạ đặc trưng đầu vào làm trung tâm. Bởi lẽ đó, có tất cả <span class="math notranslate nohighlight">\(a(q+1)\)</span>
+kênh đầu ra, với các kênh đầu ra được đánh chỉ số theo
+<span class="math notranslate nohighlight">\(i(q+1) + j\)</span> (<span class="math notranslate nohighlight">\(0 \leq j \leq q\)</span>) biểu diễn dự đoán hạng mục
+thứ <span class="math notranslate nohighlight">\(j\)</span> cho khung neo thứ <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<!--
+Now, we will define a category prediction layer of this type.
+After we specify the parameters $a$ and $q$, it uses a $3\times3$ convolutional layer with a padding of 1.
+The heights and widths of the input and output of this convolutional layer remain unchanged.
+--><p>Bây giờ, ta định nghĩa một tầng dự đoán hạng mục theo dạng này. Sau khi
+ta xác định các tham số <span class="math notranslate nohighlight">\(a\)</span> và <span class="math notranslate nohighlight">\(q\)</span>, tầng này sử dụng một
+tầng tích chập <span class="math notranslate nohighlight">\(3\times3\)</span> với đệm bằng 1. Chiều cao và chiều rộng
+của đầu ra và đầu vào của tầng tích chập này không đổi.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">autograd</span><span class="p">,</span> <span class="n">gluon</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">cls_predictor</span><span class="p">(</span><span class="n">num_anchors</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_anchors</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_classes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                     <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+### Bounding Box Prediction Layer
+--></div>
+<div class="section" id="tang-du-doan-khung-chua">
+<h3><span class="section-number">13.7.1.2. </span>Tầng Dự đoán Khung chứa<a class="headerlink" href="#tang-du-doan-khung-chua" title="Permalink to this headline">¶</a></h3>
+<!--
+The design of the bounding box prediction layer is similar to that of the category prediction layer.
+The only difference is that, here, we need to predict 4 offsets for each anchor box, rather than $q+1$ categories.
+--><p>Thiết kế của tầng dự đoán khung chứa cũng tương tự như tầng dự đoán hạng
+mục. Điểm khác biệt duy nhất đó là ta cần dự đoán 4 giá trị độ dời cho
+từng khung neo, thay vì <span class="math notranslate nohighlight">\(q+1\)</span> hạng mục.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bbox_predictor</span><span class="p">(</span><span class="n">num_anchors</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_anchors</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+### Concatenating Predictions for Multiple Scales
+--></div>
+<div class="section" id="ghep-noi-du-doan-da-ty-le">
+<h3><span class="section-number">13.7.1.3. </span>Ghép nối Dự đoán Đa Tỷ lệ<a class="headerlink" href="#ghep-noi-du-doan-da-ty-le" title="Permalink to this headline">¶</a></h3>
+<!--
+As we mentioned, SSD uses feature maps based on multiple scales to generate anchor boxes and predict their categories and offsets.
+Because the shapes and number of anchor boxes centered on the same element differ for the feature maps of different scales, the prediction outputs at different scales may have different shapes.
+--><p>Như đã đề cập, SSD sử dụng các ánh xạ đặc trưng trên nhiều tỷ lệ để sinh
+các khung neo rồi dự đoán hạng mục và độ dời. Vì kích thước và số lượng
+các khung neo có tâm tại cùng một phần tử là khác nhau đối với ánh xạ
+đặc trưng có tỷ lệ khác nhau, các đầu ra dự đoán tại các tỷ lệ khác nhau
+có thể sẽ có kích thước khác nhau.</p>
+<!--
+In the following example, we use the same batch of data to construct feature maps of two different scales, `Y1` and `Y2`.
+Here, `Y2` has half the height and half the width of `Y1`.
+Using category prediction as an example, we assume that each element in the `Y1` and `Y2` feature maps generates five (Y1) or three (Y2) anchor boxes.
+When there are 10 object categories, the number of category prediction output channels is either $5\times(10+1)=55$ or $3\times(10+1)=33$.
+The format of the prediction output is (batch size, number of channels, height, width).
+As you can see, except for the batch size, the sizes of the other dimensions are different.
+Therefore, we must transform them into a consistent format and concatenate the predictions of the multiple scales to facilitate subsequent computation.
+--><p>Trong ví dụ dưới đây, ta sử dụng cùng một batch dữ liệu để xây dựng ánh
+xạ đặc trưng <code class="docutils literal notranslate"><span class="pre">Y1</span></code> và <code class="docutils literal notranslate"><span class="pre">Y2</span></code> của hai tỷ lệ khác nhau. Trong đó, <code class="docutils literal notranslate"><span class="pre">Y2</span></code>
+có chiều cao và chiều rộng bằng một nửa <code class="docutils literal notranslate"><span class="pre">Y1</span></code>. Ví dụ khi dự đoán hạng
+mục, giả sử mỗi phần tử trong ánh xạ đặc trưng <code class="docutils literal notranslate"><span class="pre">Y1</span></code> và <code class="docutils literal notranslate"><span class="pre">Y2</span></code> sinh 5
+(với Y1) và 3 (với Y2) khung neo tương ứng. Với 10 hạng mục vật thể, số
+lượng kênh đầu ra của tầng dự đoán hạng mục sẽ là
+<span class="math notranslate nohighlight">\(5\times(10+1)=55\)</span> hoặc <span class="math notranslate nohighlight">\(3\times(10+1)=33\)</span> tương ứng. Định
+dạng đầu ra dự đoán là (kích thước batch, số lượng kênh, chiều cao,
+chiều rộng). Ta thấy, ngoại trừ kích thước batch, kích thước của các
+chiều còn lại là khác nhau. Do đó, ta phải biến đổi chúng về cùng một
+định dạng và ghép nối dự đoán đa tỷ lệ để dễ tính toán về sau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="n">block</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">block</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">Y1</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span> <span class="n">cls_predictor</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">Y2</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">cls_predictor</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="p">(</span><span class="n">Y1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Y2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<!--
+The channel dimension contains the predictions for all anchor boxes with the same center.
+We first move the channel dimension to the final dimension.
+Because the batch size is the same for all scales, we can convert the prediction results to binary format (batch size, height $\times$ width $\times$ number of channels)
+to facilitate subsequent concatenation on the $1^{\mathrm{st}}$ dimension.
+--><p>Chiều kênh chứa dự đoán cho tất cả các khung neo có cùng tâm. Đầu tiên,
+ta sẽ chuyển chiều kênh thành chiều cuối cùng. Do kích thước batch là
+giống nhau với mọi tỷ lệ, ta có thể chuyển đổi kết quả dự đoán thành
+định dạng 2D (kích thước batch, chiều cao <span class="math notranslate nohighlight">\(\times\)</span> chiều rộng
+<span class="math notranslate nohighlight">\(\times\)</span> số lượng kênh) để việc ghép nối trên chiều thứ nhất dễ
+dàng hơn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">flatten_pred</span><span class="p">(</span><span class="n">pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">npx</span><span class="o">.</span><span class="n">batch_flatten</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">concat_preds</span><span class="p">(</span><span class="n">preds</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">flatten_pred</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">preds</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Thus, regardless of the different shapes of `Y1` and `Y2`, we can still concatenate the prediction results for the two different scales of the same batch.
+--><p>Do đó, ta có thể ghép nối kết quả dự đoán cho hai tỷ lệ khác nhau trên
+cùng một batch dù <code class="docutils literal notranslate"><span class="pre">Y1</span></code> và <code class="docutils literal notranslate"><span class="pre">Y2</span></code> có kích thước khác nhau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">concat_preds</span><span class="p">([</span><span class="n">Y1</span><span class="p">,</span> <span class="n">Y2</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">25300</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+### Height and Width Downsample Block
+--></div>
+<div class="section" id="khoi-giam-chieu-cao-va-chieu-rong">
+<h3><span class="section-number">13.7.1.4. </span>Khối giảm Chiều cao và Chiều rộng<a class="headerlink" href="#khoi-giam-chieu-cao-va-chieu-rong" title="Permalink to this headline">¶</a></h3>
+<!--
+For multiscale object detection, we define the following `down_sample_blk` block, which reduces the height and width by 50%.
+This block consists of two $3\times3$ convolutional layers with a padding of 1 and a $2\times2$ maximum pooling layer with a stride of 2 connected in a series.
+As we know, $3\times3$ convolutional layers with a padding of 1 do not change the shape of feature maps.
+However, the subsequent pooling layer directly reduces the size of the feature map by half.
+Because $1\times 2+(3-1)+(3-1)=6$, each element in the output feature map has a receptive field on the input feature map of the shape $6\times6$.
+As you can see, the height and width downsample block enlarges the receptive field of each element in the output feature map.
+--><p>Với bài toán phát hiện vật thể đa tỷ lệ, ta định nghĩa khối
+<code class="docutils literal notranslate"><span class="pre">down_sample_blk</span></code> sau đây để giảm 50% chiều cao và chiều rộng. Khối
+này bao gồm 2 tầng tích chập <span class="math notranslate nohighlight">\(3\times3\)</span> với đệm bằng 1 và tầng gộp
+cực đại <span class="math notranslate nohighlight">\(2\times2\)</span> cùng sải bước bằng 2 được kết nối tuần tự. Như
+ta đã biết, tầng tích chập <span class="math notranslate nohighlight">\(3\times3\)</span> với đệm bằng 1 sẽ không thay
+đổi kích thước của ánh xạ đặc trưng. Tuy nhiên, tầng gộp cực đại tiếp
+theo sẽ giảm một nửa kích thước của ánh xạ đặc trưng. Do
+<span class="math notranslate nohighlight">\(1\times 2+(3-1)+(3-1)=6\)</span>, mỗi phần tử trong ánh xạ đặc trưng đầu
+ra sẽ có vùng tiếp nhận với kích thước <span class="math notranslate nohighlight">\(6\times6\)</span> trên ánh xạ đặc
+trưng đầu vào. Ta có thể thấy, khối giảm mẫu trên chiều cao và chiều
+rộng mở rộng vùng tiếp nhận của mỗi phần tử trong ánh xạ đặc trưng đầu
+ra.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">down_sample_blk</span><span class="p">(</span><span class="n">num_channels</span><span class="p">):</span>
+    <span class="n">blk</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">blk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="n">num_channels</span><span class="p">),</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">blk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2D</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">blk</span>
+</pre></div>
+</div>
+<!--
+By testing forward computation in the height and width downsample block, we can see that it changes the number of input channels and halves the height and width.
+--><p>Kiểm tra tính toán của lượt truyền xuôi trong khối giảm chiều cao và
+chiều rộng, ta có thể thấy khối này thay đổi số kênh đầu vào và giảm một
+nửa chiều cao và chiều rộng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">forward</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span> <span class="n">down_sample_blk</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+### Base Network Block
+--></div>
+<div class="section" id="khoi-mang-co-so">
+<h3><span class="section-number">13.7.1.5. </span>Khối Mạng Cơ sở<a class="headerlink" href="#khoi-mang-co-so" title="Permalink to this headline">¶</a></h3>
+<!--
+The base network block is used to extract features from original images.
+To simplify the computation, we will construct a small base network.
+This network consists of three height and width downsample blocks connected in a series, so it doubles the number of channels at each step.
+When we input an original image with the shape $256\times256$, the base network block outputs a feature map with the shape $32 \times 32$.
+--><p>Khối mạng cơ sở được sử dụng để trích xuất đặc trưng từ ảnh gốc ban đầu.
+Để đơn giản hóa phép tính, ta sẽ xây dựng một mạng cơ sở nhỏ, bao gồm
+các khối giảm chiều cao và chiều rộng được kết nối tuần tự sao cho số
+lượng kênh tăng gấp đôi sau mỗi bước. Khi ta truyền ảnh đầu vào có kích
+thước <span class="math notranslate nohighlight">\(256\times256\)</span>, khối mạng cơ sở sẽ cho ra ánh xạ đặc trưng
+có kích thước <span class="math notranslate nohighlight">\(32 \times 32\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">base_net</span><span class="p">():</span>
+    <span class="n">blk</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">num_filters</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">]:</span>
+        <span class="n">blk</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">down_sample_blk</span><span class="p">(</span><span class="n">num_filters</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">blk</span>
+
+<span class="n">forward</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)),</span> <span class="n">base_net</span><span class="p">())</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+### The Complete Model
+--></div>
+<div class="section" id="mo-hinh-hoan-chinh">
+<h3><span class="section-number">13.7.1.6. </span>Mô hình hoàn chỉnh<a class="headerlink" href="#mo-hinh-hoan-chinh" title="Permalink to this headline">¶</a></h3>
+<!--
+The SSD model contains a total of five modules.
+Each module outputs a feature map used to generate anchor boxes and predict the categories and offsets of these anchor boxes.
+The first module is the base network block, modules two to four are height and width downsample blocks, and the fifth module is a global maximum pooling layer that reduces the height and width to 1.
+Therefore, modules two to five are all multiscale feature blocks shown in :numref:`fig_ssd`.
+--><p>Mô hình SSD chứa tất cả năm mô-đun. Mỗi mô-đun tạo ra một ánh xạ đặc
+trưng dùng để sinh các khung neo, dự đoán hạng mục và độ dời của các
+khung neo đó. Mô-đun đầu tiên là khối mạng cơ sở, các mô-đun từ thứ hai
+tới thứ tư là các khối giảm chiều cao và chiều rộng, và mô-đun thứ năm
+là tầng gộp cực đại toàn cục nhằm giảm chiều cao và chiều rộng xuống còn
+1. Do đó, mô-đun thứ hai tới thứ năm đều là các khối đặc trưng đa tỷ lệ
+như mô tả trong <a class="reference internal" href="#fig-ssd"><span class="std std-numref">Fig. 13.7.1</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_blk</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">blk</span> <span class="o">=</span> <span class="n">base_net</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">blk</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GlobalMaxPool2D</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">blk</span> <span class="o">=</span> <span class="n">down_sample_blk</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">blk</span>
+</pre></div>
+</div>
+<!--
+Now, we will define the forward computation process for each module.
+In contrast to the previously-described convolutional neural networks, this module not only returns feature map `Y` output by convolutional computation,
+but also the anchor boxes of the current scale generated from `Y` and their predicted categories and offsets.
+--><p>Bây giờ, ta sẽ định nghĩa luợt truyền xuôi cho từng mô-đun. Khác với các
+mạng nơ-ron tích chập đã mô tả trước đây, mô-đun này không chỉ trả về
+ánh xạ đặc trưng <code class="docutils literal notranslate"><span class="pre">Y</span></code> xuất ra từ phép tích chập, mà còn sinh ra từ
+<code class="docutils literal notranslate"><span class="pre">Y</span></code> cả các khung neo của tỷ lệ hiện tại cùng với các dự đoán hạng mục
+và độ dời.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">blk_forward</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">blk</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">cls_predictor</span><span class="p">,</span> <span class="n">bbox_predictor</span><span class="p">):</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">blk</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">anchors</span> <span class="o">=</span> <span class="n">npx</span><span class="o">.</span><span class="n">multibox_prior</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">ratios</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span>
+    <span class="n">cls_preds</span> <span class="o">=</span> <span class="n">cls_predictor</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+    <span class="n">bbox_preds</span> <span class="o">=</span> <span class="n">bbox_predictor</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+As we mentioned, the closer a multiscale feature block is to the top in :numref:`fig_ssd`, the larger the objects it detects and the larger the anchor boxes it must generate.
+Here, we first divide the interval from 0.2 to 1.05 into five equal parts to determine the sizes of smaller anchor boxes at different scales: 0.2, 0.37, 0.54, etc.
+Then, according to $\sqrt{0.2 \times 0.37} = 0.272$, $\sqrt{0.37 \times 0.54} = 0.447$, and similar formulas, we determine the sizes of larger anchor boxes at the different scales.
+--><p>Như đã đề cập trong <a class="reference internal" href="#fig-ssd"><span class="std std-numref">Fig. 13.7.1</span></a>, khối đặc trưng đa tỷ lệ càng
+gần đỉnh, các vật thể được phát hiện và các khung neo được tạo ra càng
+lớn. Ở đây, trước hết ta chia khoảng từ 0.2 tới 1.05 thành năm phần bằng
+nhau để xác định các kích thước của các khung neo nhỏ hơn ở các tỷ lệ:
+0.2, 0.37, 0.54, v.v. Kế đến, theo
+<span class="math notranslate nohighlight">\(\sqrt{0.2 \times 0.37} = 0.272\)</span>,
+<span class="math notranslate nohighlight">\(\sqrt{0.37 \times 0.54} = 0.447\)</span>, và các công thức tương tự; ta
+xác định kích thước của các khung neo lớn hơn ở các tỷ lệ khác nhau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sizes</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.272</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.37</span><span class="p">,</span> <span class="mf">0.447</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.54</span><span class="p">,</span> <span class="mf">0.619</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.71</span><span class="p">,</span> <span class="mf">0.79</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">0.88</span><span class="p">,</span> <span class="mf">0.961</span><span class="p">]]</span>
+<span class="n">ratios</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">num_anchors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">ratios</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<!--
+Now, we can define the complete model, `TinySSD`.
+--><p>Bây giờ, ta có thể định nghĩa mô hình hoàn chỉnh, <code class="docutils literal notranslate"><span class="pre">TinySSD</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TinySSD</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Block</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TinySSD</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="n">num_classes</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="c1"># The assignment statement is self.blk_i = get_blk(i)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;blk_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">get_blk</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;cls_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">cls_predictor</span><span class="p">(</span><span class="n">num_anchors</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;bbox_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">bbox_predictor</span><span class="p">(</span><span class="n">num_anchors</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="c1"># getattr(self, &#39;blk_%d&#39; % i) accesses self.blk_i</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">anchors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cls_preds</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bbox_preds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">blk_forward</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;blk_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">sizes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ratios</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;cls_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;bbox_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="c1"># In the reshape function, 0 indicates that the batch size remains</span>
+        <span class="c1"># unchanged</span>
+        <span class="n">anchors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">anchors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cls_preds</span> <span class="o">=</span> <span class="n">concat_preds</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">)</span>
+        <span class="n">cls_preds</span> <span class="o">=</span> <span class="n">cls_preds</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+            <span class="n">cls_preds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">bbox_preds</span> <span class="o">=</span> <span class="n">concat_preds</span><span class="p">(</span><span class="n">bbox_preds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span>
+</pre></div>
+</div>
+<!--
+We now create an SSD model instance and use it to perform forward computation on image minibatch `X`, which has a height and width of 256 pixels.
+As we verified previously, the first module outputs a feature map with the shape $32 \times 32$.
+Because modules two to four are height and width downsample blocks, module five is a global pooling layer,
+and each element in the feature map is used as the center for 4 anchor boxes, a total of $(32^2 + 16^2 + 8^2 + 4^2 + 1)\times 4 = 5444$ anchor boxes are generated for each image at the five scales.
+--><p>Bây giờ ta thử tạo một mô hình SSD và sử dụng nó để thực hiện lượt
+truyền xuôi trên minibatch ảnh <code class="docutils literal notranslate"><span class="pre">X</span></code> có chiều rộng và chiều cao là 256
+pixel. Như đã kiểm nghiệm trước đó, mô-đun đầu tiên xuất ánh xạ đặc
+trưng với kích thước <span class="math notranslate nohighlight">\(32 \times 32\)</span>. Bởi vì các mô-đun từ thứ hai
+tới thứ tư là các khối giảm chiều cao và chiều rộng, còn mô-đun thứ năm
+là tầng gộp toàn cục, và mỗi phần tử trong ánh xạ đặc trưng này được
+dùng làm tâm cho bốn khung neo, tổng cộng
+<span class="math notranslate nohighlight">\((32^2 + 16^2 + 8^2 + 4^2 + 1)\times 4 = 5444\)</span> khung neo được tạo
+ra cho mỗi ảnh ở năm tỷ lệ đó.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">TinySSD</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
+<span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;output anchors:&#39;</span><span class="p">,</span> <span class="n">anchors</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;output class preds:&#39;</span><span class="p">,</span> <span class="n">cls_preds</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;output bbox preds:&#39;</span><span class="p">,</span> <span class="n">bbox_preds</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="n">anchors</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5444</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">output</span> <span class="k">class</span> <span class="nc">preds</span><span class="p">:</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">5444</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">output</span> <span class="n">bbox</span> <span class="n">preds</span><span class="p">:</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">21776</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+## Training
+--></div>
+</div>
+<div class="section" id="huan-luyen">
+<h2><span class="section-number">13.7.2. </span>Huấn luyện<a class="headerlink" href="#huan-luyen" title="Permalink to this headline">¶</a></h2>
+<!--
+Now, we will explain, step by step, how to train the SSD model for object detection.
+--><p>Ở bước này chúng tôi sẽ giải thích từng bước cách huấn luyện mô hình SSD
+để phát hiện vật thể.</p>
+<!--
+### Data Reading and Initialization
+--><div class="section" id="doc-du-lieu-va-khoi-tao">
+<h3><span class="section-number">13.7.2.1. </span>Đọc Dữ liệu và Khởi tạo<a class="headerlink" href="#doc-du-lieu-va-khoi-tao" title="Permalink to this headline">¶</a></h3>
+<!--
+We read the Pikachu dataset we created in the previous section.
+--><p>Ta đọc tập dữ liệu Pikachu được tạo ở phần trước.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">train_iter</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_data_pikachu</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+There is 1 category in the Pikachu dataset.
+After defining the module, we need to initialize the model parameters and define the optimization algorithm.
+--><p>Có 1 hạng mục trong tập dữ liệu Pikachu. Sau khi khai báo mô hình và
+thiết bị, ta khởi tạo các tham số của mô hình và định nghĩa thuật toán
+tối ưu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span><span class="p">,</span> <span class="n">net</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">(),</span> <span class="n">TinySSD</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="o">.</span><span class="n">Xavier</span><span class="p">(),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span>
+                        <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;wd&#39;</span><span class="p">:</span> <span class="mf">5e-4</span><span class="p">})</span>
+</pre></div>
+</div>
+<!--
+### Defining Loss and Evaluation Functions
+--></div>
+<div class="section" id="dinh-nghia-ham-mat-mat-va-ham-danh-gia">
+<h3><span class="section-number">13.7.2.2. </span>Định nghĩa Hàm mất mát và Hàm đánh giá<a class="headerlink" href="#dinh-nghia-ham-mat-mat-va-ham-danh-gia" title="Permalink to this headline">¶</a></h3>
+<!--
+Object detection is subject to two types of losses. The first is anchor box category loss.
+For this, we can simply reuse the cross-entropy loss function we used in image classification.
+The second loss is positive anchor box offset loss.
+Offset prediction is a normalization problem.
+However, here, we do not use the squared loss introduced previously.
+Rather, we use the $L_1$ norm loss, which is the absolute value of the difference between the predicted value and the ground-truth value.
+The mask variable `bbox_masks` removes negative anchor boxes and padding anchor boxes from the loss calculation.
+Finally, we add the anchor box category and offset losses to find the final loss function for the model.
+--><p>Phát hiện vật thể có hai loại mất mát. Thứ nhất là mất mát khi phân loại
+hạng mục của khung neo. Đối với mất mát này, ta hoàn toàn có thể sử dụng
+lại hàm mất mát entropy chéo trong phân loại ảnh. Loại mất mát thứ hai
+là mất mát của độ dời khung neo dương. Dự đoán độ dời là một bài toán
+chuẩn hóa. Tuy nhiên, ở đây ta không sử dụng hàm mất mát bình phương như
+trước. Thay vào đó, ta sử dụng mất mát chuẩn <span class="math notranslate nohighlight">\(L_1\)</span>, tức là trị
+tuyệt đối hiệu của giá trị dự đoán và giá trị nhãn gốc. Biến mặt nạ
+<code class="docutils literal notranslate"><span class="pre">bbox_masks</span></code> loại bỏ các khung neo âm và khung neo đệm khỏi phép tính
+mất mát. Cuối cùng, ta cộng mất mát hạng mục và mất mát độ dời của khung
+neo để có hàm mất mát cuối cùng cho mô hình.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cls_loss</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">SoftmaxCrossEntropyLoss</span><span class="p">()</span>
+<span class="n">bbox_loss</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">calc_loss</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">,</span> <span class="n">cls_labels</span><span class="p">,</span> <span class="n">bbox_preds</span><span class="p">,</span> <span class="n">bbox_labels</span><span class="p">,</span> <span class="n">bbox_masks</span><span class="p">):</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="n">cls_loss</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">,</span> <span class="n">cls_labels</span><span class="p">)</span>
+    <span class="n">bbox</span> <span class="o">=</span> <span class="n">bbox_loss</span><span class="p">(</span><span class="n">bbox_preds</span> <span class="o">*</span> <span class="n">bbox_masks</span><span class="p">,</span> <span class="n">bbox_labels</span> <span class="o">*</span> <span class="n">bbox_masks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span> <span class="o">+</span> <span class="n">bbox</span>
+</pre></div>
+</div>
+<!--
+We can use the accuracy rate to evaluate the classification results. As we use the $L_1$ norm loss, we will use the average absolute error to evaluate the bounding box prediction results.
+--><p>Ta có thể sử dụng độ chính xác để đánh giá kết quả phân loại. Do ta sử
+dụng mất mát chuẩn <span class="math notranslate nohighlight">\(L_1\)</span> khi huấn luyện, ta sẽ sử dụng trung bình
+sai số tuyệt đối (<em>average absolute error</em>) để đánh giá kết quả dự đoán
+khung chứa.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cls_eval</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">,</span> <span class="n">cls_labels</span><span class="p">):</span>
+    <span class="c1"># Because the category prediction results are placed in the final</span>
+    <span class="c1"># dimension, argmax must specify this dimension</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">((</span><span class="n">cls_preds</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="n">cls_labels</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">cls_labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">bbox_eval</span><span class="p">(</span><span class="n">bbox_preds</span><span class="p">,</span> <span class="n">bbox_labels</span><span class="p">,</span> <span class="n">bbox_masks</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">bbox_labels</span> <span class="o">-</span> <span class="n">bbox_preds</span><span class="p">)</span> <span class="o">*</span> <span class="n">bbox_masks</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<!--
+### Training the Model
+--></div>
+<div class="section" id="huan-luyen-mo-hinh">
+<h3><span class="section-number">13.7.2.3. </span>Huấn luyện Mô hình<a class="headerlink" href="#huan-luyen-mo-hinh" title="Permalink to this headline">¶</a></h3>
+<!--
+During model training, we must generate multiscale anchor boxes (`anchors`) in the model's forward computation process and predict the category (`cls_preds`) and offset (`bbox_preds`) for each anchor box.
+Afterwards, we label the category (`cls_labels`) and offset (`bbox_labels`) of each generated anchor box based on the label information `Y`.
+Finally, we calculate the loss function using the predicted and labeled category and offset values.
+To simplify the code, we do not evaluate the training dataset here.
+--><p>Trong suốt quá trình huấn luyện, ta phải tạo ra các khung neo đa tỷ lệ
+(<code class="docutils literal notranslate"><span class="pre">anchors</span></code>) khi tính toán lượt truyền xuôi rồi dự đoán hạng mục
+(<code class="docutils literal notranslate"><span class="pre">cls_preds</span></code>) và độ dời (<code class="docutils literal notranslate"><span class="pre">bbox_preds</span></code>) cho mỗi khung neo. Sau đó, ta
+gán nhãn hạng mục (<code class="docutils literal notranslate"><span class="pre">cls_labels</span></code>) và độ dời (<code class="docutils literal notranslate"><span class="pre">bbox_labels</span></code>) cho từng
+khung neo được tạo ở trên dựa vào thông tin nhãn <code class="docutils literal notranslate"><span class="pre">Y</span></code>. Cuối cùng, ta
+tính toán hàm mất mát sử dụng giá trị hạng mục/độ dời nhãn gốc và dự
+đoán. Để đơn giản hóa mã nguồn, ta sẽ không đánh giá tập huấn luyện ở
+đây.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span><span class="p">,</span> <span class="n">timer</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span>
+<span class="n">animator</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span>
+                        <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;class error&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox mae&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
+    <span class="c1"># accuracy_sum, mae_sum, num_examples, num_labels</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Accumulator</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">train_iter</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Read data from the start.</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_iter</span><span class="p">:</span>
+        <span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_in_ctx</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_in_ctx</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+            <span class="c1"># Generate multiscale anchor boxes and predict the category and</span>
+            <span class="c1"># offset of each</span>
+            <span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="c1"># Label the category and offset of each anchor box</span>
+            <span class="n">bbox_labels</span><span class="p">,</span> <span class="n">bbox_masks</span><span class="p">,</span> <span class="n">cls_labels</span> <span class="o">=</span> <span class="n">npx</span><span class="o">.</span><span class="n">multibox_target</span><span class="p">(</span>
+                <span class="n">anchors</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">cls_preds</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="c1"># Calculate the loss function using the predicted and labeled</span>
+            <span class="c1"># category and offset values</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">calc_loss</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">,</span> <span class="n">cls_labels</span><span class="p">,</span> <span class="n">bbox_preds</span><span class="p">,</span> <span class="n">bbox_labels</span><span class="p">,</span>
+                          <span class="n">bbox_masks</span><span class="p">)</span>
+        <span class="n">l</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cls_eval</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">,</span> <span class="n">cls_labels</span><span class="p">),</span> <span class="n">cls_labels</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                   <span class="n">bbox_eval</span><span class="p">(</span><span class="n">bbox_preds</span><span class="p">,</span> <span class="n">bbox_labels</span><span class="p">,</span> <span class="n">bbox_masks</span><span class="p">),</span>
+                   <span class="n">bbox_labels</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">cls_err</span><span class="p">,</span> <span class="n">bbox_mae</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">metric</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">metric</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">cls_err</span><span class="p">,</span> <span class="n">bbox_mae</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;class err </span><span class="si">{</span><span class="n">cls_err</span><span class="si">:</span><span class="s1">.2e</span><span class="si">}</span><span class="s1">, bbox mae </span><span class="si">{</span><span class="n">bbox_mae</span><span class="si">:</span><span class="s1">.2e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">train_iter</span><span class="o">.</span><span class="n">num_image</span><span class="o">/</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> examples/sec on &#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">err</span> <span class="mf">2.35e-03</span><span class="p">,</span> <span class="n">bbox</span> <span class="n">mae</span> <span class="mf">2.61e-03</span>
+<span class="mf">5949.3</span> <span class="n">examples</span><span class="o">/</span><span class="n">sec</span> <span class="n">on</span> <span class="n">gpu</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_ssd_vn_5d7329_35_1.svg" src="../_images/output_ssd_vn_5d7329_35_1.svg" /></div>
+<!--
+## Prediction
+--></div>
+</div>
+<div class="section" id="du-doan">
+<h2><span class="section-number">13.7.3. </span>Dự đoán<a class="headerlink" href="#du-doan" title="Permalink to this headline">¶</a></h2>
+<!--
+In the prediction stage, we want to detect all objects of interest in the image.
+Below, we read the test image and transform its size.
+Then, we convert it to the four-dimensional format required by the convolutional layer.
+--><p>Trong bước dự đoán, ta muốn phát hiện tất cả các vật thể đáng quan tâm
+trong ảnh. Ở đoạn mã dưới, ta đọc và biến đổi kích thước của ảnh kiểm
+tra, rồi chuyển thành dạng tensor bốn chiều mà tầng tích chập yêu cầu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../img/pikachu.jpg&#39;</span><span class="p">)</span>
+<span class="n">feature</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imresize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Using the `MultiBoxDetection` function, we predict the bounding boxes based on the anchor boxes and their predicted offsets.
+Then, we use non-maximum suppression to remove similar bounding boxes.
+--><p>Ta sử dụng hàm <code class="docutils literal notranslate"><span class="pre">MultiBoxDetection</span></code> để dự đoán các khung chứa dựa theo
+các khung neo và giá trị độ dời dự đoán của chúng. Sau đó ta sử dụng
+triệt phi cực đại (<em>non-maximum suppression</em>) để loại bỏ các khung chứa
+giống nhau.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">anchors</span><span class="p">,</span> <span class="n">cls_preds</span><span class="p">,</span> <span class="n">bbox_preds</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">as_in_ctx</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+    <span class="n">cls_probs</span> <span class="o">=</span> <span class="n">npx</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">cls_preds</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">npx</span><span class="o">.</span><span class="n">multibox_detection</span><span class="p">(</span><span class="n">cls_probs</span><span class="p">,</span> <span class="n">bbox_preds</span><span class="p">,</span> <span class="n">anchors</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+Finally, we take all the bounding boxes with a confidence level of at least 0.3 and display them as the final output.
+--><p>Cuối cùng, ta lấy toàn bộ khung chứa có độ tin cậy tối thiểu là 0.3 và
+hiển thị chúng làm kết quả cuối cùng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">ctx</span><span class="p">)]</span>
+        <span class="n">d2l</span><span class="o">.</span><span class="n">show_bboxes</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="n">bbox</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">score</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_ssd_vn_5d7329_41_0.svg" src="../_images/output_ssd_vn_5d7329_41_0.svg" /></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">13.7.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* SSD is a multiscale object detection model. This model generates different numbers of anchor boxes of different sizes
+based on the base network block and each multiscale feature block and predicts the categories and offsets of the anchor boxes to detect objects of different sizes.
+* During SSD model training, the loss function is calculated using the predicted and labeled category and offset values.
+--><ul class="simple">
+<li>SSD là một mô hình phát hiện vật thể đa tỷ lệ. Mô hình này sinh ra
+các tập khung neo với số lượng và kích thước khác nhau dựa trên khối
+mạng cơ sở và từng khối đặc trưng đa tỷ lệ, rồi dự đoán hạng mục và
+độ dời cho các khung neo để phát hiện các vật thể có kích thước khác
+nhau.</li>
+<li>Trong suốt quá trình huấn luyện, hàm mất mát được tính bằng giá trị
+dự đoán và nhãn gốc của hạng mục và độ dời.</li>
+</ul>
+</div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">13.7.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+Due to space limitations, we have ignored some of the implementation details of SSD models in this experiment.
+Can you further improve the model in the following areas?
+--><p>Do nhiều giới hạn, chúng tôi đã bỏ qua một số chi tiết phần lập trình
+cho mô hình SSD trong thí nghiệm này. Liệu bạn có thể cải thiện mô hình
+hơn nữa theo các hướng sau?</p>
+<!--
+### Loss Function
+--><div class="section" id="ham-mat-mat">
+<h3><span class="section-number">13.7.5.1. </span>Hàm mất mát<a class="headerlink" href="#ham-mat-mat" title="Permalink to this headline">¶</a></h3>
+<!--
+A. For the predicted offsets, replace $L_1$ norm loss with $L_1$ regularization loss.
+This loss function uses a square function around zero for greater smoothness.
+This is the regularized area controlled by the hyperparameter $\sigma$:
+--><p>A. Để dự đoán độ dời, thay thế mất mát chuẩn <span class="math notranslate nohighlight">\(L_1\)</span> bằng mất mát
+điều chuẩn <span class="math notranslate nohighlight">\(L_1\)</span>. Hàm mất mát này sử dụng hàm bình phương xung
+quanh giá trị không để tăng độ mượt. Đây chính là vùng được điều chuẩn
+và được xác định bởi siêu tham số <span class="math notranslate nohighlight">\(\sigma\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-computer-vision-ssd-vn-0">
+<span class="eqno">(13.7.1)<a class="headerlink" href="#equation-chapter-computer-vision-ssd-vn-0" title="Permalink to this equation">¶</a></span>\[\begin{split}f(x) =
+    \begin{cases}
+    (\sigma x)^2/2,&amp; \text{nếu }|x| &lt; 1/\sigma^2\\
+    |x|-0.5/\sigma^2,&amp; \text{mặt~khác}
+    \end{cases}\end{split}\]</div>
+<!--
+When $\sigma$ is large, this loss is similar to the $L_1$ norm loss.
+When the value is small, the loss function is smoother.
+--><p>Khi <span class="math notranslate nohighlight">\(\sigma\)</span> lớn, mất mát này tương đương với mất mát chuẩn
+<span class="math notranslate nohighlight">\(L_1\)</span>. Khi giá trị này nhỏ, hàm mất mát sẽ mượt hơn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sigmas</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">npx</span><span class="o">.</span><span class="n">smooth_l1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">l</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sigma=</span><span class="si">%.1f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">s</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_ssd_vn_5d7329_43_0.svg" src="../_images/output_ssd_vn_5d7329_43_0.svg" /></div>
+<!--
+In the experiment, we used cross-entropy loss for category prediction.
+Now, assume that the prediction probability of the actual category $j$ is $p_j$ and the cross-entropy loss is $-\log p_j$.
+We can also use the focal loss :cite:`Lin.Goyal.Girshick.ea.2017`.
+Given the positive hyperparameters $\gamma$ and $\alpha$, this loss is defined as:
+--><p>Trong thí nghiệm ở phần này, ta sử dụng hàm mất mát entropy chéo để dự
+đoán hạng mục. Còn giờ, giả sử rằng xác suất dự đoán được đúng hạng mục
+<span class="math notranslate nohighlight">\(j\)</span> là <span class="math notranslate nohighlight">\(p_j\)</span> và mất mát entropy chéo là <span class="math notranslate nohighlight">\(-\log p_j\)</span>.
+Ta cũng có thể sử dụng mất mát tiêu điểm (<em>focal loss</em>)
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#lin-goyal-girshick-ea-2017" id="id3">[Lin et al., 2017]</a>. Cho siêu tham số <span class="math notranslate nohighlight">\(\gamma\)</span>
+and <span class="math notranslate nohighlight">\(\alpha\)</span> dương, mất mát này được định nghĩa như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-computer-vision-ssd-vn-1">
+<span class="eqno">(13.7.2)<a class="headerlink" href="#equation-chapter-computer-vision-ssd-vn-1" title="Permalink to this equation">¶</a></span>\[- \alpha (1-p_j)^{\gamma} \log p_j.\]</div>
+<!--
+As you can see, by increasing $\gamma$, we can effectively reduce the loss when the probability of predicting the correct category is high.
+--><p>Như bạn có thể thấy, bằng cách tăng <span class="math notranslate nohighlight">\(\gamma\)</span>, ta thực chất có thể
+giảm giá trị mất mát đi khi khả năng dự đoán đúng hạng mục là lớn.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">focal_loss</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">gamma</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">focal_loss</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">l</span><span class="p">,</span>
+                     <span class="n">label</span><span class="o">=</span><span class="s1">&#39;gamma=</span><span class="si">%.1f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_ssd_vn_5d7329_45_0.svg" src="../_images/output_ssd_vn_5d7329_45_0.svg" /></div>
+<!--
+### Training and Prediction
+--></div>
+<div class="section" id="huan-luyen-va-du-doan">
+<h3><span class="section-number">13.7.5.2. </span>Huấn luyện và Dự đoán<a class="headerlink" href="#huan-luyen-va-du-doan" title="Permalink to this headline">¶</a></h3>
+<!--
+B. When an object is relatively large compared to the image, the model normally adopts a larger input image size.
+
+C. This generally produces a large number of negative anchor boxes when labeling anchor box categories.
+We can sample the negative anchor boxes to better balance the data categories.
+To do this, we can set the `MultiBoxTarget` function's `negative_mining_ratio` parameter.
+
+D. Assign hyperparameters with different weights to the anchor box category loss and positive anchor box offset loss in the loss function.
+
+E. Refer to the SSD paper. What methods can be used to evaluate the precision of object detection models :cite:`Liu.Anguelov.Erhan.ea.2016`?
+--><p>B. Khi một vật thể có kích thước khá lớn so với ảnh, mô hình thường chấp
+nhận kích thước ảnh đầu vào lớn hơn.</p>
+<p>C. Điều này thường sản sinh lượng lớn các khung neo âm khi gán nhãn hạng
+mục cho khung neo. Ta có thể lấy mẫu các khung neo âm để cân bằng các
+hạng mục trong dữ liệu tốt hơn. Để thực hiện điều này, ta có thể đặt
+tham số <code class="docutils literal notranslate"><span class="pre">negative_mining_ratio</span></code> của hàm <code class="docutils literal notranslate"><span class="pre">MultiBoxTarget</span></code>.</p>
+<p>D. Trong hàm mất mát, sử dụng các trọng số khác nhau cho mất mát hạng
+mục của các khung neo và mất mát độ dời của các khung neo dương.</p>
+<p>E. Tham khảo bài báo SSD. Phương pháp nào có thể được sử dụng để đánh
+giá giá trị precision của các mô hình phát hiện vật thể
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#liu-anguelov-erhan-ea-2016" id="id4">[Liu et al., 2016]</a>?</p>
+</div>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">13.7.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/373">Tiếng Anh - MXNet</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">13.7.7. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Đỗ Trường Giang</li>
+<li>Phạm Hồng Vinh</li>
+<li>Nguyễn Văn Quang</li>
+<li>Nguyễn Mai Hoàng Long</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Nguyễn Văn Cường</li>
+<li>Nguyễn Lê Quang Nhật</li>
+<li>Phạm Minh Đức</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a><ul>
+<li><a class="reference internal" href="#mo-hinh">13.7.1. Mô hình</a><ul>
+<li><a class="reference internal" href="#tang-du-doan-hang-muc">13.7.1.1. Tầng Dự đoán Hạng mục</a></li>
+<li><a class="reference internal" href="#tang-du-doan-khung-chua">13.7.1.2. Tầng Dự đoán Khung chứa</a></li>
+<li><a class="reference internal" href="#ghep-noi-du-doan-da-ty-le">13.7.1.3. Ghép nối Dự đoán Đa Tỷ lệ</a></li>
+<li><a class="reference internal" href="#khoi-giam-chieu-cao-va-chieu-rong">13.7.1.4. Khối giảm Chiều cao và Chiều rộng</a></li>
+<li><a class="reference internal" href="#khoi-mang-co-so">13.7.1.5. Khối Mạng Cơ sở</a></li>
+<li><a class="reference internal" href="#mo-hinh-hoan-chinh">13.7.1.6. Mô hình hoàn chỉnh</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#huan-luyen">13.7.2. Huấn luyện</a><ul>
+<li><a class="reference internal" href="#doc-du-lieu-va-khoi-tao">13.7.2.1. Đọc Dữ liệu và Khởi tạo</a></li>
+<li><a class="reference internal" href="#dinh-nghia-ham-mat-mat-va-ham-danh-gia">13.7.2.2. Định nghĩa Hàm mất mát và Hàm đánh giá</a></li>
+<li><a class="reference internal" href="#huan-luyen-mo-hinh">13.7.2.3. Huấn luyện Mô hình</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#du-doan">13.7.3. Dự đoán</a></li>
+<li><a class="reference internal" href="#tom-tat">13.7.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">13.7.5. Bài tập</a><ul>
+<li><a class="reference internal" href="#ham-mat-mat">13.7.5.1. Hàm mất mát</a></li>
+<li><a class="reference internal" href="#huan-luyen-va-du-doan">13.7.5.2. Huấn luyện và Dự đoán</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thao-luan">13.7.6. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">13.7.7. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="object-detection-dataset_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>13.6. Tập dữ liệu Phát hiện Đối tượng</div>
+         </div>
+     </a>
+     <a id="button-next" href="rcnn_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>13.8. CNN theo Vùng (R-CNN)</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

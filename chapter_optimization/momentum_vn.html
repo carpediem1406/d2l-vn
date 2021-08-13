@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>11.10. Động lượng &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11.11. Adagrad" href="adagrad_vn.html" />
+    <link rel="prev" title="11.9. Hạ Gradient Ngẫu nhiên theo Minibatch" href="minibatch-sgd_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">11. </span>Thuật toán Tối ưu</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">11.10. </span>Động lượng</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_optimization/momentum_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">11. Thuật toán Tối ưu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_multilayer-perceptrons/index_vn.html">4. Perceptron Đa tầng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/underfit-overfit_vn.html">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_multilayer-perceptrons/kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">11. Thuật toán Tối ưu</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!--
+# Momentum
+--><div class="section" id="dong-luong">
+<span id="sec-momentum"></span><h1><span class="section-number">11.10. </span>Động lượng<a class="headerlink" href="#dong-luong" title="Permalink to this headline">¶</a></h1>
+<!--
+In :numref:`sec_sgd` we reviewed what happens when performing stochastic gradient descent, i.e., when performing optimization where only a noisy variant of the gradient is available.
+In particular, we noticed that for noisy gradients we need to be extra cautious when it comes to choosing the learning rate in the face of noise.
+If we decrease it too rapidly, convergence stalls.
+If we are too lenient, we fail to converge to a good enough solution since noise keeps on driving us away from optimality.
+--><p>Trong <a class="reference internal" href="sgd_vn.html#sec-sgd"><span class="std std-numref">Section 11.8</span></a> chúng ta đã thảo luận cách hoạt động của hạ
+gradient ngẫu nhiên, chỉ sử dụng một mẫu gradient có nhiễu cho việc tối
+ưu. Cụ thể, khi có nhiễu ta cần cực kỳ cẩn trọng trong việc chọn tốc độ
+học. Nếu ta giảm tốc độ học quá nhanh, việc hội tụ sẽ ngưng trệ. Nếu tốc
+độ học giảm chậm, sẽ khó hội tụ tại một kết quả đủ tốt vì nhiễu sẽ đẩy
+điểm hội tụ ra xa điểm tối ưu.</p>
+<!--
+## Basics
+--><div class="section" id="kien-thuc-co-ban">
+<h2><span class="section-number">11.10.1. </span>Kiến thức Cơ bản<a class="headerlink" href="#kien-thuc-co-ban" title="Permalink to this headline">¶</a></h2>
+<!--
+In this section, we will explore more effective optimization algorithms, especially for certain types of optimization problems that are common in practice.
+--><p>Trong phần này, ta sẽ cùng khám phá những thuật toán tối ưu hiệu quả
+hơn, đặc biệt là cho một số dạng bài toán tối ưu phổ biến trong thực tế.</p>
+<!--
+### Leaky Averages
+--><div class="section" id="gia-tri-trung-binh-ro-ri">
+<h3><span class="section-number">11.10.1.1. </span>Giá trị Trung bình Rò rỉ<a class="headerlink" href="#gia-tri-trung-binh-ro-ri" title="Permalink to this headline">¶</a></h3>
+<!--
+The previous section saw us discussing minibatch SGD as a means for accelerating computation.
+It also had the nice side-effect that averaging gradients reduced the amount of variance.
+The minibatch SGD can be calculated by:
+--><p>Trong phần trước, ta đã thảo luận về hạ gradient ngẫu nhiên theo
+minibatch như một cách để tăng tốc độ tính toán. Đồng thời, kỹ thuật này
+cũng có một tác dụng phụ tốt là giúp giảm phương sai.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-0">
+<span class="eqno">(11.10.1)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-0" title="Permalink to this equation">¶</a></span>\[\mathbf{g}_{t, t-1} = \partial_{\mathbf{w}} \frac{1}{|\mathcal{B}_t|} \sum_{i \in \mathcal{B}_t} f(\mathbf{x}_{i}, \mathbf{w}_{t-1}) = \frac{1}{|\mathcal{B}_t|} \sum_{i \in \mathcal{B}_t} \mathbf{h}_{i, t-1}.\]</div>
+<!--
+To keep the notation simple, here we used $\mathbf{h}_{i, t-1} = \partial_{\mathbf{w}} f(\mathbf{x}_i, \mathbf{w}_{t-1})$ as the SGD for sample $i$ using the weights updated at time $t-1$.
+It would be nice if we could benefit from the effect of variance reduction even beyond averaging gradients on a mini-batch.
+One option to accomplish this task is to replace the gradient computation by a "leaky average":
+--><p>Ở đây để đơn giản kí hiệu, ta đặt
+<span class="math notranslate nohighlight">\(\mathbf{h}_{i, t-1} = \partial_{\mathbf{w}} f(\mathbf{x}_i, \mathbf{w}_{t-1})\)</span>
+là gradient của mẫu <span class="math notranslate nohighlight">\(i\)</span> với trọng số tại bước thời gian
+<span class="math notranslate nohighlight">\(t-1\)</span>. Sẽ rất tốt nếu ta có thể tận dụng hơn nữa lợi ích từ việc
+giảm phương sai, hơn là chỉ lấy trung bình gradient trên minibatch. Một
+phương pháp để đạt được điều này đó là thay thế việc tính toán gradient
+bằng một giá trị “trung bình rò rỉ” (<em>leaky average</em>):</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-1">
+<span class="eqno">(11.10.2)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-1" title="Permalink to this equation">¶</a></span>\[\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \mathbf{g}_{t, t-1}\]</div>
+<!--
+for some $\beta \in (0, 1)$. This effectively replaces the instantaneous gradient by one that's been averaged over multiple *past* gradients.
+$\mathbf{v}$ is called *momentum*.
+It accumulates past gradients similar to how a heavy ball rolling down the objective function landscape integrates over past forces.
+To see what is happening in more detail let us expand $\mathbf{v}_t$ recursively into
+--><p>với <span class="math notranslate nohighlight">\(\beta \in (0, 1)\)</span>. Phương pháp này thay thế gradient tức thời
+bằng một giá trị được lấy trung bình trên các gradient trước đó.
+<span class="math notranslate nohighlight">\(\mathbf{v}\)</span> được gọi là <em>động lượng (momentum)</em>. Động lượng tích
+luỹ các gradient trong quá khứ tương tự như cách một quả bóng nặng lăn
+xuống ngọn đồi sẽ tích hợp hết tất cả các lực tác động lên nó từ lúc bắt
+đầu. Để hiểu rõ hơn, hãy khai triển đệ quy <span class="math notranslate nohighlight">\(\mathbf{v}_t\)</span> thành</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-2">
+<span class="eqno">(11.10.3)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-2" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
+\mathbf{v}_t = \beta^2 \mathbf{v}_{t-2} + \beta \mathbf{g}_{t-1, t-2} + \mathbf{g}_{t, t-1}
+= \ldots, = \sum_{\tau = 0}^{t-1} \beta^{\tau} \mathbf{g}_{t-\tau, t-\tau-1}.
+\end{aligned}\]</div>
+<!--
+Large $\beta$ amounts to a long-range average, whereas small $\beta$ amounts to only a slight correction relative to a gradient method.
+The new gradient replacement no longer points into the direction of steepest descent on a particular instance any longer but rather in the direction of a weighted average of past gradients.
+This allows us to realize most of the benefits of averaging over a batch without the cost of actually computing the gradients on it.
+We will revisit this averaging procedure in more detail later.
+--><p>Khi <span class="math notranslate nohighlight">\(\beta\)</span> lớn đồng nghĩa với việc lấy trung bình trong một
+khoảng rộng, trong khi đó nếu <span class="math notranslate nohighlight">\(\beta\)</span> nhỏ phương pháp này sẽ không
+khác nhiều so với hạ gradient thông thường. Gradient mới này không còn
+có hướng đi dốc nhất trong từng trường hợp cụ thể nữa mà thay vào đó đi
+theo hướng trung bình có trọng số của các gradient trước đó. Điều này
+giúp chúng ta nhận thêm lợi ích của việc tính trung bình theo batch mà
+không cần tốn chi phí tính toán gradients trên batch. Chúng ta sẽ xem
+xét cụ thể hơn quy trình lấy trung bình ở những phần sau.</p>
+<!--
+The above reasoning formed the basis for what is now known as *accelerated* gradient methods, such as gradients with momentum.
+They enjoy the additional benefit of being much more effective in cases where the optimization problem is ill-conditioned
+(i.e., where there are some directions where progress is much slower than in others, resembling a narrow canyon).
+Furthermore, they allow us to average over subsequent gradients to obtain more stable directions of descent.
+Indeed, the aspect of acceleration even for noise-free convex problems is one of the key reasons why momentum works and why it works so well.
+--><p>Các lập luận trên là cơ sở để hình thành các phương pháp <em>tăng tốc</em>
+gradient, chẳng hạn như gradient với động lượng. Một lợi ích phụ là
+chúng hiệu quả hơn rất nhiều trong các trường hợp bài toán tối ưu có
+điều kiện xấu (ví dụ: khi một vài hướng có tiến trình tối ưu chậm hơn
+nhiều so với các hướng khác, giống như ở trong một hẻm núi hẹp). Hơn
+nữa, cách này cho phép lấy trung bình các gradient liền kề để đạt được
+hướng đi xuống ổn định hơn. Thật vậy, việc tăng tốc ngay cả đối với bài
+toán lồi không nhiễu là một trong những nguyên nhân chính lý giải vì sao
+động lượng hoạt động và có hiệu quả rất tốt.</p>
+<!--
+As one would expect, due to its efficacy momentum is a well-studied subject in optimization for deep learning and beyond.
+See e.g., the beautiful [expository article](https://distill.pub/2017/momentum/) by :cite:`Goh.2017` for an in-depth analysis and interactive animation.
+It was proposed by :cite:`Polyak.1964`.
+:cite:`Nesterov.2018` has a detailed theoretical discussion in the context of convex optimization.
+Momentum in deep learning has been known to be beneficial for a long time.
+See e.g., the discussion by :cite:`Sutskever.Martens.Dahl.ea.2013` for details.
+--><p>Do tính hiệu quả của nó, động lượng là một chủ đề đã được nghiên cứu kỹ
+trong tối ưu hóa cho học sâu và hơn thế nữa. <a class="reference external" href="https://distill.pub/2017/momentum/">Bài báo rất đẹp
+này</a> của <a class="bibtex reference internal" href="../chapter_references/zreferences.html#goh-2017" id="id1">[Goh, 2017]</a> cung
+cấp phân tích chuyên sâu và minh hoạ sinh động về phương pháp động
+lượng. Động lượng được đề xuất bởi <a class="bibtex reference internal" href="../chapter_references/zreferences.html#polyak-1964" id="id2">[Polyak, 1964]</a>.
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#nesterov-2018" id="id3">[Nesterov, 2018]</a> có một thảo luận chi tiết về lý thuyết động
+lượng trong ngữ cảnh tối ưu hóa lồi. Động lượng trong học sâu đã được
+biết đến từ lâu vì lợi ích mà nó mang lại. Tham khảo
+<a class="bibtex reference internal" href="../chapter_references/zreferences.html#sutskever-martens-dahl-ea-2013" id="id4">[Sutskever et al., 2013]</a> để biết thêm chi tiết.</p>
+<!--
+### An Ill-conditioned Problem
+--></div>
+<div class="section" id="bai-toan-voi-dieu-kien-xau">
+<h3><span class="section-number">11.10.1.2. </span>Bài toán với Điều kiện Xấu<a class="headerlink" href="#bai-toan-voi-dieu-kien-xau" title="Permalink to this headline">¶</a></h3>
+<!--
+To get a better understanding of the geometric properties of the momentum method we revisit gradient descent, albeit with a significantly less pleasant objective function.
+Recall that in :numref:`sec_gd` we used $f(\mathbf{x}) = x_1^2 + 2 x_2^2$, i.e., a moderately distorted ellipsoid objective.
+We distort this function further by stretching it out in the $x_1$ direction via
+--><p>Để hiểu hơn về các tính chất hình học của phương pháp động lượng, hãy ôn
+lại thuật toán hạ gradient sử dụng hàm mục tiêu khó chịu hơn. Trong
+<a class="reference internal" href="gd_vn.html#sec-gd"><span class="std std-numref">Section 11.7</span></a> ta sử dụng hàm mục tiêu dạng elip
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) = x_1^2 + 2 x_2^2\)</span>. Ta sẽ sửa hàm này một chút để
+kéo dãn thêm theo hướng <span class="math notranslate nohighlight">\(x_1\)</span> như sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-3">
+<span class="eqno">(11.10.4)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-3" title="Permalink to this equation">¶</a></span>\[f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2.\]</div>
+<!--
+As before $f$ has its minimum at $(0, 0)$. This function is *very* flat in the direction of $x_1$.
+Let us see what happens when we perform gradient descent as before on this new function.
+We pick a learning rate of $0.4$.
+--><p>Cũng như trước, <span class="math notranslate nohighlight">\(f\)</span> đạt cực tiểu tại điểm <span class="math notranslate nohighlight">\((0, 0)\)</span>. Hàm này
+<em>rất</em> phẳng theo hướng <span class="math notranslate nohighlight">\(x_1\)</span>. Hãy xem điều gì sẽ xảy ra khi thực
+hiện hạ gradient tương tự như trước trên hàm mới định nghĩa. Ta đặt tốc
+độ học bằng <span class="math notranslate nohighlight">\(0.4\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="k">def</span> <span class="nf">f_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x2</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="k">def</span> <span class="nf">gd_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">gd_2d</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_1_0.svg" src="../_images/output_momentum_vn_5c39fa_1_0.svg" /></div>
+<!--
+By construction, the gradient in the $x_2$ direction is *much* higher and changes much more rapidly than in the horizontal $x_1$ direction.
+Thus we are stuck between two undesirable choices: if we pick a small learning rate we ensure that the solution does not diverge in the $x_2$ direction
+but we are saddled with slow convergence in the $x_1$ direction.
+Conversely, with a large learning rate we progress rapidly in the $x_1$ direction but diverge in $x_2$.
+The example below illustrates what happens even after a slight increase in learning rate from $0.4$ to $0.6$.
+Convergence in the $x_1$ direction improves but the overall solution quality is much worse.
+--><p>Có thể thấy gradient theo hướng <span class="math notranslate nohighlight">\(x_2\)</span> có giá trị <em>lớn hơn nhiều</em>
+và thay đổi nhanh hơn nhiều so với gradient theo hướng ngang
+<span class="math notranslate nohighlight">\(x_1\)</span>. Vì thế, chúng ta bị mắc kẹt giữa hai lựa chọn không mong
+muốn: Nếu chọn tốc độ học nhỏ, các nghiệm sẽ không phân kỳ theo hướng
+<span class="math notranslate nohighlight">\(x_2\)</span>, nhưng tốc độ hội tụ sẽ chậm theo hướng <span class="math notranslate nohighlight">\(x_1\)</span>. Ngược
+lại, với tốc độ học lớn mô hình sẽ hội tụ nhanh theo hướng <span class="math notranslate nohighlight">\(x_1\)</span>
+nhưng phân kỳ theo hướng <span class="math notranslate nohighlight">\(x_2\)</span>. Ví dụ dưới đây minh họa kết quả
+khi tăng nhẹ tốc độ học từ <span class="math notranslate nohighlight">\(0.4\)</span> lên <span class="math notranslate nohighlight">\(0.6\)</span>. Sự hội tụ theo
+hướng <span class="math notranslate nohighlight">\(x_1\)</span> được cải thiện nhưng kết quả cuối cùng tệ hơn rất
+nhiều.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eta</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">gd_2d</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_3_0.svg" src="../_images/output_momentum_vn_5c39fa_3_0.svg" /></div>
+<!--
+### The Momentum Method
+--></div>
+<div class="section" id="phuong-phap-dong-luong">
+<h3><span class="section-number">11.10.1.3. </span>Phương pháp Động lượng<a class="headerlink" href="#phuong-phap-dong-luong" title="Permalink to this headline">¶</a></h3>
+<!--
+The momentum method allows us to solve the gradient descent problem described above.
+Looking at the optimization trace above we might intuit that averaging gradients over the past would work well.
+After all, in the $x_1$ direction this will aggregate well-aligned gradients, thus increasing the distance we cover with every step.
+Conversely, in the $x_2$ direction where gradients oscillate, an aggregate gradient will reduce step size due to oscillations that cancel each other out.
+Using $\mathbf{v}_t$ instead of the gradient $\mathbf{g}_t$ yields the following update equations:
+--><p>Phương pháp động lượng cho phép chúng ta giải quyết vấn đề với hạ
+gradient mô tả ở trên. Nhìn vào các vết tối ưu trên, có thể thấy sẽ tốt
+hơn nếu lấy trung bình gradient trong quá khứ. Ở chiều <span class="math notranslate nohighlight">\(x_1\)</span> các
+gradient là cùng hướng, cách làm này sẽ đơn thuần lấy tổng độ lớn, từ đó
+tăng khoảng cách di chuyển ở từng bước. Ngược lại, gradient dao động
+mạnh theo hướng <span class="math notranslate nohighlight">\(x_2\)</span>, do đó kết hợp các gradient sẽ làm giảm kích
+thước bước do dao động triệt tiêu lẫn nhau. Sử dụng <span class="math notranslate nohighlight">\(\mathbf{v}_t\)</span>
+thay vì gradient <span class="math notranslate nohighlight">\(\mathbf{g}_t\)</span>, ta có các phương trình cập nhật
+sau:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-4">
+<span class="eqno">(11.10.5)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-4" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mathbf{v}_t &amp;\leftarrow \beta \mathbf{v}_{t-1} + \mathbf{g}_{t, t-1}, \\
+\mathbf{x}_t &amp;\leftarrow \mathbf{x}_{t-1} - \eta_t \mathbf{v}_t.
+\end{aligned}\end{split}\]</div>
+<!--
+Note that for $\beta = 0$ we recover regular gradient descent.
+Before delving deeper into the mathematical properties let us have a quick look at how the algorithm behaves in practice.
+--><p>Với <span class="math notranslate nohighlight">\(\beta = 0\)</span>, phương pháp này tương đương với thuật toán hạ
+gradient thông thường. Trước khi đi sâu hơn vào các tính chất toán học,
+hãy xem thuật toán này hoạt động như thế nào.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">momentum_2d</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="n">v1</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x1</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v2</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">x2</span>
+    <span class="k">return</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">v1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span>
+
+<span class="n">eta</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.5</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">momentum_2d</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_5_0.svg" src="../_images/output_momentum_vn_5c39fa_5_0.svg" /></div>
+<!--
+As we can see, even with the same learning rate that we used before, momentum still converges well.
+Let us see what happens when we decrease the momentum parameter.
+Halving it to $\beta = 0.25$ leads to a trajectory that barely converges at all.
+Nonetheless, it is a lot better than without momentum (when the solution diverges).
+--><p>Có thể thấy, ngay cả với tốc độ học như trước, phương pháp động lượng
+vẫn hội tụ tốt. Giờ hãy xem điều gì xảy ra khi giảm tham số động lượng.
+Giảm một nửa động lượng <span class="math notranslate nohighlight">\(\beta = 0.25\)</span> dẫn đến một quỹ đạo chưa
+thật sự hội tụ. Tuy nhiên, kết quả đó vẫn tốt hơn rất nhiều so với khi
+không sử dụng động lượng (nghiệm phân kỳ).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eta</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.25</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">show_trace_2d</span><span class="p">(</span><span class="n">f_2d</span><span class="p">,</span> <span class="n">d2l</span><span class="o">.</span><span class="n">train_2d</span><span class="p">(</span><span class="n">momentum_2d</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_7_0.svg" src="../_images/output_momentum_vn_5c39fa_7_0.svg" /></div>
+<!--
+Note that we can combine momentum with SGD and in particular, minibatch-SGD.
+The only change is that in that case we replace the gradients $\mathbf{g}_{t, t-1}$ with $\mathbf{g}_t$.
+Last, for convenience we initialize $\mathbf{v}_0 = 0$ at time $t=0$.
+Let us look at what leaky averaging actually does to the updates.
+--><p>Ta cũng có thể kết hợp động lượng với SGD và đặc biệt là SGD theo
+minibatch. Thay đổi duy nhất trong trường hợp đó là các gradient
+<span class="math notranslate nohighlight">\(\mathbf{g}_{t, t-1}\)</span> được thay bằng <span class="math notranslate nohighlight">\(\mathbf{g}_t\)</span>. Cuối
+cùng, để thuận tiện ta khởi tạo <span class="math notranslate nohighlight">\(\mathbf{v}_0 = 0\)</span> tại thời điểm
+<span class="math notranslate nohighlight">\(t=0\)</span>. Hãy xem phép trung bình rò rỉ thực sự làm gì khi cập nhật.</p>
+<!--
+### Effective Sample Weight
+--></div>
+<div class="section" id="trong-so-mau-hieu-dung">
+<h3><span class="section-number">11.10.1.4. </span>Trọng số mẫu hiệu dụng<a class="headerlink" href="#trong-so-mau-hieu-dung" title="Permalink to this headline">¶</a></h3>
+<!--
+Recall that $\mathbf{v}_t = \sum_{\tau = 0}^{t-1} \beta^{\tau} \mathbf{g}_{t-\tau, t-\tau-1}$.
+In the limit the terms add up to $\sum_{\tau=0}^\infty \beta^\tau = \frac{1}{1-\beta}$.
+In other words, rather than taking a step of size $\eta$ in GD or SGD we take a step of size $\frac{\eta}{1-\beta}$ while at the same time, dealing with a potentially much better behaved descent direction.
+These are two benefits in one.
+To illustrate how weighting behaves for different choices of $\beta$ consider the diagram below.
+--><p>Hãy nhớ lại rằng
+<span class="math notranslate nohighlight">\(\mathbf{v}_t = \sum_{\tau = 0}^{t-1} \beta^{\tau} \mathbf{g}_{t-\tau, t-\tau-1}\)</span>.
+Tại giới hạn, tổng các số hạng là
+<span class="math notranslate nohighlight">\(\sum_{\tau=0}^\infty \beta^\tau = \frac{1}{1-\beta}\)</span>. Nói cách
+khác, thay vì kích thước bước <span class="math notranslate nohighlight">\(\eta\)</span> trong GD hoặc SGD, ta thực
+hiện bước dài hơn <span class="math notranslate nohighlight">\(\frac{\eta}{1-\beta}\)</span>, đồng thời hướng giảm
+gradient nhiều khả năng cũng tốt hơn. Đây là hai lợi ích trong một. Để
+minh họa ảnh hưởng của trọng số với các giá trị <span class="math notranslate nohighlight">\(\beta\)</span> khác nhau,
+hãy xem minh họa dưới đây.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">beta</span> <span class="ow">in</span> <span class="n">betas</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">beta</span> <span class="o">**</span> <span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;beta = </span><span class="si">{</span><span class="n">beta</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_9_0.svg" src="../_images/output_momentum_vn_5c39fa_9_0.svg" /></div>
+<!--
+## Practical Experiments
+--></div>
+</div>
+<div class="section" id="thuc-nghiem">
+<h2><span class="section-number">11.10.2. </span>Thực nghiệm<a class="headerlink" href="#thuc-nghiem" title="Permalink to this headline">¶</a></h2>
+<!--
+Let us see how momentum works in practice, i.e., when used within the context of a proper optimizer.
+For this we need a somewhat more scalable implementation.
+--><p>Hãy xem động lượng hoạt động như thế nào trong thực tế, khi được sử dụng
+cùng một bộ tối ưu. Để làm điều này, ta cần các đoạn mã dễ mở rộng hơn.</p>
+<!--
+### Implementation from Scratch
+--><div class="section" id="lap-trinh-tu-dau">
+<h3><span class="section-number">11.10.2.1. </span>Lập trình từ đầu<a class="headerlink" href="#lap-trinh-tu-dau" title="Permalink to this headline">¶</a></h3>
+<!--
+Compared with (minibatch) SGD the momentum method needs to maintain a set of  auxiliary variables, i.e., velocity.
+It has the same shape as the gradients (and variables of the optimization problem).
+In the implementation below we call these variables `states`.
+--><p>So với SGD hoặc SGD theo minibatch, phương pháp động lượng cần duy trì
+các biến phụ trợ, chính là vận tốc. Nó có kích thước giống gradient (và
+các biến khác trong bài toán tối ưu). Trong đoạn mã bên dưới, ta gọi các
+biến vận tốc này là <code class="docutils literal notranslate"><span class="pre">states</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">init_momentum_states</span><span class="p">(</span><span class="n">feature_dim</span><span class="p">):</span>
+    <span class="n">v_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">feature_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sgd_momentum</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">states</span><span class="p">):</span>
+        <span class="n">v</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;momentum&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">grad</span>
+        <span class="n">p</span><span class="p">[:]</span> <span class="o">-=</span> <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span>
+</pre></div>
+</div>
+<!--
+Let us see how this works in practice.
+--><p>Hãy xem đoạn mã hoạt động như thế nào trong thực tế.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_momentum</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">momentum</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">train_ch11</span><span class="p">(</span><span class="n">sgd_momentum</span><span class="p">,</span> <span class="n">init_momentum_states</span><span class="p">(</span><span class="n">feature_dim</span><span class="p">),</span>
+                   <span class="p">{</span><span class="s1">&#39;lr&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">&#39;momentum&#39;</span><span class="p">:</span> <span class="n">momentum</span><span class="p">},</span> <span class="n">data_iter</span><span class="p">,</span>
+                   <span class="n">feature_dim</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">)</span>
+
+<span class="n">data_iter</span><span class="p">,</span> <span class="n">feature_dim</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">get_data_ch11</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">train_momentum</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span><span class="p">:</span> <span class="mf">0.244</span><span class="p">,</span> <span class="mf">0.041</span> <span class="n">sec</span><span class="o">/</span><span class="n">epoch</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_13_1.svg" src="../_images/output_momentum_vn_5c39fa_13_1.svg" /></div>
+<!--
+When we increase the momentum hyperparameter `momentum` to 0.9, it amounts to a significantly larger effective sample size of $\frac{1}{1 - 0.9} = 10$.
+We reduce the learning rate slightly to $0.01$ to keep matters under control.
+--><p>Khi tăng siêu tham số động lượng <code class="docutils literal notranslate"><span class="pre">momentum</span></code> lên 0.9, kích thước mẫu
+hiệu dụng sẽ tăng lên đáng kể thành <span class="math notranslate nohighlight">\(\frac{1}{1 - 0.9} = 10\)</span>. Ta
+giảm tốc độ học xuống còn <span class="math notranslate nohighlight">\(0.01\)</span> để kiểm soát vấn đề.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_momentum</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span><span class="p">:</span> <span class="mf">0.246</span><span class="p">,</span> <span class="mf">0.041</span> <span class="n">sec</span><span class="o">/</span><span class="n">epoch</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_15_1.svg" src="../_images/output_momentum_vn_5c39fa_15_1.svg" /></div>
+<!--
+Reducing the learning rate further addresses any issue of non-smooth optimization problems.
+Setting it to $0.005$ yields good convergence properties.
+--><p>Tiếp tục giảm tốc độ học sẽ giải quyết bất kỳ vấn đề tối ưu không trơn
+tru nào. Giảm còn <span class="math notranslate nohighlight">\(0.005\)</span> đem lại các đặc tính hội tụ tốt.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_momentum</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span><span class="p">:</span> <span class="mf">0.242</span><span class="p">,</span> <span class="mf">0.041</span> <span class="n">sec</span><span class="o">/</span><span class="n">epoch</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_17_1.svg" src="../_images/output_momentum_vn_5c39fa_17_1.svg" /></div>
+<!--
+### Concise Implementation
+--></div>
+<div class="section" id="lap-trinh-suc-tich">
+<h3><span class="section-number">11.10.2.2. </span>Lập trình Súc tích<a class="headerlink" href="#lap-trinh-suc-tich" title="Permalink to this headline">¶</a></h3>
+<!--
+There is very little to do in Gluon since the standard `sgd` solver already had momentum built in.
+Setting matching parameters yields a very similar trajectory.
+--><p>Rất đơn giản nếu sử dụng Gluon vì bộ tối ưu <code class="docutils literal notranslate"><span class="pre">sgd</span></code> tiêu chuẩn đã tích
+hợp sẵn phương pháp động lượng. Với cùng các tham số, ta có quỹ đạo rất
+giống khi lập trình từ đầu.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d2l</span><span class="o">.</span><span class="n">train_concise_ch11</span><span class="p">(</span><span class="s1">&#39;sgd&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span> <span class="s1">&#39;momentum&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">},</span>
+                       <span class="n">data_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span><span class="p">:</span> <span class="mf">0.244</span><span class="p">,</span> <span class="mf">0.028</span> <span class="n">sec</span><span class="o">/</span><span class="n">epoch</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_19_1.svg" src="../_images/output_momentum_vn_5c39fa_19_1.svg" /></div>
+<!--
+## Theoretical Analysis
+--></div>
+</div>
+<div class="section" id="phan-tich-ly-thuyet">
+<h2><span class="section-number">11.10.3. </span>Phân tích Lý thuyết<a class="headerlink" href="#phan-tich-ly-thuyet" title="Permalink to this headline">¶</a></h2>
+<!--
+So far the 2D example of $f(x) = 0.1 x_1^2 + 2 x_2^2$ seemed rather contrived.
+We will now see that this is actually quite representative of the types of problem one might encounter, at least in the case of minimizing convex quadratic objective functions.
+--><p>Cho đến nay, ví dụ hai chiều <span class="math notranslate nohighlight">\(f(x) = 0.1 x_1^2 + 2 x_2^2\)</span> dường
+như không thực tế cho lắm. Thực tế, hàm này khá tiêu biểu cho các dạng
+bài toán có thể gặp phải, ít nhất trong trường hợp cực tiểu hóa các hàm
+mục tiêu lồi bậc hai.</p>
+<!--
+### Quadratic Convex Functions
+--><div class="section" id="ham-loi-bac-hai">
+<h3><span class="section-number">11.10.3.1. </span>Hàm lồi bậc Hai<a class="headerlink" href="#ham-loi-bac-hai" title="Permalink to this headline">¶</a></h3>
+<!--
+Consider the function
+--><p>Xét hàm số</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-5">
+<span class="eqno">(11.10.6)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-5" title="Permalink to this equation">¶</a></span>\[h(\mathbf{x}) = \frac{1}{2} \mathbf{x}^\top \mathbf{Q} \mathbf{x} + \mathbf{x}^\top \mathbf{c} + b.\]</div>
+<!--
+This is a general quadratic function.
+For positive definite matrices $\mathbf{Q} \succ 0$, i.e., for matrices with positive eigenvalues
+this has a minimizer at $\mathbf{x}^* = -\mathbf{Q}^{-1} \mathbf{c}$ with minimum value $b - \frac{1}{2} \mathbf{c}^\top \mathbf{Q}^{-1} \mathbf{c}$.
+Hence we can rewrite $h$ as
+--><p>Đây là một hàm bậc hai tổng quát. Với ma trận xác định dương
+<span class="math notranslate nohighlight">\(\mathbf{Q} \succ 0\)</span>, tức ma trận có trị riêng dương, hàm có
+nghiệm cực tiểu tại <span class="math notranslate nohighlight">\(\mathbf{x}^* = -\mathbf{Q}^{-1} \mathbf{c}\)</span>
+với giá trị cực tiểu
+<span class="math notranslate nohighlight">\(b - \frac{1}{2} \mathbf{c}^\top \mathbf{Q}^{-1} \mathbf{c}\)</span>. Do
+đó ta có thể viết lại <span class="math notranslate nohighlight">\(h\)</span> như sau</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-6">
+<span class="eqno">(11.10.7)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-6" title="Permalink to this equation">¶</a></span>\[h(\mathbf{x}) = \frac{1}{2} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c})^\top \mathbf{Q} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c}) + b - \frac{1}{2} \mathbf{c}^\top \mathbf{Q}^{-1} \mathbf{c}.\]</div>
+<!--
+The gradient is given by $\partial_{\mathbf{x}} f(\mathbf{x}) = \mathbf{Q} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c})$.
+That is, it is given by the distance between $\mathbf{x}$ and the minimizer, multiplied by $\mathbf{Q}$.
+Consequently also the momentum  is a linear combination of terms $\mathbf{Q} (\mathbf{x}_t - \mathbf{Q}^{-1} \mathbf{c})$.
+--><p>Gradient được tính bởi
+<span class="math notranslate nohighlight">\(\partial_{\mathbf{x}} f(\mathbf{x}) = \mathbf{Q} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c})\)</span>.
+Nghĩa là bằng khoảng cách giữa <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> và nghiệm cực tiểu
+nhân với <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>. Do đó, động lượng cũng là tổ hợp tuyến tính
+của <span class="math notranslate nohighlight">\(\mathbf{Q} (\mathbf{x}_t - \mathbf{Q}^{-1} \mathbf{c})\)</span>.</p>
+<!--
+Since $\mathbf{Q}$ is positive definite it can be decomposed into its eigensystem via
+$\mathbf{Q} = \mathbf{O}^\top \boldsymbol{\Lambda} \mathbf{O}$ for an orthogonal (rotation) matrix $\mathbf{O}$ and a diagonal matrix $\boldsymbol{\Lambda}$ of positive eigenvalues.
+This allows us to perform a change of variables from $\mathbf{x}$ to $\mathbf{z} := \mathbf{O} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c})$ to obtain a much simplified expression:
+--><p>Vì <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> là xác định dương nên nó có thể được phân tích
+thành hệ riêng thông qua
+<span class="math notranslate nohighlight">\(\mathbf{Q} = \mathbf{O}^\top \boldsymbol{\Lambda} \mathbf{O}\)</span>,
+với <span class="math notranslate nohighlight">\(\mathbf{O}\)</span> là ma trận trực giao (xoay vòng) và
+<span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}\)</span> là ma trận đường chéo của các trị riêng
+dương. Điều này cho phép ta đổi biến <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> thành
+<span class="math notranslate nohighlight">\(\mathbf{z} := \mathbf{O} (\mathbf{x} - \mathbf{Q}^{-1} \mathbf{c})\)</span>
+để có biểu thức đơn giản hơn nhiều:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-7">
+<span class="eqno">(11.10.8)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-7" title="Permalink to this equation">¶</a></span>\[h(\mathbf{z}) = \frac{1}{2} \mathbf{z}^\top \boldsymbol{\Lambda} \mathbf{z} + b'.\]</div>
+<!--
+Here $c' = b - \frac{1}{2} \mathbf{c}^\top \mathbf{Q}^{-1} \mathbf{c}$.
+Since $\mathbf{O}$ is only an orthogonal matrix this does not perturb the gradients in a meaningful way.
+Expressed in terms of $\mathbf{z}$ gradient descent becomes
+--><p>Ở đây
+<span class="math notranslate nohighlight">\(c' = b - \frac{1}{2} \mathbf{c}^\top \mathbf{Q}^{-1} \mathbf{c}\)</span>.
+Vì <span class="math notranslate nohighlight">\(\mathbf{O}\)</span> chỉ là một ma trận trực giao nên điều này không
+làm nhiễu các gradient một cách có ý nghĩa. Biểu diễn theo
+<span class="math notranslate nohighlight">\(\mathbf{z}\)</span>, ta có hạ gradient</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-8">
+<span class="eqno">(11.10.9)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-8" title="Permalink to this equation">¶</a></span>\[\mathbf{z}_t = \mathbf{z}_{t-1} - \boldsymbol{\Lambda} \mathbf{z}_{t-1} = (\mathbf{I} - \boldsymbol{\Lambda}) \mathbf{z}_{t-1}.\]</div>
+<!--
+The important fact in this expression is that gradient descent *does not mix* between different eigenspaces.
+That is, when expressed in terms of the eigensystem of $\mathbf{Q}$ the optimization problem proceeds in a coordinate-wise manner.
+This also holds for momentum.
+--><p>Một điểm quan trọng trong biểu thức này là hạ gradient <em>không trộn lẫn</em>
+các không gian riêng khác nhau. Nghĩa là, khi được biểu diễn dưới dạng
+hệ riêng của <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, việc tối ưu được thực hiện theo từng
+trục tọa độ. Điều này cũng đúng với phương pháp động lượng.</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-9">
+<span class="eqno">(11.10.10)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-9" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{aligned}
+\mathbf{v}_t &amp; = \beta \mathbf{v}_{t-1} + \boldsymbol{\Lambda} \mathbf{z}_{t-1} \\
+\mathbf{z}_t &amp; = \mathbf{z}_{t-1} - \eta \left(\beta \mathbf{v}_{t-1} + \boldsymbol{\Lambda} \mathbf{z}_{t-1}\right) \\
+    &amp; = (\mathbf{I} - \eta \boldsymbol{\Lambda}) \mathbf{z}_{t-1} - \eta \beta \mathbf{v}_{t-1}.
+\end{aligned}\end{split}\]</div>
+<!--
+In doing this we just proved the following theorem: Gradient Descent with and without momentum for a convex quadratic function decomposes
+into coordinate-wise optimization in the direction of the eigenvectors of the quadratic matrix.
+--><p>Khi thực hiện điều này, ta đã chứng minh định lý sau: Hạ Gradient có và
+không có động lượng cho hàm lồi bậc hai có thể được phân tích thành bài
+toán tối ưu theo hướng các vector riêng của ma trận bậc hai theo từng
+trục tọa độ.</p>
+<!--
+### Scalar Functions
+--></div>
+<div class="section" id="ham-vo-huong">
+<h3><span class="section-number">11.10.3.2. </span>Hàm vô hướng<a class="headerlink" href="#ham-vo-huong" title="Permalink to this headline">¶</a></h3>
+<!--
+Given the above result let us see what happens when we minimize the function $f(x) = \frac{\lambda}{2} x^2$. For gradient descent we have
+--><p>Với kết quả trên hãy xem điều gì xảy ra khi cực tiểu hóa hàm
+<span class="math notranslate nohighlight">\(f(x) = \frac{\lambda}{2} x^2\)</span>. Ta có hạ gradient</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-10">
+<span class="eqno">(11.10.11)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-10" title="Permalink to this equation">¶</a></span>\[x_{t+1} = x_t - \eta \lambda x_t = (1 - \eta \lambda) x_t.\]</div>
+<!--
+Whenever $|1 - \eta \lambda| < 1$ this optimization converges at an exponential rate since after $t$ steps we have $x_t = (1 - \eta \lambda)^t x_0$.
+This shows how the rate of convergence improves initially as we increase the learning rate $\eta$ until $\eta \lambda = 1$.
+Beyond that things diverge and for $\eta \lambda > 2$ the optimization problem diverges.
+--><p>Với <span class="math notranslate nohighlight">\(|1 - \eta \lambda| &lt; 1\)</span>, sau <span class="math notranslate nohighlight">\(t\)</span> bước ta có
+<span class="math notranslate nohighlight">\(x_t = (1 - \eta \lambda)^t x_0\)</span>, do đó tốc độ hội tụ sẽ theo hàm
+mũ. Tốc độ hội tụ sẽ tăng khi tăng tốc độ học <span class="math notranslate nohighlight">\(\eta\)</span> cho đến khi
+<span class="math notranslate nohighlight">\(\eta \lambda = 1\)</span>. Khi <span class="math notranslate nohighlight">\(\eta \lambda &gt; 2\)</span>, bài toán tối ưu
+sẽ phân kỳ.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lambdas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">lam</span> <span class="ow">in</span> <span class="n">lambdas</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span>
+    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">lam</span><span class="p">)</span> <span class="o">**</span> <span class="n">t</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;lambda = </span><span class="si">{</span><span class="n">lam</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_momentum_vn_5c39fa_21_0.svg" src="../_images/output_momentum_vn_5c39fa_21_0.svg" /></div>
+<!--
+To analyze convergence in the case of momentum we begin by rewriting the update equations in terms of two scalars: one for $x$ and one for the momentum $v$. This yields:
+--><p>Để phân tích tính hội tụ khi sử dụng động lượng, ta viết lại các phương
+trình cập nhật theo hai số vô hướng: <span class="math notranslate nohighlight">\(x\)</span> và động lượng <span class="math notranslate nohighlight">\(v\)</span>.
+Ta có:</p>
+<div class="math notranslate nohighlight" id="equation-chapter-optimization-momentum-vn-11">
+<span class="eqno">(11.10.12)<a class="headerlink" href="#equation-chapter-optimization-momentum-vn-11" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{bmatrix} v_{t+1} \\ x_{t+1} \end{bmatrix} =
+\begin{bmatrix} \beta &amp; \lambda \\ -\eta \beta &amp; (1 - \eta \lambda) \end{bmatrix}
+\begin{bmatrix} v_{t} \\ x_{t} \end{bmatrix} = \mathbf{R}(\beta, \eta, \lambda) \begin{bmatrix} v_{t} \\ x_{t} \end{bmatrix}.\end{split}\]</div>
+<!--
+We used $\mathbf{R}$ to denote the $2 \times 2$ governing convergence behavior.
+After $t$ steps the initial choice $[v_0, x_0]$ becomes $\mathbf{R}(\beta, \eta, \lambda)^t [v_0, x_0]$.
+Hence, it is up to the eigenvalues of $\mathbf{R}$ to detmine the speed of convergence.
+See the [Distill post](https://distill.pub/2017/momentum/) of :cite:`Goh.2017` for a great animation and :cite:`Flammarion.Bach.2015` for a detailed analysis.
+One can show that $0 < \eta \lambda < 2 + 2 \beta$ momentum converges.
+This is a larger range of feasible parameters when compared to $0 < \eta \lambda < 2$ for gradient descent.
+It also suggests that in general large values of $\beta$ are desirable.
+Further details require a fair amount of technical detail and we suggest that the interested reader consult the original publications.
+--><p>Ta kí hiệu <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> là ma trận chi phối hội tụ, kích thước
+<span class="math notranslate nohighlight">\(2 \times 2\)</span>. Sau <span class="math notranslate nohighlight">\(t\)</span> bước thì giá trị ban đầu
+<span class="math notranslate nohighlight">\([v_0, x_0]\)</span> sẽ là
+<span class="math notranslate nohighlight">\(\mathbf{R}(\ beta, \eta, \lambda)^t [v_0, x_0]\)</span>. Do đó, các trị
+riêng của <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> sẽ quyết định tốc độ hội tụ. Độc giả có thể
+xem hình ảnh động tại <a class="reference external" href="https://distill.pub/2017/momentum/">bài viết của
+Distill</a> của <a class="bibtex reference internal" href="../chapter_references/zreferences.html#goh-2017" id="id5">[Goh, 2017]</a>
+và đọc thêm <a class="bibtex reference internal" href="../chapter_references/zreferences.html#flammarion-bach-2015" id="id6">[Flammarion &amp; Bach, 2015]</a> để biết phân tích chi tiết.
+Có thể chỉ ra rằng phương pháp động lượng hội tụ với
+<span class="math notranslate nohighlight">\(0 &lt; \eta \lambda &lt; 2 + 2 \beta\)</span>, có khoảng tham số khả thi lớn
+hơn khoảng <span class="math notranslate nohighlight">\(0 &lt; \eta \lambda &lt;2\)</span> của hạ gradient. Điều này cũng
+gợi ý rằng nhìn chung ta mong muốn <span class="math notranslate nohighlight">\(\beta\)</span> có giá trị lớn. Chi
+tiết kỹ thuật đòi hỏi nền tảng kiến thức sâu hơn, bạn đọc quan tâm có
+thể tham khảo các bài báo gốc.</p>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">11.10.4. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Momentum replaces gradients with a leaky average over past gradients. This accelerates convergence significantly.
+* It is desirable for both noise-free gradient descent and (noisy) stochastic gradient descent.
+* Momentum prevents stalling of the optimization process that is much more likely to occur for stochastic gradient descent.
+* The effective number of gradients is given by $\frac{1}{1-\beta}$ due to exponentiated downweighting of past data.
+* In the case of convex quadratic problems this can be analyzed explicitly in detail.
+* Implementation is quite straightforward but it requires us to store an additional state vector (momentum $\mathbf{v}$).
+--><ul class="simple">
+<li>Phương pháp động lượng thay thế gradient bằng trung bình rò rỉ của
+các gradient trong quá khứ, giúp tăng tốc độ hội tụ đáng kể.</li>
+<li>Phương pháp này có thể sử dụng cho cả hạ gradient không nhiễu và hạ
+gradient ngẫu nhiên (có nhiễu).</li>
+<li>Phương pháp động lượng giúp tránh việc tối ưu bị ngưng trệ, điều
+nhiều khả năng xảy ra đối với hạ gradient ngẫu nhiên.</li>
+<li>Số lượng gradient hiệu dụng là <span class="math notranslate nohighlight">\(\frac{1}{1-\beta}\)</span>, được tính
+bằng giới hạn của tổng cấp số nhân.</li>
+<li>Trong trường hợp các bài toán lồi bậc hai, hạ gradient (có và không
+có động lượng) có thể được phân tích chi tiết một cách tường minh.</li>
+<li>Việc lập trình khá đơn giản nhưng cần lưu trữ thêm một vector trạng
+thái (động lượng <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>).</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">11.10.5. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Use other combinations of momentum hyperparameters and learning rates and observe and analyze the different experimental results.
+2. Try out GD and momentum for a quadratic problem where you have multiple eigenvalues, i.e., $f(x) = \frac{1}{2} \sum_i \lambda_i x_i^2$, e.g., $\lambda_i = 2^{-i}$.
+Plot how the values of $x$ decrease for the initialization $x_i = 1$.
+3. Derive minimum value and minimizer for $h(\mathbf{x}) = \frac{1}{2} \mathbf{x}^\top \mathbf{Q} \mathbf{x} + \mathbf{x}^\top \mathbf{c} + b$.
+4. What changes when we perform SGD with momentum? What happens when we use mini-batch SGD with momentum? Experiment with the parameters?
+--><ol class="arabic simple">
+<li>Quan sát và phân tích kết quả khi sử dụng các tổ hợp động lượng và
+tốc độ học khác nhau.</li>
+<li>Hãy thử dùng hạ gradient có động lượng cho bài toán bậc hai có nhiều
+trị riêng, ví dụ: <span class="math notranslate nohighlight">\(f(x) = \frac{1}{2} \sum_i \lambda_i x_i^2\)</span>,
+e.g., <span class="math notranslate nohighlight">\(\lambda_i = 2^{-i}\)</span>. Vẽ đồ thị biểu diễn sự giảm của
+<span class="math notranslate nohighlight">\(x\)</span> khi khởi tạo <span class="math notranslate nohighlight">\(x_i = 1\)</span>.</li>
+<li>Tính giá trị và nghiệm cực tiểu của
+<span class="math notranslate nohighlight">\(h(\mathbf{x}) = \frac{1}{2} \mathbf{x}^\top \mathbf{Q} \mathbf{x} + \mathbf{x}^\top \mathbf{c} + b\)</span>.</li>
+<li>Điều gì thay đổi khi ta thực hiện SGD và SGD theo minibatch có động
+lượng? Thử nghiệm với các tham số.</li>
+</ol>
+</div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">11.10.6. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.d2l.ai/t/354">Tiếng Anh - MXNet</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">11.10.7. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Nguyễn Thanh Hòa</li>
+<li>Nguyễn Văn Quang</li>
+<li>Trần Yến Thy</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Minh Đức</li>
+<li>Phạm Hồng Vinh</li>
+<li>Nguyễn Văn Cường</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">11.10. Động lượng</a><ul>
+<li><a class="reference internal" href="#kien-thuc-co-ban">11.10.1. Kiến thức Cơ bản</a><ul>
+<li><a class="reference internal" href="#gia-tri-trung-binh-ro-ri">11.10.1.1. Giá trị Trung bình Rò rỉ</a></li>
+<li><a class="reference internal" href="#bai-toan-voi-dieu-kien-xau">11.10.1.2. Bài toán với Điều kiện Xấu</a></li>
+<li><a class="reference internal" href="#phuong-phap-dong-luong">11.10.1.3. Phương pháp Động lượng</a></li>
+<li><a class="reference internal" href="#trong-so-mau-hieu-dung">11.10.1.4. Trọng số mẫu hiệu dụng</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thuc-nghiem">11.10.2. Thực nghiệm</a><ul>
+<li><a class="reference internal" href="#lap-trinh-tu-dau">11.10.2.1. Lập trình từ đầu</a></li>
+<li><a class="reference internal" href="#lap-trinh-suc-tich">11.10.2.2. Lập trình Súc tích</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#phan-tich-ly-thuyet">11.10.3. Phân tích Lý thuyết</a><ul>
+<li><a class="reference internal" href="#ham-loi-bac-hai">11.10.3.1. Hàm lồi bậc Hai</a></li>
+<li><a class="reference internal" href="#ham-vo-huong">11.10.3.2. Hàm vô hướng</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">11.10.4. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">11.10.5. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">11.10.6. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">11.10.7. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="minibatch-sgd_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</div>
+         </div>
+     </a>
+     <a id="button-next" href="adagrad_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>11.11. Adagrad</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp &#8212; Đắm mình vào Học Sâu 0.14.4 documentation</title>
+
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/d2l.css" />
+    <link rel="stylesheet" href="../_static/material-design-lite-1.3.0/material.blue-deep_orange.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx_materialdesign_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fontawesome/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/d2l.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.5. Suy giảm trọng số" href="weight-decay_vn.html" />
+    <link rel="prev" title="4.3. Cách lập trình súc tích Perceptron Đa tầng" href="mlp-gluon_vn.html" /> 
+  </head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer"><header class="mdl-layout__header mdl-layout__header--waterfall ">
+    <div class="mdl-layout__header-row">
+        
+        <nav class="mdl-navigation breadcrumb">
+            <a class="mdl-navigation__link" href="index_vn.html"><span class="section-number">4. </span>Perceptron Đa tầng</a><i class="material-icons">navigate_next</i>
+            <a class="mdl-navigation__link is-active"><span class="section-number">4.4. </span>Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+        
+<form class="form-inline pull-sm-right" action="../search.html" method="get">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+        <label id="quick-search-icon" class="mdl-button mdl-js-button mdl-button--icon"  for="waterfall-exp">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" name="q"  id="waterfall-exp" placeholder="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </div>
+      </div>
+      <div class="mdl-tooltip" data-mdl-for="quick-search-icon">
+      Quick search
+      </div>
+</form>
+        
+<a id="button-show-source"
+    class="mdl-button mdl-js-button mdl-button--icon"
+    href="../_sources/chapter_multilayer-perceptrons/underfit-overfit_vn.rst.txt" rel="nofollow">
+  <i class="material-icons">code</i>
+</a>
+<div class="mdl-tooltip" data-mdl-for="button-show-source">
+Show Source
+</div>
+        </nav>
+    </div>
+    <div class="mdl-layout__header-row header-links">
+      <div class="mdl-layout-spacer"></div>
+      <nav class="mdl-navigation">
+          
+              <a  class="mdl-navigation__link" href="https://github.com/aivivn/d2l-vn">
+                  <i class="fab fa-github"></i>
+                  GitHub
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://forum.machinelearningcoban.com/">
+                  <i class="fab fa-discourse"></i>
+                  Forum
+              </a>
+          
+              <a  class="mdl-navigation__link" href="https://www.d2l.ai/">
+                  <i class="fas fa-external-link-alt"></i>
+                  English
+              </a>
+      </nav>
+    </div>
+</header><header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">4. Perceptron Đa tầng</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+        <main class="mdl-layout__content" tabIndex="0">
+
+	<script type="text/javascript" src="../_static/sphinx_materialdesign_theme.js "></script>
+    <header class="mdl-layout__drawer">
+    
+          <!-- Title -->
+      <span class="mdl-layout-title">
+          <a class="title" href="../index.html">
+              <img class="logo" src="../_static/logo-with-text-vi.png" alt="Đắm mình vào Học Sâu"/>
+          </a>
+      </span>
+    
+    
+      <div class="globaltoc">
+        <span class="mdl-layout-title toc">Table Of Contents</span>
+        
+        
+            
+            <nav class="mdl-navigation">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro_vn.html">Giới thiệu từ nhóm dịch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/index_vn.html">Lời nói đầu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_install/index_vn.html">Cài đặt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_notation/index_vn.html">Ký hiệu</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_introduction/index_vn.html">1. Giới thiệu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preliminaries/index_vn.html">2. Sơ bộ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/ndarray_vn.html">2.1. Thao tác với Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/pandas_vn.html">2.2. Tiền xử lý dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/linear-algebra_vn.html">2.3. Đại số tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/calculus_vn.html">2.4. Giải tích</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/autograd_vn.html">2.5. Tính vi phân Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/probability_vn.html">2.6. Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_preliminaries/lookup-api_vn.html">2.7. Tài liệu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear-networks/index_vn.html">3. Mạng nơ-ron Tuyến tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression_vn.html">3.1. Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-scratch_vn.html">3.2. Lập trình Hồi quy Tuyến tính từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/linear-regression-gluon_vn.html">3.3. Cách lập trình súc tích Hồi quy Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression_vn.html">3.4. Hồi quy Softmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/fashion-mnist_vn.html">3.5. Bộ dữ liệu Phân loại Ảnh (Fashion-MNIST)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-scratch_vn.html">3.6. Lập trình Hồi quy Sofmax từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_linear-networks/softmax-regression-gluon_vn.html">3.7. Cách lập trình súc tích Hồi quy Softmax</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index_vn.html">4. Perceptron Đa tầng</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mlp_vn.html">4.1. Perceptron đa tầng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-scratch_vn.html">4.2. Lập trình Perceptron Đa tầng từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlp-gluon_vn.html">4.3. Cách lập trình súc tích Perceptron Đa tầng</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weight-decay_vn.html">4.5. Suy giảm trọng số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dropout_vn.html">4.6. Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backprop_vn.html">4.7. Lan truyền xuôi, Lan truyền ngược và Đồ thị tính toán</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numerical-stability-and-init_vn.html">4.8. Ổn định Số học và Khởi tạo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_vn.html">4.9. Cân nhắc tới Môi trường</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kaggle-house-price_vn.html">4.10. Dự đoán Giá Nhà trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_deep-learning-computation/index_vn.html">5. Tính toán Học sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/model-construction_vn.html">5.1. Tầng và Khối</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/parameters_vn.html">5.2. Quản lý Tham số</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/deferred-init_vn.html">5.3. Khởi tạo trễ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/custom-layer_vn.html">5.4. Các tầng Tuỳ chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/read-write_vn.html">5.5. Đọc/Ghi tệp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_deep-learning-computation/use-gpu_vn.html">5.6. GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-neural-networks/index_vn.html">6. Mạng Nơ-ron Tích chập</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/why-conv_vn.html">6.1. Từ Tầng Kết nối Dày đặc đến phép Tích chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/conv-layer_vn.html">6.2. Phép Tích chập cho Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/padding-and-strides_vn.html">6.3. Đệm và Sải Bước</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/channels_vn.html">6.4. Đa kênh Đầu vào và Đầu ra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/pooling_vn.html">6.5. Gộp (<em>Pooling</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-neural-networks/lenet_vn.html">6.6. Mạng Nơ-ron Tích chập (LeNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_convolutional-modern/index_vn.html">7. Mạng Nơ-ron Tích chập Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/alexnet_vn.html">7.1. Mạng Nơ-ron Tích chập Sâu (AlexNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/vgg_vn.html">7.2. Mạng sử dụng Khối (VGG)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/nin_vn.html">7.3. Mạng trong Mạng (<em>Network in Network - NiN</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/googlenet_vn.html">7.4. Mạng nối song song (GoogLeNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/batch-norm_vn.html">7.5. Chuẩn hoá theo batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/resnet_vn.html">7.6. Mạng phần dư (ResNet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convolutional-modern/densenet_vn.html">7.7. Mạng Tích chập Kết nối Dày đặc (DenseNet)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-neural-networks/index_vn.html">8. Mạng Nơ-ron Hồi tiếp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/sequence_vn.html">8.1. Mô hình chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/text-preprocessing_vn.html">8.2. Tiền Xử lý Dữ liệu Văn bản</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/language-models-and-dataset_vn.html">8.3. Mô hình Ngôn ngữ và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn_vn.html">8.4. Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-scratch_vn.html">8.5. Lập trình Mạng nơ-ron Hồi tiếp từ đầu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/rnn-gluon_vn.html">8.6. Lập trình súc tích Mạng nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-neural-networks/bptt_vn.html">8.7. Lan truyền Ngược qua Thời gian</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recurrent-modern/index_vn.html">9. Mạng Nơ-ron Hồi tiếp Hiện đại</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/gru_vn.html">9.1. Nút Hồi tiếp có Cổng (GRU)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/lstm_vn.html">9.2. Bộ nhớ Ngắn hạn Dài (LSTM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/deep-rnn_vn.html">9.3. Mạng Nơ-ron Hồi tiếp Sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/bi-rnn_vn.html">9.4. Mạng Nơ-ron Hồi tiếp Hai chiều</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/machine-translation-and-dataset_vn.html">9.5. Dịch Máy và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/encoder-decoder_vn.html">9.6. Kiến trúc Mã hoá - Giải mã</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/seq2seq_vn.html">9.7. Chuỗi sang Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recurrent-modern/beam-search_vn.html">9.8. Tìm kiếm Chùm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_attention-mechanisms/index_vn.html">10. Cơ chế Tập trung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/attention_vn.html">10.1. Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/seq2seq-attention_vn.html">10.2. Chuỗi sang Chuỗi áp dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_attention-mechanisms/transformer_vn.html">10.3. Kiến trúc Transformer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_optimization/index_vn.html">11. Thuật toán Tối ưu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html">11.1. Tối ưu và Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-thach-thuc-cua-toi-uu-trong-hoc-sau">11.2. Các Thách thức của Tối ưu trong Học sâu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-vung-cuc-tieu">11.3. Các vùng Cực tiểu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#cac-diem-yen-ngua">11.4. Các điểm Yên ngựa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/optimization-intro_vn.html#tieu-bien-gradient">11.5. Tiêu biến Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/convexity_vn.html">11.6. Tính lồi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/gd_vn.html">11.7. Hạ Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/sgd_vn.html">11.8. Hạ Gradient Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/minibatch-sgd_vn.html">11.9. Hạ Gradient Ngẫu nhiên theo Minibatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/momentum_vn.html">11.10. Động lượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adagrad_vn.html">11.11. Adagrad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/rmsprop_vn.html">11.12. RMSProp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adadelta_vn.html">11.13. Adadelta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/adam_vn.html">11.14. Adam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_optimization/lr-scheduler_vn.html">11.15. Định thời Tốc độ Học</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computational-performance/index_vn.html">12. Hiệu năng Tính toán</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hybridize_vn.html">12.1. Trình biên dịch và Trình thông dịch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/async-computation_vn.html">12.2. Tính toán Bất đồng bộ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/auto-parallelism_vn.html">12.3. Song song hóa Tự động</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/hardware_vn.html">12.4. Phần cứng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus_vn.html">12.5. Huấn luyện đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/multiple-gpus-concise_vn.html">12.6. Cách lập trình Súc tích đa GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computational-performance/parameterserver_vn.html">12.7. Máy chủ Tham số</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_computer-vision/index_vn.html">13. Thị giác Máy tính</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/image-augmentation_vn.html">13.1. Tăng cường Ảnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fine-tuning_vn.html">13.2. Tinh Chỉnh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/bounding-box_vn.html">13.3. Phát hiện Vật thể và Khoanh vùng Đối tượng (Khung chứa)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/anchor_vn.html">13.4. Khung neo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/multiscale-object-detection_vn.html">13.5. Phát hiện Vật thể Đa tỷ lệ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/object-detection-dataset_vn.html">13.6. Tập dữ liệu Phát hiện Đối tượng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/ssd_vn.html">13.7. Phát hiện Nhiều khung Một lượt (SSD)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/rcnn_vn.html">13.8. CNN theo Vùng (R-CNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/semantic-segmentation-and-dataset_vn.html">13.9. Phân vùng theo Ngữ nghĩa và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/transposed-conv_vn.html">13.10. Tích chập Chuyển vị</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/fcn_vn.html">13.11. Mạng Tích chập Đầy đủ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/neural-style_vn.html">13.12. Truyền tải Phong cách Nơ-ron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-cifar10_vn.html">13.13. Phân loại ảnh (CIFAR-10) trên Kaggle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_computer-vision/kaggle-dog_vn.html">13.14. Nhận diện Giống Chó (ImageNet Dogs) trên Kaggle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/index_vn.html">14. Xử lý Ngôn ngữ Tự nhiên: Tiền Huấn luyện</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec_vn.html">14.1. Embedding Từ (word2vec)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/approx-training_vn.html">14.2. Huấn luyện Gần đúng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word-embedding-dataset_vn.html">14.3. Tập dữ liệu để Tiền Huấn luyện Embedding Từ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/word2vec-pretraining_vn.html">14.4. Tiền huấn luyện word2vec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/glove_vn.html">14.5. Embedding từ với Vector Toàn cục (GloVe)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/subword-embedding_vn.html">14.6. Embedding từ con</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/similarity-analogy_vn.html">14.7. Tìm kiếm từ Đồng nghĩa và Loại suy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert_vn.html">14.8. Biểu diễn Mã hóa hai chiều từ Transformer (BERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-dataset_vn.html">14.9. Tập dữ liệu để Tiền huấn luyện BERT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-pretraining/bert-pretraining_vn.html">14.10. Tiền Huấn luyện BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_natural-language-processing-applications/index_vn.html">15. Xử lý Ngôn ngữ Tự nhiên: Ứng dụng</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset_vn.html">15.1. Tác vụ Phân tích Cảm xúc và Bộ Dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn_vn.html">15.2. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Hồi tiếp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn_vn.html">15.3. Phân tích Cảm xúc: Sử dụng Mạng Nơ-ron Tích Chập</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset_vn.html">15.4. Suy luận ngôn ngữ tự nhiên và Tập dữ liệu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-attention_vn.html">15.5. Suy luận Ngôn ngữ Tự nhiên: Sử dụng Cơ chế Tập trung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/finetuning-bert_vn.html">15.6. Tinh chỉnh BERT cho các Ứng dụng Cấp Chuỗi và Cấp Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_natural-language-processing-applications/natural-language-inference-bert_vn.html">15.7. Suy luận Ngôn ngữ Tự nhiên: Tinh chỉnh BERT</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_recommender-systems/index_vn.html">16. Hệ thống Đề xuất</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/recsys-intro_vn.html">16.1. Tổng quan về Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/movielens_vn.html">16.2. Tập dữ liệu MovieLens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/mf_vn.html">16.3. Phân rã Ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/autorec_vn.html">16.4. AutoRec: Dự đoán Đánh giá với Bộ tự Mã hóa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ranking_vn.html">16.5. Cá nhân hóa Xếp hạng trong Hệ thống Đề xuất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/neumf_vn.html">16.6. Lọc Cộng tác Nơ-ron cho Cá nhân hóa Xếp hạng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/seqrec_vn.html">16.7. Hệ thống Đề xuất có Nhận thức về Chuỗi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/ctr_vn.html">16.8. Hệ thống Đề xuất Giàu Đặc trưng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/fm_vn.html">16.9. Máy Phân rã ma trận</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_recommender-systems/deepfm_vn.html">16.10. Máy Phân rã Ma trận Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_generative-adversarial-networks/index_vn.html">17. Mạng Đối sinh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/gan_vn.html">17.1. Mạng Đối sinh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_generative-adversarial-networks/dcgan_vn.html">17.2. Mạng Đối sinh Tích chập Sâu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/index_vn.html">18. Phụ lục: Toán học cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops_vn.html">18.1. Các phép toán Hình học và Đại số Tuyến tính</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/eigendecomposition_vn.html">18.2. Phân rã trị riêng</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus_vn.html">18.3. Giải tích một biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus_vn.html">18.4. Giải tích Nhiều biến</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/integral-calculus_vn.html">18.5. Giải tích Tích phân</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/random-variables_vn.html">18.6. Biến Ngẫu nhiên</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood_vn.html">18.7. Hợp lý Cực đại</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/distributions_vn.html">18.8. Các Phân phối Xác suất</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/naive-bayes_vn.html">18.9. Bộ phân loại Naive Bayes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/statistics_vn.html">18.10. Thống kê</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-mathematics-for-deep-learning/information-theory_vn.html">18.11. Lý thuyết Thông tin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/index_vn.html">19. Phụ lục: Công cụ cho Học Sâu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/jupyter_vn.html">19.1. Sử dụng Jupyter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/sagemaker_vn.html">19.2. Sử dụng Amazon SageMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/aws_vn.html">19.3. Sử dụng Máy ảo AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/colab_vn.html">19.4. Sử dụng Google Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus_vn.html">19.5. Lựa chọn Máy chủ &amp; GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/contributing_vn.html">19.6. Đóng góp cho Quyển sách</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_appendix-tools-for-deep-learning/d2l_vn.html">19.7. Tài liệu API của <code class="docutils literal notranslate"><span class="pre">d2l</span></code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_references/zreferences.html">Tài liệu tham khảo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Bảng thuật ngữ</a></li>
+</ul>
+
+            </nav>
+        
+        </div>
+    
+</header>
+
+    <div class="document">
+        <div class="page-content" role="main">
+        
+  <!-- ===================== Bắt đầu dịch Phần 1 ===================== --><!-- ========================================= REVISE PHẦN 1 - BẮT ĐẦU =================================== --><!--
+# Model Selection, Underfitting and Overfitting
+--><div class="section" id="lua-chon-mo-hinh-duoi-khop-va-qua-khop">
+<span id="sec-model-selection"></span><h1><span class="section-number">4.4. </span>Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp<a class="headerlink" href="#lua-chon-mo-hinh-duoi-khop-va-qua-khop" title="Permalink to this headline">¶</a></h1>
+<!--
+As machine learning scientists, our goal is to discover *patterns*.
+But how can we be sure that we have truly discovered a *general* pattern and not simply memorized our data.
+For example, imagine that we wanted to hunt for patterns among genetic markers linking patients to their dementia status,
+(let's the labels be drawn from the set {*dementia*, *mild cognitive impairment*, *healthy*}).
+Because each person's genes identify them uniquely (ignoring identical siblings), it's possible to memorize the entire dataset.
+--><p>Là những nhà khoa học học máy, mục tiêu của chúng ta là khám phá ra các
+<em>khuôn mẫu</em>. Nhưng làm sao có thể chắc chắn rằng chúng ta đã thực sự
+khám phá ra một khuôn mẫu <em>khái quát</em> chứ không chỉ đơn giản là ghi nhớ
+dữ liệu. Ví dụ, thử tưởng tượng rằng chúng ta muốn săn lùng các khuôn
+mẫu liên kết các dấu hiệu di truyền của bệnh nhân và tình trạng mất trí
+của họ, với nhãn được trích ra từ tập {<em>mất trí nhớ</em>, <em>suy giảm nhận
+thức mức độ nhẹ</em>, <em>khỏe mạnh</em>}. Bởi vì các gen của mỗi người định dạng
+họ theo cách độc nhất vô nhị (bỏ qua các cặp song sinh giống hệt nhau),
+nên việc ghi nhớ toàn bộ tập dữ liệu là hoàn toàn khả thi.</p>
+<!--
+We don't want our model to say *"That's Bob! I remember him! He has dementia!*
+The reason why is simple.
+When we deploy the model in the future, we will encounter patients that the model has never seen before.
+Our predictions will only be useful if our model has truly discovered a *general* pattern.
+--><p>Chúng ta không muốn mô hình của mình nói rằng <em>“Bob kìa! Tôi nhớ anh ta!
+Anh ta bị mất trí nhớ!</em> Lý do tại sao rất đơn giản. Khi triển khai mô
+hình trong tương lai, chúng ta sẽ gặp các bệnh nhân mà mô hình chưa bao
+giờ gặp trước đó. Các dự đoán sẽ chỉ có ích khi mô hình của chúng ta
+thực sự khám phá ra một khuôn mẫu <em>khái quát</em>.</p>
+<!--
+To recapitulate more formally, our goal is to discover patterns that capture regularities in the underlying population from which our training set was drawn.
+If we are successful in this endeavor, then we could successfully assess risk even for individuals that we have never encountered before.
+This problem---how to discover patterns that *generalize*---is the fundamental problem of machine learning.
+--><p>Để tóm tắt một cách chính thức hơn, mục tiêu của chúng ta là khám phá
+các khuôn mẫu mà chúng mô tả được các quy tắc trong tập dữ liệu mà từ đó
+tập huấn luyện đã được trích ra. Nếu thành công trong nỗ lực này, thì
+chúng ta có thể đánh giá thành công rủi ro ngay cả đối với các cá nhân
+mà chúng ta chưa bao giờ gặp phải trước đây. Vấn đề này—làm cách nào để
+khám phá ra các mẫu mà <em>khái quát hóa</em>—là vấn đề nền tảng của học máy.</p>
+<!--
+The danger is that when we train models, we access just a small sample of data.
+The largest public image datasets contain roughly one million images.
+More often, we must learn from only thousands or tens of thousands of data points.
+In a large hospital system, we might access hundreds of thousands of medical records.
+When working with finite samples, we run the risk that we might discover *apparent* associations that turn out not to hold up when we collect more data.
+--><p>Nguy hiểm là khi huấn luyện các mô hình, chúng ta chỉ truy cập một tập
+dữ liệu nhỏ. Các tập dữ liệu hình ảnh công khai lớn nhất chứa khoảng một
+triệu ảnh. Thường thì chúng ta phải học chỉ từ vài ngàn hoặc vài chục
+ngàn điểm dữ liệu. Trong một hệ thống bệnh viện lớn, chúng ta có thể
+truy cập hàng trăm ngàn hồ sơ y tế. Khi làm việc với các tập mẫu hữu
+hạn, chúng ta gặp phải rủi ro sẽ khám phá ra các mối liên kết <em>rõ ràng</em>
+mà hóa ra lại không đúng khi thu thập thêm dữ liệu.</p>
+<!--
+The phenomena of fitting our training data more closely than we fit the underlying distribution is called overfitting, and the techniques used to combat overfitting are called regularization.
+In the previous sections, you might have observed this effect while experimenting with the Fashion-MNIST dataset.
+If you altered the model structure or the hyper-parameters during the experiment,
+you might have noticed that with enough nodes, layers, and training epochs, the model can eventually reach perfect accuracy on the training set, even as the accuracy on test data deteriorates.
+--><p>Hiện tượng mô hình khớp với dữ liệu huấn luyện chính xác hơn nhiều so
+với phân phối thực được gọi là quá khớp (<em>overfitting</em>), và kỹ thuật sử
+dụng để chống lại quá khớp được gọi là điều chuẩn (<em>regularization</em>).
+Trong các phần trước, bạn có thể đã quan sát hiệu ứng này khi thử nghiệm
+với tập dữ liệu Fashion-MNIST. Nếu bạn đã sửa đổi cấu trúc mô hình hoặc
+siêu tham số trong quá trình thử nghiệm, bạn có thể đã nhận ra rằng với
+đủ các nút, các tầng, và các epoch huấn luyện, mô hình ấy có thể cuối
+cùng cũng đạt đến sự chính xác hoàn hảo trên tập huấn luyện, ngay cả khi
+độ chính xác trên dữ liệu kiểm tra giảm đi.</p>
+<!-- ===================== Kết thúc dịch Phần 1 ===================== --><!-- ===================== Bắt đầu dịch Phần 2 ===================== --><!--
+## Training Error and Generalization Error
+--><div class="section" id="loi-huan-luyen-va-loi-khai-quat">
+<h2><span class="section-number">4.4.1. </span>Lỗi huấn luyện và Lỗi khái quát<a class="headerlink" href="#loi-huan-luyen-va-loi-khai-quat" title="Permalink to this headline">¶</a></h2>
+<!--
+In order to discuss this phenomenon more formally, we need to differentiate between *training error* and *generalization error*.
+The training error is the error of our model as calculated on the training dataset,
+while generalization error is the expectation of our model's error
+were we to apply it to an infinite stream of additional data points drawn from the same underlying data distribution as our original sample.
+--><p>Để thảo luận hiện tượng này một cách chuyên sâu hơn, ta cần phân biệt
+giữa <em>lỗi huấn luyện</em> (<em>training error</em>) và <em>lỗi khái quát</em>
+(<em>generalization error</em>). Lỗi huấn luyện là lỗi của mô hình được tính
+toán trên tập huấn luyện, trong khi đó lỗi khái quát là lỗi kỳ vọng của
+mô hình khi áp dụng nó cho một luồng vô hạn các điểm dữ liệu mới được
+lấy từ cùng một phân phối dữ liệu với các mẫu ban đầu.</p>
+<!--
+Problematically, *we can never calculate the generalization error exactly*.
+That is because the imaginary stream of infinite data is an imaginary object.
+In practice, we must *estimate* the generalization error by applying our model to an independent test set
+constituted of a random selection of data points that were withheld from our training set.
+--><p>Vấn đề là <em>chúng ta không bao giờ có thể tính toán chính xác lỗi khái
+quát</em> vì luồng vô hạn dữ liệu chỉ có trong tưởng tượng. Trên thực tế, ta
+phải <em>ước tính</em> lỗi khái quát bằng cách áp dụng mô hình vào một tập kiểm
+tra độc lập bao gồm các điểm dữ liệu ngẫu nhiên ngoài tập huấn luyện.</p>
+<!--
+The following three thought experiments will help illustrate this situation better.
+Consider a college student trying to prepare for his final exam.
+A diligent student will strive to practice well and test her abilities using exams from previous years.
+Nonetheless, doing well on past exams is no guarantee that she will excel when it matters.
+For instance, the student might try to prepare by rote learning the answers to the exam questions.
+This requires the student to memorize many things.
+She might even remember the answers for past exams perfectly.
+Another student might prepare by trying to understand the reasons for giving certain answers.
+In most cases, the latter student will do much better.
+--><p>Ba thí nghiệm sau sẽ giúp minh họa tình huống này tốt hơn. Hãy xem xét
+một sinh viên đại học đang cố gắng chuẩn bị cho kỳ thi cuối cùng của
+mình. Một sinh viên chăm chỉ sẽ cố gắng luyện tập tốt và kiểm tra khả
+năng của cô ấy bằng việc luyện tập những bài kiểm tra của các năm trước.
+Tuy nhiên, làm tốt các bài kiểm tra trước đây không đảm bảo rằng cô ấy
+sẽ làm tốt bài kiểm tra thật. Ví dụ, sinh viên có thể cố gắng chuẩn bị
+bằng cách học tủ các câu trả lời cho các câu hỏi. Điều này đòi hỏi sinh
+viên phải ghi nhớ rất nhiều thứ. Cô ấy có lẽ còn ghi nhớ đáp án cho các
+bài kiểm tra cũ một cách hoàn hảo. Một học sinh khác có thể chuẩn bị
+bằng việc cố gắng hiểu lý do mà một số đáp án nhất định được đưa ra.
+Trong hầu hết các trường hợp, sinh viên sau sẽ làm tốt hơn nhiều.</p>
+<!--
+Likewise, consider a model that simply uses a lookup table to answer questions.
+If the set of allowable inputs is discrete and reasonably small, then perhaps after viewing *many* training examples, this approach would perform well.
+Still this model has no ability to do better than random guessing when faced with examples that it has never seen before.
+In reality the input spaces are far too large to memorize the answers corresponding to every conceivable input.
+For example, consider the black and white $28\times28$ images.
+If each pixel can take one among $256$ gray scale values, then there are $256^{784}$ possible images.
+That means that there are far more low-res grayscale thumbnail-sized images than there are atoms in the universe.
+Even if we could encounter this data, we could never afford to store the lookup table.
+--><p>Tương tự như vậy, hãy xem xét một mô hình đơn giản chỉ sử dụng một bảng
+tra cứu để trả lời các câu hỏi. Nếu tập hợp các đầu vào cho phép là rời
+rạc và đủ nhỏ, thì có lẽ sau khi xem <em>nhiều</em> ví dụ huấn luyện, phương
+pháp này sẽ hoạt động tốt. Tuy nhiên mô hình này không có khả năng thể
+hiện tốt hơn so với việc đoán ngẫu nhiên khi phải đối mặt với các ví dụ
+chưa từng gặp trước đây. Trong thực tế, không gian đầu vào là quá lớn để
+có thể ghi nhớ mọi đáp án tương ứng của từng đầu vào khả dĩ. Ví dụ, hãy
+xem xét các ảnh <span class="math notranslate nohighlight">\(28\times28\)</span> đen trắng. Nếu mỗi điểm ảnh có thể
+lấy một trong số các giá trị xám trong thang <span class="math notranslate nohighlight">\(256\)</span>, thì có thể có
+<span class="math notranslate nohighlight">\(256^{784}\)</span> ảnh khác nhau. Điều đó nghĩa là số lượng ảnh độ phân
+giải thấp còn lớn hơn nhiều so với số lượng nguyên tử trong vũ trụ. Thậm
+chí nếu có thể xem qua toàn bộ điểm dữ liệu, ta cũng không thể lưu trữ
+chúng trong bảng tra cứu.</p>
+<!--
+Last, consider the problem of trying to classify the outcomes of coin tosses (class 0: heads, class 1: tails) based on some contextual features that might be available.
+No matter what algorithm we come up with, because the generalization error will always be $\frac{1}{2}$.
+However, for most algorithms, we should expect our training error to be considerably lower, depending on the luck of the draw, even if we did not have any features!
+Consider the dataset {0, 1, 1, 1, 0, 1}.
+Our feature-less would have to fall back on always predicting the *majority class*, which appears from our limited sample to be *1*.
+In this case, the model that always predicts class 1 will incur an error of $\frac{1}{3}$, considerably better than our generalization error.
+As we increase the amount of data, the probability that the fraction of heads will deviate significantly from $\frac{1}{2}$ diminishes, and our training error would come to match the generalization error.
+--><p>Cuối cùng, hãy xem xét bài toán phân loại kết quả của việc tung đồng xu
+(lớp 0: ngửa, lớp 1: xấp) dựa trên một số đặc trưng theo ngữ cảnh sẵn
+có. Bất kể thuật toán nào được đưa ra, lỗi khái quát sẽ luôn là
+<span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>. Tuy nhiên, đối với hầu hết các thuật toán, lỗi huấn
+luyện sẽ thấp hơn đáng kể, tùy thuộc vào sự may mắn của ta khi lấy dữ
+liệu, ngay cả khi ta không có bất kỳ đặc trưng nào! Hãy xem xét tập dữ
+liệu {0, 1, 1, 1, 0, 1}. Việc không có đặc trưng có thể khiến ta luôn dự
+đoán <em>lớp chiếm đa số</em>, đối với ví dụ này thì đó là <em>1</em>. Trong trường
+hợp này, mô hình luôn dự đoán lớp 1 sẽ có lỗi huấn luyện là
+<span class="math notranslate nohighlight">\(\frac{1}{3}\)</span>, tốt hơn đáng kể so với lỗi khái quát. Khi ta tăng
+lượng dữ liệu, xác suất nhận được mặt ngửa sẽ dần tiến về
+<span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> và lỗi huấn luyện sẽ tiến đến lỗi khái quát.</p>
+<!-- ===================== Kết thúc dịch Phần 2 ===================== --><!-- ===================== Bắt đầu dịch Phần 3 ===================== --><!-- ========================================= REVISE PHẦN 1 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 2 - BẮT ĐẦU ===================================--><!--
+### Statistical Learning Theory
+--><div class="section" id="ly-thuyet-hoc-thong-ke">
+<h3><span class="section-number">4.4.1.1. </span>Lý thuyết Học Thống kê<a class="headerlink" href="#ly-thuyet-hoc-thong-ke" title="Permalink to this headline">¶</a></h3>
+<!--
+Since generalization is the fundamental problem in machine learning, you might not be surprised to learn
+that many mathematicians and theorists have dedicated their lives to developing formal theories to describe this phenomenon.
+In their [eponymous theorem](https://en.wikipedia.org/wiki/Glivenko–Cantelli_theorem), Glivenko and Cantelli derived the rate at which the training error converges to the generalization error.
+In a series of seminal papers, [Vapnik and Chervonenkis](https://en.wikipedia.org/wiki/Vapnik–Chervonenkis_theory) extended this theory to more general classes of functions.
+This work laid the foundations of [Statistical Learning Theory](https://en.wikipedia.org/wiki/Statistical_learning_theory).
+--><p>Bởi khái quát hóa là một vấn đề nền tảng trong học máy, không quá ngạc
+nhiên khi nhiều nhà toán học và nhà lý thuyết học dành cả cuộc đời để
+phát triển các lý thuyết hình thức mô tả vấn đề này. Trong <a class="reference external" href="https://en.wikipedia.org/wiki/Glivenko–Cantelli_theorem">định lý cùng
+tên</a>,
+Glivenko và Cantelli đã tìm ra tốc độ học mà tại đó lỗi huấn luyện sẽ
+hội tụ về lỗi khái quát. Trong chuỗi các bài báo đầu ngành, <a class="reference external" href="https://en.wikipedia.org/wiki/Vapnik–Chervonenkis_theory">Vapnik và
+Chervonenkis</a>
+đã mở rộng lý thuyết này cho nhiều lớp hàm tổng quát hơn. Công trình này
+là nền tảng của ngành <a class="reference external" href="https://en.wikipedia.org/wiki/Statistical_learning_theory">Lý thuyết học thống
+kê</a>.</p>
+<!--
+In the *standard supervised learning setting*, which we have addressed up until now and will stick throughout most of this book,
+we assume that both the training data and the test data are drawn *independently* from *identical* distributions (commonly called the i.i.d. assumption).
+This means that the process that samples our data has no *memory*.
+The $2^{\mathrm{nd}}$ example drawn and the $3^{\mathrm{rd}}$ drawn are no more correlated than the $2^{\mathrm{nd}}$ and the $2$-millionth sample drawn.
+--><p>Trong một <em>thiết lập chuẩn cho học có giám sát</em> – chủ đề lớn nhất xuyên
+suốt cuốn sách, chúng ta giả sử rằng cả dữ liệu huấn luyện và dữ liệu
+kiểm tra đều được lấy mẫu <em>độc lập</em> từ các phân phối <em>giống hệt</em> nhau
+(<em>independent &amp; identically distributed</em>, thường gọi là giả thiết
+i.i.d.). Điều này có nghĩa là quá trình lấy mẫu dữ liệu không hề có sự
+<em>ghi nhớ</em>. Mẫu lấy ra thứ hai cũng không tương quan với mẫu thứ ba hơn
+so với mẫu thứ hai triệu.</p>
+<!--
+Being a good machine learning scientist requires thinking critically, and already you should be poking holes in this assumption, coming up with common cases where the assumption fails.
+What if we train a mortality risk predictor on data collected from patients at UCSF, and apply it on patients at Massachusetts General Hospital?
+These distributions are simply not identical.
+Moreover, draws might be correlated in time.
+What if we are classifying the topics of Tweets.
+The news cycle would create temporal dependencies in the topics being discussed violating any assumptions of independence.
+--><p>Trở thành một nhà khoa học học máy giỏi yêu cầu tư duy phản biện, và có
+lẽ bạn đã có thể “bóc mẽ” được giả thiết này, có thể đưa ra các tình
+huống thường gặp mà giả thiết này không thỏa mãn. Điều gì sẽ xảy ra nếu
+chúng ta huấn luyện một mô hình dự đoán tỉ lệ tử vong trên bộ dữ thu
+thập từ các bệnh nhân tại UCSF, và áp dụng nó trên các bệnh nhân tại
+Bệnh viện Đa khoa Massachusetts. Các phân phối này đơn giản là không
+giống nhau. Hơn nữa, việc lấy mẫu có thể có tương quan về mặt thời gian.
+Sẽ ra sao nếu chúng ta thực hiện phân loại chủ đề cho các bài Tweet.
+Vòng đời của các tin tức sẽ tạo nên sự phụ thuộc về mặt thời gian giữa
+các chủ đề được đề cập, vi phạm mọi giả định độc lập thống kê.</p>
+<!--
+Sometimes we can get away with minor violations of the i.i.d. assumption and our models will continue to work remarkably well.
+After all, nearly every real-world application involves at least some minor violation of the i.i.d. assumption, and yet we have useful tools for face recognition, speech recognition, language translation, etc.
+--><p>Đôi khi, chúng ta có thể bỏ qua một vài vi phạm nhỏ trong giả thiết
+i.i.d. mà mô hình vẫn có thể làm việc rất tốt. Nhìn chung, gần như tất
+cả các ứng dụng thực tế đều vi phạm một vài giả thiết i.i.d. nhỏ, nhưng
+đổi lại ta có được các công cụ rất hữu dụng như nhận dạng khuôn mặt,
+nhận dạng tiếng nói, dịch ngôn ngữ, v.v.</p>
+<!--
+Other violations are sure to cause trouble.
+Imagine, for example, if we tried to train a face recognition system by training it exclusively on university students and then want to deploy it as a tool for monitoring geriatrics in a nursing home population.
+This is unlikely to work well since college students tend to look considerably different from the elderly.
+--><p>Các vi phạm khác thì chắc chắn dẫn tới rắc rối. Cùng hình dung ở ví dụ
+này, ta thử huấn luyện một hệ thống nhận dạng khuôn mặt sử dụng hoàn
+toàn dữ liệu của các sinh viên đại học và đem đi triển khai như một công
+cụ giám sát trong viện dưỡng lão. Cách này gần như không khả thi vì
+ngoại hình giữa hai độ tuổi quá khác biệt.</p>
+<!--
+In subsequent chapters and volumes, we will discuss problems arising from violations of the i.i.d. assumption.
+For now, even taking the i.i.d. assumption for granted, understanding generalization is a formidable problem.
+Moreover, elucidating the precise theoretical foundations that might explain why deep neural networks generalize as well as they do continues to vexes the greatest minds in learning theory.
+--><p>Trong các mục và chương kế tiếp, chúng ta sẽ đề cập tới các vấn đề gặp
+phải khi vi phạm giả thiết i.i.d. Hiện tại khi giả thiết i.i.d. thậm chí
+được đảm bảo, hiểu được sự khái quát hóa cũng là một vấn đề nan giải.
+Hơn nữa, việc làm sáng tỏ nền tảng lý thuyết để giải thích tại sao các
+mạng nơ-ron sâu có thể khái quát hóa tốt như vậy vẫn tiếp tục làm đau
+đầu những bộ óc vĩ đại nhất trong lý thuyết học.</p>
+<!--
+When we train our models, we attempt searching for a function that fits the training data as well as possible.
+If the function is so flexible that it can catch on to spurious patterns just as easily as to the true associations,
+then it might perform *too well* without producing a model that generalizes well to unseen data.
+This is precisely what we want to avoid (or at least control).
+Many of the techniques in deep learning are heuristics and tricks aimed at guarding against overfitting.
+--><p>Khi huấn luyện mô hình, ta đang cố gắng tìm kiếm một hàm số khớp với dữ
+liệu huấn luyện nhất có thể. Nếu hàm số này quá linh hoạt để có thể khớp
+với các khuôn mẫu giả cũng dễ như với các xu hướng thật trong dữ liệu,
+thì nó có thể <em>quá khớp</em> để có thể tạo ra một mô hình có tính khái quát
+hóa cao trên dữ liệu chưa nhìn thấy. Đây chính xác là những gì chúng ta
+muốn tránh (hay ít nhất là kiểm soát được). Rất nhiều kỹ thuật trong học
+sâu là các phương pháp dựa trên thực nghiệm và thủ thuật để chống lại
+vấn đề quá khớp.</p>
+<!-- ===================== Kết thúc dịch Phần 3 ===================== --><!-- ===================== Bắt đầu dịch Phần 4 ===================== --><!--
+### Model Complexity
+--></div>
+<div class="section" id="do-phuc-tap-cua-mo-hinh">
+<h3><span class="section-number">4.4.1.2. </span>Độ Phức tạp của Mô hình<a class="headerlink" href="#do-phuc-tap-cua-mo-hinh" title="Permalink to this headline">¶</a></h3>
+<!--
+When we have simple models and abundant data, we expect the generalization error to resemble the training error.
+When we work with more complex models and fewer examples, we expect the training error to go down but the generalization gap to grow.
+What precisely constitutes model complexity is a complex matter.
+Many factors govern whether a model will generalize well.
+For example a model with more parameters might be considered more complex.
+A model whose parameters can take a wider range of values might be more complex.
+Often with neural networks, we think of a model that takes more training steps as more complex, and one subject to *early stopping* as less complex.
+--><p>Khi có các mô hình đơn giản và dữ liệu dồi dào, ta kỳ vọng lỗi khái quát
+sẽ giống với lỗi huấn luyện. Khi làm việc với mô hình phức tạp hơn và ít
+mẫu huấn luyện hơn, ta kỳ vọng các lỗi huấn luyện giảm xuống nhưng
+khoảng cách khái quát tăng. Việc chỉ ra chính xác điều gì cấu thành nên
+độ phức tạp của mô hình là một vấn đề nan giải. Có rất nhiều yếu tố ảnh
+hưởng đến việc một mô hình có khái quát hóa tốt hay không. Ví dụ một mô
+hình với nhiều tham số hơn sẽ được xem là phức tạp hơn. Một mô hình mà
+các tham số có miền giá trị rộng hơn thì được xem là phức tạp hơn. Thông
+thường với các mạng nơ-ron, ta nghĩ đến một mô hình có nhiều bước huấn
+luyện là mô hình phức tạp hơn, và mô hình <em>dừng sớm</em> là ít phức tạp hơn.</p>
+<!--
+It can be difficult to compare the complexity among members of substantially different model classes (say a decision tree versus a neural network).
+For now, a simple rule of thumb is quite useful:
+A model that can readily explain arbitrary facts is what statisticians view as complex,
+whereas one that has only a limited expressive power but still manages to explain the data well is probably closer to the truth.
+In philosophy, this is closely related to Popper’s criterion of [falsifiability](https://en.wikipedia.org/wiki/Falsifiability) of a scientific theory:
+a theory is good if it fits data and if there are specific tests which can be used to disprove it.
+This is important since all statistical estimation is [post hoc](https://en.wikipedia.org/wiki/Post_hoc), i.e., we estimate after we observe the facts, hence vulnerable to the associated fallacy.
+For now, we will put the philosophy aside and stick to more tangible issues.
+--><p>Rất khó để có thể so sánh sự phức tạp giữa các thành viên trong các lớp
+mô hình khác hẳn nhau (ví như cây quyết định so với mạng nơ-ron). Hiện
+tại, có một quy tắc đơn giản khá hữu ích sau: Một mô hình có thể giải
+thích các sự kiện bất kỳ thì được các nhà thống kê xem là phức tạp,
+trong khi một mô hình với năng lực biểu diễn giới hạn nhưng vẫn có thể
+giải thích tốt được dữ liệu thì hầu như chắc chắn là đúng đắn hơn. Trong
+triết học, điều này gần với tiêu chí của Popper về <a class="reference external" href="https://en.wikipedia.org/wiki/Falsifiability">khả năng phủ
+định</a> của một lý thuyết
+khoa học: một lý thuyết tốt nếu nó khớp dữ liệu và nếu có các kiểm định
+cụ thể có thể dùng để phản chứng nó. Điều này quan trọng bởi vì tất cả
+các ước lượng thống kê là <a class="reference external" href="https://en.wikipedia.org/wiki/Post_hoc">post
+hoc</a>, tức là ta đánh giá giả
+thuyết sau khi quan sát các sự thật, do đó dễ bị tác động bởi lỗi ngụy
+biện cùng tên. Từ bây giờ, ta sẽ đặt triết lý qua một bên và tập trung
+hơn vào các vấn đề hữu hình.</p>
+<!--
+In this section, to give you some intuition, we’ll focus on a few factors that tend to influence the generalizability of a model class:
+--><p>Trong phần này, để có cái nhìn trực quan, chúng ta sẽ tập trung vào một
+vài yếu tố có xu hướng ảnh hưởng đến tính khái quát của một lớp mô hình:</p>
+<!--
+1. The number of tunable parameters. When the number of tunable parameters, sometimes called the *degrees of freedom*, is large, models tend to be more susceptible to overfitting.
+2. The values taken by the parameters. When weights can take a wider range of values, models can be more susceptible to over fitting.
+3. The number of training examples. It’s trivially easy to overfit a dataset containing only one or two examples even if your model is simple.
+But overfitting a dataset with millions of examples requires an extremely flexible model.
+--><ol class="arabic simple">
+<li>Số lượng các tham số có thể điều chỉnh. Khi số lượng các tham số có
+thể điều chỉnh (đôi khi được gọi là <em>bậc tự do</em>) lớn thì mô hình sẽ
+dễ bị quá khớp hơn.</li>
+<li>Các giá trị được nhận bởi các tham số. Khi các trọng số có miền giá
+trị rộng hơn, các mô hình dễ bị quá khớp hơn.</li>
+<li>Số lượng các mẫu huấn luyện. Việc quá khớp một tập dữ liệu chứa chỉ
+một hoặc hai mẫu rất dễ dàng, kể cả khi mô hình đơn giản. Nhưng quá
+khớp một tập dữ liệu với vài triệu mẫu đòi hỏi mô hình phải cực kỳ
+linh hoạt.</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 4 ===================== --><!-- ===================== Bắt đầu dịch Phần 5 ===================== --><!--
+## Model Selection
+--></div>
+</div>
+<div class="section" id="lua-chon-mo-hinh">
+<h2><span class="section-number">4.4.2. </span>Lựa chọn Mô hình<a class="headerlink" href="#lua-chon-mo-hinh" title="Permalink to this headline">¶</a></h2>
+<!--
+In machine learning, we usually select our final model after evaluating several candidate models.
+This process is called model selection.
+Sometimes the models subject to comparison are fundamentally different in nature (say, decision trees vs linear models).
+At other times, we are comparing members of the same class of models that have been trained with different hyperparameter settings.
+--><p>Trong học máy, ta thường lựa chọn mô hình cuối cùng sau khi cân nhắc
+nhiều mô hình ứng viên. Quá trình này được gọi là lựa chọn mô hình. Đôi
+khi các mô hình được đem ra so sánh khác nhau cơ bản về mặt bản chất (ví
+như, cây quyết định với các mô hình tuyến tính). Khi khác, ta lại so
+sánh các thành viên của cùng một lớp mô hình được huấn luyện với các cài
+đặt siêu tham số khác nhau.</p>
+<!--
+With multilayer perceptrons for example, we may wish to compare models with different numbers of hidden layers,
+different numbers of hidden units, and various choices of the activation functions applied to each hidden layer.
+In order to determine the best among our candidate models, we will typically employ a validation set.
+--><p>Lấy perceptron đa tầng làm ví dụ, ta mong muốn so sánh các mô hình với
+số lượng tầng ẩn khác nhau, số lượng nút ẩn khác nhau, và các lựa chọn
+hàm kích hoạt khác nhau áp dụng vào từng tầng ẩn. Để xác định được mô
+hình tốt nhất trong các mô hình ứng viên, ta thường sử dụng một tập kiểm
+định.</p>
+<!-- ========================================= REVISE PHẦN 2 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 3 - BẮT ĐẦU ===================================--><!--
+### Validation Dataset
+--><div class="section" id="tap-du-lieu-kiem-dinh">
+<h3><span class="section-number">4.4.2.1. </span>Tập Dữ liệu Kiểm định<a class="headerlink" href="#tap-du-lieu-kiem-dinh" title="Permalink to this headline">¶</a></h3>
+<!--
+In principle we should not touch our test set until after we have chosen all our hyper-parameters.
+Were we to use the test data in the model selection process, there is a risk that we might overfit the test data.
+Then we would be in serious trouble.
+If we overfit our training data, there is always the evaluation on test data to keep us honest.
+But if we overfit the test data, how would we ever know?
+--><p>Về nguyên tắc, ta không nên sử dụng tập kiểm tra cho đến khi chọn xong
+tất cả các siêu tham số. Nếu sử dụng dữ liệu kiểm tra trong quá trình
+lựa chọn mô hình, có một rủi ro là ta có thể quá khớp dữ liệu kiểm tra,
+và khi đó ta sẽ gặp rắc rối lớn. Nếu quá khớp dữ liệu huấn luyện, ta
+luôn có thể đánh giá mô hình trên tập kiểm tra để đảm bảo mình “trung
+thực”. Nhưng nếu quá khớp trên dữ liệu kiểm tra, làm sao chúng ta có thể
+biết được?</p>
+<!--
+Thus, we should never rely on the test data for model selection.
+And yet we cannot rely solely on the training data for model selection either because we cannot estimate the generalization error on the very data that we use to train the model.
+--><p>Vì vậy, ta không bao giờ nên dựa vào dữ liệu kiểm tra để lựa chọn mô
+hình. Tuy nhiên, không thể chỉ dựa vào dữ liệu huấn luyện để lựa chọn mô
+hình vì ta không thể ước tính lỗi khái quát trên chính dữ liệu được sử
+dụng để huấn luyện mô hình.</p>
+<!--
+The common practice to address this problem is to split our data three ways, incorporating a *validation set* in addition to the training and test sets.
+--><p>Phương pháp phổ biến để giải quyết vấn đề này là phân chia dữ liệu thành
+ba phần, thêm một <em>tập kiểm định</em> ngoài các tập huấn luyện và kiểm tra.</p>
+<!--
+In practical applications, the picture gets muddier.
+While ideally we would only touch the test data once, to assess the very best model or to compare a small number of models to each other, real-world test data is seldom discarded after just one use.
+We can seldom afford a new test set for each round of experiments.
+--><p>Trong các ứng dụng thực tế, bức tranh trở nên mập mờ hơn. Mặc dù tốt
+nhất ta chỉ nên động đến dữ liệu kiểm tra đúng một lần, để đánh giá mô
+hình tốt nhất hoặc so sánh một số lượng nhỏ các mô hình với nhau, dữ
+liệu kiểm tra trong thế giới thực hiếm khi bị vứt bỏ chỉ sau một lần sử
+dụng. Ta hiếm khi có được một tập kiểm tra mới sau mỗi vòng thử nghiệm.</p>
+<!--
+The result is a murky practice where the boundaries between validation and test data are worryingly ambiguous.
+Unless explicitly stated otherwise, in the experiments in this book we are really working with what should rightly be called training data and validation data, with no true test sets.
+Therefore, the accuracy reported in each experiment is really the validation accuracy and not a true test set accuracy.
+The good news is that we do not need too much data in the validation set.
+The uncertainty in our estimates can be shown to be of the order of $\mathcal{O}(n^{-\frac{1}{2}})$.
+--><p>Kết quả là một thực tiễn âm u trong đó ranh giới giữa dữ liệu kiểm định
+và kiểm tra mơ hồ theo cách đáng lo ngại. Trừ khi có quy định rõ ràng
+thì, trong các thí nghiệm trong cuốn sách này, ta thật sự đang làm việc
+với cái được gọi là dữ liệu huấn luyện và dữ liệu kiểm định chứ không có
+tập kiểm tra thật. Do đó, độ chính xác được báo cáo trong mỗi thử nghiệm
+thật ra là độ chính xác kiểm định và không phải là độ chính xác của tập
+kiểm tra thật. Tin tốt là ta không cần quá nhiều dữ liệu trong tập kiểm
+định. Ta có thể chứng minh rằng sự bất định trong các ước tính thuộc bậc
+<span class="math notranslate nohighlight">\(\mathcal{O}(n^{-\frac{1}{2}})\)</span>.</p>
+<!-- ===================== Kết thúc dịch Phần 5 ===================== --><!-- ===================== Bắt đầu dịch Phần 6 ===================== --><!--
+### $K$-Fold Cross-Validation
+--></div>
+<div class="section" id="kiem-dinh-cheo-gap-k-lan">
+<h3><span class="section-number">4.4.2.2. </span>Kiểm định chéo gập <span class="math notranslate nohighlight">\(K\)</span>-lần<a class="headerlink" href="#kiem-dinh-cheo-gap-k-lan" title="Permalink to this headline">¶</a></h3>
+<!--
+When training data is scarce, we might not even be able to afford to hold out enough data to constitute a proper validation set.
+One popular solution to this problem is to employ $K$*-fold cross-validation*.
+Here, the original training data is split into $K$ non-overlapping subsets.
+Then model training and validation are executed $K$ times, each time training on $K-1$ subsets and validating on a different subset (the one not used for training in that round).
+Finally, the training and validation error rates are estimated by averaging over the results from the $K$ experiments.
+--><p>Khi khan hiếm dữ liệu huấn luyện, có lẽ ta sẽ không thể dành ra đủ dữ
+liệu để tạo một tập kiểm định phù hợp. Một giải pháp phổ biến để giải
+quyết vấn đề này là kiểm định chéo gập <span class="math notranslate nohighlight">\(K\)</span>-lần. Ở phương pháp này,
+tập dữ liệu huấn luyện ban đầu được chia thành <span class="math notranslate nohighlight">\(K\)</span> tập con không
+chồng lên nhau. Sau đó việc huấn luyện và kiểm định mô hình được thực
+thi <span class="math notranslate nohighlight">\(K\)</span> lần, mỗi lần huấn luyện trên <span class="math notranslate nohighlight">\(K-1\)</span> tập con và kiểm
+định trên tập con còn lại (tập không được sử dụng để huấn luyện trong
+lần đó). Cuối cùng, lỗi huấn luyện và lỗi kiểm định được ước lượng bằng
+cách tính trung bình các kết quả thu được từ <span class="math notranslate nohighlight">\(K\)</span> thí nghiệm.</p>
+<!--
+## Underfitting or Overfitting?
+--></div>
+</div>
+<div class="section" id="duoi-khop-hay-qua-khop">
+<h2><span class="section-number">4.4.3. </span>Dưới khớp hay Quá khớp?<a class="headerlink" href="#duoi-khop-hay-qua-khop" title="Permalink to this headline">¶</a></h2>
+<!--
+When we compare the training and validation errors, we want to be mindful of two common situations:
+First, we want to watch out for cases when our training error and validation error are both substantial but there is a little gap between them.
+If the model is unable to reduce the training error, that could mean that our model is too simple (i.e., insufficiently expressive) to capture the pattern that we are trying to model.
+Moreover, since the *generalization gap* between our training and validation errors is small, we have reason to believe that we could get away with a more complex model.
+This phenomenon is known as underfitting.
+--><p>Khi so sánh lỗi huấn luyện và lỗi kiểm định, ta cần lưu ý hai trường hợp
+thường gặp sau: Đầu tiên, ta sẽ muốn chú ý trường hợp lỗi huấn luyện và
+lỗi kiểm định đều lớn nhưng khoảng cách giữa chúng lại nhỏ. Nếu mô hình
+không thể giảm thiểu lỗi huấn luyện, điều này có nghĩa là mô hình quá
+đơn giản (tức không đủ khả năng biểu diễn) để có thể xác định được khuôn
+mẫu mà ta đang cố mô hình hóa. Hơn nữa, do khoảng cách khái quát giữa
+lỗi huấn luyện và lỗi kiểm định nhỏ, ta có lý do để tin rằng phương án
+giải quyết là một mô hình phức tạp hơn. Hiện tượng này được gọi là dưới
+khớp (<em>underfitting</em>).</p>
+<!--
+On the other hand, as we discussed above, we want to watch out for the cases when our training error is significantly lower than our validation error, indicating severe overfitting.
+Note that overfitting is not always a bad thing.
+With deep learning especially, it is well known that the best predictive models often perform far better on training data than on holdout data.
+Ultimately, we usually care more about the validation error than about the gap between the training and validation errors.
+--><p>Mặt khác, như ta đã thảo luận ở phía trên, ta cũng muốn chú ý tới trường
+hợp lỗi huấn luyện thấp hơn lỗi kiểm định một cách đáng kể, một biểu
+hiện của sự quá khớp nặng. Lưu ý rằng quá khớp không phải luôn là điều
+xấu. Đặc biệt là với học sâu, ta đều biết rằng mô hình dự đoán tốt nhất
+thường đạt chất lượng tốt hơn hẳn trên dữ liệu huấn luyện so với dữ liệu
+kiểm định. Sau cùng, ta thường quan tâm đến lỗi kiểm định hơn khoảng
+cách giữa lỗi huấn luyện và lỗi kiểm định.</p>
+<!--
+Whether we overfit or underfit can depend both on the complexity of our model and the size of the available training datasets, two topics that we discuss below.
+--><p>Việc ta đang quá khớp hay dưới khớp có thể phụ thuộc vào cả độ phức tạp
+của mô hình lẫn kích thước của tập dữ liệu huấn luyện có sẵn, và hai vấn
+đề này sẽ được thảo luận ngay sau đây.</p>
+<!-- ===================== Kết thúc dịch Phần 6 ===================== --><!-- ===================== Bắt đầu dịch Phần 7 ===================== --><!--
+### Model Complexity
+--><div class="section" id="do-phuc-tap-mo-hinh">
+<h3><span class="section-number">4.4.3.1. </span>Độ phức tạp Mô hình<a class="headerlink" href="#do-phuc-tap-mo-hinh" title="Permalink to this headline">¶</a></h3>
+<!--
+To illustrate some classical intuition about overfitting and model complexity, we given an example using polynomials.
+Given training data consisting of a single feature $x$ and a corresponding real-valued label $y$, we try to find the polynomial of degree $d$
+--><p>Để có thể hình dung một cách trực quan hơn về mối quan hệ giữa quá khớp
+và độ phức tạp mô hình, ta sẽ đưa ra một ví dụ sử dụng đa thức. Cho một
+tập dữ liệu huấn luyện có một đặc trưng duy nhất <span class="math notranslate nohighlight">\(x\)</span> và nhãn
+<span class="math notranslate nohighlight">\(y\)</span> tương ứng có giá trị thực, ta thử tìm bậc <span class="math notranslate nohighlight">\(d\)</span> của đa
+thức</p>
+<div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-underfit-overfit-vn-0">
+<span class="eqno">(4.4.1)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-underfit-overfit-vn-0" title="Permalink to this equation">¶</a></span>\[\hat{y}= \sum_{i=0}^d x^i w_i\]</div>
+<!--
+to estimate the labels $y$.
+This is just a linear regression problem where our features are given by the powers of $x$, the $w_i$ given the model’s weights, and the bias is given by $w_0$ since $x^0 = 1$ for all $x$.
+Since this is just a linear regression problem, we can use the squared error as our loss function.
+--><p>để ước tính nhãn <span class="math notranslate nohighlight">\(y\)</span>. Đây đơn giản là một bài toán hồi quy tuyến
+tính trong đó các đặc trưng được tính bằng cách lấy mũ của <span class="math notranslate nohighlight">\(x\)</span>,
+<span class="math notranslate nohighlight">\(w_i\)</span> là trọng số của mô hình, vì <span class="math notranslate nohighlight">\(x^0=1\)</span> với mọi <span class="math notranslate nohighlight">\(x\)</span>
+nên <span class="math notranslate nohighlight">\(w_0\)</span> là hệ số điều chỉnh. Vì đây là bài toán hồi quy tuyến
+tính, ta có thể sử dụng bình phương sai số làm hàm mất mát.</p>
+<!--
+A higher-order polynomial function is more complex than a lower order polynomial function, since the higher-order polynomial has more parameters and the model function’s selection range is wider.
+Fixing the training dataset, higher-order polynomial functions should always achieve lower (at worst, equal) training error relative to lower degree polynomials.
+In fact, whenever the data points each have a distinct value of $x$, a polynomial function with degree equal to the number of data points can fit the training set perfectly.
+We visualize the relationship between polynomial degree and under- vs over-fitting in :numref:`fig_capacity_vs_error`.
+--><p>Hàm đa thức bậc cao phức tạp hơn hàm đa thức bậc thấp, vì đa thức bậc
+cao có nhiều tham số hơn và miền lựa chọn hàm số cũng rộng hơn. Nếu giữ
+nguyên tập dữ liệu huấn luyện, các hàm đa thức bậc cao hơn sẽ luôn đạt
+được lỗi huấn luyện thấp hơn (ít nhất là bằng) so với đa thức bậc thấp
+hơn. Trong thực tế, nếu mọi điểm dữ liệu có các giá trị <span class="math notranslate nohighlight">\(x\)</span> riêng
+biệt, một hàm đa thức có bậc bằng với số điểm dữ liệu đều có thể khớp
+một cách hoàn hảo với tập huấn luyện. Mối quan hệ giữa bậc của đa thức
+với hai hiện tượng dưới khớp và quá khớp được biểu diễn trong
+<a class="reference internal" href="#fig-capacity-vs-error"><span class="std std-numref">Fig. 4.4.1</span></a>.</p>
+<!--
+![Influence of Model Complexity on Underfitting and Overfitting](../img/capacity_vs_error.svg)
+--><div class="figure align-default" id="id1">
+<span id="fig-capacity-vs-error"></span><img alt="../_images/capacity_vs_error.svg" src="../_images/capacity_vs_error.svg" /><p class="caption"><span class="caption-number">Fig. 4.4.1 </span><span class="caption-text">Ảnh hưởng của Độ phức tạp Mô hình tới Dưới khớp và Quá khớp</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<!-- ========================================= REVISE PHẦN 3 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 4 - BẮT ĐẦU ===================================--><!--
+### Dataset Size
+--></div>
+<div class="section" id="kich-thuoc-tap-du-lieu">
+<h3><span class="section-number">4.4.3.2. </span>Kích thước Tập dữ liệu<a class="headerlink" href="#kich-thuoc-tap-du-lieu" title="Permalink to this headline">¶</a></h3>
+<!--
+The other big consideration to bear in mind is the dataset size.
+Fixing our model, the fewer samples we have in the training dataset, the more likely (and more severely) we are to encounter overfitting.
+As we increase the amount of training data, the generalization error typically decreases.
+Moreover, in general, more data never hurts.
+For a fixed task and data *distribution*, there is typically a relationship between model complexity and dataset size.
+Given more data, we might profitably attempt to fit a more complex model.
+Absent sufficient data, simpler models may be difficult to beat.
+For many tasks, deep learning only outperforms linear models when many thousands of training examples are available.
+In part, the current success of deep learning owes to the current abundance of massive datasets due to Internet companies, cheap storage, connected devices, and the broad digitization of the economy.
+--><p>Một lưu ý quan trọng khác cần ghi nhớ là kích thước tập dữ liệu. Với một
+mô hình cố định, tập dữ liệu càng ít mẫu thì càng có nhiều khả năng gặp
+phải tình trạng quá khớp với mức độ nghiêm trọng hơn. Khi số lượng dữ
+liệu tăng lên, lỗi khái quát sẽ có xu hướng giảm. Hơn nữa, trong hầu hết
+các trường hợp, nhiều dữ liệu không bao giờ là thừa. Trong một tác vụ
+với một <em>phân phối</em> dữ liệu cố định, ta có thể quan sát được mối quan hệ
+giữa độ phức tạp của mô hình và kích thước tập dữ liệu. Khi có nhiều dữ
+liệu, thử khớp một mô hình phức tạp hơn thường sẽ mang lợi nhiều lợi
+ích. Khi dữ liệu không quá nhiều, mô hình đơn giản sẽ là lựa chọn tốt
+hơn. Đối với nhiều tác vụ, học sâu chỉ tốt hơn các mô hình tuyến tính
+khi có sẵn hàng ngàn mẫu huấn luyện. Sự thành công hiện nay của học sâu
+phần nào dựa vào sự phong phú của các tập dữ liệu khổng lồ từ các công
+ty hoạt động trên internet, từ các thiết bị lưu trữ giá rẻ, các thiết bị
+được nối mạng và rộng hơn là việc số hóa nền kinh tế.</p>
+<!-- ===================== Kết thúc dịch Phần 7 ===================== --><!-- ===================== Bắt đầu dịch Phần 8 ===================== --><!--
+## Polynomial Regression
+--></div>
+</div>
+<div class="section" id="hoi-quy-da-thuc">
+<h2><span class="section-number">4.4.4. </span>Hồi quy Đa thức<a class="headerlink" href="#hoi-quy-da-thuc" title="Permalink to this headline">¶</a></h2>
+<!--
+We can now explore these concepts interactively by fitting polynomials to data.
+To get started we will import our usual packages.
+--><p>Bây giờ ta có thể khám phá một cách tương tác những khái niệm này bằng
+cách khớp đa thức với dữ liệu. Để bắt đầu ta sẽ nhập các gói thư viện
+thường dùng.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">d2l</span> <span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<span class="kn">from</span> <span class="nn">mxnet</span> <span class="kn">import</span> <span class="n">gluon</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<span class="kn">from</span> <span class="nn">mxnet.gluon</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+</pre></div>
+</div>
+<!--
+### Generating the Dataset
+--><div class="section" id="tao-ra-tap-du-lieu">
+<h3><span class="section-number">4.4.4.1. </span>Tạo ra Tập dữ liệu<a class="headerlink" href="#tao-ra-tap-du-lieu" title="Permalink to this headline">¶</a></h3>
+<!--
+First we need data. Given $x$, we will use the following cubic polynomial to generate the labels on training and test data:
+--><p>Đầu tiên ta cần dữ liệu. Cho <span class="math notranslate nohighlight">\(x\)</span>, ta sẽ sử dụng đa thức bậc ba ở
+dưới đây để tạo nhãn cho tập dữ liệu huấn luyện và tập kiểm tra:</p>
+<!--
+$$y = 5 + 1.2x - 3.4\frac{x^2}{2!} + 5.6 \frac{x^3}{3!} + \epsilon \text{ where }
+\epsilon \sim \mathcal{N}(0, 0.1).$$
+--><div class="math notranslate nohighlight" id="equation-chapter-multilayer-perceptrons-underfit-overfit-vn-1">
+<span class="eqno">(4.4.2)<a class="headerlink" href="#equation-chapter-multilayer-perceptrons-underfit-overfit-vn-1" title="Permalink to this equation">¶</a></span>\[y = 5 + 1.2x - 3.4\frac{x^2}{2!} + 5.6 \frac{x^3}{3!} + \epsilon \text{ với }
+\epsilon \sim \mathcal{N}(0, 0.1).\]</div>
+<!--
+The noise term $\epsilon$ obeys a normal distribution with a mean of 0 and a standard deviation of 0.1.
+We will synthesize 100 samples each for the training set and test set.
+--><p>Số hạng nhiễu <span class="math notranslate nohighlight">\(\epsilon\)</span> tuân theo phân phối chuẩn (phân phối
+Gauss) với giá trị trung bình bằng 0 và độ lệch chuẩn bằng 0.1. Ta sẽ
+tạo 100 mẫu cho mỗi tập huấn luyện và tập kiểm tra.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maxdegree</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Maximum degree of the polynomial</span>
+<span class="n">n_train</span><span class="p">,</span> <span class="n">n_test</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>  <span class="c1"># Training and test dataset sizes</span>
+<span class="n">true_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">maxdegree</span><span class="p">)</span>  <span class="c1"># Allocate lots of empty space</span>
+<span class="n">true_w</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.4</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">])</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_train</span> <span class="o">+</span> <span class="n">n_test</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="n">poly_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxdegree</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">poly_features</span> <span class="o">=</span> <span class="n">poly_features</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">npx</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">maxdegree</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">poly_features</span><span class="p">,</span> <span class="n">true_w</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<!--
+For optimization, we typically want to avoid very large values of gradients, losses, etc.
+This is why the monomials stored in `poly_features` are rescaled from $x^i$ to $\frac{1}{i!} x^i$.
+It allows us to avoid very large values for large exponents $i$.
+Factorials are implemented in Gluon using the Gamma function,
+where $n! = \Gamma(n+1)$.
+--><p>Khi tối ưu hóa, ta thường muốn tránh các giá trị rất lớn của gradient,
+mất mát, v.v. Đây là lý do tại sao các đơn thức lưu trong
+<code class="docutils literal notranslate"><span class="pre">poly_features</span></code> được chuyển đổi giá trị từ <span class="math notranslate nohighlight">\(x^i\)</span> thành
+<span class="math notranslate nohighlight">\(\frac{1}{i!} x^i\)</span>. Nó cho phép ta tránh các giá trị quá lớn với
+số mũ bậc cao <span class="math notranslate nohighlight">\(i\)</span>. Phép tính giai thừa được lập trình trong Gluon
+bằng hàm Gamma, với <span class="math notranslate nohighlight">\(n! = \Gamma(n+1)\)</span>.</p>
+<!--
+Take a look at the first 2 samples from the generated dataset.
+The value 1 is technically a feature, namely the constant feature corresponding to the bias.
+--><p>Hãy xét hai mẫu đầu tiên trong tập dữ liệu được tạo. Về mặt kỹ thuật giá
+trị 1 là một đặc trưng, cụ thể là đặc trưng không đổi tương ứng với hệ
+số điều chỉnh.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">features</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">poly_features</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">labels</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.03716067</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">1.1468065</span> <span class="p">]]),</span>
+ <span class="n">array</span><span class="p">([[</span> <span class="mf">1.0000000e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.7160669e-02</span><span class="p">,</span>  <span class="mf">6.9045764e-04</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.5526226e-06</span><span class="p">,</span>
+          <span class="mf">7.9455290e-08</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.9052230e-10</span><span class="p">,</span>  <span class="mf">3.6573674e-12</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.9415738e-14</span><span class="p">,</span>
+          <span class="mf">9.0187774e-17</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.7238198e-19</span><span class="p">,</span>  <span class="mf">1.3837955e-21</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.6747992e-24</span><span class="p">,</span>
+          <span class="mf">1.4476548e-26</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.1381331e-29</span><span class="p">,</span>  <span class="mf">1.0983988e-31</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.7211553e-34</span><span class="p">,</span>
+          <span class="mf">6.3199964e-37</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3815009e-39</span><span class="p">,</span>  <span class="mf">2.8516424e-42</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.6051939e-45</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">1.0000000e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1468065e+00</span><span class="p">,</span>  <span class="mf">6.5758252e-01</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5137332e-01</span><span class="p">,</span>
+          <span class="mf">7.2069131e-02</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.6529869e-02</span><span class="p">,</span>  <span class="mf">3.1594266e-03</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.1760708e-04</span><span class="p">,</span>
+          <span class="mf">7.4199437e-05</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.4547104e-06</span><span class="p">,</span>  <span class="mf">1.0842717e-06</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1304095e-07</span><span class="p">,</span>
+          <span class="mf">1.0803002e-08</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.5299479e-10</span><span class="p">,</span>  <span class="mf">7.8064347e-11</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.9683270e-12</span><span class="p">,</span>
+          <span class="mf">4.2778224e-13</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.8857840e-14</span><span class="p">,</span>  <span class="mf">1.8385725e-15</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1097342e-16</span><span class="p">]]),</span>
+ <span class="n">array</span><span class="p">([</span> <span class="mf">5.1432443</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.06415121</span><span class="p">]))</span>
+</pre></div>
+</div>
+<!--
+### Training and Testing Model
+--></div>
+<div class="section" id="huan-luyen-va-kiem-tra-mo-hinh">
+<h3><span class="section-number">4.4.4.2. </span>Huấn luyện và Kiểm tra Mô hình<a class="headerlink" href="#huan-luyen-va-kiem-tra-mo-hinh" title="Permalink to this headline">¶</a></h3>
+<!--
+Let's first implement a function to evaluate the loss on a given data.
+--><p>Trước tiên ta lập trình hàm để tính giá trị mất mát của dữ liệu cho
+trước.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saved in the d2l package for later use</span>
+<span class="k">def</span> <span class="nf">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">data_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Evaluate the loss of a model on the given dataset.&quot;&quot;&quot;</span>
+    <span class="n">metric</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Accumulator</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># sum_loss, num_examples</span>
+    <span class="k">for</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data_iter</span><span class="p">:</span>
+        <span class="n">metric</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">metric</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<!--
+Now define the training function.
+--><p>Giờ ta định nghĩa hàm huấn luyện.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">test_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span>
+          <span class="n">num_epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">L2Loss</span><span class="p">()</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+    <span class="c1"># Switch off the bias since we already catered for it in the polynomial</span>
+    <span class="c1"># features</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">train_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">train_iter</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_array</span><span class="p">((</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">test_iter</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">load_array</span><span class="p">((</span><span class="n">test_features</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">,</span>
+                               <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">trainer</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">collect_params</span><span class="p">(),</span> <span class="s1">&#39;sgd&#39;</span><span class="p">,</span>
+                            <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">})</span>
+    <span class="n">animator</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Animator</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;loss&#39;</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                            <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">],</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">],</span>
+                            <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">d2l</span><span class="o">.</span><span class="n">train_epoch_ch3</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">trainer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">animator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="p">(</span><span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">train_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">),</span>
+                                 <span class="n">evaluate_loss</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">test_iter</span><span class="p">,</span> <span class="n">loss</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;weight:&#39;</span><span class="p">,</span> <span class="n">net</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+</pre></div>
+</div>
+<!-- ========================================= REVISE PHẦN 4 - KẾT THÚC ===================================--><!-- ========================================= REVISE PHẦN 5 - BẮT ĐẦU ===================================--><!--
+### Third-Order Polynomial Function Fitting (Normal)
+--></div>
+<div class="section" id="khop-ham-da-thuc-bac-ba-dang-chuan">
+<h3><span class="section-number">4.4.4.3. </span>Khớp Hàm Đa thức Bậc Ba (dạng chuẩn)<a class="headerlink" href="#khop-ham-da-thuc-bac-ba-dang-chuan" title="Permalink to this headline">¶</a></h3>
+<!--
+We will begin by first using a third-order polynomial function with the same order as the data generation function.
+The results show that this model’s training error rate when using the testing dataset is low.
+The trained model parameters are also close to the true values $w = [5, 1.2, -3.4, 5.6]$.
+--><p>Ta sẽ bắt đầu với việc sử dụng hàm đa thức bậc ba, cùng bậc với hàm tạo
+dữ liệu. Kết quả cho thấy cả lỗi huấn luyện và lỗi kiểm tra của mô hình
+đều thấp. Các tham số của mô hình được huấn luyện cũng gần với giá trị
+thật <span class="math notranslate nohighlight">\(w = [5, 1.2, -3.4, 5.6]\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pick the first four dimensions, i.e., 1, x, x^2, x^3 from the polynomial</span>
+<span class="c1"># features</span>
+<span class="n">train</span><span class="p">(</span><span class="n">poly_features</span><span class="p">[:</span><span class="n">n_train</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">poly_features</span><span class="p">[</span><span class="n">n_train</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span>
+      <span class="n">labels</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">n_train</span><span class="p">:])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">5.015699</span>   <span class="mf">1.1957837</span> <span class="o">-</span><span class="mf">3.4175875</span>  <span class="mf">5.619841</span> <span class="p">]]</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_underfit-overfit_vn_553d16_11_1.svg" src="../_images/output_underfit-overfit_vn_553d16_11_1.svg" /></div>
+<!-- ===================== Kết thúc dịch Phần 8 ===================== --><!-- ===================== Bắt đầu dịch Phần 9 ===================== --><!--
+### Linear Function Fitting (Underfitting)
+--></div>
+<div class="section" id="khop-ham-tuyen-tinh-duoi-khop">
+<h3><span class="section-number">4.4.4.4. </span>Khớp hàm tuyến tính (Dưới khớp)<a class="headerlink" href="#khop-ham-tuyen-tinh-duoi-khop" title="Permalink to this headline">¶</a></h3>
+<!--
+Let’s take another look at linear function fitting.
+After the decline in the early epoch, it becomes difficult to further decrease this model’s training error rate.
+After the last epoch iteration has been completed, the training error rate is still high.
+When used to fit non-linear patterns (like the third-order polynomial function here) linear models are liable to underfit.
+--><p>Hãy xem lại việc khớp hàm tuyến tính. Sau sự sụt giảm ở những epoch đầu,
+việc giảm thêm lỗi huấn luyện của mô hình đã trở nên khó khăn. Sau khi
+epoch cuối cùng kết thúc, lỗi huấn luyện vẫn còn cao. Khi được sử dụng
+để khớp các khuôn mẫu phi tuyến (như hàm đa thức bậc ba trong trường hợp
+này), các mô hình tuyến tính dễ bị dưới khớp.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pick the first four dimensions, i.e., 1, x from the polynomial features</span>
+<span class="n">train</span><span class="p">(</span><span class="n">poly_features</span><span class="p">[:</span><span class="n">n_train</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">poly_features</span><span class="p">[</span><span class="n">n_train</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span>
+      <span class="n">labels</span><span class="p">[:</span><span class="n">n_train</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="n">n_train</span><span class="p">:])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">5.2660666</span>  <span class="mf">4.024163</span>  <span class="o">-</span><span class="mf">3.9857814</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_underfit-overfit_vn_553d16_13_1.svg" src="../_images/output_underfit-overfit_vn_553d16_13_1.svg" /></div>
+<!--
+### Insufficient Training (Overfitting)
+--></div>
+<div class="section" id="thieu-du-lieu-huan-luyen-qua-khop">
+<h3><span class="section-number">4.4.4.5. </span>Thiếu dữ liệu huấn luyện (Quá khớp)<a class="headerlink" href="#thieu-du-lieu-huan-luyen-qua-khop" title="Permalink to this headline">¶</a></h3>
+<!--
+Now let's try to train the model using a polynomial of too high degree.
+Here, there is insufficient data to learn that the higher-degree coefficients should have values close to zero.
+As a result, our overly-complex model is far too susceptible to being influenced by noise in the training data.
+Of course, our training error will now be low (even lower than if we had the right model!) but our test error will be high.
+--><p>Bây giờ, hãy thử huấn luyện mô hình sử dụng một đa thức với bậc rất cao.
+Trong trường hợp này, mô hình không có đủ dữ liệu để học được rằng các
+hệ số bậc cao nên có giá trị gần với không. Vì vậy, mô hình quá phức tạp
+của ta sẽ dễ bị ảnh hưởng bởi nhiễu ở trong dữ liệu huấn luyện. Dĩ
+nhiên, lỗi huấn luyện trong trường hợp này sẽ thấp (thậm chí còn thấp
+hơn cả khi chúng ta có được mô hình thích hợp!) nhưng lỗi kiểm tra sẽ
+cao.</p>
+<!--
+Try out different model complexities (`n_degree`) and training set sizes (`n_subset`) to gain some intuition of what is happening.
+--><p>Thử nghiệm với các độ phức tạp của mô hình (<code class="docutils literal notranslate"><span class="pre">n_degree</span></code>) và các kích
+thước của tập huấn luyện (<code class="docutils literal notranslate"><span class="pre">n_subset</span></code>) khác nhau để thấy được một cách
+trực quan điều gì đang diễn ra.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_subset</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># Subset of data to train on</span>
+<span class="n">n_degree</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Degree of polynomials</span>
+<span class="n">train</span><span class="p">(</span><span class="n">poly_features</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n_subset</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">n_degree</span><span class="p">],</span>
+      <span class="n">poly_features</span><span class="p">[</span><span class="n">n_train</span><span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">n_degree</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n_subset</span><span class="p">],</span>
+      <span class="n">labels</span><span class="p">[</span><span class="n">n_train</span><span class="p">:])</span>
+</pre></div>
+</div>
+<div class="output highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weight</span><span class="p">:</span> <span class="p">[[</span> <span class="mf">4.9481597</span>   <span class="mf">1.3327131</span>  <span class="o">-</span><span class="mf">3.2095444</span>   <span class="mf">5.042951</span>   <span class="o">-</span><span class="mf">0.42211843</span>  <span class="mf">1.3476641</span>
+   <span class="mf">0.07500532</span>  <span class="mf">0.19182673</span> <span class="o">-</span><span class="mf">0.01919946</span>  <span class="mf">0.01772289</span> <span class="o">-</span><span class="mf">0.05095179</span> <span class="o">-</span><span class="mf">0.02382807</span>
+  <span class="o">-</span><span class="mf">0.01497361</span> <span class="o">-</span><span class="mf">0.04940026</span>  <span class="mf">0.06389722</span> <span class="o">-</span><span class="mf">0.0476184</span>  <span class="o">-</span><span class="mf">0.04380194</span> <span class="o">-</span><span class="mf">0.05188226</span>
+   <span class="mf">0.05655775</span>  <span class="mf">0.01104914</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="../_images/output_underfit-overfit_vn_553d16_15_1.svg" src="../_images/output_underfit-overfit_vn_553d16_15_1.svg" /></div>
+<!--
+In later chapters, we will continue to discuss overfitting problems and methods for dealing with them, such as weight decay and dropout.
+--><p>Ở các chương sau, chúng ta sẽ tiếp tục thảo luận về các vấn đề quá khớp
+và các phương pháp đối phó, ví dụ như suy giảm trọng số hay dropout.</p>
+<!--
+## Summary
+--></div>
+</div>
+<div class="section" id="tom-tat">
+<h2><span class="section-number">4.4.5. </span>Tóm tắt<a class="headerlink" href="#tom-tat" title="Permalink to this headline">¶</a></h2>
+<!--
+* Since the generalization error rate cannot be estimated based on the training error rate, simply minimizing the training error rate will not necessarily mean a reduction in the generalization error rate. Machine learning models need to be careful to safeguard against overfitting such as to minimize the generalization error.
+* A validation set can be used for model selection (provided that it is not used too liberally).
+* Underfitting means that the model is not able to reduce the training error rate while overfitting is a result of the model training error rate being much lower than the testing dataset rate.
+* We should choose an appropriately complex model and avoid using insufficient training samples.
+--><ul class="simple">
+<li>Bởi vì lỗi khái quát không thể được ước lượng dựa trên lỗi huấn
+luyện, nên việc chỉ đơn thuần cực tiểu hóa lỗi huấn luyện sẽ không
+nhất thiết đồng nghĩa với việc cực tiểu hóa lỗi khái quát. Các mô
+hình học máy cần phải được bảo vệ khỏi việc quá khớp để giảm thiểu
+lỗi khái quát.</li>
+<li>Một tập kiểm định có thể được sử dụng cho việc lựa chọn mô hình (với
+điều kiện là tập này không được sử dụng quá nhiều).</li>
+<li>Dưới khớp có nghĩa là mô hình không có khả năng giảm lỗi huấn luyện,
+còn quá khớp là kết quả của việc lỗi huấn luyện của mô hình thấp hơn
+nhiều so với lỗi kiểm tra.</li>
+<li>Chúng ta nên chọn một mô hình phức tạp vừa phải và tránh việc sử dụng
+tập huấn luyện không có đủ số số mẫu.</li>
+</ul>
+<!--
+## Exercises
+--></div>
+<div class="section" id="bai-tap">
+<h2><span class="section-number">4.4.6. </span>Bài tập<a class="headerlink" href="#bai-tap" title="Permalink to this headline">¶</a></h2>
+<!--
+1. Can you solve the polynomial regression problem exactly? Hint: use linear algebra.
+2. Model selection for polynomials
+    * Plot the training error vs. model complexity (degree of the polynomial). What do you observe?
+    * Plot the test error in this case.
+    * Generate the same graph as a function of the amount of data?
+3. What happens if you drop the normalization of the polynomial features $x^i$ by $1/i!$. Can you fix this in some other way?
+4. What degree of polynomial do you need to reduce the training error to 0?
+5. Can you ever expect to see 0 generalization error?
+--><ol class="arabic simple">
+<li>Bạn có thể giải bài toán hồi quy đa thức một cách chính xác không?
+Gợi ý: sử dụng đại số tuyến tính.</li>
+<li>Lựa chọn mô hình cho các đa thức<ul>
+<li>Vẽ đồ thị biểu diễn lỗi huấn luyện và độ phức tạp của mô hình (bậc
+của đa thức). Bạn quan sát được gì?</li>
+<li>Vẽ đồ thị biểu diễn lỗi kiểm tra trong trường hợp này.</li>
+<li>Tạo một đồ thị tương tự nhưng với hàm của lượng dữ liệu.</li>
+</ul>
+</li>
+<li>Điều gì sẽ xảy ra nếu bạn bỏ qua việc chuẩn hóa các đặc trưng đa thức
+<span class="math notranslate nohighlight">\(x^i\)</span> với <span class="math notranslate nohighlight">\(1/i!\)</span>. Bạn có thể sửa chữa vấn đề này bằng
+cách nào khác không?</li>
+<li>Bậc mấy của đa thức giảm được tỉ lệ lỗi huấn luyện về 0?</li>
+<li>Bạn có bao giờ kỳ vọng thấy được lỗi khái quát bằng 0?</li>
+</ol>
+<!-- ===================== Kết thúc dịch Phần 9 ===================== --><!-- ========================================= REVISE PHẦN 5 - KẾT THÚC ===================================--><!--
+## [Discussions](https://discuss.mxnet.io/t/2341)
+--></div>
+<div class="section" id="thao-luan">
+<h2><span class="section-number">4.4.7. </span>Thảo luận<a class="headerlink" href="#thao-luan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://discuss.mxnet.io/t/2341">Tiếng Anh</a></li>
+<li><a class="reference external" href="https://forum.machinelearningcoban.com/c/d2l">Tiếng Việt</a></li>
+</ul>
+</div>
+<div class="section" id="nhung-nguoi-thuc-hien">
+<h2><span class="section-number">4.4.8. </span>Những người thực hiện<a class="headerlink" href="#nhung-nguoi-thuc-hien" title="Permalink to this headline">¶</a></h2>
+<p>Bản dịch trong trang này được thực hiện bởi:</p>
+<ul class="simple">
+<li>Đoàn Võ Duy Thanh</li>
+<li>Trần Yến Thy</li>
+<li>Lê Khắc Hồng Phúc</li>
+<li>Phạm Minh Đức</li>
+<li>Nguyễn Văn Tâm</li>
+<li>Vũ Hữu Tiệp</li>
+<li>Phạm Hồng Vinh</li>
+<li>Bùi Nhật Quân</li>
+<li>Lý Phi Long</li>
+<li>Nguyễn Duy Du</li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+        <div class="side-doc-outline">
+            <div class="side-doc-outline--content"> 
+<div class="localtoc">
+    <p class="caption">
+      <span class="caption-text">Table Of Contents</span>
+    </p>
+    <ul>
+<li><a class="reference internal" href="#">4.4. Lựa Chọn Mô Hình, Dưới Khớp và Quá Khớp</a><ul>
+<li><a class="reference internal" href="#loi-huan-luyen-va-loi-khai-quat">4.4.1. Lỗi huấn luyện và Lỗi khái quát</a><ul>
+<li><a class="reference internal" href="#ly-thuyet-hoc-thong-ke">4.4.1.1. Lý thuyết Học Thống kê</a></li>
+<li><a class="reference internal" href="#do-phuc-tap-cua-mo-hinh">4.4.1.2. Độ Phức tạp của Mô hình</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lua-chon-mo-hinh">4.4.2. Lựa chọn Mô hình</a><ul>
+<li><a class="reference internal" href="#tap-du-lieu-kiem-dinh">4.4.2.1. Tập Dữ liệu Kiểm định</a></li>
+<li><a class="reference internal" href="#kiem-dinh-cheo-gap-k-lan">4.4.2.2. Kiểm định chéo gập <span class="math notranslate nohighlight">\(K\)</span>-lần</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#duoi-khop-hay-qua-khop">4.4.3. Dưới khớp hay Quá khớp?</a><ul>
+<li><a class="reference internal" href="#do-phuc-tap-mo-hinh">4.4.3.1. Độ phức tạp Mô hình</a></li>
+<li><a class="reference internal" href="#kich-thuoc-tap-du-lieu">4.4.3.2. Kích thước Tập dữ liệu</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hoi-quy-da-thuc">4.4.4. Hồi quy Đa thức</a><ul>
+<li><a class="reference internal" href="#tao-ra-tap-du-lieu">4.4.4.1. Tạo ra Tập dữ liệu</a></li>
+<li><a class="reference internal" href="#huan-luyen-va-kiem-tra-mo-hinh">4.4.4.2. Huấn luyện và Kiểm tra Mô hình</a></li>
+<li><a class="reference internal" href="#khop-ham-da-thuc-bac-ba-dang-chuan">4.4.4.3. Khớp Hàm Đa thức Bậc Ba (dạng chuẩn)</a></li>
+<li><a class="reference internal" href="#khop-ham-tuyen-tinh-duoi-khop">4.4.4.4. Khớp hàm tuyến tính (Dưới khớp)</a></li>
+<li><a class="reference internal" href="#thieu-du-lieu-huan-luyen-qua-khop">4.4.4.5. Thiếu dữ liệu huấn luyện (Quá khớp)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tom-tat">4.4.5. Tóm tắt</a></li>
+<li><a class="reference internal" href="#bai-tap">4.4.6. Bài tập</a></li>
+<li><a class="reference internal" href="#thao-luan">4.4.7. Thảo luận</a></li>
+<li><a class="reference internal" href="#nhung-nguoi-thuc-hien">4.4.8. Những người thực hiện</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+
+      <div class="clearer"></div>
+    </div><div class="pagenation">
+     <a id="button-prev" href="mlp-gluon_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="P">
+         <i class="pagenation-arrow-L fas fa-arrow-left fa-lg"></i>
+         <div class="pagenation-text">
+            <span class="pagenation-direction">Previous</span>
+            <div>4.3. Cách lập trình súc tích Perceptron Đa tầng</div>
+         </div>
+     </a>
+     <a id="button-next" href="weight-decay_vn.html" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" role="botton" accesskey="N">
+         <i class="pagenation-arrow-R fas fa-arrow-right fa-lg"></i>
+        <div class="pagenation-text">
+            <span class="pagenation-direction">Next</span>
+            <div>4.5. Suy giảm trọng số</div>
+        </div>
+     </a>
+  </div>
+        
+        </main>
+    </div>
+  </body>
+</html>
